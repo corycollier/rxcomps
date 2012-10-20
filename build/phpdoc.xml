@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<phpdoc>
+    <title>RxCompetition Application</title>
+
+    <!-- pick the files to run phpdoc on -->
+    <files>
+        <directory>src/app</directory>
+        <directory>src/lib/Rx</directory>
+    </files>
+    <parser>
+        <target>build/phpdoc</target>
+        <markers>
+            <item>TODO</item>
+        </markers>
+        <extensions>
+            <extension>php</extension>
+        </extensions>
+    </parser>
+    <!-- where to put the api docs -->
+    <transformer>
+        <target>build/phpdoc</target>
+    </transformer>
+</phpdoc>

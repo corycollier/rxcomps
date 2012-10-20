@@ -1,0 +1,24 @@
+<phpunit bootstrap="./tests/bootstrap.php" colors="true">
+<php>
+    <const name="APPLICATION_ENV" value="testing" />
+</php>
+
+<filter>
+    <whitelist>
+        <directory suffix="php">./src/app</directory>
+        <directory suffix="php">./src/lib/Rx</directory>
+    </whitelist>
+</filter>
+
+<!-- logging for the unit test coverage -->
+<logging>
+    <log type="coverage-html"
+        target="build/coverage"
+        charset="UTF-8"
+        yui="true"
+        highlight="false"
+        lowUpperBound="50"
+        highLowerBound="80" />
+</logging>
+
+</phpunit>
