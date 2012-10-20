@@ -5,12 +5,12 @@
  * This model represents a database table of users to the application
  *
  * @category    RxCompetition
- * @package     Application
+ * @package     App
  * @subpackage  Model
  * @copyright   Copyright (c) 2012 RxCompetition, Inc (http://www.rxcompetition.com)
  * @license     All Rights Reserved
- * @version     Release: 2.0.0
- * @since       File available since release 2.0.0
+ * @version     Release: 1.0.0
+ * @since       File available since release 1.0.0
  * @filesource
  */
 
@@ -20,12 +20,12 @@
  * This model represents a database table of users to the application
  *
  * @category    RxCompetition
- * @package     Application
+ * @package     App
  * @subpackage  Model
  * @copyright   Copyright (c) 2012 RxCompetition, Inc (http://www.rxcompetition.com)
  * @license     All Rights Reserved
- * @version     Release: 2.0.0
- * @since       Class available since release 2.0.0
+ * @version     Release: 1.0.0
+ * @since       Class available since release 1.0.0
  */
 
 class App_Model_DbTable_User
@@ -52,4 +52,4 @@ class App_Model_DbTable_User
         return 'unit test check';
     }
 
-} // END class Application_Model_DbTable_Users
+} // END class App_Model_DbTable_Users

@@ -85,6 +85,7 @@ class App_Bootstrap
 
         $acl->addResource(new Zend_Acl_Resource('index'));
         $acl->addResource(new Zend_Acl_Resource('error'));
+        $acl->addResource(new Zend_Acl_Resource('users'));
 
         $acl->allow('guest', null, array(
             'index', 'view', 'error', 'denied', 'login', 'logout', 'success',
