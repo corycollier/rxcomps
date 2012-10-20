@@ -45,8 +45,6 @@ class ErrorController
             return;
         }
 
-        var_dump($errors); die;
-
         switch ($errors->type) {
             case Zend_Controller_Plugin_ErrorHandler::EXCEPTION_NO_ROUTE:
             case Zend_Controller_Plugin_ErrorHandler::EXCEPTION_NO_CONTROLLER:

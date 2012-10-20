@@ -47,14 +47,28 @@ class Tests_Rx_Controller_ActionTest
     {
         $request = new Zend_Controller_Request_HttpTestCase;
 
+        $aclHelper = $this->getMockBuilder('Rx_Controller_Action_Helper_Acl')
+            ->setMethods(array('check'))
+            ->disableOriginalConstructor()
+            ->getMock();
+
         $controller = $this->getMockBuilder('Rx_Controller_Action')
             ->setMethods(array('getHelper', 'getRequest'))
             ->disableOriginalConstructor()
             ->getMock();
 
+        $aclHelper->expects($this->once())
+            ->method('check')
+            ->with($this->equalTo($request));
+
         $controller->expects($this->once())
             ->method('getRequest')
             ->will($this->returnValue($request));
+
+        $controller->expects($this->once())
+            ->method('getHelper')
+            ->with($this->equalTo('Acl'))
+            ->will($this->returnValue($aclHelper));
 
         $controller->preDispatch();
 

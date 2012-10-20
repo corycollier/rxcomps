@@ -74,29 +74,4 @@ class IndexControllerTest
         $this->assertAction($urlParams['action']);
     }
 
-    /**
-     * test_aboutAction()
-     *
-     * Unit test for the aboutAction of the IndexController class
-     *
-     * @covers IndexController::aboutAction
-     */
-    public function test_aboutAction ( )
-    {
-        $params = array(
-            'action'    => 'about',
-            'controller' => 'index',
-            'module'    => 'default'
-        );
-
-        $urlParams = $this->urlizeOptions($params);
-        $url = $this->url($urlParams);
-        $this->dispatch($url);
-
-        // assertions
-        $this->assertModule($urlParams['module']);
-        $this->assertController($urlParams['controller']);
-        $this->assertAction($urlParams['action']);
-    }
-
 } // END class
