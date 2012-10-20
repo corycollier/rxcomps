@@ -1,0 +1,33 @@
+<phpunit bootstrap="../src/pub/index.php" colors="true">
+    <testsuite name="RxCompetition Test Suite">
+        <directory>./app</directory>
+    </testsuite>
+    <testsuite name="Library Test Suite">
+        <directory>./lib/Rx</directory>
+    </testsuite>
+
+
+<filter>
+    <whitelist>
+        <directory suffix="php">../src/app</directory>
+        <directory suffix="php">../src/lib/Rx</directory>
+        <exclude>
+            <directory>../src/lib/Zend</directory>
+            <file>../src/lib/Rx/Model/Exception.php</file>
+        </exclude>
+    </whitelist>
+</filter>
+
+<!-- logging for the unit test coverage -->
+<logging>
+    <log type="coverage-html"
+        target="../build/coverage"
+        charset="UTF-8"
+        yui="true"
+        highlight="false"
+        lowUpperBound="50"
+        highLowerBound="80" />
+    <log type="junit" target="../build/logs/phpunit.xml" logIncompleteSkipped="false"/>
+    <log type="coverage-clover" target="../build/logs/clover.xml"/>
+</logging>
+</phpunit>

@@ -40,7 +40,7 @@ class App_Bootstrap
     {
         $loader = Zend_Loader_Autoloader::getInstance();
         $loader->setFallbackAutoloader(true);
-        // $loader->registerNamespace('Rx_');
+        $loader->registerNamespace('Rx_');
 
     } // END function _initAutoloader
 
@@ -69,5 +69,31 @@ class App_Bootstrap
         $view->addHelperPath(APPLICATION_PATH . '/views/helpers/', 'App_View_Helper_');
 
     } // END function _initViewHelpers
+
+
+    /**
+     * _initAcl()
+     *
+     * Initializes the ACL object, and sets it into the registry for global use
+     */
+    protected function _initAcl ( )
+    {
+        $acl = new Zend_Acl;
+
+        $guest = $acl->addRole(new Zend_Acl_Role('guest'));
+        $admin = $acl->addRole(new Zend_Acl_Role('admin'));
+
+        $acl->addResource(new Zend_Acl_Resource('index'));
+        $acl->addResource(new Zend_Acl_Resource('error'));
+
+        $acl->allow('guest', null, array(
+            'index', 'view', 'error', 'denied', 'login', 'logout', 'success',
+        ));
+
+        $acl->allow('admin');
+
+        Zend_Registry::getInstance()->set('acl', $acl);
+
+    } // END function _initAcl
 
 } // END class Bootstrap

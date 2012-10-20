@@ -40,7 +40,7 @@ class Rx_Controller_Action
      */
     public function preDispatch ( )
     {
-        // $this->getHelper('Acl')->check($this->getRequest());
+        $this->getHelper('Acl')->check($this->getRequest());
 
     } // END function preDispatch
 

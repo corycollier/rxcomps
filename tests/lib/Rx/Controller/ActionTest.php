@@ -154,7 +154,7 @@ class Tests_Rx_Controller_ActionTest
      */
     public function test_getLog ($expected, $hasResource = false)
     {
-        $bootstrap = $this->getMockBuilder('Bootstrap')
+        $bootstrap = $this->getMockBuilder('App_Bootstrap')
             ->setMethods(array('hasResource', 'getResource'))
             ->disableOriginalConstructor()
             ->getMock();
