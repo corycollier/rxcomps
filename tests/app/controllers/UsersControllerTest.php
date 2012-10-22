@@ -105,17 +105,13 @@ class UsersControllerTest
      * Unit test for the loginAction of the UsersController class
      *
      * @covers UsersController::loginAction
+     * @dataProvider provide_loginAction
      */
-    public function test_loginAction ( )
+    public function test_loginAction ($method, $params = array())
     {
-        $params = array(
-            'action'    => 'login',
-            'controller' => 'users',
-            'module'    => 'default'
-        );
-
         $urlParams = $this->urlizeOptions($params);
         $url = $this->url($urlParams);
+        $this->getRequest()->setMethod($method);
         $this->dispatch($url);
 
         // assertions
@@ -123,6 +119,31 @@ class UsersControllerTest
         $this->assertController($urlParams['controller']);
         $this->assertAction($urlParams['action']);
     }
+
+    /**
+     * provide_loginAction()
+     *
+     * Provides data to use for testing the loginAction method of the
+     * UsersController
+     *
+     * @return array
+     */
+    public function provide_loginAction()
+    {
+        return array(
+            array('GET', array(
+                'action'    => 'login',
+                'controller' => 'users',
+                'module'    => 'default'
+            )),
+            array('POST', array(
+                'action'    => 'login',
+                'controller' => 'users',
+                'module'    => 'default'
+            )),
+        );
+
+    } // END function provide_loginAction
 
     /**
      * test_editAction()
