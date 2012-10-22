@@ -1,3 +1,5 @@
+build/api
+build/phpdox
 build/coverage
 build/logs
 src/lib/Zend
