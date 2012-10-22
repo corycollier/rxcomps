@@ -13,4 +13,10 @@
     <p>
     You have been logged out of the application
     </p>
+    <?php echo $this->htmlAnchor('Login', array(
+        'module'    => 'default',
+        'controller'=> 'users',
+        'action'    => 'login',
+        )); ?>
 </div>
+

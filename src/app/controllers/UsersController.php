@@ -57,8 +57,8 @@ class UsersController
             $user->login($request->getParams());
             $this->getHelper('Redirector')->gotoRoute(array(
                 'module'        => 'default',
-                'controller'    => 'registrations',
-                'action'        => 'list',
+                'controller'    => 'index',
+                'action'        => 'index',
             ));
         }
 
