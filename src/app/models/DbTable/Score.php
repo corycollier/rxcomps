@@ -39,17 +39,21 @@ class App_Model_DbTable_Score
     protected $_name = 'scores';
 
     /**
-     * unitTestCheck()
+     * The name of the database table that this table depends upon
      *
-     * Because XDebug doesn't provide code coverage metrics for classes that are
-     * empty, we provide a simple method to allow verification that the class
-     * is, in fact, code covered
-     *
-     * @return string
+     * @var string
      */
-    public function unitTestCheck ( )
-    {
-        return 'unit test check';
-    }
+    protected $_referenceMap    = array(
+        'Competition' => array(
+            'columns'           => array('competition_id'),
+            'refTableClass'     => 'App_Model_DbTable_Competition',
+            'refColumns'        => array('id'),
+        ),
+        'Athelete' => array(
+            'columns'           => array('athlete_id'),
+            'refTableClass'     => 'App_Model_DbTable_Athelete',
+            'refColumns'        => array('id'),
+        ),
+    );
 
 } // END class App_Model_DbTable_Scores

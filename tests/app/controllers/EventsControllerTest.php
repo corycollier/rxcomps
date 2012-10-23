@@ -56,7 +56,7 @@ class EventsControllerTest
      *
      * @covers EventsController::indexAction
      */
-    public function test_indexAction ( )
+    public function test_dispatchIndexAction ( )
     {
         $params = array(
             'action'    => 'index',
@@ -73,6 +73,42 @@ class EventsControllerTest
         $this->assertController($urlParams['controller']);
         $this->assertAction($urlParams['action']);
     }
+
+    /**
+     * test_indexAction()
+     *
+     * Tests the indexAction method of the EventsController class
+     *
+     * @covers EventsController::indexAction
+     * @dataProvider provide_indexAction
+     */
+    public function test_indexAction ( )
+    {
+        $subject = new EventsController(
+            new Zend_Controller_Request_HttpTestCase,
+            new Zend_Controller_Response_HttpTestCase
+        );
+
+        $subject->indexAction();
+
+    } // END function test_indexAction
+
+    /**
+     * provide_indexAction()
+     *
+     * Provides data to use for testing the indexAction method of
+     * the EventsController class
+     *
+     * @return array
+     */
+    public function provide_indexAction ( )
+    {
+        return array(
+            array(),
+        );
+
+    } // END function provide_indexAction
+
 
 } // END class EventsControllerTest
 

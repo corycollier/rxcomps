@@ -29,8 +29,15 @@
  */
 
 class EventsController
-    extends Rx_Controller_Action
+    extends Rx_Controller_Model
 {
+    /**
+     * Specify the name of the model to be used
+     *
+     * @var string
+     */
+    protected $_modelName = 'Event';
+
     /**
      * indexAction()
      *
@@ -40,6 +47,5 @@ class EventsController
     {
 
     } // END function indexAction
-
 
 } // END class App_Controller_EventsController

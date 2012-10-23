@@ -32,6 +32,16 @@ class App_Model_User
     extends Rx_Model_Abstract
 {
     /**
+     * Excpetion message to indicate that the login form is invalid
+     */
+    const EXCEPTION_LOGIN_FORM_NOT_VALID = 'Login form not valid';
+
+    /**
+     * Excpetion message to indicate that the login failed
+     */
+    const EXCEPTION_AUTH_FAILURE = 'Login Failure';
+
+    /**
      * Property to hold an instance of the authentication adapter associated
      * with this model
      *
@@ -53,7 +63,7 @@ class App_Model_User
         $auth           = $this->getAuth();
 
         if (! $form->isValid($params)) {
-            throw new Zend_Exception('Login form not valid');
+            throw new Zend_Exception(self::EXCEPTION_LOGIN_FORM_NOT_VALID);
         }
 
         $result = $authAdapter->setIdentity($form->getValue('email'))
@@ -64,6 +74,8 @@ class App_Model_User
             $auth->getStorage()->write(
                 $authAdapter->getResultRowObject()
             );
+        } else {
+            throw new Zend_Exception(self::EXCEPTION_AUTH_FAILURE);
         }
 
     } // END function login

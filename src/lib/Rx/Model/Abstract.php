@@ -36,6 +36,11 @@ class Rx_Model_Abstract
     const EXCEPTION_INVALID_DATA = 'The data provided is not valid';
 
     /**
+     * Message to indicate that the id wasn't set on the model before a delete was attempted
+     */
+    const EXCEPTION_DELETE_CONSTRAINT = 'The id must be set on the model before deletion';
+
+    /**
      * Property to hold an instance of the form associated with this model
      *
      * @var Rx_Form
@@ -104,7 +109,7 @@ class Rx_Model_Abstract
      * Updates the existing item
      *
      * @param array $values
-     * @return App_Model_Athlete $this for a fluent interface
+     * @return Rx_Model_Abstract $this for a fluent interface
      */
     public function edit ($values = array())
     {
@@ -123,6 +128,51 @@ class Rx_Model_Abstract
         return $this;
 
     } // END function edit
+
+    /**
+     * create()
+     *
+     * Creates a record of the model
+     *
+     * @param array $values
+     * @return Rx_Model_Abstract $this for a fluent interface
+     */
+    public function create ($values = array())
+    {
+        $dbTable = $this->getTable();
+
+        $form = $this->getForm();
+        if (! $form->isValid($values)) {
+            throw new Rx_Model_Exception(self::EXCEPTION_INVALID_DATA);
+        }
+        $values = $form->getValues();
+
+        $this->getTable()->insert($values);
+
+        return $this;
+
+    } // END function create
+
+    /**
+     * delete()
+     *
+     * Delets the model by it's current id value
+     */
+    public function delete ( )
+    {
+        if (! $this->id) {
+            throw new Rx_Model_Exception(self::EXCEPTION_DELETE_CONSTRAINT);
+        }
+
+        $dbTable = $this->getTable();
+
+        $select = $dbTable->select();
+
+        $select->where('id = ?', $this->id);
+
+        $dbTable->delete($select);
+
+    } // END function delete
 
     /**
      * filterValues()

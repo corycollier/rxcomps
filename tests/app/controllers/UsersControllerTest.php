@@ -56,7 +56,7 @@ class UsersControllerTest
      *
      * @covers UsersController::indexAction
      */
-    public function test_indexAction ( )
+    public function test_dispatchIndexAction ( )
     {
         $params = array(
             'action'    => 'index',
@@ -81,7 +81,7 @@ class UsersControllerTest
      *
      * @covers UsersController::logoutAction
      */
-    public function test_logoutAction ( )
+    public function test_dispatchLogoutAction ( )
     {
         $params = array(
             'action'    => 'logout',
@@ -100,18 +100,23 @@ class UsersControllerTest
     }
 
     /**
-     * test_loginAction()
+     * test_dispatchLoginAction()
      *
      * Unit test for the loginAction of the UsersController class
      *
      * @covers UsersController::loginAction
-     * @dataProvider provide_loginAction
+     * @dataProvider provide_dispatchLoginAction
      */
-    public function test_loginAction ($method, $params = array())
+    public function test_dispatchLoginAction ($method, $params = array(), $post = array())
     {
         $urlParams = $this->urlizeOptions($params);
         $url = $this->url($urlParams);
         $this->getRequest()->setMethod($method);
+
+        if (count($post)) {
+            $this->getRequest()->setPost($post);
+        }
+
         $this->dispatch($url);
 
         // assertions
@@ -121,29 +126,34 @@ class UsersControllerTest
     }
 
     /**
-     * provide_loginAction()
+     * provide_dispatchLoginAction()
      *
      * Provides data to use for testing the loginAction method of the
      * UsersController
      *
      * @return array
      */
-    public function provide_loginAction()
+    public function provide_dispatchLoginAction ( )
     {
         return array(
-            array('GET', array(
-                'action'    => 'login',
-                'controller' => 'users',
-                'module'    => 'default'
-            )),
+
             array('POST', array(
+                'action'    => 'login',
+                'controller'=> 'users',
+                'module'    => 'default'
+            ), array(
+                'email'     => 'corycollier@corycollier.com',
+                'passwd'    => 'password',
+            )),
+
+            array('GET', array(
                 'action'    => 'login',
                 'controller' => 'users',
                 'module'    => 'default'
             )),
         );
 
-    } // END function provide_loginAction
+    } // END function provide_dispatchLoginAction
 
     /**
      * test_editAction()

@@ -38,18 +38,4 @@ class App_Model_DbTable_Event
      */
     protected $_name = 'events';
 
-    /**
-     * unitTestCheck()
-     *
-     * Because XDebug doesn't provide code coverage metrics for classes that are
-     * empty, we provide a simple method to allow verification that the class
-     * is, in fact, code covered
-     *
-     * @return string
-     */
-    public function unitTestCheck ( )
-    {
-        return 'unit test check';
-    }
-
 } // END class App_Model_DbTable_Events

@@ -90,4 +90,15 @@ class Rx_Controller_Action
 
     } // END function getLog
 
+
+    /**
+     * postDispatch()
+     *
+     * Local implementation of the postDispatch hook
+     */
+    public function postDispatch ( )
+    {
+        $this->view->flashMessenger = $this->getHelper('FlashMessenger');
+    }
+
 } // END class Rx_Controller_Action

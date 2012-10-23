@@ -173,7 +173,8 @@ class Tests_App_Model_UserTest
                 array(
                     'email'     => 'user@user.com',
                     'passwd'    => 'password',
-                )
+                ),
+                'Zend_Exception',
             ),
 
             'invalid form data' => array(
@@ -303,8 +304,7 @@ class Tests_App_Model_UserTest
      *
      * Tests the getAcl of the App_Model_User
      *
-     * @covers          App_Model_User::getAcl
-     * @dataProvider    provide_getAcl
+     * @covers App_Model_User::getAcl
      */
     public function test_getAcl ( )
     {
@@ -316,20 +316,6 @@ class Tests_App_Model_UserTest
         $this->assertInstanceOf('Zend_Acl', $result);
 
     } // END function test_getAcl
-
-    /**
-     * provide_getAcl()
-     *
-     * Provides data for the getAcl method of the
-     * App_Model_User class
-     */
-    public function provide_getAcl ( )
-    {
-        return array(
-            array(),
-        );
-
-    } // END function provide_getAcl
 
     /**
      * test_isAllowed()
