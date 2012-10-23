@@ -184,5 +184,35 @@ class App_Model_User
 
     } // END function getRole
 
+    /**
+     * edit()
+     *
+     * Local override of the edit method to ensure the password is saved
+     * as it's sha1 converted hash
+     *
+     */
+    public function edit ($values)
+    {
+        $values['passwd'] = hash('sha1', @$values['passwd']);
+
+        return parent::edit($values);
+
+    } // END function edit
+
+    /**
+     * create()
+     *
+     * Local override of the create method to ensure the password is saved
+     * as it's sha1 converted hash
+     *
+     */
+    public function create ($values)
+    {
+        $values['passwd'] = hash('sha1', @$values['passwd']);
+
+        return parent::create($values);
+
+    } // END function create
+
 }// END class App_Model_Users
 

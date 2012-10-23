@@ -117,17 +117,5 @@ class UsersController
 
     } // END function logoutAction
 
-    /**
-     * editAction()
-     *
-     * Edit the user
-     */
-    public function editAction ( )
-    {
-
-
-    } // END function editAction
-
-
 } // END class UsersController
 

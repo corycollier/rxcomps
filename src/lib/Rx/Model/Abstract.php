@@ -143,9 +143,8 @@ class Rx_Model_Abstract
         }
         $values = $form->getValues();
 
-        $this->getTable()->update(array_merge($values, array(
-            'id' => $this->id,
-        )));
+        $select = $dbTable->select();
+        $this->getTable()->update($values, $select->where('id = ?', $this->id));
 
         return $this;
 
@@ -190,9 +189,7 @@ class Rx_Model_Abstract
 
         $select = $dbTable->select();
 
-        $select->where('id = ?', $this->id);
-
-        $dbTable->delete($select);
+        $dbTable->delete($select->where('id = ?', $this->id));
 
     } // END function delete
 
