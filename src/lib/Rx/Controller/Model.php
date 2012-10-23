@@ -1,0 +1,103 @@
+<?php
+/**
+ * Model Controller
+ *
+ * This controller acts as the base controller definition for requests to modify
+ * or view model information
+ *
+ * @category    RxCompetition
+ * @package     Rx
+ * @subpackage  Controller
+ * @copyright   Copyright (c) 2012 RxCompetition.com, Inc (http://www.RxCompetition.com)
+ * @license     All Rights Reserved
+ * @version     Release: 1.0.0
+ * @since       File available since release 1.0.0
+ * @filesource
+ */
+
+/**
+ * Model Controller
+ *
+ * This controller acts as the base controller definition for requests to modify
+ * or view model information
+ *
+ * @category    RxCompetition
+ * @package     Rx
+ * @subpackage  Controller
+ * @copyright   Copyright (c) 2012 RxCompetition.com, Inc (http://www.RxCompetition.com)
+ * @license     All Rights Reserved
+ * @version     Release: 1.0.0
+ * @since       Class available since release 1.0.0
+ */
+
+class Rx_Controller_Model
+    extends Rx_Controller_Action
+{
+    /**
+     * Tell the developer that the _modelName property is required
+     */
+    const EXCEPTION_NO_MODEL_NAME_SPECIFIED
+        = 'Specify the _modelName attribute for this controller [%s]';
+
+    /**
+     * Message to indicate a successful creation of model data
+     */
+    const MSG_CREATE_SUCCESS = 'Successfully created a %s';
+
+    /**
+     * Message to indicate a successful creation of model data
+     */
+    const MSG_CREATE_FAILURE = 'Failure to create a %s';
+
+    /**
+     * Short-hand name of the model to associate with this controller
+     *
+     * @var string
+     */
+    protected $_modelName;
+
+    /**
+     * init()
+     *
+     * Local implementation of the init hook
+     */
+    public function init ( )
+    {
+        if (! $this->_modelName) {
+            throw new Rx_Controller_Exception(sprintf(
+                self::EXCEPTION_NO_MODEL_NAME_SPECIFIED, get_class($this)
+            ));
+        }
+
+    } // END function init
+
+    /**
+     * createAction()
+     *
+     * Action to allow the creation of model data
+     */
+    public function createAction ( )
+    {
+        $event = $this->getModel($this->_modelName);
+        $form = $event->getForm();
+        $request = $this->getRequest();
+        $flash = $this->getHelper('FlashMessenger');
+
+        if ($request->isPost()) {
+            try {
+                $event->create($request->getParams());
+                $flash->addMessage(sprintf(
+                    self::MSG_CREATE_SUCCESS, $this->_modelName
+                ), 'success');
+            } catch (Zend_Exception $exception) {
+                $flash->addMessage(sprintf(
+                    self::MSG_CREATE_FAILURE, $this->_modelName
+                ), 'error');
+            }
+        }
+
+        $this->view->form = $form;
+
+    } // END function createAction
+
+} // END class Rx_Controller_Model
