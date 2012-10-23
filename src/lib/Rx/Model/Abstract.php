@@ -104,6 +104,28 @@ class Rx_Model_Abstract
     } // END function getTable
 
     /**
+     * load()
+     *
+     * Loads the record by identity
+     */
+    public function load ($identity)
+    {
+        $dbTable = $this->getTable();
+        $select = $dbTable->select();
+        $form = $this->getForm();
+
+        $row = $dbTable->fetchRow($select->where('id = ?', $identity));
+
+        if ($row) {
+            $this->id = $identity;
+            $form->populate($row->toArray());
+        }
+
+        return $this;
+
+    } // END function load
+
+    /**
      * edit()
      *
      * Updates the existing item
@@ -147,7 +169,7 @@ class Rx_Model_Abstract
         }
         $values = $form->getValues();
 
-        $this->getTable()->insert($values);
+        $this->id = $this->getTable()->insert($values);
 
         return $this;
 

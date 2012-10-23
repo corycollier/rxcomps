@@ -50,6 +50,21 @@ class Rx_Controller_Model
     const MSG_CREATE_FAILURE = 'Failure to create a %s';
 
     /**
+     * Message to indicate a successful editing of model data
+     */
+    const MSG_EDIT_SUCCESS = 'Successfully edited a %s';
+
+    /**
+     * Message to indicate a successful editing of model data
+     */
+    const MSG_EDIT_FAILURE = 'Failure to edit a %s';
+
+    /**
+     * Message to indicate a failure to load the model by the given id
+     */
+    const MSG_LOAD_FAILURE = 'Failed to load the %s';
+
+    /**
      * Short-hand name of the model to associate with this controller
      *
      * @var string
@@ -78,17 +93,22 @@ class Rx_Controller_Model
      */
     public function createAction ( )
     {
-        $event = $this->getModel($this->_modelName);
-        $form = $event->getForm();
+        $model = $this->getModel($this->_modelName);
+        $form = $model->getForm();
         $request = $this->getRequest();
         $flash = $this->getHelper('FlashMessenger');
+        $redirector = $this->getHelper('Redirector');
 
         if ($request->isPost()) {
             try {
-                $event->create($request->getParams());
+                $model->create($request->getParams());
                 $flash->addMessage(sprintf(
                     self::MSG_CREATE_SUCCESS, $this->_modelName
                 ), 'success');
+                $redirector->gotoRoute(array(
+                    'action'    => 'view',
+                    'id'        => $model->id
+                ));
             } catch (Zend_Exception $exception) {
                 $flash->addMessage(sprintf(
                     self::MSG_CREATE_FAILURE, $this->_modelName
@@ -99,5 +119,78 @@ class Rx_Controller_Model
         $this->view->form = $form;
 
     } // END function createAction
+
+
+    /**
+     * editAction()
+     *
+     * Action to allow the editing of model data
+     */
+    public function editAction ( )
+    {
+        $model = $this->getModel($this->_modelName);
+        $form = $model->getForm();
+        $request = $this->getRequest();
+        $flash = $this->getHelper('FlashMessenger');
+        $redirector = $this->getHelper('Redirector');
+
+        $model->load($request->getParam('id'));
+        if (! $model->id) {
+            $flash->addMessage(sprintf(
+                self::MSG_LOAD_FAILURE, $this->_modelName
+            ), 'error');
+            $redirector->gotoRoute(array(
+                'module'        => $request->getModuleName(),
+                'controller'    => $request->getControllerName(),
+                'action'        => 'index',
+            ), 'default', true);
+        }
+
+        if ($request->isPost()) {
+            try {
+                $model->edit($request->getParams());
+                $flash->addMessage(sprintf(
+                    self::MSG_EDIT_SUCCESS, $this->_modelName
+                ), 'success');
+            } catch (Zend_Exception $exception) {
+                $flash->addMessage(sprintf(
+                    self::MSG_EDIT_FAILURE, $this->_modelName
+                ), 'error');
+            }
+        }
+
+        $this->view->form = $form;
+
+    } // END function editAction
+
+    /**
+     * viewAction()
+     *
+     * Action to view a single model record
+     *
+     */
+    public function viewAction ( )
+    {
+        $model = $this->getModel($this->_modelName);
+        $form = $model->getForm();
+        $request = $this->getRequest();
+        $flash = $this->getHelper('FlashMessenger');
+        $redirector = $this->getHelper('Redirector');
+
+        $model->load($request->getParam('id'));
+        if (! $model->id) {
+            $flash->addMessage(sprintf(
+                self::MSG_LOAD_FAILURE, $this->_modelName
+            ), 'error');
+            $redirector->gotoRoute(array(
+                'module'        => $request->getModuleName(),
+                'controller'    => $request->getControllerName(),
+                'action'        => 'index',
+            ), 'default', true);
+        }
+
+        $this->view->model = $model;
+
+    }
 
 } // END class Rx_Controller_Model
