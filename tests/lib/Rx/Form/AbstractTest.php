@@ -31,74 +31,49 @@
  */
 
 class Tests_Rx_Form_AbstractTest
-    extends Zend_Form
+    extends PHPUnit_Framework_TestCase
 {
     /**
      * test_getButtonSubForm()
      *
      * Tests the getButtonSubForm of the Rx_Form_Abstract
      *
-     * @covers          Rx_Form_Abstract::getButtonSubForm
-     * @dataProvider    provide_getButtonSubForm
+     * @covers Rx_Form_Abstract::getButtonSubForm
      */
     public function test_getButtonSubForm ( )
     {
         $form = $this->getMockBuilder('Rx_Form_Abstract')
+            ->setMethods(array('buildSubForm'))
             ->disableOriginalConstructor()
             ->getMock();
 
+        $subForm = new Zend_Form_SubForm;
+
+        $form->expects($this->once())
+            ->method('buildSubForm')
+            ->will($this->returnValue($subForm));
+
         $result = $form->getButtonSubForm();
 
-        $this->assertInstanceOf('Zend_Form', $result);
+        $this->assertSame($subForm, $result);
 
     } // END function test_getButtonSubForm
-
-    /**
-     * provide_getButtonSubForm()
-     *
-     * Provides data for the getButtonSubForm method of the
-     * Rx_Form_Abstract class
-     */
-    public function provide_getButtonSubForm ( )
-    {
-        return array(
-            array(),
-        );
-
-    } // END function provide_getButtonSubForm
 
     /**
      * test_buildSubForm()
      *
      * Tests the buildSubForm of the Rx_Form_Abstract
      *
-     * @covers          Rx_Form_Abstract::buildSubForm
-     * @dataProvider    provide_buildSubForm
+     * @covers Rx_Form_Abstract::buildSubForm
      */
     public function test_buildSubForm ( )
     {
-        $form = $this->getMockBuilder('Rx_Form_Abstract')
-            ->disableOriginalConstructor()
-            ->getMock();
+        $form = new Rx_Form_Abstract;
 
         $result = $form->buildSubForm();
 
         $this->assertInstanceOf('Zend_Form_SubForm', $result);
 
     } // END function test_buildSubForm
-
-    /**
-     * provide_buildSubForm()
-     *
-     * Provides data for the buildSubForm method of the
-     * Rx_Form_Abstract class
-     */
-    public function provide_buildSubForm ( )
-    {
-        return array(
-            array(),
-        );
-
-    } // END function provide_buildSubForm
 
 } // END class Rx_Form_Abstract

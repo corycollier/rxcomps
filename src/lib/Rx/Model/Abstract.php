@@ -143,8 +143,8 @@ class Rx_Model_Abstract
         }
 
         $values = $form->getValues();
-        $select = $dbTable->select();
-        $dbTable->update($values, $select->where('id = ?', $this->id));
+
+        $dbTable->update($values, sprintf('id = %d', $this->id));
 
         return $this;
 

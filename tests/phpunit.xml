@@ -1,11 +1,11 @@
 <phpunit bootstrap="../src/pub/index.php" colors="true">
-    <testsuite name="RxCompetition Test Suite">
-        <directory>./app</directory>
-    </testsuite>
-    <testsuite name="Library Test Suite">
-        <directory>./lib/Rx</directory>
-    </testsuite>
 
+<testsuite name="RxCompetition Test Suite">
+    <directory>./app</directory>
+</testsuite>
+<testsuite name="Library Test Suite">
+    <directory>./lib/Rx</directory>
+</testsuite>
 
 <filter>
     <whitelist>
@@ -30,4 +30,5 @@
     <log type="junit" target="../build/logs/phpunit.xml" logIncompleteSkipped="false"/>
     <log type="coverage-clover" target="../build/logs/clover.xml"/>
 </logging>
+
 </phpunit>

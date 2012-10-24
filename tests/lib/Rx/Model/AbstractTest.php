@@ -38,7 +38,7 @@ class Tests_Rx_Model_AbstractTest
      *
      * Tests the getForm of the Rx_Model_Abstract
      *
-     * @covers            Rx_Model_Abstract::getForm
+     * @covers          Rx_Model_Abstract::getForm
      * @dataProvider    provide_getForm
      */
     public function test_getForm ( )
@@ -343,17 +343,12 @@ class Tests_Rx_Model_AbstractTest
     public function test_edit ($isValid, $identity, $values, $exception = '')
     {
         $model = $this->getMockBuilder('Rx_Model_Abstract')
-            ->setMethods(array('getTable', 'getForm'))
+            ->setMethods(array('getTable', 'getForm', 'filterValues'))
             ->disableOriginalConstructor()
             ->getMock();
 
         $table = $this->getMockBuilder('Rx_Model_DbTable_Abstract')
             ->setMethods(array('update', 'select'))
-            ->disableOriginalConstructor()
-            ->getMock();
-
-        $select = $this->getMockBuilder('Rx_Model_DbTable_Abstract')
-            ->setMethods(array('where'))
             ->disableOriginalConstructor()
             ->getMock();
 
@@ -365,18 +360,9 @@ class Tests_Rx_Model_AbstractTest
         if ($exception) {
             $this->setExpectedException($exception);
         } else {
-            $select->expects($this->once())
-                ->method('where')
-                ->with($this->equalTo('id = ?'), $this->equalTo($identity))
-                ->will($this->returnSelf());
-
             $table->expects($this->once())
                 ->method('update')
-                ->with($this->equalto($values), $this->equalTo($select));
-
-            $table->expects($this->once())
-                ->method('select')
-                ->will($this->returnValue($select));
+                ->with($this->equalto($values), $this->equalTo(sprintf('id = %d', $identity)));
 
             $form->expects($this->once())
                 ->method('isValid')
