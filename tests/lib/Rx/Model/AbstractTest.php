@@ -34,6 +34,74 @@ class Tests_Rx_Model_AbstractTest
     extends PHPUnit_Framework_TestCase
 {
     /**
+     * test_getName()
+     *
+     * Tests the getName method of the Rx_Model_Abstract class
+     *
+     * @covers Rx_Model_Abstract::getName
+     */
+    public function test_getName ( )
+    {
+        $subject = new Rx_Model_Abstract;
+
+        $result = $subject->getName();
+
+        $this->assertEquals('Abstract', $result);
+
+    } // END function test_getName
+
+    /**
+     * test_getValue()
+     *
+     * Tests the getValue method of the Rx_Model_Abstract class
+     *
+     * @covers Rx_Model_Abstract::getValue
+     * @dataProvider provide_getValue
+     */
+    public function test_getValue ($expected, $name)
+    {
+        $model = $this->getMockBuilder('Rx_Model_Abstract')
+            ->setMethods(array('getForm'))
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $form = $this->getMockBuilder('Rx_Form_Abstract')
+            ->setMethods(array('getValue'))
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $form->expects($this->once())
+            ->method('getValue')
+            ->with($this->equalTo($name))
+            ->will($this->returnValue($expected));
+
+        $model->expects($this->once())
+            ->method('getForm')
+            ->will($this->returnValue($form));
+
+        $result = $model->getValue($name);
+
+        $this->assertEquals($expected, $result);
+
+    } // END function test_getValue
+
+    /**
+     * provide_getValue()
+     *
+     * Provides data to use for testing the getValue method of
+     * the Rx_Model_Abstract class
+     *
+     * @return array
+     */
+    public function provide_getValue ( )
+    {
+        return array(
+            array('expected value', 'name value'),
+        );
+
+    } // END function provide_getValue
+
+    /**
      * test_getForm()
      *
      * Tests the getForm of the Rx_Model_Abstract
@@ -281,26 +349,12 @@ class Tests_Rx_Model_AbstractTest
             ->disableOriginalConstructor()
             ->getMock();
 
-        $select = $this->getMockBuilder('Rx_Model_DbTable_Abstract')
-            ->setMethods(array('where'))
-            ->disableOriginalConstructor()
-            ->getMock();
-
         if ($exception) {
             $this->setExpectedException($exception);
         } else {
-            $select->expects($this->once())
-                ->method('where')
-                ->with($this->equalTo('id = ?'), $this->equalTo($identity))
-                ->will($this->returnSelf());
-
-            $table->expects($this->once())
-                ->method('select')
-                ->will($this->returnValue($select));
-
             $table->expects($this->once())
                 ->method('delete')
-                ->with($this->equalTo($select));
+                ->with($this->equalTo(sprintf('id = %d', $identity)));
 
             $model->expects($this->once())
                 ->method('getTable')
@@ -494,5 +548,81 @@ class Tests_Rx_Model_AbstractTest
         );
 
     } // END function provide_create
+
+    /**
+     * test_paginate()
+     *
+     * Tests the paginate method of the Rx_Model_Abstract class
+     *
+     * @covers Rx_Model_Abstract::paginate
+     * @dataProvider provide_paginate
+     */
+    public function test_paginate ($expected, $params = array())
+    {
+        $model = $this->getMockBuilder('Rx_Model_Abstract')
+            ->setMethods(array('getTable', 'getForm'))
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $table = $this->getMockBuilder('Rx_Model_DbTable_Abstract')
+            ->setMethods(array('getPaginationAdapter'))
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $paginator = $this->getMockBuilder('Zend_Paginator_Adapter_DbTableSelect')
+            ->setMethods(array('getItems'))
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $rowset = $this->getMockBuilder('Zend_Db_Table_Rowset_Abstract')
+            ->setMethods(array('toArray'))
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $rowset->expects($this->once())
+            ->method('toArray')
+            ->will($this->returnValue($expected));
+
+        $paginator->expects($this->once())
+            ->method('getItems')
+            // ->with
+            ->will($this->returnValue($rowset));
+
+        $table->expects($this->once())
+            ->method('getPaginationAdapter')
+            ->will($this->returnValue($paginator));
+
+        $model->expects($this->once())
+            ->method('getTable')
+            ->will($this->returnValue($table));
+
+        $result = $model->paginate($params);
+
+        $this->assertEquals($expected, $result);
+
+    } // END function test_paginate
+
+    /**
+     * provide_paginate()
+     *
+     * Provides data to use for testing the paginate method of
+     * the Rx_Model_Abstract class
+     *
+     * @return array
+     */
+    public function provide_paginate ( )
+    {
+        return array(
+            array(array(
+                array(
+                    'id' => 1,
+                ),
+                array(
+                    'id' => 2,
+                ),
+            )),
+        );
+
+    } // END function provide_paginate
 
 } // END class Tests_Rx_Model_AbstractTest

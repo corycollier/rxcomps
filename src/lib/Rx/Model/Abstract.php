@@ -251,7 +251,6 @@ class Rx_Model_Abstract
     public function paginate ($params)
     {
         $dbTable    = $this->getTable();
-        $select     = $dbTable->select();
         $paginator  = $dbTable->getPaginationAdapter();
 
         return $paginator->getItems(0, 20)->toArray();
