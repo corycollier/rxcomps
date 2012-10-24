@@ -136,15 +136,15 @@ class Rx_Model_Abstract
     public function edit ($values = array())
     {
         $dbTable = $this->getTable();
-
         $form = $this->getForm();
+
         if (! $form->isValid($values)) {
             throw new Rx_Model_Exception(self::EXCEPTION_INVALID_DATA);
         }
-        $values = $form->getValues();
 
+        $values = $form->getValues();
         $select = $dbTable->select();
-        $this->getTable()->update($values, $select->where('id = ?', $this->id));
+        $dbTable->update($values, $select->where('id = ?', $this->id));
 
         return $this;
 
@@ -161,14 +161,14 @@ class Rx_Model_Abstract
     public function create ($values = array())
     {
         $dbTable = $this->getTable();
-
         $form = $this->getForm();
+
         if (! $form->isValid($values)) {
             throw new Rx_Model_Exception(self::EXCEPTION_INVALID_DATA);
         }
-        $values = $form->getValues();
 
-        $this->id = $this->getTable()->insert($values);
+        $values = $form->getValues();
+        $this->id = $dbTable->insert($values);
 
         return $this;
 

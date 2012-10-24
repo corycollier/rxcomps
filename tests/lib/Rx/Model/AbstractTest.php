@@ -111,18 +111,6 @@ class Tests_Rx_Model_AbstractTest
     } // END function provide_getTable
 
     /**
-    public function filterValues ($values = array())
-    {
-        $info = $this->getTable()->info();
-
-        $columns = array_flip($info['cols']);
-
-        return array_intersect_key($values, $columns);
-
-    } // END function filterValues
-    */
-
-    /**
      * test_filterValues()
      *
      * Tests the filterValues method of the Rx_Model_Abstract class
@@ -182,5 +170,343 @@ class Tests_Rx_Model_AbstractTest
         );
 
     } // END function provide_filterValues
+
+    /**
+     * test_load()
+     *
+     * Tests the load method of the Rx_Model_Abstract class
+     *
+     * @covers Rx_Model_Abstract::load
+     * @dataProvider provide_load
+     */
+    public function test_load ($row, $identity, $formValues = array())
+    {
+        $model = $this->getMockBuilder('Rx_Model_Abstract')
+            ->setMethods(array('getTable', 'getForm'))
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $table = $this->getMockBuilder('Rx_Model_DbTable_Abstract')
+            ->setMethods(array('select', 'fetchRow'))
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $select = $this->getMockBuilder('Rx_Model_DbTable_Abstract')
+            ->setMethods(array('where', 'fetchRow'))
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $form = $this->getMockBuilder('Rx_Form_Abstract')
+            ->setMethods(array('populate'))
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        if ($row) {
+            $row->expects($this->once())
+                ->method('toArray')
+                ->will($this->returnValue($formValues));
+
+            $form->expects($this->once())
+                ->method('populate')
+                ->with($this->equalTo($formValues));
+        }
+
+        $select->expects($this->once())
+            ->method('where')
+            ->with($this->equalTo('id = ?'), $this->equalTo($identity))
+            ->will($this->returnSelf());
+
+        $table->expects($this->once())
+            ->method('fetchRow')
+            ->with($this->equalTo($select))
+            ->will($this->returnValue($row));
+
+        $table->expects($this->once())
+            ->method('select')
+            ->will($this->returnValue($select));
+
+        $model->expects($this->once())
+            ->method('getTable')
+            ->will($this->returnValue($table));
+
+        $model->expects($this->once())
+            ->method('getForm')
+            ->will($this->returnValue($form));
+
+        $result = $model->load($identity);
+
+        $this->assertSame($model, $result);
+
+    } // END function test_load
+
+    /**
+     * provide_load()
+     *
+     * Provides data to use for testing the load method of
+     * the Rx_Model_Abstract class
+     *
+     * @return array
+     */
+    public function provide_load ( )
+    {
+        $row = $this->getMockBuilder('Zend_Db_Table_Row')
+            ->setMethods(array('toArray'))
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        return array(
+            array(null, 1),
+            array($row, 1),
+        );
+
+    } // END function provide_load
+
+    /**
+     * test_delete()
+     *
+     * Tests the delete method of the Rx_Model_Abstract class
+     *
+     * @covers Rx_Model_Abstract::delete
+     * @dataProvider provide_delete
+     */
+    public function test_delete ($identity, $exception = '')
+    {
+        $model = $this->getMockBuilder('Rx_Model_Abstract')
+            ->setMethods(array('getTable'))
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $table = $this->getMockBuilder('Rx_Model_DbTable_Abstract')
+            ->setMethods(array('select', 'delete'))
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $select = $this->getMockBuilder('Rx_Model_DbTable_Abstract')
+            ->setMethods(array('where'))
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        if ($exception) {
+            $this->setExpectedException($exception);
+        } else {
+            $select->expects($this->once())
+                ->method('where')
+                ->with($this->equalTo('id = ?'), $this->equalTo($identity))
+                ->will($this->returnSelf());
+
+            $table->expects($this->once())
+                ->method('select')
+                ->will($this->returnValue($select));
+
+            $table->expects($this->once())
+                ->method('delete')
+                ->with($this->equalTo($select));
+
+            $model->expects($this->once())
+                ->method('getTable')
+                ->will($this->returnValue($table));
+        }
+
+        $model->id = $identity;
+
+        $model->delete($identity);
+
+    } // END function test_delete
+
+    /**
+     * provide_delete()
+     *
+     * Provides data to use for testing the delete method of
+     * the Rx_Model_Abstract class
+     *
+     * @return array
+     */
+    public function provide_delete ( )
+    {
+        return array(
+            array(1),
+            array(null, 'Rx_Model_Exception'),
+            array(0, 'Rx_Model_Exception'),
+            array(false, 'Rx_Model_Exception'),
+        );
+
+    } // END function provide_delete
+
+    /**
+     * test_edit()
+     *
+     * Tests the edit method of the Rx_Model_Abstract class
+     *
+     * @covers Rx_Model_Abstract::edit
+     * @dataProvider provide_edit
+     */
+    public function test_edit ($isValid, $identity, $values, $exception = '')
+    {
+        $model = $this->getMockBuilder('Rx_Model_Abstract')
+            ->setMethods(array('getTable', 'getForm'))
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $table = $this->getMockBuilder('Rx_Model_DbTable_Abstract')
+            ->setMethods(array('update', 'select'))
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $select = $this->getMockBuilder('Rx_Model_DbTable_Abstract')
+            ->setMethods(array('where'))
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $form = $this->getMockBuilder('Rx_Form_Abstract')
+            ->setMethods(array('isValid', 'getValues'))
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        if ($exception) {
+            $this->setExpectedException($exception);
+        } else {
+            $select->expects($this->once())
+                ->method('where')
+                ->with($this->equalTo('id = ?'), $this->equalTo($identity))
+                ->will($this->returnSelf());
+
+            $table->expects($this->once())
+                ->method('update')
+                ->with($this->equalto($values), $this->equalTo($select));
+
+            $table->expects($this->once())
+                ->method('select')
+                ->will($this->returnValue($select));
+
+            $form->expects($this->once())
+                ->method('isValid')
+                ->with($this->equalTo($values))
+                ->will($this->returnValue($isValid));
+
+            $form->expects($this->once())
+                ->method('getValues')
+                ->will($this->returnValue($values));
+        }
+
+        $model->expects($this->once())
+            ->method('getForm')
+            ->will($this->returnValue($form));
+
+        $model->expects($this->once())
+            ->method('getTable')
+            ->will($this->returnValue($table));
+
+        $model->id = $identity;
+
+        $result = $model->edit($values);
+
+        $this->assertSame($model, $result);
+
+    } // END function test_edit
+
+    /**
+     * provide_edit()
+     *
+     * Provides data to use for testing the edit method of
+     * the Rx_Model_Abstract class
+     *
+     * @return array
+     */
+    public function provide_edit ( )
+    {
+        // $isValid, $identity, $values, $exception = ''
+        return array(
+            'simple test' => array(true, 1, array(
+                'name' => 'value',
+            )),
+
+            'invalid form, expect exception' => array(false, 1, array(
+                'name' => 'value',
+            ), 'Rx_Model_Exception'),
+        );
+
+    } // END function provide_edit
+
+    /**
+     * test_create()
+     *
+     * Tests the create method of the Rx_Model_Abstract class
+     *
+     * @covers Rx_Model_Abstract::create
+     * @dataProvider provide_create
+     */
+    public function test_create ($isValid, $identity, $values, $exception = '')
+    {
+        $model = $this->getMockBuilder('Rx_Model_Abstract')
+            ->setMethods(array('getTable', 'getForm'))
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $table = $this->getMockBuilder('Rx_Model_DbTable_Abstract')
+            ->setMethods(array('insert'))
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $form = $this->getMockBuilder('Rx_Form_Abstract')
+            ->setMethods(array('isValid', 'getValues'))
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        if ($exception) {
+            $this->setExpectedException($exception);
+        } else {
+            $table->expects($this->once())
+                ->method('insert')
+                ->with($this->equalto($values))
+                ->will($this->returnValue($identity));
+
+            $form->expects($this->once())
+                ->method('isValid')
+                ->with($this->equalTo($values))
+                ->will($this->returnValue($isValid));
+
+            $form->expects($this->once())
+                ->method('getValues')
+                ->will($this->returnValue($values));
+        }
+
+        $model->expects($this->once())
+            ->method('getForm')
+            ->will($this->returnValue($form));
+
+        $model->expects($this->once())
+            ->method('getTable')
+            ->will($this->returnValue($table));
+
+        $result = $model->create($values);
+
+        $this->assertSame($model, $result);
+
+        $this->assertEquals($identity, $model->id);
+
+    } // END function test_create
+
+    /**
+     * provide_create()
+     *
+     * Provides data to use for testing the create method of
+     * the Rx_Model_Abstract class
+     *
+     * @return array
+     */
+    public function provide_create ( )
+    {
+        // $isValid, $values, $exception = ''
+        return array(
+            'simple test' => array(true, 1, array(
+                'name' => 'value',
+            )),
+
+            'invalid form, expect exception' => array(false, 1, array(
+                'name' => 'value',
+            ), 'Rx_Model_Exception'),
+        );
+
+    } // END function provide_create
 
 } // END class Tests_Rx_Model_AbstractTest
