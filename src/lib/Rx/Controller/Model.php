@@ -65,6 +65,11 @@ class Rx_Controller_Model
     const MSG_LOAD_FAILURE = 'Failed to load the %s';
 
     /**
+     * Message to indicate a successful deletion of model data
+     */
+    const MSG_DELETE_SUCCESS = 'Sucessfully deleted a %s';
+
+    /**
      * Short-hand name of the model to associate with this controller
      *
      * @var string
@@ -153,6 +158,7 @@ class Rx_Controller_Model
                     self::MSG_EDIT_SUCCESS, $this->_modelName
                 ), 'success');
             } catch (Zend_Exception $exception) {
+                var_dump($exception); die;
                 $flash->addMessage(sprintf(
                     self::MSG_EDIT_FAILURE, $this->_modelName
                 ), 'error');
@@ -191,6 +197,36 @@ class Rx_Controller_Model
 
         $this->view->model = $model;
 
-    }
+    } // END function viewAction
+
+    /**
+     * deleteAction()
+     *
+     * Allows the destruction of model data
+     */
+    public function deleteAction ( )
+    {
+        $model = $this->getModel($this->_modelName);
+        $request = $this->getRequest();
+        $flash = $this->getHelper('FlashMessenger');
+        $redirector = $this->getHelper('Redirector');
+
+        $model->load($request->getParam('id'));
+
+        if ($request->isPost()) {
+            $model->delete();
+            $flash->addMessage(sprintf(
+                self::MSG_DELETE_SUCCESS, $this->_modelName
+            ), 'success');
+            $redirector->gotoRoute(array(
+                'module'        => $request->getModuleName(),
+                'controller'    => $request->getControllerName(),
+                'action'        => 'index',
+            ), 'default', true);
+        }
+
+        $this->view->model = $model;
+
+    } // END function deleteAction
 
 } // END class Rx_Controller_Model
