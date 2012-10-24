@@ -214,19 +214,38 @@ class Rx_Controller_Model
         $model->load($request->getParam('id'));
 
         if ($request->isPost()) {
-            $model->delete();
-            $flash->addMessage(sprintf(
-                self::MSG_DELETE_SUCCESS, $this->_modelName
-            ), 'success');
-            $redirector->gotoRoute(array(
-                'module'        => $request->getModuleName(),
-                'controller'    => $request->getControllerName(),
-                'action'        => 'index',
-            ), 'default', true);
+            try {
+                $model->delete();
+                $flash->addMessage(sprintf(
+                    self::MSG_DELETE_SUCCESS, $this->_modelName
+                ), 'success');
+                $redirector->gotoRoute(array(
+                    'module'        => $request->getModuleName(),
+                    'controller'    => $request->getControllerName(),
+                    'action'        => 'index',
+                ), 'default', true);
+            } catch (Zend_Exception $exception) {
+                var_dump($exception); die;
+            }
         }
 
         $this->view->model = $model;
+        $this->view->form = new Rx_Form_Confirmation;
 
     } // END function deleteAction
+
+    /**
+     * listAction()
+     *
+     * List all of the model data, paginated, of course
+     */
+    public function listAction ( )
+    {
+        $model = $this->getModel($this->_modelName);
+        $request = $this->getRequest();
+
+        $this->view->items = $model->paginate($request->getParams());
+
+    } // END function listAction
 
 } // END class Rx_Controller_Model

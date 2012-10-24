@@ -62,6 +62,37 @@ class Rx_Model_Abstract
     public $id;
 
     /**
+     * getName()
+     *
+     * gets the short-hand name of the model
+     *
+     * @return string
+     */
+    public function getName ( )
+    {
+        $classNameParts = explode('_', get_class($this));
+
+        return end($classNameParts);
+
+    } // END function getName
+
+    /**
+     * getValue()
+     *
+     * Gets the value from the internal form, for a given property name
+     *
+     * @param string $name
+     * @return string
+     */
+    public function getValue ($name)
+    {
+        $form = $this->getForm();
+
+        return $form->getValue($name);
+
+    } // END function getValue
+
+    /**
      * getForm()
      *
      * Gets the form, which is loosely tied to this model
@@ -186,10 +217,9 @@ class Rx_Model_Abstract
         }
 
         $dbTable = $this->getTable();
-
         $select = $dbTable->select();
 
-        $dbTable->delete($select->where('id = ?', $this->id));
+        $dbTable->delete(sprintf('id = %d', $this->id));
 
     } // END function delete
 
@@ -205,11 +235,27 @@ class Rx_Model_Abstract
     public function filterValues ($values = array())
     {
         $info = $this->getTable()->info();
-
         $columns = array_flip($info['cols']);
 
         return array_intersect_key($values, $columns);
 
     } // END function filterValues
+
+    /**
+     * paginate()
+     *
+     * get a paginated set of data
+     *
+     * @return array
+     */
+    public function paginate ($params)
+    {
+        $dbTable    = $this->getTable();
+        $select     = $dbTable->select();
+        $paginator  = $dbTable->getPaginationAdapter();
+
+        return $paginator->getItems(0, 20)->toArray();
+
+    } // END function paginate
 
 } // END class Rx_Model_Abstract
