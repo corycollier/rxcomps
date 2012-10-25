@@ -72,7 +72,6 @@ class App_Form_Competition
             'label'         => 'Event',
             'placeholder'   => 'Select Event',
             'required'      => true,
-
         ));
 
     }

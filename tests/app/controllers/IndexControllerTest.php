@@ -60,7 +60,7 @@ class IndexControllerTest
     {
         $params = array(
             'action'    => 'index',
-            'controller' => 'index',
+            'controller'=> 'index',
             'module'    => 'default'
         );
 
