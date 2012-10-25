@@ -43,7 +43,6 @@ class App_Form_User
     		'placeholder'	=> 'Enter email',
     		'required'		=> true,
             'filters'    	=> array('StringTrim', 'StringToLower'),
-
 		));
 
     	$this->addElement('password', 'passwd', array(
