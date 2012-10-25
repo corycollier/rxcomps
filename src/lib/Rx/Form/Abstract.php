@@ -82,4 +82,17 @@ class Rx_Form_Abstract
 
     } // END function buildSubForm
 
+    /**
+     * injectDependencies()
+     *
+     * Inject all of a model's dependencies into this form
+     *
+     * @var Rx_Model_Abstract $model
+     * @return Rx_Form_Abstract $this for a fluent interface
+     */
+    public function injectDependencies ($model)
+    {
+
+    } // END function injectDependencies
+
 } // END class Rx_Form_Abstract

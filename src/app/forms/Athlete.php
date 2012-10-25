@@ -51,7 +51,7 @@ class App_Form_Athlete
             'filters'       => array('StringTrim'),
         ));
 
-        $this->addElement('select', 'event', array(
+        $this->addElement('select', 'event_id', array(
             'label'         => 'Event',
             'placeholder'   => 'Select Event',
             'required'      => true,
@@ -79,5 +79,25 @@ class App_Form_Athlete
         ));
 
     } // END function init
+
+    /**
+     * injectDependencies()
+     *
+     * Inject all of a model's dependencies into this form
+     *
+     * @var Rx_Model_Abstract $model
+     * @return Rx_Form_Abstract $this for a fluent interface
+     */
+    public function injectDependencies ($model)
+    {
+        $events = $model->getParent('Event')->getTable()->fetchAll();
+
+        $element = $this->getElement('event_id');
+
+        foreach ($events as $event) {
+            $element->addMultiOption($event->id, $event->name);
+        }
+
+    } // END function injectDependencies
 
 } // END class App_Form_Athlete

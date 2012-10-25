@@ -47,7 +47,7 @@ class Tests_App_Form_Competition
         $name = $form->getElement('name');
         $description = $form->getElement('description');
         $goal = $form->getElement('goal');
-        $event = $form->getElement('event');
+        $event = $form->getElement('event_id');
         $save = $form->getElement('save');
 
         $this->assertInstanceOf('Zend_Form_Element_Text', $name);

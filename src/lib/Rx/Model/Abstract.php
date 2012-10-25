@@ -277,11 +277,12 @@ class Rx_Model_Abstract
     {
         $fullTableName = sprintf('App_Model_DbTable_%s', $shortName);
         $fullModelName = sprintf('App_Model_%s', $shortName);
-
-        $parentRow = $this->row->findParentRow($fullTableName);
-
         $model = new $fullModelName;
-        $model->fromRow($parentRow);
+
+        if ($this->row) {
+            $parentRow = $this->row->findParentRow($fullTableName);
+            $model->fromRow($parentRow);
+        }
 
         return $model;
 

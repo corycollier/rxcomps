@@ -45,7 +45,7 @@ class Tests_App_Form_Athlete
         $form = new App_Form_Athlete;
 
         $name = $form->getElement('name');
-        $event = $form->getElement('event');
+        $event = $form->getElement('event_id');
         $save = $form->getElement('save');
 
         $this->assertInstanceOf('Zend_Form_Element_Text', $name);
