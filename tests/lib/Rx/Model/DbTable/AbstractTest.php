@@ -10,8 +10,8 @@
  * @subpackage  Rx_Model_DbTable
  * @copyright   Copyright (c) 2012 RxCompetition, Inc (http://www.rxcompetition.com)
  * @license     All Rights Reserved
- * @version     Release: 2.0.6
- * @since       File available since release 2.0.6
+ * @version     Release: 1.0.0
+ * @since       File available since release 1.0.0
  * @filesource
  */
 
@@ -26,45 +26,39 @@
  * @subpackage  Rx_Model_DbTable
  * @copyright   Copyright (c) 2012 RxCompetition, Inc (http://www.rxcompetition.com)
  * @license     All Rights Reserved
- * @version     Release: 2.0.6
- * @since       Class available since release 2.0.6
+ * @version     Release: 1.0.0
+ * @since       Class available since release 1.0.0
  */
 
 class Tests_Rx_Model_DbTable_Abstract
     extends PHPUnit_Framework_TestCase
 {
     /**
-     * test_unitTestCheck()
+     * test_getPaginationAdapter()
      *
-     * Tests the unitTestCheck of the Rx_Model_DbTable_Abstract
+     * Tests the getPaginationAdapter method of the Rx_Model_DbTable_Abstract class
      *
-     * @covers          Rx_Model_DbTable_Abstract::unitTestCheck
-     * @dataProvider    provide_unitTestCheck
+     * @covers Rx_Model_DbTable_Abstract::getPaginationAdapter
      */
-    public function test_unitTestCheck ($expected)
+    public function test_getPaginationAdapter ( )
     {
         $subject = $this->getMockBuilder('Rx_Model_DbTable_Abstract')
+            ->setMethods(array('select'))
             ->disableOriginalConstructor()
-            ->getMockForAbstractClass();
+            ->getMock();
 
-        $result = $subject->unitTestCheck();
+        $select = $this->getMockBuilder('Zend_Db_Table_Select')
+            ->disableOriginalConstructor()
+            ->getMock();
 
-        $this->assertEquals($expected, $result);
+        $subject->expects($this->once())
+            ->method('select')
+            ->will($this->returnValue($select));
 
-    } // END function test_unitTestCheck
+        $result = $subject->getPaginationAdapter();
 
-    /**
-     * provide_unitTestCheck()
-     *
-     * Provides data for the unitTestCheck method of the
-     * Rx_Model_DbTable_Abstract class
-     */
-    public function provide_unitTestCheck ( )
-    {
-        return array(
-            array('unit test check'),
-        );
+        $this->assertInstanceOf('Zend_Paginator_Adapter_DbTableSelect', $result);
 
-    } // END function provide_unitTestCheck
+    } // END function test_getPaginationAdapter
 
 } // END class Tests_2Tests_Rx_Model_DbTable_Abstract

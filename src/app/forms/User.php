@@ -38,6 +38,10 @@ class App_Form_User
      */
     public function init ( )
     {
+        $this->addElement('hidden', 'id', array(
+            'ignore'        => true,
+        ));
+
     	$this->addElement('text', 'email', array(
     		'label' 		=> 'Email',
     		'placeholder'	=> 'Enter email',

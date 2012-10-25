@@ -270,6 +270,11 @@ class Tests_Rx_Model_AbstractTest
             ->getMock();
 
         if ($row) {
+            $row = $this->getMockBuilder('Zend_Db_Table_Row')
+                ->setMethods(array('toArray'))
+                ->disableOriginalConstructor()
+                ->getMock();
+
             $row->expects($this->once())
                 ->method('toArray')
                 ->will($this->returnValue($formValues));
@@ -323,8 +328,8 @@ class Tests_Rx_Model_AbstractTest
             ->getMock();
 
         return array(
-            array(null, 1),
-            array($row, 1),
+            array(false, 1),
+            array(true, 1),
         );
 
     } // END function provide_load

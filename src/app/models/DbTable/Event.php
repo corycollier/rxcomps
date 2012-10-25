@@ -38,4 +38,9 @@ class App_Model_DbTable_Event
      */
     protected $_name = 'events';
 
+    protected $_dependentTables = array(
+        'App_Model_DbTable_Competition',
+        'App_Model_DbTable_Athlete',
+    );
+
 } // END class App_Model_DbTable_Events

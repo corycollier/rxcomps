@@ -33,27 +33,12 @@
 class Rx_Model_DbTable_Abstract
     extends Zend_Db_Table_Abstract
 {
-
     /**
      * single instance of the paginator per table
      *
      * @var Zend_Paginator_Adapter_DbTableSelect
      */
     protected $_paginator;
-
-    /**
-     * unitTestCheck()
-     *
-     * Because XDebug doesn't provide code coverage metrics for classes that are
-     * empty, we provide a simple method to allow verification that the class
-     * is, in fact, code covered
-     *
-     * @return string
-     */
-    public function unitTestCheck ( )
-    {
-        return 'unit test check';
-    }
 
     /**
      * getPaginationAdapter()

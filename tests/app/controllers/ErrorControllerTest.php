@@ -57,11 +57,11 @@ class ErrorControllerTest
      *
      * @covers ErrorController::errorAction
      */
-    public function test_indexAction ( )
+    public function test_errorAction ( )
     {
         $params = array(
             'action'    => 'error',
-            'controller' => 'error',
+            'controller'=> 'error',
             'module'    => 'default'
         );
 
@@ -87,7 +87,7 @@ class ErrorControllerTest
     {
         $params = array(
             'action'    => 'denied',
-            'controller' => 'error',
+            'controller'=> 'error',
             'module'    => 'default'
         );
 

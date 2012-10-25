@@ -31,7 +31,6 @@
 class App_Model_Competition
     extends Rx_Model_Abstract
 {
-
     /**
      * create()
      *

@@ -38,16 +38,9 @@ class App_Form_Competition
      */
     public function init ( )
     {
-        /**
-          `id` INT NOT NULL AUTO_INCREMENT ,
-          `name` VARCHAR(255) NOT NULL ,
-          `description` TEXT NULL ,
-          `date` TIMESTAMP NOT NULL DEFAULT 0 ,
-          `created` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP() ,
-          `updated` TIMESTAMP NOT NULL DEFAULT 0 ,
-          `event_id` INT NOT NULL ,
-          `goal` ENUM('time', 'amrap', 'max') NOT NULL DEFAULT 'time' ,
-        */
+        $this->addElement('hidden', 'id', array(
+            'ignore'        => true,
+        ));
 
         $this->addElement('select', 'goal', array(
             'label'         => 'Goal',

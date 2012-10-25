@@ -55,6 +55,13 @@ class Rx_Model_Abstract
     protected $_table;
 
     /**
+     * holds a row object, which contains the currently loaded record
+     *
+     * @var Zend_Db_Table_Row
+     */
+    public $row;
+
+    /**
      * Stores the id of the model
      *
      * @var integer
@@ -149,6 +156,7 @@ class Rx_Model_Abstract
 
         if ($row) {
             $this->id = $identity;
+            $this->row = $row;
             $form->populate($row->toArray());
         }
 
@@ -256,5 +264,69 @@ class Rx_Model_Abstract
         return $paginator->getItems(0, 20)->toArray();
 
     } // END function paginate
+
+    /**
+     * getParent()
+     *
+     * Shortens up the ability to get parent rows for a given row
+     *
+     * @param string $shortName
+     * @return Zend_Db_Table_Row
+     */
+    public function getParent ($shortName)
+    {
+        $fullTableName = sprintf('App_Model_DbTable_%s', $shortName);
+        $fullModelName = sprintf('App_Model_%s', $shortName);
+
+        $parentRow = $this->row->findParentRow($fullTableName);
+
+        $model = new $fullModelName;
+        $model->fromRow($parentRow);
+
+        return $model;
+
+    } // END function getParent
+
+    /**
+     * getChildren()
+     *
+     * Gets the child models of this one
+     *
+     * @return ArrayObject
+     */
+    public function getChildren ($shortName)
+    {
+        $result = new ArrayObject;
+
+        $fullTableName = sprintf('App_Model_DbTable_%s', $shortName);
+        $fullModelName = sprintf('App_Model_%s', $shortName);
+
+        $rowset = $this->row->findDependentRowset($fullTableName);
+
+        foreach ($rowset as $row) {
+            $model = new $fullModelName;
+            $model->fromRow($row);
+            $result[] = $model;
+        }
+
+        return $result;
+
+    } // END function getChildren
+
+    /**
+     * fromRow()
+     *
+     * Populates a model from a row object
+     *
+     * @param Zend_Db_Table_Row
+     * @return Rx_Model_Abstract $this for object chaining
+     */
+    public function fromRow ($row)
+    {
+        $this->row = $row;
+        $this->getForm()->populate($row->toArray());
+        $this->id = $row->id;
+
+    } // END function fromRow
 
 } // END class Rx_Model_Abstract

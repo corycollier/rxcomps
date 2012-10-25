@@ -14,4 +14,19 @@
  */
 ?>
 
-<?php var_dump($this->model); ?>
+<h2><?php echo $this->model->getValue('name'); ?></h2>
+
+<p><?php echo $this->model->getValue('description'); ?></p>
+
+<ol>
+    <?php foreach ($this->model->getChildren('Competition') as $competition) : ?>
+
+        <li><?php echo $this->htmlAnchor($competition->getValue('name'), array(
+            'module'    => 'default',
+            'controller'=> 'competitions',
+            'action'    => 'view',
+            'id'        => $competition->getValue('id'),
+        )); ?></li>
+
+    <?php endforeach; ?>
+</ol>

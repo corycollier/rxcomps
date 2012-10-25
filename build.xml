@@ -124,7 +124,7 @@
     </target>
 
     <target name="phpunit" description="Run unit tests with PHPUnit">
-        <exec dir="tests" executable="phpunit" failonerror="true"/>
+        <exec dir="tests" executable="phpunit" failonerror="true" />
     </target>
 
     <target name="phpcb" description="Aggregate tool output with PHP_CodeBrowser">

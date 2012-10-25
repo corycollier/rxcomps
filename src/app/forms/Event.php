@@ -40,6 +40,10 @@ class App_Form_Event
      */
     public function init ( )
     {
+        $this->addElement('hidden', 'id', array(
+            'ignore'        => true,
+        ));
+
         $this->addElement('text', 'name', array(
             'label'         => 'Name',
             'placeholder'   => 'Enter name',
