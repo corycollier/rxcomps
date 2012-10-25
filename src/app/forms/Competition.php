@@ -74,6 +74,11 @@ class App_Form_Competition
             'required'      => true,
         ));
 
+        $this->addElement('submit', 'save', array(
+            'label'         => 'Save',
+            'ignore'        => true,
+        ));
+
     }
 
 } // END class App_Form_Competition
