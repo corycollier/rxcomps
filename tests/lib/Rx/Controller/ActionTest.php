@@ -221,4 +221,30 @@ class Tests_Rx_Controller_ActionTest
 
     } // END function provide_getLog
 
+
+    /**
+     * test_getModel()
+     *
+     * Tests the postDispatch method of the Rx_Controller_Action
+     *
+     * @covers Rx_Controller_Action::postDispatch
+     */
+    public function test_postDispatch ( )
+    {
+        $controller = new Rx_Controller_Action(
+            new Zend_Controller_Request_HttpTestCase,
+            new Zend_Controller_Response_HttpTestCase
+        );
+
+        $controller->view = new Zend_View;
+
+        $controller->postDispatch();
+
+        $this->assertInstanceOf(
+            'Zend_Controller_Action_Helper_FlashMessenger',
+            $controller->view->flashMessenger
+        );
+
+    } // END function test_getModel
+
 } // END class Tests_Rx_Controller_Action
