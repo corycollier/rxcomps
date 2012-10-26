@@ -748,4 +748,71 @@ class Tests_Rx_Model_AbstractTest
 
     } // END function test_delete
 
+    /**
+     * test_fromRow()
+     *
+     * Tests the fromRow method of the Rx_Model_Abstract class
+     *
+     * @covers Rx_Model_Abstract::fromRow
+     * @dataProvider provide_fromRow
+     */
+    public function test_fromRow ($id, $array = array())
+    {
+        $subject = $this->getMockBuilder('Rx_Model_Abstract')
+            ->setMethods(array('getForm'))
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $row = $this->getMockBuilder('Zend_Db_Table_Row')
+            ->setMethods(array('toArray', '__get'))
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $form = $this->getMockBuilder('Rx_Form_Abstract')
+            ->setMethods(array('populate'))
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $row->expects($this->once())
+            ->method('toArray')
+            ->will($this->returnValue($array));
+
+        $row->expects($this->once())
+            ->method('__get')
+            ->with($this->equalTo('id'))
+            ->will($this->returnValue($id));
+
+        $form->expects($this->once())
+            ->method('populate')
+            ->with($this->equalTo($array));
+
+        $subject->expects($this->once())
+            ->method('getForm')
+            ->will($this->returnValue($form));
+
+        $subject->fromRow($row);
+
+        $this->assertSame($row, $subject->row);
+        $this->assertSame($id, $subject->id);
+
+    } // END function test_fromRow
+
+    /**
+     * provide_fromRow()
+     *
+     * Provides data to use for testing the fromRow method of
+     * the Rx_Model_Abstract class
+     *
+     * @return array
+     */
+    public function provide_fromRow ( )
+    {
+        return array(
+            'simple test' => array(1, array(
+
+            )),
+        );
+
+    } // END function provide_fromRow
+
 } // END class Tests_Rx_Model_AbstractTest
