@@ -335,14 +335,14 @@ class Tests_Rx_Model_AbstractTest
     } // END function provide_load
 
     /**
-     * test_delete()
+     * test__delete()
      *
      * Tests the delete method of the Rx_Model_Abstract class
      *
-     * @covers Rx_Model_Abstract::delete
-     * @dataProvider provide_delete
+     * @covers Rx_Model_Abstract::_delete
+     * @dataProvider provide__delete
      */
-    public function test_delete ($identity, $exception = '')
+    public function test__delete ($identity, $exception = '')
     {
         $model = $this->getMockBuilder('Rx_Model_Abstract')
             ->setMethods(array('getTable'))
@@ -368,19 +368,21 @@ class Tests_Rx_Model_AbstractTest
 
         $model->id = $identity;
 
-        $model->delete($identity);
+        $method = new ReflectionMethod('Rx_Model_Abstract', '_delete');
+        $method->setAccessible(true);
+        $method->invoke($model, $identity);
 
-    } // END function test_delete
+    } // END function test__delete
 
     /**
-     * provide_delete()
+     * provide__delete()
      *
-     * Provides data to use for testing the delete method of
+     * Provides data to use for testing the _delete method of
      * the Rx_Model_Abstract class
      *
      * @return array
      */
-    public function provide_delete ( )
+    public function provide__delete ( )
     {
         return array(
             array(1),
@@ -389,17 +391,17 @@ class Tests_Rx_Model_AbstractTest
             array(false, 'Rx_Model_Exception'),
         );
 
-    } // END function provide_delete
+    } // END function provide__delete
 
     /**
-     * test_edit()
+     * test__edit()
      *
      * Tests the edit method of the Rx_Model_Abstract class
      *
-     * @covers Rx_Model_Abstract::edit
-     * @dataProvider provide_edit
+     * @covers Rx_Model_Abstract::_edit
+     * @dataProvider provide__edit
      */
-    public function test_edit ($isValid, $identity, $values, $exception = '')
+    public function test__edit ($isValid, $identity, $values, $exception = '')
     {
         $model = $this->getMockBuilder('Rx_Model_Abstract')
             ->setMethods(array('getTable', 'getForm', 'filterValues'))
@@ -443,21 +445,23 @@ class Tests_Rx_Model_AbstractTest
 
         $model->id = $identity;
 
-        $result = $model->edit($values);
+        $method = new ReflectionMethod('Rx_Model_Abstract', '_edit');
+        $method->setAccessible(true);
+        $result = $method->invoke($model, $values);
 
         $this->assertSame($model, $result);
 
-    } // END function test_edit
+    } // END function test__edit
 
     /**
-     * provide_edit()
+     * provide__edit()
      *
      * Provides data to use for testing the edit method of
      * the Rx_Model_Abstract class
      *
      * @return array
      */
-    public function provide_edit ( )
+    public function provide__edit ( )
     {
         // $isValid, $identity, $values, $exception = ''
         return array(
@@ -470,17 +474,17 @@ class Tests_Rx_Model_AbstractTest
             ), 'Rx_Model_Exception'),
         );
 
-    } // END function provide_edit
+    } // END function provide__edit
 
     /**
-     * test_create()
+     * test__create()
      *
      * Tests the create method of the Rx_Model_Abstract class
      *
-     * @covers Rx_Model_Abstract::create
-     * @dataProvider provide_create
+     * @covers Rx_Model_Abstract::_create
+     * @dataProvider provide__create
      */
-    public function test_create ($isValid, $identity, $values, $exception = '')
+    public function test__create ($isValid, $identity, $values, $exception = '')
     {
         $model = $this->getMockBuilder('Rx_Model_Abstract')
             ->setMethods(array('getTable', 'getForm'))
@@ -523,23 +527,25 @@ class Tests_Rx_Model_AbstractTest
             ->method('getTable')
             ->will($this->returnValue($table));
 
-        $result = $model->create($values);
+        $method = new ReflectionMethod('Rx_Model_Abstract', '_create');
+        $method->setAccessible(true);
+        $result = $method->invoke($model, $values);
 
         $this->assertSame($model, $result);
 
         $this->assertEquals($identity, $model->id);
 
-    } // END function test_create
+    } // END function test__create
 
     /**
-     * provide_create()
+     * provide__create()
      *
-     * Provides data to use for testing the create method of
+     * Provides data to use for testing the _create method of
      * the Rx_Model_Abstract class
      *
      * @return array
      */
-    public function provide_create ( )
+    public function provide__create ( )
     {
         // $isValid, $values, $exception = ''
         return array(
@@ -552,7 +558,7 @@ class Tests_Rx_Model_AbstractTest
             ), 'Rx_Model_Exception'),
         );
 
-    } // END function provide_create
+    } // END function provide__create
 
     /**
      * test_paginate()
@@ -629,5 +635,117 @@ class Tests_Rx_Model_AbstractTest
         );
 
     } // END function provide_paginate
+
+    /**
+     * test_edit()
+     *
+     * Tests the edit method of the Rx_Model_Abstract class
+     *
+     * @covers Rx_Model_Abstract::edit
+     * @dataProvider provide_edit
+     */
+    public function test_edit ($values = array())
+    {
+        $subject = $this->getMockBuilder('Rx_Model_Abstract')
+            ->setMethods(array('_edit'))
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $subject->expects($this->once())
+            ->method('_edit')
+            ->with($this->equalTo($values))
+            ->will($this->returnSelf());
+
+        $result = $subject->edit($values);
+
+        $this->assertSame($subject, $result);
+
+    } // END function test_edit
+
+    /**
+     * provide_edit()
+     *
+     * Provides data to use for testing the edit method of
+     * the Rx_Model_Abstract class
+     *
+     * @return array
+     */
+    public function provide_edit ( )
+    {
+        return array(
+            array(array(
+                'key' => 'value'
+            )),
+        );
+
+    } // END function provide_edit
+
+    /**
+     * test_create()
+     *
+     * Tests the create method of the Rx_Model_Abstract class
+     *
+     * @covers Rx_Model_Abstract::create
+     * @dataProvider provide_create
+     */
+    public function test_create ($values = array())
+    {
+        $subject = $this->getMockBuilder('Rx_Model_Abstract')
+            ->setMethods(array('_create'))
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $subject->expects($this->once())
+            ->method('_create')
+            ->with($this->equalTo($values))
+            ->will($this->returnSelf());
+
+        $result = $subject->create($values);
+
+        $this->assertSame($subject, $result);
+
+    } // END function test_create
+
+    /**
+     * provide_create()
+     *
+     * Provides data to use for testing the create method of
+     * the Rx_Model_Abstract class
+     *
+     * @return array
+     */
+    public function provide_create ( )
+    {
+        return array(
+            array(array(
+                'key' => 'value'
+            )),
+        );
+
+    } // END function provide_create
+
+    /**
+     * test_delete()
+     *
+     * Tests the delete method of the Rx_Model_Abstract class
+     *
+     * @covers Rx_Model_Abstract::delete
+     */
+    public function test_delete ( )
+    {
+        $subject = $this->getMockBuilder('Rx_Model_Abstract')
+            ->setMethods(array('_delete'))
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $subject->expects($this->once())
+            ->method('_delete')
+            ->will($this->returnValue(null));
+
+        $result = $subject->delete();
+
+        $this->assertNull($result);
+
+    } // END function test_delete
 
 } // END class Tests_Rx_Model_AbstractTest
