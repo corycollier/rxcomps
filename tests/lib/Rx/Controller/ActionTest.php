@@ -221,7 +221,6 @@ class Tests_Rx_Controller_ActionTest
 
     } // END function provide_getLog
 
-
     /**
      * test_getModel()
      *

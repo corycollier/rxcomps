@@ -195,7 +195,7 @@ class App_Model_User
     {
         $values['passwd'] = hash('sha1', @$values['passwd']);
 
-        return parent::edit($values);
+        return $this->_edit($values);
 
     } // END function edit
 
@@ -210,7 +210,7 @@ class App_Model_User
     {
         $values['passwd'] = hash('sha1', @$values['passwd']);
 
-        return parent::create($values);
+        return $this->_create($values);
 
     } // END function create
 

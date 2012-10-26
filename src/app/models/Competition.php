@@ -48,7 +48,7 @@ class App_Model_Competition
         $values['created'] = $created;
         $values['updated'] = $created;
 
-        return parent::create($values);
+        return $this->_create($values);
 
     } // END function create
 
@@ -69,7 +69,7 @@ class App_Model_Competition
 
         $values['updated'] = $updated;
 
-        return parent::edit($values);
+        return $this->_edit($values);
 
     } // END function edit
 

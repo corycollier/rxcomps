@@ -174,6 +174,20 @@ class Rx_Model_Abstract
      */
     public function edit ($values = array())
     {
+        return $this->_edit($values);
+
+    } // END function edit
+
+    /**
+     * _edit()
+     *
+     * Where the bulk of the work happens
+     *
+     * @param array $values
+     * @return Rx_Model_Abstract $this for object chaining
+     */
+    protected function _edit ($values = array())
+    {
         $dbTable = $this->getTable();
         $form = $this->getForm();
 
@@ -187,7 +201,7 @@ class Rx_Model_Abstract
 
         return $this;
 
-    } // END function edit
+    } // END function _edit
 
     /**
      * create()
@@ -198,6 +212,20 @@ class Rx_Model_Abstract
      * @return Rx_Model_Abstract $this for a fluent interface
      */
     public function create ($values = array())
+    {
+        return $this->_create($values);
+
+    } // END function create
+
+    /**
+     * _create()
+     *
+     * Does the bulk of the creating work
+     *
+     * @param array $values
+     * @return Rx_Model_Abstract $this for object chaining
+     */
+    protected function _create ($values = array())
     {
         $dbTable = $this->getTable();
         $form = $this->getForm();
@@ -211,7 +239,7 @@ class Rx_Model_Abstract
 
         return $this;
 
-    } // END function create
+    } // END function _create
 
     /**
      * delete()
@@ -219,6 +247,17 @@ class Rx_Model_Abstract
      * Delets the model by it's current id value
      */
     public function delete ( )
+    {
+        $this->_delete();
+
+    } // END function delete
+
+    /**
+     * _delete()
+     *
+     * Does the bulk of the work for deleting
+     */
+    protected function _delete ( )
     {
         if (! $this->id) {
             throw new Rx_Model_Exception(self::EXCEPTION_DELETE_CONSTRAINT);
@@ -229,7 +268,7 @@ class Rx_Model_Abstract
 
         $dbTable->delete(sprintf('id = %d', $this->id));
 
-    } // END function delete
+    } // END function _delete
 
     /**
      * filterValues()
