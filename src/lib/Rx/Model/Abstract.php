@@ -281,10 +281,7 @@ class Rx_Model_Abstract
      */
     public function filterValues ($values = array())
     {
-        $info = $this->getTable()->info();
-        $columns = array_flip($info['cols']);
-
-        return array_intersect_key($values, $columns);
+        return $this->getTable()->filterValues($values);
 
     } // END function filterValues
 
@@ -298,7 +295,7 @@ class Rx_Model_Abstract
     public function paginate ($params)
     {
         $dbTable    = $this->getTable();
-        $paginator  = $dbTable->getPaginationAdapter();
+        $paginator  = $dbTable->getPaginationAdapter($params);
 
         return $paginator->getItems(0, 20)->toArray();
 

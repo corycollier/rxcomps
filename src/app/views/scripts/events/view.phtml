@@ -18,6 +18,13 @@
 
 <p><?php echo $this->model->getValue('description'); ?></p>
 
+<p><?php echo $this->htmlAnchor('Athletes', array(
+    'controller'    => 'athletes',
+    'action'        => 'list',
+    'event_id'      => $this->model->id,
+
+)); ?></p>
+
 <ol>
     <?php foreach ($this->model->getChildren('Competition') as $competition) : ?>
 

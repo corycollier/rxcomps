@@ -100,4 +100,11 @@ class App_Bootstrap
 
     } // END function _initAcl
 
+    protected function _initPlugins ( )
+    {
+        $this->bootstrap('frontcontroller');
+        $front = $this->getResource('frontcontroller');
+        $front->registerPlugin(new App_Plugin_Navigation);
+    }
+
 } // END class Bootstrap
