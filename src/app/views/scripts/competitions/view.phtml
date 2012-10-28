@@ -16,3 +16,9 @@
 
 <h2><?php echo $this->model->getValue('name'); ?></h2>
 <p><?php echo $this->model->getValue('description'); ?></p>
+<p><?php echo $this->htmlAnchor('Enter Scores', array(
+    'controller'    => 'scores',
+    'action'        => 'create',
+    'event_id'      => $this->model->getParent('Event')->id,
+
+)); ?></p>
