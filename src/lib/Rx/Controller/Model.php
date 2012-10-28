@@ -104,7 +104,8 @@ class Rx_Controller_Model
         $flash = $this->getHelper('FlashMessenger');
         $redirector = $this->getHelper('Redirector');
 
-        $form->injectDependencies($model);
+        $form->injectDependencies($model, $request->getParams());
+        $form->populate($model->filterValues($request->getParams()));
 
         if ($request->isPost()) {
             try {
@@ -117,7 +118,6 @@ class Rx_Controller_Model
                     'id'        => $model->id
                 ));
             } catch (Zend_Exception $exception) {
-                var_dump($exception); die;
                 $flash->addMessage(sprintf(
                     self::MSG_CREATE_FAILURE, $this->_modelName
                 ), 'error');
@@ -143,7 +143,8 @@ class Rx_Controller_Model
         $redirector = $this->getHelper('Redirector');
 
         $model->load($request->getParam('id'));
-        $form->injectDependencies($model);
+        $form->injectDependencies($model, $request->getParams());
+        $form->populate($model->filterValues($request->getParams()));
 
         if (! $model->id) {
             $flash->addMessage(sprintf(
@@ -163,7 +164,6 @@ class Rx_Controller_Model
                     self::MSG_EDIT_SUCCESS, $this->_modelName
                 ), 'success');
             } catch (Zend_Exception $exception) {
-                var_dump($exception); die;
                 $flash->addMessage(sprintf(
                     self::MSG_EDIT_FAILURE, $this->_modelName
                 ), 'error');
@@ -183,13 +183,11 @@ class Rx_Controller_Model
     public function viewAction ( )
     {
         $model = $this->getModel($this->_modelName);
-        $form = $model->getForm();
         $request = $this->getRequest();
         $flash = $this->getHelper('FlashMessenger');
         $redirector = $this->getHelper('Redirector');
 
         $model->load($request->getParam('id'));
-        $form->injectDependencies($model);
 
         if (! $model->id) {
             $flash->addMessage(sprintf(

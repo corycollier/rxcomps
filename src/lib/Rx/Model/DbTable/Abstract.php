@@ -47,11 +47,11 @@ class Rx_Model_DbTable_Abstract
      *
      * @return Zend_Paginator_Adapter_DbTableSelect
      */
-    public function getPaginationAdapter ($params)
+    public function getPaginationAdapter ($params = array())
     {
         if (! $this->_paginator || $params) {
             $this->_paginator = new Zend_Paginator_Adapter_DbTableSelect(
-                $this->buildWhere($this->select(), $params)
+                $this->buildWhere($params)
             );
         }
 
@@ -67,15 +67,14 @@ class Rx_Model_DbTable_Abstract
      * @param array $data
      * @return Zend_Db_Table_Select
      */
-    public function buildWhere (Zend_Db_Table_Select $select, $data = array())
+    public function buildWhere ($data = array())
     {
+        $select = $this->select();
         $values = $this->filterValues(array_diff_key($data, array('id' => null)));
 
         foreach ($values as $key => $value) {
             $select->where(sprintf("{$key} = '%s'", $value));
         }
-
-        // var_dump($select); die;
 
         return $select;
 
