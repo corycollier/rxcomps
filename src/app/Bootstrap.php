@@ -86,6 +86,7 @@ class App_Bootstrap
         $acl->addResource(new Zend_Acl_Resource('index'));
         $acl->addResource(new Zend_Acl_Resource('error'));
         $acl->addResource(new Zend_Acl_Resource('users'));
+        $acl->addResource(new Zend_Acl_Resource('scores'));
         $acl->addResource(new Zend_Acl_Resource('events'));
         $acl->addResource(new Zend_Acl_Resource('athletes'));
         $acl->addResource(new Zend_Acl_Resource('competitions'));
