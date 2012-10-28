@@ -1,0 +1,19 @@
+<?php
+/**
+ * view view script
+ *
+ * This view script is for viewing a single score record
+ *
+ * @category    RxCompetition
+ * @package     App
+ * @subpackage  View_Scripts
+ * @copyright   Copyright (c) 2012 RxCompetition.com, Inc (http://www.RxCompetition.com)
+ * @license     All Rights Reserved
+ * @version     Release: 1.0.0
+ * @since       File available since release 1.0.0
+ */
+?>
+
+<h2><?php echo $this->model->getValue('score'); ?></h2>
+<?php echo $this->model->getParent('Athlete')->getValue('name'); ?>
+<?php echo $this->model->getParent('Competition')->getValue('name'); ?>
