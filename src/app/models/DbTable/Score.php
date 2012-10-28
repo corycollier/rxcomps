@@ -49,9 +49,9 @@ class App_Model_DbTable_Score
             'refTableClass'     => 'App_Model_DbTable_Competition',
             'refColumns'        => array('id'),
         ),
-        'Athelete' => array(
+        'Athlete' => array(
             'columns'           => array('athlete_id'),
-            'refTableClass'     => 'App_Model_DbTable_Athelete',
+            'refTableClass'     => 'App_Model_DbTable_Athlete',
             'refColumns'        => array('id'),
         ),
     );
