@@ -57,55 +57,13 @@ class App_Bootstrap
 
     } // END function _initControllers
 
-    /**
-     * _initViewHelpers()
-     *
-     * Initializes the view helper paths for use
-     */
-    protected function _initViewHelpers ( )
-    {
-        $this->bootstrap('view');
-        $view = $this->getResource('view');
-        $view->addHelperPath(APPLICATION_PATH . '/views/helpers/', 'App_View_Helper_');
-
-    } // END function _initViewHelpers
-
-
-    /**
-     * _initAcl()
-     *
-     * Initializes the ACL object, and sets it into the registry for global use
-     */
-    protected function _initAcl ( )
-    {
-        $acl = new Zend_Acl;
-
-        $guest = $acl->addRole(new Zend_Acl_Role('guest'));
-        $admin = $acl->addRole(new Zend_Acl_Role('admin'));
-
-        $acl->addResource(new Zend_Acl_Resource('index'));
-        $acl->addResource(new Zend_Acl_Resource('error'));
-        $acl->addResource(new Zend_Acl_Resource('users'));
-        $acl->addResource(new Zend_Acl_Resource('scores'));
-        $acl->addResource(new Zend_Acl_Resource('events'));
-        $acl->addResource(new Zend_Acl_Resource('athletes'));
-        $acl->addResource(new Zend_Acl_Resource('competitions'));
-
-        $acl->allow('guest', null, array(
-            'index', 'view', 'error', 'denied', 'login', 'logout', 'success',
-        ));
-
-        $acl->allow('admin');
-
-        Zend_Registry::getInstance()->set('acl', $acl);
-
-    } // END function _initAcl
-
     protected function _initPlugins ( )
     {
         $this->bootstrap('frontcontroller');
         $front = $this->getResource('frontcontroller');
+        $front->registerPlugin(new App_Plugin_Acl);
         $front->registerPlugin(new App_Plugin_Navigation);
+        $front->registerPlugin(new App_Plugin_View);
     }
 
 } // END class Bootstrap
