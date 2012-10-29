@@ -1,8 +1,8 @@
 <?php
 /**
- * Event List Item View Helper
+ * Competition List Item View Helper
  *
- * This view helper displays information related to an event in a list-item format
+ * This view helper displays information related to an Competition in a list-item format
  *
  * @category    RxCompetition
  * @package     App
@@ -15,9 +15,9 @@
  */
 
 /**
- * Event List Item View Helper
+ * Competition List Item View Helper
  *
- * This view helper displays information related to an event in a list-item format
+ * This view helper displays information related to an Competition in a list-item format
  *
  * @category    RxCompetition
  * @package     App
@@ -28,18 +28,18 @@
  * @since       Class available since release 1.0.0
  */
 
-class App_View_Helper_EventListItem
+class App_View_Helper_CompetitionListItem
     extends Zend_View_Helper_HtmlElement
 {
     /**
-     * eventListItem()
+     * CompetitionListItem()
      *
      * Main method of the view helper
      *
-     * @param array $event
+     * @param array $competition
      * @return string
      */
-    public function eventListItem ($event)
+    public function CompetitionListItem ($competition)
     {
         $auth = $this->_getAuth();
         $view = $this->view;
@@ -51,24 +51,24 @@ class App_View_Helper_EventListItem
             $actions = $view->htmlList(array(
                 $view->htmlAnchor('Edit', array(
                     'action'    => 'edit',
-                    'id'        => $event['id'],
+                    'id'        => $competition['id'],
                 )),
                 $view->htmlAnchor('Delete', array(
                     'action'    => 'delete',
-                    'id'        => $event['id'],
+                    'id'        => $competition['id'],
                 )),
             ), false, array(
                 'class' => 'actions',
             ), false);
         }
 
-        return sprintf($title, $view->htmlAnchor($event['name'], array(
+        return sprintf($title, $view->htmlAnchor($competition['name'], array(
                 'action'    => 'view',
-                'id'        => $event['id'],
+                'id'        => $competition['id'],
             )))
             . $actions;
 
-    } // END function eventListItem
+    } // END function CompetitionListItem
 
     /**
      * _getAuth
@@ -83,4 +83,4 @@ class App_View_Helper_EventListItem
 
     } // END function _getAuth
 
-} // END class App_View_Helper_EventListItem
+} // END class App_View_Helper_CompetitionListItem

@@ -14,8 +14,8 @@
  */
 ?>
 
-<?php foreach ($this->items as $event) : ?>
+<?php foreach ($this->items as $competition) : ?>
 
-    <?php var_dump($event); ?>
+    <?php echo $this->competitionListItem($competition); ?>
 
 <?php endforeach; ?>
