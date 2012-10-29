@@ -42,6 +42,7 @@ CREATE  TABLE IF NOT EXISTS `scores` (
   `athlete_id` INT NOT NULL ,
   `competition_id` INT NOT NULL ,
   PRIMARY KEY (`id`) ,
+  UNIQUE KEY `uk_athlete_competition_score` (`athlete_id`,`competition_id`),
   INDEX `fk_athletes_idx` (`athlete_id` ASC) ,
   INDEX `fk_competitions_idx` (`competition_id` ASC) ,
   CONSTRAINT `fk_scores_athletes`
