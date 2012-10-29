@@ -453,4 +453,96 @@ class Tests_App_Model_UserTest
 
     } // END function provide_getRole
 
+    /**
+     * test_edit()
+     *
+     * Tests the edit of the App_Model_User
+     *
+     * @covers          App_Model_User::edit
+     * @dataProvider    provide_edit
+     */
+    public function test_edit ($values)
+    {
+        $subject = $this->getMockBuilder('App_Model_User')
+            ->setMethods(array('_edit'))
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $modified = $values;
+        $modified['passwd'] = hash('sha1', @$values['passwd']);
+
+        $subject->expects($this->once())
+            ->method('_edit')
+            ->with($this->equalTo($modified))
+            ->will($this->returnSelf());
+
+        $result = $subject->edit($values);
+
+        $this->assertSame($subject, $result);
+
+    } // END function test_edit
+
+    /**
+     * provide_edit()
+     *
+     * Provides data for the edit method of the
+     * App_Model_User class
+     */
+    public function provide_edit ( )
+    {
+        return array(
+            array(array(
+                'id'    => 1,
+                'email' => 'some@thing.com',
+            )),
+        );
+
+    } // END function provide_edit
+
+    /**
+     * test_create()
+     *
+     * Tests the create of the App_Model_User
+     *
+     * @covers          App_Model_User::create
+     * @dataProvider    provide_create
+     */
+    public function test_create ($values)
+    {
+        $subject = $this->getMockBuilder('App_Model_User')
+            ->setMethods(array('_create'))
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $modified = $values;
+        $modified['passwd'] = hash('sha1', @$values['passwd']);
+
+        $subject->expects($this->once())
+            ->method('_create')
+            ->with($this->equalTo($modified))
+            ->will($this->returnSelf());
+
+        $result = $subject->create($values);
+
+        $this->assertSame($subject, $result);
+
+    } // END function test_create
+
+    /**
+     * provide_create()
+     *
+     * Provides data for the create method of the
+     * App_Model_User class
+     */
+    public function provide_create ( )
+    {
+        return array(
+            array(array(
+                'id'    => 1,
+                'email' => 'some@thing.com',
+            )),
+        );
+
+    } // END function provide_create
+
 } // END class Tests_App_Model_UserTest
