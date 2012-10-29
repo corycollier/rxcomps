@@ -41,8 +41,8 @@ class App_View_Helper_ScoreListItem
      */
     public function scoreListItem ($score)
     {
-        $auth = $this->_getAuth();
         $view = $this->view;
+        $auth = $view->auth();
 
         $title = '<h3>%s</h3>';
         $actions = '';
@@ -69,18 +69,5 @@ class App_View_Helper_ScoreListItem
             . $actions;
 
     } // END function ScoreListItem
-
-    /**
-     * _getAuth
-     *
-     * Gets the global authentication
-     *
-     * @return Zend_Auth
-     */
-    protected function _getAuth ( )
-    {
-        return Zend_Auth::getInstance();
-
-    } // END function _getAuth
 
 } // END class App_View_Helper_ScoreListItem

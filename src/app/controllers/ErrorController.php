@@ -40,6 +40,8 @@ class ErrorController
     {
         $errors = $this->_getParam('error_handler');
 
+        var_dump($errors); die;
+
         if (!$errors || !$errors instanceof ArrayObject) {
             $this->view->message = 'You have reached the error page';
             return;

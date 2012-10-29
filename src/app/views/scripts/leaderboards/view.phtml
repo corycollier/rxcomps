@@ -1,0 +1,39 @@
+<?php
+/**
+ * view view script
+ *
+ * This view script is for viewing a single competition's leaderboards
+ *
+ * @category    RxCompetition
+ * @package     App
+ * @subpackage  View_Scripts
+ * @copyright   Copyright (c) 2012 RxCompetition.com, Inc (http://www.RxCompetition.com)
+ * @license     All Rights Reserved
+ * @version     Release: 1.0.0
+ * @since       File available since release 1.0.0
+ */
+?>
+<?php $rank = 1; ?>
+<table>
+    <tr>
+        <th>Rank</th>
+        <th>Score</th>
+        <th>Athlete</th>
+    </tr>
+<?php foreach ($this->items as $score) : ?>
+    <tr>
+        <td><?php echo $rank; ?></td>
+        <td><?php echo $score->score; ?></td>
+        <td>
+            <?php $athlete = $score->findParentRow('App_Model_DbTable_Athlete'); ?>
+            <?php echo $this->htmlAnchor($athlete->name, array(
+                'controller'    => 'athletes',
+                'action'        => 'view',
+                'id'            => $athlete->id,
+            ));?>
+        </td>
+
+    </tr>
+    <?php $rank++; ?>
+<?php endforeach; ?>
+</table>

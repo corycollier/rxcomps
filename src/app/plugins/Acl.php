@@ -51,6 +51,7 @@ class App_Plugin_Acl
         $acl->addResource(new Zend_Acl_Resource('events'));
         $acl->addResource(new Zend_Acl_Resource('athletes'));
         $acl->addResource(new Zend_Acl_Resource('competitions'));
+        $acl->addResource(new Zend_Acl_Resource('leaderboards'));
 
         $acl->allow('guest', null, array(
             'index', 'view', 'error', 'denied', 'login', 'logout', 'success',

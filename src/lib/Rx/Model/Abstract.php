@@ -297,7 +297,7 @@ class Rx_Model_Abstract
         $dbTable    = $this->getTable();
         $paginator  = $dbTable->getPaginationAdapter($params);
 
-        return $paginator->getItems(0, 20)->toArray();
+        return $paginator->getItems(0, 20);
 
     } // END function paginate
 

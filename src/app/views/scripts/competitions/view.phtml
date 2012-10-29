@@ -22,3 +22,21 @@
     'event_id'      => $this->model->getParent('Event')->id,
     'competition_id'=> $this->model->id,
 )); ?></p>
+
+
+
+<table>
+    <tr>
+        <th>Score</th>
+        <th>Athlete</th>
+        <th>Actions</th>
+    </tr>
+<?php foreach ($this->model->getChildren('Score') as $score) : ?>
+    <tr>
+        <td><?php echo $score->getValue('score'); ?></td>
+        <td><?php echo $score->getParent('Athlete')->getValue('name'); ?></td>
+        <td></td>
+
+    </tr>
+<?php endforeach; ?>
+</table>

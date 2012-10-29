@@ -51,4 +51,8 @@ class App_Model_DbTable_Competition
         ),
     );
 
+    protected $_dependentTables = array(
+        'App_Model_DbTable_Score',
+    );
+
 } // END class App_Model_DbTable_Competitions
