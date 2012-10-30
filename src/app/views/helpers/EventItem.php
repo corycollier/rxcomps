@@ -1,8 +1,8 @@
 <?php
 /**
- * Athlete List Item View Helper
+ * Event List Item View Helper
  *
- * This view helper displays information related to an Athlete in a list-item format
+ * This view helper displays information related to an event in a list-item format
  *
  * @category    RxCompetition
  * @package     App
@@ -15,9 +15,9 @@
  */
 
 /**
- * Athlete List Item View Helper
+ * Event List Item View Helper
  *
- * This view helper displays information related to an Athlete in a list-item format
+ * This view helper displays information related to an event in a list-item format
  *
  * @category    RxCompetition
  * @package     App
@@ -28,46 +28,45 @@
  * @since       Class available since release 1.0.0
  */
 
-class App_View_Helper_AthleteListItem
+class App_View_Helper_EventItem
     extends Zend_View_Helper_HtmlElement
 {
     /**
-     * athleteListItem()
+     * eventItem()
      *
      * Main method of the view helper
      *
-     * @param array $Athlete
+     * @param array $event
      * @return string
      */
-    public function athleteListItem ($athlete)
+    public function eventItem ($event)
     {
         $view = $this->view;
         $auth = $view->auth();
 
-        $title = '<h3>%s</h3>';
         $actions = '';
+        $title = sprintf('<h3>%s</h3>', $view->htmlAnchor($event->name, array(
+            'action'    => 'view',
+            'id'        => $event->id,
+        )));
 
         if ($auth->hasIdentity()) {
             $actions = $view->htmlList(array(
                 $view->htmlAnchor('Edit', array(
                     'action'    => 'edit',
-                    'id'        => $athlete['id'],
+                    'id'        => $event->id,
                 )),
                 $view->htmlAnchor('Delete', array(
                     'action'    => 'delete',
-                    'id'        => $athlete['id'],
+                    'id'        => $event->id,
                 )),
             ), false, array(
                 'class' => 'actions',
             ), false);
         }
 
-        return sprintf($title, $view->htmlAnchor($athlete['name'], array(
-                'action'    => 'view',
-                'id'        => $athlete['id'],
-            )))
-            . $actions;
+        return $title . $actions;
 
-    } // END function athleteListItem
+    } // END function eventItem
 
-} // END class App_View_Helper_AthleteListItem
+} // END class App_View_Helper_EventItem

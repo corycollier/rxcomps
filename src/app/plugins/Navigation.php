@@ -52,6 +52,10 @@ class App_Plugin_Navigation
                 'label'         => 'Events',
                 'controller'    => 'events',
             ),
+            'leaderboards' => array(
+                'label'         => 'Leaderboards',
+                'controller'    => 'leaderboards',
+            ),
         ));
 
         $this->_addExtraPages($container);

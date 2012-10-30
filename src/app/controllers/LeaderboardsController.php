@@ -34,6 +34,16 @@ class LeaderboardsController
     extends Rx_Controller_Action
 {
     /**
+     * indexAction()
+     *
+     * Default action for the leaderboards controller
+     */
+    public function indexAction ( )
+    {
+
+    } // END function indexAction
+
+    /**
      * viewAction()
      *
      * The action to view leaderboards for a specific competition

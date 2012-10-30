@@ -28,46 +28,45 @@
  * @since       Class available since release 1.0.0
  */
 
-class App_View_Helper_ScoreListItem
+class App_View_Helper_ScoreItem
     extends Zend_View_Helper_HtmlElement
 {
     /**
-     * ScoreListItem()
+     * ScoreItem()
      *
      * Main method of the view helper
      *
      * @param array $score
      * @return string
      */
-    public function scoreListItem ($score)
+    public function scoreItem ($score)
     {
         $view = $this->view;
         $auth = $view->auth();
 
-        $title = '<h3>%s</h3>';
         $actions = '';
+        $title = sprintf('<h3>%s</h3>', $view->htmlAnchor($score->score, array(
+            'action'    => 'view',
+            'id'        => $score->id,
+        )));
 
         if ($auth->hasIdentity()) {
             $actions = $view->htmlList(array(
                 $view->htmlAnchor('Edit', array(
                     'action'    => 'edit',
-                    'id'        => $score['id'],
+                    'id'        => $score->id,
                 )),
                 $view->htmlAnchor('Delete', array(
                     'action'    => 'delete',
-                    'id'        => $score['id'],
+                    'id'        => $score->id,
                 )),
             ), false, array(
                 'class' => 'actions',
             ), false);
         }
 
-        return sprintf($title, $view->htmlAnchor($score['score'], array(
-                'action'    => 'view',
-                'id'        => $score['id'],
-            )))
-            . $actions;
+        return $title . $actions;
 
-    } // END function ScoreListItem
+    } // END function ScoreItem
 
-} // END class App_View_Helper_ScoreListItem
+} // END class App_View_Helper_ScoreItem

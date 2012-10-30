@@ -40,13 +40,10 @@ class ErrorController
     {
         $errors = $this->_getParam('error_handler');
 
-        var_dump($errors); die;
-
         if (!$errors || !$errors instanceof ArrayObject) {
             $this->view->message = 'You have reached the error page';
             return;
         }
-
 
         switch ($errors->type) {
             case Zend_Controller_Plugin_ErrorHandler::EXCEPTION_NO_ROUTE:
