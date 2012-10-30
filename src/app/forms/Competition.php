@@ -74,6 +74,12 @@ class App_Form_Competition
             'required'      => true,
         ));
 
+        $this->addElement('select', 'scale_id', array(
+            'label'         => 'Scale',
+            'placeholder'   => 'Select Scale',
+            'required'      => true,
+        ));
+
         $this->addElement('submit', 'save', array(
             'label'         => 'Save',
             'ignore'        => true,
@@ -89,7 +95,7 @@ class App_Form_Competition
      * @var Rx_Model_Abstract $model
      * @return Rx_Form_Abstract $this for a fluent interface
      */
-    public function injectDependencies ($model)
+    public function injectDependencies ($model, $params = array())
     {
         $events = $model->getParent('Event')->getTable()->fetchAll();
 
@@ -97,6 +103,18 @@ class App_Form_Competition
 
         foreach ($events as $event) {
             $element->addMultiOption($event->id, $event->name);
+        }
+
+        // scales
+        $scalesTable = $model->getParent('Scale')->getTable();
+        $scales = $scalesTable->fetchAll(
+            $scalesTable->buildWhere($params)
+        );
+
+        $element = $this->getElement('scale_id');
+
+        foreach ($scales as $scale) {
+            $element->addMultiOption($scale->id, $scale->name);
         }
 
     } // END function injectDependencies
