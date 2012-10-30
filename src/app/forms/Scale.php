@@ -1,9 +1,9 @@
 <?php
 /**
- * Score Form
+ * Scale Form
  *
  * This form contains the input filtering and validating definitions for requests
- * to either create, or edit an event
+ * to either create, or edit an Scale
  *
  * @category    RxCompetition
  * @package     App
@@ -16,10 +16,10 @@
  */
 
 /**
- * Score Form
+ * Scale Form
  *
  * This form contains the input filtering and validating definitions for requests
- * to either create, or edit an event
+ * to either create, or edit an Scale
  *
  * @category    RxCompetition
  * @package     App
@@ -30,7 +30,7 @@
  * @since       Class available since release 1.0.0
  */
 
-class App_Form_Score
+class App_Form_Scale
     extends Rx_Form_Abstract
 {
     /**
@@ -44,28 +44,23 @@ class App_Form_Score
             'ignore'        => true,
         ));
 
-        $this->addElement('text', 'score', array(
-            'label'         => 'Score',
-            'placeholder'   => 'Enter Score',
+        $this->addElement('text', 'name', array(
+            'label'         => 'Name',
+            'placeholder'   => 'Enter name',
             'required'      => true,
-            'filters'       => array('StringTrim', 'Digits'),
+            'filters'       => array('StringTrim'),
         ));
 
-        $this->addElement('select', 'athlete_id', array(
-            'label'         => 'Athlete',
-            'placeholder'   => 'Select Athlete',
+        $this->addElement('text', 'code', array(
+            'label'         => 'Code',
+            'placeholder'   => 'Enter short code',
             'required'      => true,
+            'filters'       => array('StringTrim', 'Alpha'),
         ));
 
-        $this->addElement('select', 'competition_id', array(
-            'label'         => 'Competition',
-            'placeholder'   => 'Select Competition',
-            'required'      => true,
-        ));
-
-        $this->addElement('select', 'scale_id', array(
-            'label'         => 'Competition',
-            'placeholder'   => 'Select Competition',
+        $this->addElement('select', 'event_id', array(
+            'label'         => 'Event',
+            'placeholder'   => 'Select Event',
             'required'      => true,
         ));
 
@@ -100,32 +95,16 @@ class App_Form_Score
      * @var Rx_Model_Abstract $model
      * @return Rx_Form_Abstract $this for a fluent interface
      */
-    public function injectDependencies ($model, $params = array())
+    public function injectDependencies ($model)
     {
-        // athletes
-        $athletesTable = $model->getParent('Athlete')->getTable();
-        $athletes = $athletesTable->fetchAll(
-            $athletesTable->buildWhere($params)
-        );
+        $events = $model->getParent('Event')->getTable()->fetchAll();
 
-        $element = $this->getElement('athlete_id');
+        $element = $this->getElement('event_id');
 
-        foreach ($athletes as $athlete) {
-            $element->addMultiOption($athlete->id, $athlete->name);
-        }
-
-        // competitions
-        $competitionsTable = $model->getParent('Competition')->getTable();
-        $competitions = $competitionsTable->fetchAll(
-            $competitionsTable->buildWhere($params)
-        );
-
-        $element = $this->getElement('competition_id');
-
-        foreach ($competitions as $competition) {
-            $element->addMultiOption($competition->id, $competition->name);
+        foreach ($events as $event) {
+            $element->addMultiOption($event->id, $event->name);
         }
 
     } // END function injectDependencies
 
-} // END class App_Form_Score
+} // END class App_Form_Scale

@@ -49,6 +49,11 @@ class App_Model_DbTable_Competition
             'refTableClass'     => 'App_Model_DbTable_Event',
             'refColumns'        => array('id'),
         ),
+        'Scale' => array(
+            'columns'           => array('scale_id'),
+            'refTableClass'     => 'App_Model_DbTable_Scale',
+            'refColumns'        => array('id'),
+        ),
     );
 
     protected $_dependentTables = array(

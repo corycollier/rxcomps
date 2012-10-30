@@ -24,6 +24,31 @@
     'event_id'      => $this->model->id,
 )); ?></p>
 
+<ul>
+    <?php foreach ($this->model->getChildren('Scale') as $scale) : ?>
+
+        <li><?php echo $this->htmlAnchor($scale->getValue('name'), array(
+            'module'    => 'default',
+            'controller'=> 'scale',
+            'action'    => 'view',
+            'id'        => $scale->getValue('id'),
+        )); ?></li>
+
+    <?php endforeach; ?>
+</ul>
+<?php echo $this->htmlAnchor('Enter Scales', array(
+    'controller'    => 'scales',
+    'action'        => 'create',
+    'event_id'     => $this->model->id,
+)); ?>
+
+<?php echo $this->htmlAnchor('Enter Competitions', array(
+    'controller'    => 'competitions',
+    'action'        => 'create',
+    'event_id'     => $this->model->id,
+)); ?>
+
+
 <ol>
     <?php foreach ($this->model->getChildren('Competition') as $competition) : ?>
 

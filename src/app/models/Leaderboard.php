@@ -46,12 +46,25 @@ class App_Model_Leaderboard
     } // END function getScoreTable
 
     /**
+     * getCompetitionTable()
+     *
+     * Gets an instance of the competition table class
+     *
+     * @return App_Model_DbTable_Competition
+     */
+    public function getCompetitionTable ( )
+    {
+        return new App_Model_DbTable_Competition;
+
+    } // END function getCompetitionTable
+
+    /**
      * load()
      *
      * Loads up the leaderboards for a given competition
      *
      * @param integer $competitionId
-     * @return App_Model_Leaderboard $this for object chaining
+     * @return Zend_Db_Table_Rowset $this for object chaining
      */
     public function load ($competitionId)
     {
@@ -64,5 +77,27 @@ class App_Model_Leaderboard
         );
 
     } // END function load
+
+    /**
+     * event()
+     *
+     * Returns the aggregate results of an event's competitions leaderboard results
+     *
+     * @param integer $eventId
+     * @return array
+     */
+    public function event ($eventId)
+    {
+        $table = $this->getCompetitionTable();
+
+        $competitions = $table->fetchAll(
+            $table->select()
+                ->where(sprintf('event_id = %d', $eventId))
+
+        );
+
+        var_dump($competitions); die;
+
+    } // END function event
 
 } // END class App_Model_Leaderboard

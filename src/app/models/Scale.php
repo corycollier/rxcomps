@@ -1,8 +1,8 @@
 <?php
 /**
- * Events Database Table
+ * Scales Model
  *
- * This model represents a database table of events to the application
+ * This model represents individual Scales of the application
  *
  * @category    RxCompetition
  * @package     App
@@ -15,9 +15,9 @@
  */
 
 /**
- * Events Database Table
+ * Scales Model
  *
- * This model represents a database table of events to the application
+ * This model represents individual Scales of the application
  *
  * @category    RxCompetition
  * @package     App
@@ -28,20 +28,8 @@
  * @since       Class available since release 1.0.0
  */
 
-class App_Model_DbTable_Event
-    extends Rx_Model_DbTable_Abstract
+class App_Model_Scale
+    extends Rx_Model_Abstract
 {
-    /**
-     * The name of the database table to use for this class
-     *
-     * @var string
-     */
-    protected $_name = 'events';
 
-    protected $_dependentTables = array(
-        'App_Model_DbTable_Competition',
-        'App_Model_DbTable_Athlete',
-        'App_Model_DbTable_Scale',
-    );
-
-} // END class App_Model_DbTable_Events
+}// END class App_Model_Scales

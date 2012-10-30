@@ -1,8 +1,8 @@
 <?php
 /**
- * Athletes Database Table
+ * Scales Database Table
  *
- * This model represents a database table of athletes to the application
+ * This model represents a database table of Scales to the application
  *
  * @category    RxCompetition
  * @package     App
@@ -15,9 +15,9 @@
  */
 
 /**
- * Athletes Database Table
+ * Scales Database Table
  *
- * This model represents a database table of athletes to the application
+ * This model represents a database table of Scales to the application
  *
  * @category    RxCompetition
  * @package     App
@@ -28,7 +28,7 @@
  * @since       Class available since release 1.0.0
  */
 
-class App_Model_DbTable_Athlete
+class App_Model_DbTable_Scale
     extends Rx_Model_DbTable_Abstract
 {
     /**
@@ -36,7 +36,12 @@ class App_Model_DbTable_Athlete
      *
      * @var string
      */
-    protected $_name = 'athletes';
+    protected $_name = 'scales';
+
+    protected $_dependentTables = array(
+        'App_Model_DbTable_Event',
+        'App_Model_DbTable_Athlete',
+    );
 
     /**
      * The name of the database table that this table depends upon
@@ -49,11 +54,6 @@ class App_Model_DbTable_Athlete
             'refTableClass'     => 'App_Model_DbTable_Event',
             'refColumns'        => array('id'),
         ),
-        'Scale' => array(
-            'columns'           => array('scale_id'),
-            'refTableClass'     => 'App_Model_DbTable_Scale',
-            'refColumns'        => array('id'),
-        ),
     );
 
-} // END class App_Model_DbTable_Athletes
+} // END class App_Model_DbTable_Scales
