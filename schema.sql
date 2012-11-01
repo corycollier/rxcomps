@@ -2,7 +2,8 @@ CREATE  TABLE IF NOT EXISTS `events` (
   `id` INT NOT NULL AUTO_INCREMENT ,
   `name` VARCHAR(45) NOT NULL ,
   `description` TEXT NULL ,
-  PRIMARY KEY (`id`) )
+  PRIMARY KEY (`id`)
+)
 ENGINE = InnoDB;
 
 CREATE TABLE IF NOT EXISTS `scales` (
@@ -16,7 +17,8 @@ CREATE TABLE IF NOT EXISTS `scales` (
     FOREIGN KEY (`event_id`)
     REFERENCES `events` (`id`)
     ON DELETE CASCADE
-    ON UPDATE NO ACTION)
+    ON UPDATE NO ACTION
+)
 ENGINE = InnoDB;
 
 CREATE  TABLE IF NOT EXISTS `athletes` (
@@ -36,7 +38,7 @@ CREATE  TABLE IF NOT EXISTS `athletes` (
     REFERENCES `scales` (`id` )
     ON DELETE CASCADE
     ON UPDATE NO ACTION
-  )
+)
 ENGINE = InnoDB;
 
 CREATE  TABLE IF NOT EXISTS `competitions` (
@@ -50,15 +52,9 @@ CREATE  TABLE IF NOT EXISTS `competitions` (
   `goal` ENUM('time', 'amrap', 'max') NOT NULL DEFAULT 'time' ,
   PRIMARY KEY (`id`) ,
   INDEX `fk_events_idx` (`event_id` ASC) ,
-  INDEX `fk_scales_idx` (`scale_id` ASC) ,
   CONSTRAINT `fk_competitions_events`
     FOREIGN KEY (`event_id` )
     REFERENCES `events` (`id` )
-    ON DELETE CASCADE
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_competitions_scales`
-    FOREIGN KEY (`scale_id` )
-    REFERENCES `scales` (`id` )
     ON DELETE CASCADE
     ON UPDATE NO ACTION
   )
@@ -96,7 +92,8 @@ CREATE  TABLE IF NOT EXISTS `scores` (
     FOREIGN KEY (`competition_id` )
     REFERENCES `competitions` (`id` )
     ON DELETE CASCADE
-    ON UPDATE NO ACTION,
+    ON UPDATE NO ACTION
+)
 ENGINE = InnoDB;
 
 CREATE  TABLE IF NOT EXISTS `users` (
@@ -104,5 +101,6 @@ CREATE  TABLE IF NOT EXISTS `users` (
   `email` VARCHAR(255) NOT NULL ,
   `passwd` VARCHAR(40) NOT NULL ,
   PRIMARY KEY (`id`) ,
-  UNIQUE INDEX `email_UNIQUE` (`email` ASC) )
+  UNIQUE INDEX `email_UNIQUE` (`email` ASC)
+)
 ENGINE = InnoDB;

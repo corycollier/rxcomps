@@ -94,7 +94,25 @@ class App_Form_Athlete
      * @var Rx_Model_Abstract $model
      * @return Rx_Form_Abstract $this for a fluent interface
      */
-    public function injectDependencies ($model)
+    public function injectDependencies ($model, $params = array())
+    {
+        $this->_insertEvents($model, $params);
+        $this->_insertScales($model, $params);
+
+        return $this;
+
+    } // END function injectDependencies
+
+    /**
+     * _insertEvents()
+     *
+     * Inserts event options into the event_id form element
+     *
+     * @param App_Model_Athlete $model
+     * @param array $params
+     * @return App_Form_Athlete $this for object-chaining
+     */
+    protected function _insertEvents ($model, $params = array())
     {
         $events = $model->getParent('Event')->getTable()->fetchAll();
 
@@ -104,6 +122,21 @@ class App_Form_Athlete
             $element->addMultiOption($event->id, $event->name);
         }
 
+        return $this;
+
+    } // END function _insertEvents
+
+    /**
+     * _insertScales()
+     *
+     * Inserts scales options into the scale_id form element
+     *
+     * @param App_Model_Athlete $model
+     * @param array $params
+     * @return App_Form_Athlete $this for object-chaining
+     */
+    protected function _insertScales ($model, $params = array())
+    {
         $scales = $model->getParent('Scale')->getTable()->fetchAll();
 
         $element = $this->getElement('scale_id');
@@ -112,6 +145,8 @@ class App_Form_Athlete
             $element->addMultiOption($scale->id, $scale->name);
         }
 
-    } // END function injectDependencies
+        return $this;
+
+    } // END function _insertScales
 
 } // END class App_Form_Athlete

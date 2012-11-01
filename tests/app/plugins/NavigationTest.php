@@ -167,4 +167,59 @@ class Tests_App_Plugin_NavigationTest
 
     } // END function test__getAuth
 
+    /**
+     * test__addExtraPages()
+     *
+     * Tests the _addExtraPages method of the App_Plugin_Navigation class
+     *
+     * @covers App_Plugin_Navigation::_addExtraPages
+     * @dataProvider provide__addExtraPages
+     */
+    public function test__addExtraPages ($hasIdentity)
+    {
+        $subject = $this->getMockBuilder('App_Plugin_Navigation')
+            ->setMethods(array('_getAuth'))
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $auth = $this->getMockBuilder('Zend_Auth')
+            ->setMethods(array('hasIdentity'))
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $auth->expects($this->once())
+            ->method('hasIdentity')
+            ->will($this->returnValue($hasIdentity));
+
+        $subject->expects($this->once())
+            ->method('_getAuth')
+            ->will($this->returnValue($auth));
+
+        $container = new Zend_Navigation(array());
+
+        $method = new ReflectionMethod('App_Plugin_Navigation', '_addExtraPages');
+        $method->setAccessible(true);
+        $method->invoke($subject, $container);
+
+
+
+    } // END function test__addExtraPages
+
+    /**
+     * provide__addExtraPages()
+     *
+     * Provides data to use for testing the _addExtraPages method of
+     * the App_Plugin_Navigation class
+     *
+     * @return array
+     */
+    public function provide__addExtraPages ( )
+    {
+        return array(
+            array(true),
+            array(false),
+        );
+
+    } // END function provide__addExtraPages
+
 } // END class Tests_App_Plugin_NavigationTest

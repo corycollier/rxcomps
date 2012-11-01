@@ -45,7 +45,7 @@ class Tests_App_Model_CompetitionTest
     public function test_create ($values)
     {
         $subject = $this->getMockBuilder('App_Model_Competition')
-            ->setMethods(array('_create'))
+            ->setMethods(array('_create', '_saveScoring'))
             ->disableOriginalConstructor()
             ->getMock();
 
@@ -58,6 +58,10 @@ class Tests_App_Model_CompetitionTest
             ->method('_create')
             ->with($this->equalTo($modified))
             ->will($this->returnSelf());
+
+        $subject->expects($this->once())
+            ->method('_saveScoring')
+            ->with($this->equalTo(@$values['scoring']));
 
         $result = $subject->create($values);
 
@@ -94,7 +98,7 @@ class Tests_App_Model_CompetitionTest
     public function test_edit ($values = array())
     {
         $subject = $this->getMockBuilder('App_Model_Competition')
-            ->setMethods(array('_edit'))
+            ->setMethods(array('_edit', '_saveScoring'))
             ->disableOriginalConstructor()
             ->getMock();
 
@@ -106,6 +110,10 @@ class Tests_App_Model_CompetitionTest
             ->method('_edit')
             ->with($this->equalTo($modified))
             ->will($this->returnSelf());
+
+        $subject->expects($this->once())
+            ->method('_saveScoring')
+            ->with($this->equalTo(@$values['scoring']));
 
         $result = $subject->edit($values);
 

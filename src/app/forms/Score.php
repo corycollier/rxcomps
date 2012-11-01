@@ -125,6 +125,8 @@ class App_Form_Score
             $element->addMultiOption($athlete->id, $athlete->name);
         }
 
+        return $this;
+
     } // END function _insertAthletes
 
     /**
@@ -148,6 +150,8 @@ class App_Form_Score
         foreach ($competitions as $competition) {
             $element->addMultiOption($competition->id, $competition->name);
         }
+
+        return $this;
 
     } // END function _insertCompetitions
 
