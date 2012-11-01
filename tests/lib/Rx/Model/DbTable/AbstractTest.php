@@ -208,4 +208,37 @@ class Tests_Rx_Model_DbTable_Abstract
 
     } // END function provide_filterValues
 
+    /**
+     * test_insert()
+     *
+     * Tests the insert method of the Rx_Model_DbTable_Abstract class
+     *
+     * @covers Rx_Model_DbTable_Abstract::insert
+     * @dataProvider provide_insert
+     */
+    public function test_insert ($values = array())
+    {
+        $subject = $this->getMockBuilder('Rx_Model_DbTable_Abstract')
+            ->setMethods(array('filterValues'))
+            ->disableOriginalConstructor()
+            ->getMock();
+
+    } // END function test_insert
+
+    /**
+     * provide_insert()
+     *
+     * Provides data to use for testing the insert method of
+     * the Rx_Model_DbTable_Abstract class
+     *
+     * @return array
+     */
+    public function provide_insert ( )
+    {
+        return array(
+            array(),
+        );
+
+    } // END function provide_insert
+
 } // END class Tests_2Tests_Rx_Model_DbTable_Abstract
