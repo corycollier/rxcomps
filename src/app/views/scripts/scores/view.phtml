@@ -14,6 +14,8 @@
  */
 ?>
 
-<h2><?php echo $this->model->getValue('score'); ?></h2>
-<?php echo $this->model->getParent('Athlete')->getValue('name'); ?>
-<?php echo $this->model->getParent('Competition')->getValue('name'); ?>
+<?php echo $this->htmlAnchor('Create New Score', array(
+    'action'    => 'create',
+)); ?>
+
+<?php echo $this->scoreItem($this->model->row); ?>

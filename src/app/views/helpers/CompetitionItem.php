@@ -41,14 +41,48 @@ class App_View_Helper_CompetitionItem
      */
     public function competitionItem ($competition)
     {
+        $title = $this->_getTitle($competition);
+
+        $actions = $this->_getActions($competition);
+
+        return $title . $actions;
+
+    } // END function CompetitionItem
+
+    /**
+     * _getTitle()
+     *
+     * Gets the title value for an competition
+     *
+     * @param App_Model_Competition
+     * @return string
+     */
+    protected function _getTitle ($competition)
+    {
+        $view = $this->view;
+        $title = sprintf('<h3>%s</h3>', $view->htmlAnchor($competition->name, array(
+            'action'    => 'view',
+            'id'        => $competition->id,
+        )));
+
+        return $title;
+
+    } // END function _getTitle
+
+    /**
+     * _getActions()
+     *
+     * gets markup displaying links to perform actions on an competition
+     *
+     * @param App_Model_Competition
+     * @return string
+     */
+    protected function _getActions ($competition)
+    {
         $view = $this->view;
         $auth = $view->auth();
 
         $actions = '';
-        $title = sprintf('<h3>%s</h3>', $view->htmlAnchor($competition->name, array(
-            'action'    => 'view',
-            'id'        => $competition['id'],
-        )));
 
         if ($auth->hasIdentity()) {
             $actions = $view->htmlList(array(
@@ -65,8 +99,8 @@ class App_View_Helper_CompetitionItem
             ), false);
         }
 
-        return $title . $actions;
+        return $actions;
 
-    } // END function CompetitionItem
+    } // END function _getActions
 
 } // END class App_View_Helper_CompetitionItem

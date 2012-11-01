@@ -1,8 +1,8 @@
 <?php
 /**
- * Scales Database Table
+ * Scorings Database Table
  *
- * This model represents a database table of Scales to the application
+ * This model represents a database table of scoring mechanisms to the application
  *
  * @category    RxCompetition
  * @package     App
@@ -15,9 +15,9 @@
  */
 
 /**
- * Scales Database Table
+ * Scorings Database Table
  *
- * This model represents a database table of Scales to the application
+ * This model represents a database table of scoring mechanisms to the application
  *
  * @category    RxCompetition
  * @package     App
@@ -28,7 +28,7 @@
  * @since       Class available since release 1.0.0
  */
 
-class App_Model_DbTable_Scale
+class App_Model_DbTable_Scoring
     extends Rx_Model_DbTable_Abstract
 {
     /**
@@ -36,13 +36,7 @@ class App_Model_DbTable_Scale
      *
      * @var string
      */
-    protected $_name = 'scales';
-
-    protected $_dependentTables = array(
-        'App_Model_DbTable_Event',
-        'App_Model_DbTable_Athlete',
-        'App_Model_DbTable_Score',
-    );
+    protected $_name = 'scorings';
 
     /**
      * The name of the database table that this table depends upon
@@ -50,11 +44,11 @@ class App_Model_DbTable_Scale
      * @var string
      */
     protected $_referenceMap    = array(
-        'Event' => array(
-            'columns'           => array('event_id'),
-            'refTableClass'     => 'App_Model_DbTable_Event',
+        'Competition' => array(
+            'columns'           => array('competition_id'),
+            'refTableClass'     => 'App_Model_DbTable_Competition',
             'refColumns'        => array('id'),
         ),
     );
 
-} // END class App_Model_DbTable_Scales
+} // END class App_Model_DbTable_Scorings

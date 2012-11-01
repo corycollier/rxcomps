@@ -118,9 +118,7 @@ class Rx_Controller_Model
                     'id'        => $model->id
                 ));
             } catch (Zend_Exception $exception) {
-                $flash->addMessage(sprintf(
-                    self::MSG_CREATE_FAILURE, $this->_modelName
-                ), 'error');
+                $flash->addMessage($exception->getMessage(), 'error');
             }
         }
 
@@ -164,9 +162,7 @@ class Rx_Controller_Model
                     self::MSG_EDIT_SUCCESS, $this->_modelName
                 ), 'success');
             } catch (Zend_Exception $exception) {
-                $flash->addMessage(sprintf(
-                    self::MSG_EDIT_FAILURE, $this->_modelName
-                ), 'error');
+                $flash->addMessage($exception->getMessage(), 'error');
             }
         }
 
@@ -230,7 +226,7 @@ class Rx_Controller_Model
                     'action'        => 'index',
                 ), 'default', true);
             } catch (Zend_Exception $exception) {
-                var_dump($exception); die;
+                $flash->addMessage($exception->getMessage(), 'error');
             }
         }
 

@@ -32,7 +32,7 @@ class App_View_Helper_ScoreItem
     extends Zend_View_Helper_HtmlElement
 {
     /**
-     * ScoreItem()
+     * scoreItem()
      *
      * Main method of the view helper
      *
@@ -41,14 +41,65 @@ class App_View_Helper_ScoreItem
      */
     public function scoreItem ($score)
     {
-        $view = $this->view;
-        $auth = $view->auth();
+        $title = $this->_getTitle($score);
 
-        $actions = '';
+        $actions = $this->_getActions($score);
+
+        return $title . $actions;
+
+    } // END function scoreItem
+
+    /**
+     * _getTitle()
+     *
+     * Gets the title value for an score
+     *
+     * @param App_Model_Score
+     * @return string
+     */
+    protected function _getTitle ($score)
+    {
+        $view = $this->view;
+
+        $athlete = $score->findParentRow('App_Model_DbTable_Athlete');
+        $competition = $score->findParentRow('App_Model_DbTable_Competition');
+
         $title = sprintf('<h3>%s</h3>', $view->htmlAnchor($score->score, array(
             'action'    => 'view',
             'id'        => $score->id,
         )));
+
+        $details = sprintf('<p>%s %s</p>',
+            $view->htmlAnchor($athlete->name, array(
+                'controller'=> 'athletes',
+                'action'    => 'view',
+                'id'        => $athlete->id,
+            )),
+            $view->htmlAnchor($competition->name, array(
+                'controller'=> 'competitions',
+                'action'    => 'view',
+                'id'        => $competition->id,
+            ))
+        );
+
+        return $title . $details;
+
+    } // END function _getTitle
+
+    /**
+     * _getActions()
+     *
+     * gets markup displaying links to perform actions on an score
+     *
+     * @param App_Model_Score
+     * @return string
+     */
+    protected function _getActions ($score)
+    {
+        $view = $this->view;
+        $auth = $view->auth();
+
+        $actions = '';
 
         if ($auth->hasIdentity()) {
             $actions = $view->htmlList(array(
@@ -65,8 +116,8 @@ class App_View_Helper_ScoreItem
             ), false);
         }
 
-        return $title . $actions;
+        return $actions;
 
-    } // END function ScoreItem
+    } // END function _getActions
 
 } // END class App_View_Helper_ScoreItem

@@ -13,6 +13,8 @@
  * @since       File available since release 1.0.0
  */
 ?>
+<?php echo $this->htmlAnchor('Create New Athlete', array(
+    'action'    => 'create',
+)); ?>
 
-<h2><?php echo $this->model->getValue('name'); ?></h2>
-<p><?php echo $this->model->getValue('description'); ?></p>
+<?php echo $this->athleteItem($this->model->row); ?>

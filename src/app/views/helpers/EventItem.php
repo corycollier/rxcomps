@@ -41,14 +41,48 @@ class App_View_Helper_EventItem
      */
     public function eventItem ($event)
     {
-        $view = $this->view;
-        $auth = $view->auth();
+        $title = $this->_getTitle($event);
 
-        $actions = '';
+        $actions = $this->_getActions($event);
+
+        return $title . $actions;
+
+    } // END function eventItem
+
+    /**
+     * _getTitle()
+     *
+     * Gets the title value for an event
+     *
+     * @param App_Model_Event
+     * @return string
+     */
+    protected function _getTitle ($event)
+    {
+        $view = $this->view;
         $title = sprintf('<h3>%s</h3>', $view->htmlAnchor($event->name, array(
             'action'    => 'view',
             'id'        => $event->id,
         )));
+
+        return $title;
+
+    } // END function _getTitle
+
+    /**
+     * _getActions()
+     *
+     * gets markup displaying links to perform actions on an event
+     *
+     * @param App_Model_Event
+     * @return string
+     */
+    protected function _getActions ($event)
+    {
+        $view = $this->view;
+        $auth = $view->auth();
+
+        $actions = '';
 
         if ($auth->hasIdentity()) {
             $actions = $view->htmlList(array(
@@ -65,8 +99,9 @@ class App_View_Helper_EventItem
             ), false);
         }
 
-        return $title . $actions;
+        return $actions;
 
-    } // END function eventItem
+    } // END function _getActions
+
 
 } // END class App_View_Helper_EventItem

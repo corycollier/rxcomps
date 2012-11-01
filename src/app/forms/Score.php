@@ -63,12 +63,6 @@ class App_Form_Score
             'required'      => true,
         ));
 
-        $this->addElement('select', 'scale_id', array(
-            'label'         => 'Competition',
-            'placeholder'   => 'Select Competition',
-            'required'      => true,
-        ));
-
         $this->addElement('submit', 'save', array(
             'label'         => 'Save',
             'ignore'        => true,
@@ -102,10 +96,27 @@ class App_Form_Score
      */
     public function injectDependencies ($model, $params = array())
     {
+        $this->_insertAthletes($model, $params);
+        $this->_insertCompetitions($model, $params);
+
+        return $this;
+
+    } // END function injectDependencies
+
+    /**
+     * _insertAthletes()
+     *
+     * Populate the selection of athletes form element
+     *
+     * @var Rx_Model_Abstract $model
+     * @return Rx_Form_Abstract $this for a fluent interface
+     */
+    protected function _insertAthletes ($model, $params = array())
+    {
         // athletes
-        $athletesTable = $model->getParent('Athlete')->getTable();
-        $athletes = $athletesTable->fetchAll(
-            $athletesTable->buildWhere($params)
+        $table = $model->getParent('Athlete')->getTable();
+        $athletes = $table->fetchAll(
+            $table->buildWhere($params)
         );
 
         $element = $this->getElement('athlete_id');
@@ -114,10 +125,22 @@ class App_Form_Score
             $element->addMultiOption($athlete->id, $athlete->name);
         }
 
-        // competitions
-        $competitionsTable = $model->getParent('Competition')->getTable();
-        $competitions = $competitionsTable->fetchAll(
-            $competitionsTable->buildWhere($params)
+    } // END function _insertAthletes
+
+    /**
+     * _insertCompetitions()
+     *
+     * Populate the selection of competitions form element
+     *
+     * @var Rx_Model_Abstract $model
+     * @return Rx_Form_Abstract $this for a fluent interface
+     */
+    protected function _insertCompetitions ($model, $params = array())
+    {
+        // athletes
+        $table = $model->getParent('Competition')->getTable();
+        $competitions = $table->fetchAll(
+            $table->buildWhere($params)
         );
 
         $element = $this->getElement('competition_id');
@@ -126,6 +149,6 @@ class App_Form_Score
             $element->addMultiOption($competition->id, $competition->name);
         }
 
-    } // END function injectDependencies
+    } // END function _insertCompetitions
 
 } // END class App_Form_Score

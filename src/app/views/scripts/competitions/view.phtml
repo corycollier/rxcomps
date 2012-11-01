@@ -14,6 +14,12 @@
  */
 ?>
 
+<?php $event = $this->model->getParent('Event'); ?>
+<?php echo $this->htmlAnchor(sprintf('Back to %s', $event->getValue('name')), array(
+    'controller'    => 'events',
+    'action'        => 'view',
+    'id'            => $event->id,
+)); ?>
 <h2><?php echo $this->model->getValue('name'); ?></h2>
 <p><?php echo $this->model->getValue('description'); ?></p>
 <p><?php echo $this->htmlAnchor('Enter Scores', array(
@@ -36,7 +42,6 @@
         <td><?php echo $score->getValue('score'); ?></td>
         <td><?php echo $score->getParent('Athlete')->getValue('name'); ?></td>
         <td></td>
-
     </tr>
 <?php endforeach; ?>
 </table>

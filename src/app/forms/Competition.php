@@ -74,10 +74,14 @@ class App_Form_Competition
             'required'      => true,
         ));
 
-        $this->addElement('select', 'scale_id', array(
-            'label'         => 'Scale',
-            'placeholder'   => 'Select Scale',
+        $this->addElement('textarea', 'scoring', array(
+            'label'         => 'Scoring System',
+            'placeholder'   => implode(' ', array(
+                'Enter the points for each rank, in order of first to last.',
+                'Separate each rank/points with a newline'
+            )),
             'required'      => true,
+            'filters'       => array('StringTrim'),
         ));
 
         $this->addElement('submit', 'save', array(
@@ -97,24 +101,18 @@ class App_Form_Competition
      */
     public function injectDependencies ($model, $params = array())
     {
-        $events = $model->getParent('Event')->getTable()->fetchAll();
+        $eventsTable = $model->getParent('Event')->getTable();
+        $events = $eventsTable->fetchAll(
+            $eventsTable->buildWhere(array_diff_key($params, array(
+                'description'   => null,
+                'name'          => null,
+            )))
+        );
 
         $element = $this->getElement('event_id');
 
         foreach ($events as $event) {
             $element->addMultiOption($event->id, $event->name);
-        }
-
-        // scales
-        $scalesTable = $model->getParent('Scale')->getTable();
-        $scales = $scalesTable->fetchAll(
-            $scalesTable->buildWhere($params)
-        );
-
-        $element = $this->getElement('scale_id');
-
-        foreach ($scales as $scale) {
-            $element->addMultiOption($scale->id, $scale->name);
         }
 
     } // END function injectDependencies

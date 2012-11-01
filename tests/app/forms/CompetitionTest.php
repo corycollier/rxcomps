@@ -72,7 +72,7 @@ class Tests_App_Form_Competition
      * @covers App_Form_Competition::injectDependencies
      * @dataProvider provide_injectDependencies
      */
-    public function test_injectDependencies ($events = array())
+    public function test_injectDependencies ($events = array(), $scales = array())
     {
         $model = $this->getMockBuilder('Rx_Model_Abstract')
             ->setMethods(array('getParent'))
@@ -84,12 +84,27 @@ class Tests_App_Form_Competition
             ->disableOriginalConstructor()
             ->getMock();
 
-        $table = $this->getMockBuilder('Zend_Db_Table_Abstract')
-            ->setMethods(array('fetchAll'))
+        $scaleModel = $this->getMockBuilder('App_Model_Event')
+            ->setMethods(array('getTable'))
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $eventTable = $this->getMockBuilder('App_Model_DbTable_Event')
+            ->setMethods(array('fetchAll', 'buildWhere'))
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $scaleTable = $this->getMockBuilder('App_Model_DbTable_Scale')
+            ->setMethods(array('fetchAll', 'buildWhere'))
             ->disableOriginalConstructor()
             ->getMock();
 
         $eventElement = $this->getMockBuilder('Zend_Form_Element_Select')
+            ->setMethods(array('addMultiOption'))
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $scaleElement = $this->getMockBuilder('Zend_Form_Element_Select')
             ->setMethods(array('addMultiOption'))
             ->disableOriginalConstructor()
             ->getMock();
@@ -102,23 +117,38 @@ class Tests_App_Form_Competition
         $eventElement->expects($this->exactly(count($events)))
             ->method('addMultiOption');
 
-        $subject->expects($this->once())
-            ->method('getElement')
-            ->with($this->equalTo('event_id'))
-            ->will($this->returnValue($eventElement));
+        $scaleElement->expects($this->exactly(count($scales)))
+            ->method('addMultiOption');
 
-        $table->expects($this->once())
+        $subject->expects($this->any())
+            ->method('getElement')
+            ->will($this->returnValueMap(array(
+                array('event_id', $eventElement),
+                array('sacle_id', $scaleElement),
+            )));
+
+        $eventTable->expects($this->once())
             ->method('fetchAll')
             ->will($this->returnValue($events));
 
+        $scaleTable->expects($this->once())
+            ->method('fetchAll')
+            ->will($this->returnValue($scales));
+
         $eventModel->expects($this->once())
             ->method('getTable')
-            ->will($this->returnValue($table));
+            ->will($this->returnValue($eventTable));
 
-        $model->expects($this->once())
+        $scaleModel->expects($this->once())
+            ->method('getTable')
+            ->will($this->returnValue($scaleTable));
+
+        $model->expects($this->any())
             ->method('getParent')
-            ->with($this->equalTo('Event'))
-            ->will($this->returnValue($eventModel));
+            ->will($this->returnValueMap(array(
+                array('Event', $eventModel),
+                array('Scale', $scaleModel),
+            )));
 
         $subject->injectDependencies($model);
 

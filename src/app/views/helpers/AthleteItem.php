@@ -41,14 +41,48 @@ class App_View_Helper_AthleteItem
      */
     public function athleteItem ($athlete)
     {
-        $view = $this->view;
-        $auth = $view->auth();
+        $title = $this->_getTitle($athlete);
 
-        $actions = '';
+        $actions = $this->_getActions($athlete);
+
+        return $title . $actions;
+
+    } // END function athleteItem
+
+    /**
+     * _getTitle()
+     *
+     * Gets the title value for an athlete
+     *
+     * @param App_Model_Athlete
+     * @return string
+     */
+    protected function _getTitle ($athlete)
+    {
+        $view = $this->view;
         $title = sprintf('<h3>%s</h3>', $view->htmlAnchor($athlete->name, array(
             'action'    => 'view',
             'id'        => $athlete->id,
         )));
+
+        return $title;
+
+    } // END function _getTitle
+
+    /**
+     * _getActions()
+     *
+     * gets markup displaying links to perform actions on an athlete
+     *
+     * @param App_Model_Athlete
+     * @return string
+     */
+    protected function _getActions ($athlete)
+    {
+        $view = $this->view;
+        $auth = $view->auth();
+
+        $actions = '';
 
         if ($auth->hasIdentity()) {
             $actions = $view->htmlList(array(
@@ -65,8 +99,8 @@ class App_View_Helper_AthleteItem
             ), false);
         }
 
-        return $title . $actions;
+        return $actions;
 
-    } // END function athleteItem
+    } // END function _getActions
 
 } // END class App_View_Helper_AthleteItem

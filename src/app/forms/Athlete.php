@@ -57,6 +57,12 @@ class App_Form_Athlete
             'required'      => true,
         ));
 
+        $this->addElement('select', 'scale_id', array(
+            'label'         => 'Scale',
+            'placeholder'   => 'Select Scale',
+            'required'      => true,
+        ));
+
         $this->addElement('submit', 'save', array(
             'label'         => 'Save',
             'ignore'        => true,
@@ -96,6 +102,14 @@ class App_Form_Athlete
 
         foreach ($events as $event) {
             $element->addMultiOption($event->id, $event->name);
+        }
+
+        $scales = $model->getParent('Scale')->getTable()->fetchAll();
+
+        $element = $this->getElement('scale_id');
+
+        foreach ($scales as $scale) {
+            $element->addMultiOption($scale->id, $scale->name);
         }
 
     } // END function injectDependencies

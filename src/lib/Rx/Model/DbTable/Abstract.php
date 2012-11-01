@@ -98,4 +98,34 @@ class Rx_Model_DbTable_Abstract
 
     } // END function filterValues
 
+    /**
+     * insert()
+     *
+     * Overriding the insert method to ensure that values to this table are
+     * filtered by the schema first
+     *
+     * @param array $values
+     *
+     */
+    public function insert ($values)
+    {
+        return parent::insert($this->filterValues($values));
+
+    } // END function insert
+
+    /**
+     * update()
+     *
+     * Overriding the update method to ensure that values to this table are
+     * filtered by the schema first
+     *
+     * @param array $values
+     *
+     */
+    public function update ($values, $where = null)
+    {
+        return parent::update($this->filterValues($values), $where);
+
+    } // END function update
+
 } // END class Rx_Model_DbTable_Abstract

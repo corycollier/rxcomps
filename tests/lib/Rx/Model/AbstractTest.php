@@ -609,7 +609,7 @@ class Tests_Rx_Model_AbstractTest
 
         $result = $model->paginate($params);
 
-        $this->assertEquals($expected, $result);
+        $this->assertEquals($expected, $result->toArray());
 
     } // END function test_paginate
 
