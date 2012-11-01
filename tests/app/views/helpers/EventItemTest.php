@@ -76,7 +76,9 @@ class Tests_App_View_Helper_EventItem
         // $expected, $hasIdentity, $event, $title, $actions = null)
         return array(
             array(
-                'title', (object)array('id' => 1, 'name' => 'value'), 'title',
+                '<div class="event-item">title</div>',
+                (object)array('id' => 1, 'name' => 'value'),
+                'title',
             ),
         );
 

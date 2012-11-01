@@ -76,7 +76,9 @@ class Tests_App_View_Helper_CompetitionItem
         // $expected, $hasIdentity, $competition, $title, $actions = null)
         return array(
             array(
-                'title', (object)array('id' => 1, 'name' => 'value'), 'title',
+                '<div class="competition-item">title</div>',
+                (object)array('id' => 1, 'name' => 'value'),
+                'title',
             ),
         );
 
@@ -138,7 +140,7 @@ class Tests_App_View_Helper_CompetitionItem
                 'name'  => 'Competition name',
             )),
 
-            array('<h3>another html-anchor</h3>', 'another html-anchor', (object)array(
+            array('<h3>another Html-anchor</h3>', 'another html-anchor', (object)array(
                 'id'    => 1,
                 'name'  => 'Competition name does not matter here',
             )),

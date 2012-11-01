@@ -75,7 +75,9 @@ class Tests_App_View_Helper_ScoreItem
         // $expected, $hasIdentity, $score, $title, $actions = null)
         return array(
             array(
-                'title', (object)array('id' => 1, 'name' => 'value'), 'title',
+                '<div class="score-item">title</div>',
+                (object)array('id' => 1, 'name' => 'value'),
+                'title',
             ),
         );
 

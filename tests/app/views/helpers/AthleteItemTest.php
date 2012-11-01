@@ -76,7 +76,9 @@ class Tests_App_View_Helper_AtheleteItem
         // $expected, $hasIdentity, $athlete, $title, $actions = null)
         return array(
             array(
-                'title', (object)array('id' => 1, 'name' => 'value'), 'title',
+                '<div class="athlete-item">title</div>',
+                (object)array('id' => 1, 'name' => 'value'),
+                'title',
             ),
         );
 
