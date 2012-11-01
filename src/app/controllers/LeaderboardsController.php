@@ -50,9 +50,13 @@ class LeaderboardsController
      */
     public function viewAction ( )
     {
+        $request = $this->getRequest();
         $leaderboards = $this->getModel('Leaderboard');
 
-        $this->view->items = $leaderboards->load($this->getRequest()->getParam('competition_id'));
+        $this->view->items = $leaderboards->load(
+            $request->getParam('competition_id'),
+            $request->getParam('scale_id')
+        );
 
     } // END function viewAction
 
@@ -63,9 +67,12 @@ class LeaderboardsController
      */
     public function eventAction ( )
     {
+        $request = $this->getRequest();
         $leaderboards = $this->getModel('Leaderboard');
 
-        $this->view->items = $leaderboards->event($this->getRequest()->getParam('event_id'));
+        $this->view->items = $leaderboards->event(
+            $request->getParam('event_id')
+        );
 
     } // END function eventAction
 

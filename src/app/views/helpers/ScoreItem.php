@@ -70,12 +70,12 @@ class App_View_Helper_ScoreItem
         )));
 
         $details = sprintf('<p>%s %s</p>',
-            $view->htmlAnchor($athlete->name, array(
+            'Performed by: ' . $view->htmlAnchor($athlete->name, array(
                 'controller'=> 'athletes',
                 'action'    => 'view',
                 'id'        => $athlete->id,
             )),
-            $view->htmlAnchor($competition->name, array(
+            'for the event: ' . $view->htmlAnchor($competition->name, array(
                 'controller'=> 'competitions',
                 'action'    => 'view',
                 'id'        => $competition->id,

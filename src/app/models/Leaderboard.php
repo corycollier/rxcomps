@@ -59,6 +59,19 @@ class App_Model_Leaderboard
     } // END function getCompetitionTable
 
     /**
+     * getAthletesTable()
+     *
+     * Gets an instance of the athlete table class
+     *
+     * @return App_Model_DbTable_Competition
+     */
+    public function getAthletesTable ( )
+    {
+        return new App_Model_DbTable_Athlete;
+
+    } // END function getAthletesTable
+
+    /**
      * load()
      *
      * Loads up the leaderboards for a given competition
@@ -66,17 +79,42 @@ class App_Model_Leaderboard
      * @param integer $competitionId
      * @return Zend_Db_Table_Rowset $this for object chaining
      */
-    public function load ($competitionId)
+    public function load ($competitionId, $scaleId)
     {
         $table = $this->getScoreTable();
 
         return $table->fetchAll(
             $table->select()
                 ->where(sprintf('competition_id = %d', $competitionId))
+                ->where('athlete_id IN (?)', $this->getAthleteIds($scaleId))
                 ->order('score DESC')
         );
 
     } // END function load
+
+    /**
+     * getAthleteIds()
+     *
+     * Gets the athlete identifiers for a given scale Id
+     *
+     * @param integer $scaleId
+     * @return array
+     */
+    public function getAthleteIds ($scaleId)
+    {
+        $table = $this->getAthletesTable();
+        $athletes = $table->fetchAll(
+            $table->select()
+                ->where(sprintf('scale_id = %d', $scaleId))
+        );
+
+        $results = array();
+        foreach ($athletes as $athlete) {
+            $results[] = $athlete->id;
+        }
+
+        return $results;
+    }
 
     /**
      * event()
