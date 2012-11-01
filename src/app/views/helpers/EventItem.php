@@ -45,7 +45,7 @@ class App_View_Helper_EventItem
 
         $actions = $this->_getActions($event);
 
-        return $title . $actions;
+        return sprintf('<div class="event-item">%s%s</div>', $title, $actions);
 
     } // END function eventItem
 

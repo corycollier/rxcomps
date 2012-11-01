@@ -6,6 +6,8 @@
 @import "blueprint/liquid";
 @import "blueprint/colors";
 @import "blueprint/fancy-type";
+@import "blueprint/scaffolding";
+@import "compass/css3";
 
 body {
     // text-align: center;
@@ -116,11 +118,60 @@ textarea {
 /* ==========================================================================
    Author's custom styles
    ========================================================================== */
+body {
+    background: #ddd;
+}
 
+body .container {
+    background: #fff;
+    padding: 10px;
+    @include box-shadow(0 0 2px rgba(0,0,0,0.8), 0 0 1px rgba(255,255,255,0.8) inset);
+    @include border-radius(2px);
+    margin-bottom: 10px;
+}
 
+.nav {
+    li {
+        list-style: none;
+        padding: 10px 5px;
+        text-align: center;
+        margin-right: 1px;
+        @include inline-block;
+    }
+}
 
+.flash-messages {
+    ul {
+        margin: 0;
+    }
+}
 
+ul.actions {
+    padding: 0;
+    margin: 0;
 
+    li {
+        list-style: none;
+        font-size: 0.8em;
+        @include inline-block;
+    }
+}
+
+.competition-item
+, .athlete-item
+, .event-item
+, .score-item {
+
+    margin: 1em 0;
+    padding: 0.5em ;
+    background: rgba(0,0,0,0.05);
+    @include border-radius(2px);
+
+    h3 {
+        margin: 0;
+        padding: 0.5em 0;
+    }
+}
 
 
 

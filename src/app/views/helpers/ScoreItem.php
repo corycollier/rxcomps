@@ -45,7 +45,7 @@ class App_View_Helper_ScoreItem
 
         $actions = $this->_getActions($score);
 
-        return $title . $actions;
+        return sprintf('<div class="score-item">%s%s</div>', $title, $actions);
 
     } // END function scoreItem
 
@@ -82,7 +82,7 @@ class App_View_Helper_ScoreItem
             ))
         );
 
-        return $title . $details;
+        return ucwords($title) . $details;
 
     } // END function _getTitle
 

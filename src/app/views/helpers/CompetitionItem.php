@@ -45,7 +45,7 @@ class App_View_Helper_CompetitionItem
 
         $actions = $this->_getActions($competition);
 
-        return $title . $actions;
+        return sprintf('<div class="competition-item">%s%s</div>', $title, $actions);
 
     } // END function CompetitionItem
 
@@ -65,7 +65,7 @@ class App_View_Helper_CompetitionItem
             'id'        => $competition->id,
         )));
 
-        return $title;
+        return ucwords($title);
 
     } // END function _getTitle
 

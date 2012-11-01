@@ -13,8 +13,17 @@
  * @since       File available since release 1.0.0
  */
 ?>
-<?php echo $this->htmlAnchor('Create New Athlete', array(
-    'action'    => 'create',
-)); ?>
+<?php echo $this->htmlList(array(
+    $this->htmlAnchor('Add Athlete', array(
+        'action'    => 'create',
+    ))
+), false, array(
+    'class' => 'actions',
+), false); ?>
 
 <?php echo $this->athleteItem($this->model->row); ?>
+
+<h3>Scores</h3>
+<?php echo $this->action('list', 'scores', 'default', array(
+    'athlete_id' => $this->model->id,
+)); ?>

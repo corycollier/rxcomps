@@ -15,19 +15,25 @@
 ?>
 
 <?php $event = $this->model->getParent('Event'); ?>
-<?php echo $this->htmlAnchor(sprintf('Back to %s', $event->getValue('name')), array(
-    'controller'    => 'events',
-    'action'        => 'view',
-    'id'            => $event->id,
-)); ?>
+<?php echo $this->htmlList(array(
+    $this->htmlAnchor(sprintf('Back to %s', $event->getValue('name')), array(
+        'controller'    => 'events',
+        'action'        => 'view',
+        'id'            => $event->id,
+    )),
+    $this->htmlAnchor('Enter Scores', array(
+        'controller'    => 'scores',
+        'action'        => 'create',
+        'event_id'      => $this->model->getParent('Event')->id,
+        'competition_id'=> $this->model->id,
+    ))
+), false, array(
+    'class' => 'actions',
+), false); ?>
+
 <h2><?php echo $this->model->getValue('name'); ?></h2>
 <p><?php echo $this->model->getValue('description'); ?></p>
-<p><?php echo $this->htmlAnchor('Enter Scores', array(
-    'controller'    => 'scores',
-    'action'        => 'create',
-    'event_id'      => $this->model->getParent('Event')->id,
-    'competition_id'=> $this->model->id,
-)); ?></p>
+<p></p>
 
 
 

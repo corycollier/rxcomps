@@ -43,11 +43,11 @@
             <h1 class="container"><a href="/">Rx Competition</a></h1>
         </div>
         <div class="nav">
-            <?php echo $this->navigation(); ?>
+            <?php echo $this->navigation()->menu()->setUlClass('container')->menu(); ?>
         </div>
         <div class="content">
-            <?php echo $this->flashMessenger($this->flashMessenger); ?>
             <div class="container">
+            <?php echo $this->flashMessenger($this->flashMessenger); ?>
             <div class="page-content">
                 <?php echo $this->layout()->content; ?>
             </div>

@@ -45,7 +45,7 @@ class App_View_Helper_AthleteItem
 
         $actions = $this->_getActions($athlete);
 
-        return $title . $actions;
+        return sprintf('<div class="athlete-item">%s%s</div>', $title, $actions);
 
     } // END function athleteItem
 
