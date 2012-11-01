@@ -219,9 +219,33 @@ class Tests_Rx_Model_DbTable_Abstract
     public function test_insert ($values = array())
     {
         $subject = $this->getMockBuilder('Rx_Model_DbTable_Abstract')
-            ->setMethods(array('filterValues'))
+            ->setMethods(array('filterValues', '_setupPrimaryKey'))
             ->disableOriginalConstructor()
             ->getMock();
+
+        $db = $this->getMockBuilder('Zend_Db_Adapter_Pdo_Pgsql')
+            ->setMethods(array('nextSequenceId', 'insert', 'lastInsertId'))
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $dbProperty = new ReflectionProperty('Rx_Model_DbTable_Abstract', '_db');
+        $dbProperty->setAccessible(true);
+        $dbProperty->setValue($subject, $db);
+
+        $primaryProperty = new ReflectionProperty('Rx_Model_DbTable_Abstract', '_primary');
+        $primaryProperty->setAccessible(true);
+        $primaryProperty->setValue($subject, 'primary_key');
+
+        $identityProperty = new ReflectionProperty('Rx_Model_DbTable_Abstract', '_identity');
+        $identityProperty->setAccessible(true);
+        $identityProperty->setValue($subject, 0);
+
+        $subject->expects($this->once())
+            ->method('filterValues')
+            ->with($this->equalTo($values))
+            ->will($this->returnValue($values));
+
+        $result = $subject->insert($values);
 
     } // END function test_insert
 
@@ -240,5 +264,71 @@ class Tests_Rx_Model_DbTable_Abstract
         );
 
     } // END function provide_insert
+
+    /**
+     * test_update()
+     *
+     * Tests the update method of the Rx_Model_DbTable_Abstract class
+     *
+     * @covers Rx_Model_DbTable_Abstract::update
+     * @dataProvider provide_update
+     */
+    public function test_update ($expected, $values = array(), $where = '')
+    {
+    // public function update(array $data, $where)
+    // {
+    //     $tableSpec = ($this->_schema ? $this->_schema . '.' : '') . $this->_name;
+    //     return $this->_db->update($tableSpec, $data, $where);
+    // }
+
+        $subject = $this->getMockBuilder('Rx_Model_DbTable_Abstract')
+            ->setMethods(array('filterValues'))
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $db = $this->getMockBuilder('Zend_Db_Adapter_Pdo_Pgsql')
+            ->setMethods(array('update'))
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $db->expects($this->once())
+            ->method('update')
+            ->with(
+                $this->equalTo(''),
+                $this->equalTo($values),
+                $this->equalTo($where)
+            )
+            ->will($this->returnValue($expected));
+
+        $dbProperty = new ReflectionProperty('Rx_Model_DbTable_Abstract', '_db');
+        $dbProperty->setAccessible(true);
+        $dbProperty->setValue($subject, $db);
+
+        $subject->expects($this->once())
+            ->method('filterValues')
+            ->with($this->equalTo($values))
+            ->will($this->returnValue($values));
+
+        $result = $subject->update($values, $where);
+
+        $this->assertEquals($expected, $result);
+
+    } // END function test_update
+
+    /**
+     * provide_update()
+     *
+     * Provides data to use for testing the update method of
+     * the Rx_Model_DbTable_Abstract class
+     *
+     * @return array
+     */
+    public function provide_update ( )
+    {
+        return array(
+            'no values, no where' => array('expected'),
+        );
+
+    } // END function provide_update
 
 } // END class Tests_2Tests_Rx_Model_DbTable_Abstract

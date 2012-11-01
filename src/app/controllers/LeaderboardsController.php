@@ -60,20 +60,4 @@ class LeaderboardsController
 
     } // END function viewAction
 
-    /**
-     * eventAction()
-     *
-     * Action to display the aggregeate leaderboards for an event
-     */
-    public function eventAction ( )
-    {
-        $request = $this->getRequest();
-        $leaderboards = $this->getModel('Leaderboard');
-
-        $this->view->items = $leaderboards->event(
-            $request->getParam('event_id')
-        );
-
-    } // END function eventAction
-
 } // END class App_Controller_className
