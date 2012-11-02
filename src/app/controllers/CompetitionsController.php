@@ -48,4 +48,21 @@ class CompetitionsController
 
     } // END function indexAction
 
+    /**
+     * leaderboardsAction()
+     *
+     * The leaderboards for a specific competition
+     */
+    public function leaderboardsAction ( )
+    {
+        $model = $this->getModel('Competition');
+        $request = $this->getRequest();
+
+        $model->load($request->getParam('id'));
+
+        $this->view->model = $model;
+        $this->view->leaderboards = $model->getLeaderboards();
+
+    } // END function leaderboardsAction
+
 } // END class App_Controller_CompetitionsController

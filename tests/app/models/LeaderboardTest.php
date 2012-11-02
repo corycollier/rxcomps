@@ -84,5 +84,37 @@ class Tests_App_Model_LeaderboardTest
 
     } // END function test_getAthletesTable
 
+    /**
+     * test_event()
+     *
+     * Tests the event of the App_Model_Leaderboard
+     *
+     * @covers          App_Model_Leaderboard::event
+     * @dataProvider    provide_event
+     */
+    public function test_event ( )
+    {
+        $subject = new App_Model_Leaderboard;
+
+        $subject->event(1);
+
+
+
+    } // END function test_event
+
+    /**
+     * provide_event()
+     *
+     * Provides data for the event method of the
+     * App_Model_Leaderboard class
+     */
+    public function provide_event ( )
+    {
+        return array(
+            array(),
+        );
+
+    } // END function provide_event
+
 
 } // END class Tests_App_Model_LeaderboardTest

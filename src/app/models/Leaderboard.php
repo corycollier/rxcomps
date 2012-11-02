@@ -72,6 +72,19 @@ class App_Model_Leaderboard
     } // END function getAthletesTable
 
     /**
+     * getEventTable()
+     *
+     * Gets an instance of the event table class
+     *
+     * @return App_Model_DbTable_Competition
+     */
+    public function getEventTable ( )
+    {
+        return new App_Model_DbTable_Event;
+
+    } // END function getEventTable
+
+    /**
      * load()
      *
      * Loads up the leaderboards for a given competition
@@ -126,16 +139,34 @@ class App_Model_Leaderboard
      */
     public function event ($eventId)
     {
-        $table = $this->getCompetitionTable();
+        $event = $this->_getEventModel();
+        $table = $this->getEventTable();
+        $row = $table->fetchRow(sprintf('id = %d', $eventId));
+        $event->fromRow($row);
 
-        $competitions = $table->fetchAll(
-            $table->select()
-                ->where(sprintf('event_id = %d', $eventId))
+        $competitions = $event->getChildren('Competition');
 
-        );
+        $results = array();
+        foreach ($competitions as $competition) {
+            $results[$competition->id] = $competition->getLeaderboards();
+        }
 
-        var_dump($competitions); die;
+        print_r($results); die;
+
 
     } // END function event
+
+    /**
+     * _getEventModel()
+     *
+     * Gets a new instance of the event model
+     *
+     * @return
+     */
+    protected function _getEventModel ( )
+    {
+        return new App_Model_Event;
+
+    } // END function _getEventModel
 
 } // END class App_Model_Leaderboard

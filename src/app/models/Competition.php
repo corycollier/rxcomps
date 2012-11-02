@@ -133,6 +133,19 @@ class App_Model_Competition
     } // END function _saveScoring
 
     /**
+     * _getScoreTable()
+     *
+     * Gets a new instance of the score table
+     *
+     * @return App_Model_DbTable_Score
+     */
+    protected function _getScoreTable ( )
+    {
+        return new App_Model_DbTable_Score;
+
+    } // END function _getScoreTable
+
+    /**
      * _getScoringTable()
      *
      * Gets a new instance of the scorings table
@@ -144,5 +157,39 @@ class App_Model_Competition
         return new App_Model_DbTable_Scoring;
 
     } // END function _getScoringTable
+
+    /**
+     * getLeaderboards()
+     *
+     * Gets an array representing the leaderboards
+     *
+     * @return array
+     */
+    public function getLeaderboards ( )
+    {
+        $scoreTable = $this->_getScoreTable();
+        $scoringTable = $this->_getScoringTable();
+        $scoring = $scoringTable->fetchRow(sprintf('competition_id = %d', $this->id));
+
+        $scores = $scoreTable->fetchAll(
+            $scoreTable->buildWhere(array(
+                'competition_id'
+            ))
+            ->order('score DESC')
+        )->toArray();
+
+        $points = explode(PHP_EOL, $scoring->definition);
+
+        $results = array();
+
+        foreach ($scores as $i => $score) {
+            $results[$score['athlete_id']] = array_merge($score, array(
+                'points'    => $points[$i],
+            ));
+        }
+
+        return $results;
+
+    } // END function leaderboards
 
 }// END class App_Model_Competitions
