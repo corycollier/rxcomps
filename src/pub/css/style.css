@@ -1561,13 +1561,17 @@ body .container {
 .flash-messages ul {
   margin: 0;
 }
+/* line 147, ../../app/views/sass/style.scss */
+.flash-messages li {
+  list-style: none;
+}
 
-/* line 149, ../../app/views/sass/style.scss */
+/* line 152, ../../app/views/sass/style.scss */
 ul.actions {
   padding: 0;
   margin: 0;
 }
-/* line 153, ../../app/views/sass/style.scss */
+/* line 156, ../../app/views/sass/style.scss */
 ul.actions li {
   list-style: none;
   font-size: 0.8em;
@@ -1582,7 +1586,7 @@ ul.actions li {
   *display: inline;
 }
 
-/* line 163, ../../app/views/sass/style.scss */
+/* line 166, ../../app/views/sass/style.scss */
 .competition-item
 , .athlete-item
 , .event-item
@@ -1597,7 +1601,7 @@ ul.actions li {
   -khtml-border-radius: 2px;
   border-radius: 2px;
 }
-/* line 170, ../../app/views/sass/style.scss */
+/* line 173, ../../app/views/sass/style.scss */
 .competition-item
 h3, .athlete-item
 h3, .event-item
@@ -1612,7 +1616,7 @@ h3, .score-item h3 {
 /*
  * Image replacement
  */
-/* line 195, ../../app/views/sass/style.scss */
+/* line 198, ../../app/views/sass/style.scss */
 .ir {
   background-color: transparent;
   border: 0;
@@ -1621,7 +1625,7 @@ h3, .score-item h3 {
   *text-indent: -9999px;
 }
 
-/* line 203, ../../app/views/sass/style.scss */
+/* line 206, ../../app/views/sass/style.scss */
 .ir:before {
   content: "";
   display: block;
@@ -1632,7 +1636,7 @@ h3, .score-item h3 {
 /*
  * Hide from both screenreaders and browsers: h5bp.com/u
  */
-/* line 214, ../../app/views/sass/style.scss */
+/* line 217, ../../app/views/sass/style.scss */
 .hidden {
   display: none !important;
   visibility: hidden;
@@ -1641,7 +1645,7 @@ h3, .score-item h3 {
 /*
  * Hide only visually, but have it available for screenreaders: h5bp.com/v
  */
-/* line 223, ../../app/views/sass/style.scss */
+/* line 226, ../../app/views/sass/style.scss */
 .visuallyhidden {
   border: 0;
   clip: rect(0 0 0 0);
@@ -1657,7 +1661,7 @@ h3, .score-item h3 {
  * Extends the .visuallyhidden class to allow the element to be focusable
  * when navigated to via the keyboard: h5bp.com/p
  */
-/* line 240, ../../app/views/sass/style.scss */
+/* line 243, ../../app/views/sass/style.scss */
 .visuallyhidden.focusable:active,
 .visuallyhidden.focusable:focus {
   clip: auto;
@@ -1671,7 +1675,7 @@ h3, .score-item h3 {
 /*
  * Hide visually and from screenreaders, but maintain layout
  */
-/* line 253, ../../app/views/sass/style.scss */
+/* line 256, ../../app/views/sass/style.scss */
 .invisible {
   visibility: hidden;
 }
@@ -1687,7 +1691,7 @@ h3, .score-item h3 {
  * 2. The use of `table` rather than `block` is only necessary if using
  *    `:before` to contain the top-margins of child elements.
  */
-/* line 270, ../../app/views/sass/style.scss */
+/* line 273, ../../app/views/sass/style.scss */
 .clearfix:before,
 .clearfix:after {
   content: " ";
@@ -1696,7 +1700,7 @@ h3, .score-item h3 {
   /* 2 */
 }
 
-/* line 275, ../../app/views/sass/style.scss */
+/* line 278, ../../app/views/sass/style.scss */
 .clearfix:after {
   clear: both;
 }
@@ -1705,7 +1709,7 @@ h3, .score-item h3 {
  * For IE 6/7 only
  * Include this rule to trigger hasLayout and contain floats.
  */
-/* line 284, ../../app/views/sass/style.scss */
+/* line 287, ../../app/views/sass/style.scss */
 .clearfix {
   *zoom: 1;
 }
@@ -1726,7 +1730,7 @@ h3, .score-item h3 {
    Inlined to avoid required HTTP connection: h5bp.com/r
    ========================================================================== */
 @media print {
-  /* line 309, ../../app/views/sass/style.scss */
+  /* line 312, ../../app/views/sass/style.scss */
   * {
     background: transparent !important;
     color: #000 !important;
@@ -1735,18 +1739,18 @@ h3, .score-item h3 {
     text-shadow: none !important;
   }
 
-  /* line 317, ../../app/views/sass/style.scss */
+  /* line 320, ../../app/views/sass/style.scss */
   a,
   a:visited {
     text-decoration: underline;
   }
 
-  /* line 321, ../../app/views/sass/style.scss */
+  /* line 324, ../../app/views/sass/style.scss */
   a[href]:after {
     content: " (" attr(href) ")";
   }
 
-  /* line 325, ../../app/views/sass/style.scss */
+  /* line 328, ../../app/views/sass/style.scss */
   abbr[title]:after {
     content: " (" attr(title) ")";
   }
@@ -1754,33 +1758,33 @@ h3, .score-item h3 {
   /*
    * Don't show links for images, or javascript/internal links
    */
-  /* line 335, ../../app/views/sass/style.scss */
+  /* line 338, ../../app/views/sass/style.scss */
   .ir a:after,
   a[href^="javascript:"]:after,
   a[href^="#"]:after {
     content: "";
   }
 
-  /* line 340, ../../app/views/sass/style.scss */
+  /* line 343, ../../app/views/sass/style.scss */
   pre,
   blockquote {
     border: 1px solid #999;
     page-break-inside: avoid;
   }
 
-  /* line 345, ../../app/views/sass/style.scss */
+  /* line 348, ../../app/views/sass/style.scss */
   thead {
     display: table-header-group;
     /* h5bp.com/t */
   }
 
-  /* line 350, ../../app/views/sass/style.scss */
+  /* line 353, ../../app/views/sass/style.scss */
   tr,
   img {
     page-break-inside: avoid;
   }
 
-  /* line 354, ../../app/views/sass/style.scss */
+  /* line 357, ../../app/views/sass/style.scss */
   img {
     max-width: 100% !important;
   }
@@ -1789,7 +1793,7 @@ h3, .score-item h3 {
     margin: 0.5cm;
 }
 
-  /* line 364, ../../app/views/sass/style.scss */
+  /* line 367, ../../app/views/sass/style.scss */
   p,
   h2,
   h3 {
@@ -1797,7 +1801,7 @@ h3, .score-item h3 {
     widows: 3;
   }
 
-  /* line 370, ../../app/views/sass/style.scss */
+  /* line 373, ../../app/views/sass/style.scss */
   h2,
   h3 {
     page-break-after: avoid;
