@@ -58,10 +58,13 @@ class CompetitionsController
         $model = $this->getModel('Competition');
         $request = $this->getRequest();
 
-        $model->load($request->getParam('id'));
+        $competitionId = $request->getParam('id');
+        $scaleId = $request->getParam('scale_id');
+
+        $model->load($competitionId);
 
         $this->view->model = $model;
-        $this->view->leaderboards = $model->getLeaderboards();
+        $this->view->leaderboards = $model->getLeaderboards($scaleId);
 
     } // END function leaderboardsAction
 

@@ -54,7 +54,7 @@ class LeaderboardsController
         $leaderboards = $this->getModel('Leaderboard');
 
         $this->view->items = $leaderboards->load(
-            $request->getParam('competition_id'),
+            $request->getParam('event_id'),
             $request->getParam('scale_id')
         );
 

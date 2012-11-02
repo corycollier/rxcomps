@@ -159,13 +159,26 @@ class App_Model_Competition
     } // END function _getScoringTable
 
     /**
+     * getAthletesTable()
+     *
+     * Gets an instance of the athlete table class
+     *
+     * @return App_Model_DbTable_Competition
+     */
+    public function getAthletesTable ( )
+    {
+        return new App_Model_DbTable_Athlete;
+
+    } // END function getAthletesTable
+
+    /**
      * getLeaderboards()
      *
      * Gets an array representing the leaderboards
      *
      * @return array
      */
-    public function getLeaderboards ( )
+    public function getLeaderboards ($scaleId)
     {
         $scoreTable = $this->_getScoreTable();
         $scoringTable = $this->_getScoringTable();
@@ -173,8 +186,9 @@ class App_Model_Competition
 
         $scores = $scoreTable->fetchAll(
             $scoreTable->buildWhere(array(
-                'competition_id'
+                'competition_id' => $this->id,
             ))
+            ->where('athlete_id IN (?)', $this->getAthleteIds($scaleId))
             ->order('score DESC')
         )->toArray();
 
@@ -184,12 +198,37 @@ class App_Model_Competition
 
         foreach ($scores as $i => $score) {
             $results[$score['athlete_id']] = array_merge($score, array(
-                'points'    => $points[$i],
+                'points'    => (int)$points[$i],
+                'rank'      => $i + 1,
             ));
         }
 
         return $results;
 
     } // END function leaderboards
+
+    /**
+     * getAthleteIds()
+     *
+     * Gets the athlete identifiers for a given scale Id
+     *
+     * @param integer $scaleId
+     * @return array
+     */
+    public function getAthleteIds ($scaleId)
+    {
+        $table = $this->getAthletesTable();
+        $athletes = $table->fetchAll(
+            $table->select()
+                ->where(sprintf('scale_id = %d', $scaleId))
+        );
+
+        $results = array();
+        foreach ($athletes as $athlete) {
+            $results[] = $athlete->id;
+        }
+
+        return $results;
+    }
 
 }// END class App_Model_Competitions

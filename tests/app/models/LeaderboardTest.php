@@ -68,53 +68,41 @@ class Tests_App_Model_LeaderboardTest
     } // END function test_getCompetitionTable
 
     /**
-     * test_getAthletesTable()
+     * test_getEventTable()
      *
-     * Tests the getAthletesTable method of the App_Model_Leaderboard class
+     * Tests the getScoreTable method of the App_Model_Leaderboard class
      *
-     * @covers App_Model_Leaderboard::getAthletesTable
+     * @covers App_Model_Leaderboard::getEventTable
      */
-    public function test_getAthletesTable ( )
+    public function test_getEventTable ( )
     {
         $subject = new App_Model_Leaderboard;
 
-        $result = $subject->getAthletesTable();
+        $result = $subject->getEventTable();
 
-        $this->assertInstanceOf('App_Model_DbTable_Athlete', $result);
+        $this->assertInstanceOf('App_Model_DbTable_Event', $result);
 
-    } // END function test_getAthletesTable
+    } // END function test_getEventTable
 
     /**
-     * test_event()
+     * test__getEventModel()
      *
-     * Tests the event of the App_Model_Leaderboard
+     * Tests the _getEventModel method of the App_Model_Leaderboard class
      *
-     * @covers          App_Model_Leaderboard::event
-     * @dataProvider    provide_event
+     * @covers App_Model_Leaderboard::_getEventModel
      */
-    public function test_event ( )
+    public function test__getEventModel ( )
     {
         $subject = new App_Model_Leaderboard;
 
-        $subject->event(1);
+        $method = new ReflectionMethod('App_Model_Leaderboard', '_getEventModel');
+        $method->setAccessible(true);
 
+        $result = $method->invoke($subject);
 
+        $this->assertInstanceOf('App_Model_Event', $result);
 
-    } // END function test_event
-
-    /**
-     * provide_event()
-     *
-     * Provides data for the event method of the
-     * App_Model_Leaderboard class
-     */
-    public function provide_event ( )
-    {
-        return array(
-            array(),
-        );
-
-    } // END function provide_event
+    } // END function test__getEventModel
 
 
 } // END class Tests_App_Model_LeaderboardTest

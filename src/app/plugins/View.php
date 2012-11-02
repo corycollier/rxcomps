@@ -42,6 +42,15 @@ class App_Plugin_View
         $view = $front->getParam('bootstrap')->getResource('view');
         $view->addHelperPath(APPLICATION_PATH . '/views/helpers/', 'App_View_Helper_');
 
+        $params = $request->getParams();
+        foreach ($params as $key => $value) {
+            if (is_object($value) || is_array($value)) {
+                unset($params[$key]);
+            }
+        }
+
+        $view->title = 'Rx Competition : ' . implode(' : ', $params);
+
     } // END function preDispatch
 
 } // END class App_Plugin_View

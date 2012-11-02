@@ -87,7 +87,7 @@ class Tests_App_Controller_LeaderboardsControllerTest
             'action'            => 'view',
             'controller'        => 'leaderboards',
             'module'            => 'default',
-            'competition_id'    => 1,
+            'event_id'          => 1,
             'scale_id'          => 1,
         );
 

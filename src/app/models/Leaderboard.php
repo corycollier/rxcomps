@@ -59,19 +59,6 @@ class App_Model_Leaderboard
     } // END function getCompetitionTable
 
     /**
-     * getAthletesTable()
-     *
-     * Gets an instance of the athlete table class
-     *
-     * @return App_Model_DbTable_Competition
-     */
-    public function getAthletesTable ( )
-    {
-        return new App_Model_DbTable_Athlete;
-
-    } // END function getAthletesTable
-
-    /**
      * getEventTable()
      *
      * Gets an instance of the event table class
@@ -85,59 +72,15 @@ class App_Model_Leaderboard
     } // END function getEventTable
 
     /**
-     * load()
-     *
-     * Loads up the leaderboards for a given competition
-     *
-     * @param integer $competitionId
-     * @return Zend_Db_Table_Rowset $this for object chaining
-     */
-    public function load ($competitionId, $scaleId)
-    {
-        $table = $this->getScoreTable();
-
-        return $table->fetchAll(
-            $table->select()
-                ->where(sprintf('competition_id = %d', $competitionId))
-                ->where('athlete_id IN (?)', $this->getAthleteIds($scaleId))
-                ->order('score DESC')
-        );
-
-    } // END function load
-
-    /**
-     * getAthleteIds()
-     *
-     * Gets the athlete identifiers for a given scale Id
-     *
-     * @param integer $scaleId
-     * @return array
-     */
-    public function getAthleteIds ($scaleId)
-    {
-        $table = $this->getAthletesTable();
-        $athletes = $table->fetchAll(
-            $table->select()
-                ->where(sprintf('scale_id = %d', $scaleId))
-        );
-
-        $results = array();
-        foreach ($athletes as $athlete) {
-            $results[] = $athlete->id;
-        }
-
-        return $results;
-    }
-
-    /**
      * event()
      *
      * Returns the aggregate results of an event's competitions leaderboard results
      *
+     * @todo Make this not horrible
      * @param integer $eventId
      * @return array
      */
-    public function event ($eventId)
+    public function load ($eventId, $scaleId)
     {
         $event = $this->_getEventModel();
         $table = $this->getEventTable();
@@ -148,11 +91,45 @@ class App_Model_Leaderboard
 
         $results = array();
         foreach ($competitions as $competition) {
-            $results[$competition->id] = $competition->getLeaderboards();
+            $results[$competition->id] = $competition->getLeaderboards($scaleId);
         }
 
-        print_r($results); die;
+        $athletes = array();
+        foreach ($results as $competitionId => $competitionResults) {
+            foreach ($competitionResults as $athleteId => $athleteResults) {
+                if (! array_key_exists($athleteId, $athletes)) {
+                    $athletes[$athleteId] = $athleteResults;
+                    $athletes[$athleteId]['competitions'] = array();
 
+                } else {
+                    $athletes[$athleteId]['points'] = (int)($athletes[$athleteId]['points'] + $athleteResults['points']);
+                }
+
+                $athletes[$athleteId]['competitions'][$athleteResults['competition_id']] = array(
+                    'score' => $athleteResults['score'],
+                    'rank'  => $athleteResults['rank'],
+                );
+
+                unset($athletes[$athleteId]['competition_id']);
+                unset($athletes[$athleteId]['rank']);
+                unset($athletes[$athleteId]['score']);
+            }
+        }
+
+        // var_dump($athletes); die;
+
+        // remove the numeric index
+        sort($athletes);
+
+        // create a sorting index
+        $sortingIndex = array();
+        foreach ($athletes as $athleteId => $athleteResults) {
+            $sortingIndex[$athleteId] = (int)$athleteResults['points'];
+        }
+
+        array_multisort($sortingIndex, SORT_DESC, $athletes);
+
+        return $athletes;
 
     } // END function event
 
