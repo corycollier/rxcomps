@@ -53,11 +53,30 @@ class LeaderboardsController
         $request = $this->getRequest();
         $leaderboards = $this->getModel('Leaderboard');
 
-        $this->view->items = $leaderboards->load(
-            $request->getParam('event_id'),
-            $request->getParam('scale_id')
-        );
+        $eventId = $request->getParam('event_id');
+        $scaleId = $request->getParam('scale_id');
+
+        $items = array();
+
+        if ($eventId && $scaleId) {
+            $items = $leaderboards->load($eventId, $scaleId);
+        }
+
+        $this->view->items = $items;
 
     } // END function viewAction
+
+    /**
+     * fullScreenAction()
+     *
+     * Allows for viewing of the leaderboards on a full screen
+     */
+    public function fullScreenAction ( )
+    {
+        $this->getHelper('Layout')->getLayoutInstance()->setLayout('full-screen');
+        $this->_forward('view');
+
+    } // END function fullScreenAction
+
 
 } // END class App_Controller_className

@@ -69,6 +69,10 @@ class App_View_Helper_LeaderboardItem
      */
     public function leaderboardItem ($data, $rank)
     {
+        if (! count($data)) {
+            return '';
+        }
+
         $table = $this->_getAthleteTable();
         $athlete = $table->fetchRow(sprintf('id = %d', $data['athlete_id']));
 
@@ -78,9 +82,6 @@ class App_View_Helper_LeaderboardItem
             '<tr>',
             sprintf('<td>%d (%d) %s</td>', $rank, $data['points'], $athlete->name),
             sprintf('<td>%s</td>', implode('</td><td>', $this->getCompetitionResults($data))),
-            // sprintf('<td>%d</td>', $athlete->name),
-            // sprintf('<td>%s</td>', $athlete->name),
-            // sprintf('<td>%s</td>', $athlete->name),
             '</tr>',
         ));
 
@@ -97,7 +98,8 @@ class App_View_Helper_LeaderboardItem
     {
         $results = array();
         foreach ($data['competitions'] as $competitionId => $competitionResults) {
-            $results[] = sprintf('%d (%d)', $competitionResults['rank'], $competitionResults['score']);
+            // $results[] = sprintf('%d (%d)', $competitionResults['rank'], $competitionResults['score']);
+            $results[] = sprintf('%d', $competitionResults['rank']);
         }
         return $results;
 

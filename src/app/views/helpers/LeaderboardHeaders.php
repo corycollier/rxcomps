@@ -54,6 +54,10 @@ class App_View_Helper_LeaderboardHeaders
      */
     public function leaderboardHeaders ($data)
     {
+        if (! count($data)) {
+            return '';
+        }
+
         $table = $this->_getCompetitionTable();
         $competitions = $table->fetchAll(
             $table->select()->where('id in (?)', array_keys($data['competitions']))
