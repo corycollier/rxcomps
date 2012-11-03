@@ -13,6 +13,8 @@
  * @since       File available since release 1.0.0
  */
 ?>
+
+<?php echo $this->scaleFilter(); ?>
 <table>
 <?php echo $this->leaderboardHeaders(@$this->items[0]); ?>
 <?php foreach ($this->items as $index => $athlete) : ?>
