@@ -108,6 +108,7 @@ class App_Model_Leaderboard
                 $athletes[$athleteId]['competitions'][$athleteResults['competition_id']] = array(
                     'score' => $athleteResults['score'],
                     'rank'  => $athleteResults['rank'],
+                    'points' => $athleteResults['points'],
                 );
 
                 unset($athletes[$athleteId]['competition_id']);
