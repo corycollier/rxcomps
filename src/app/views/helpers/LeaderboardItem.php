@@ -79,7 +79,7 @@ class App_View_Helper_LeaderboardItem
         $competitions = $this->getCompetitionResults($data);
 
         return implode(PHP_EOL, array(
-            '<tr>',
+            sprintf('<tr class="%s">', $rank % 2 ? 'striped' : ''),
             sprintf('<td>%d (%d) %s</td>', $rank, $data['points'], $athlete->name),
             sprintf('<td>%s</td>', implode('</td><td>', $this->getCompetitionResults($data))),
             '</tr>',
@@ -101,7 +101,17 @@ class App_View_Helper_LeaderboardItem
         foreach ($data['competitions'] as $competitionId => $competitionResults) {
             // $results[] = sprintf('%d (%d)', $competitionResults['rank'], $competitionResults['score']);
             // $results[] = sprintf('%d', $competitionResults['rank']);
-            $results[] = sprintf('%d (%d) [%d]', $competitionResults['rank'], $competitionResults['score'], $competitionResults['points']);
+            $results[] = sprintf(implode(PHP_EOL, array(
+                    '<a href="#" class="expand-details">%d</a>',
+                    '<ul class="details">',
+                    '<li><strong>Score</strong> %d</li>',
+                    '<li><strong>Points</strong> %d</li>',
+                    '</ul>',
+                )),
+                $competitionResults['rank'],
+                $competitionResults['score'],
+                $competitionResults['points']
+            );
         }
         return $results;
 

@@ -176,9 +176,24 @@ ul.actions {
     }
 }
 
+.details {
+    display: none;
+    position: absolute;
+    background: #fff;
+    margin-left: 1em;
+    margin-top: -1em;
+    padding: 1em;
+    font-size: 0.8em;
+    @include box-shadow(0 0 4px rgba(0,0,0,0.8));
 
+    li {
+        list-style: none;
+    }
+}
 
-
+.striped {
+    background: rgba(0,0,0,0.05);
+}
 
 
 
