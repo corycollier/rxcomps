@@ -65,6 +65,8 @@ class App_Plugin_Acl
             'full-screen',
         ));
 
+        $acl->allow('guest', 'events', 'list');
+
         $acl->allow('admin');
 
         Zend_Registry::getInstance()->set('acl', $acl);
