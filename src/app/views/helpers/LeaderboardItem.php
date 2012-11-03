@@ -97,9 +97,11 @@ class App_View_Helper_LeaderboardItem
     public function getCompetitionResults ($data)
     {
         $results = array();
+
         foreach ($data['competitions'] as $competitionId => $competitionResults) {
             // $results[] = sprintf('%d (%d)', $competitionResults['rank'], $competitionResults['score']);
-            $results[] = sprintf('%d', $competitionResults['rank']);
+            // $results[] = sprintf('%d', $competitionResults['rank']);
+            $results[] = sprintf('%d (%d) [%d]', $competitionResults['rank'], $competitionResults['score'], $competitionResults['points']);
         }
         return $results;
 

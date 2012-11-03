@@ -196,10 +196,19 @@ class App_Model_Competition
 
         $results = array();
 
+        $scoreValue = 0;
+        $pointValue = current($points);
+        $rankValue = 1;
         foreach ($scores as $i => $score) {
+            if ($score['score'] != $scoreValue) {
+                $scoreValue = $score['score'];
+                $pointValue = $points[$i];
+                $rankValue = $i + 1;
+            }
+
             $results[$score['athlete_id']] = array_merge($score, array(
-                'points'    => (int)$points[$i],
-                'rank'      => $i + 1,
+                'points'    => (int)$pointValue,
+                'rank'      => (int)$rankValue,
             ));
         }
 
