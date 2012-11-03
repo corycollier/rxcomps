@@ -189,7 +189,7 @@ class App_Model_Competition
                 'competition_id' => $this->id,
             ))
             ->where('athlete_id IN (?)', $this->getAthleteIds($scaleId))
-            ->order('score DESC')
+            ->order($this->_getOrder())
         )->toArray();
 
         $points = explode(PHP_EOL, $scoring->definition);
@@ -215,6 +215,25 @@ class App_Model_Competition
         return $results;
 
     } // END function leaderboards
+
+    /**
+     * _getOrder()
+     *
+     * Gets the order based on the goal of the competition
+     *
+     * @return string
+     */
+    protected function _getOrder ( )
+    {
+        $order = 'score DESC';
+
+        if ($this->getValue('goal') == 'time') {
+            $order = 'score ASC';
+        }
+
+        return $order;
+
+    } // END function _getOrder
 
     /**
      * getAthleteIds()

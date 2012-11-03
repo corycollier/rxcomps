@@ -130,6 +130,8 @@ class App_Model_Leaderboard
 
         array_multisort($sortingIndex, SORT_DESC, $athletes);
 
+        // var_dump($athletes); die;
+
         return $athletes;
 
     } // END function event
