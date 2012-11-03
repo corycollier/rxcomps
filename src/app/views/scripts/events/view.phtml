@@ -14,16 +14,28 @@
  */
 ?>
 
+<?php
+    $hasIdentity = $this->auth()->hasIdentity();
+?>
 <h2><?php echo $this->model->getValue('name'); ?></h2>
 
 <p><?php echo $this->model->getValue('description'); ?></p>
 
+<p><?php echo $this->htmlAnchor('Leaderboards', array(
+    'controller' => 'leaderboards',
+    'action'    => 'full-screen',
+    'event_id'  => $this->model->id,
+)); ?></p>
+
+<?php if ($hasIdentity) : ?>
 <p><?php echo $this->htmlAnchor('Athletes', array(
     'controller'    => 'athletes',
     'action'        => 'list',
     'event_id'      => $this->model->id,
 )); ?></p>
+<?php endif; ?>
 
+<?php if ($hasIdentity) : ?>
 <ul>
     <?php foreach ($this->model->getChildren('Scale') as $scale) : ?>
 
@@ -61,3 +73,5 @@
 
     <?php endforeach; ?>
 </ol>
+
+<?php endif; ?>
