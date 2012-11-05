@@ -303,8 +303,10 @@ class Rx_Model_Abstract
         $dbTable    = $this->getTable();
         $paginator  = $dbTable->getPaginationAdapter($params);
 
-        $offset = @$params['offset'] ? $params['offset'] : 0;
+        $page = @$params['page'] ? $params['page'] : 1;
         $count = @$params['count'] ? $params['count'] : 20;
+
+        $offset = ($page - 1) * $count;
 
         return $paginator->getItems($offset, $count);
 
