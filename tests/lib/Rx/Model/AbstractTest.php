@@ -156,7 +156,7 @@ class Tests_Rx_Model_AbstractTest
 
         $this->assertInstanceOf('Rx_Model_DbTable_Abstract', $firstResult);
 
-        $secondResult = $model->getTable(true);
+        $secondResult = $model->getTable('Abstract');
 
         $this->assertInstanceOf('Rx_Model_DbTable_Abstract', $secondResult);
 
@@ -247,10 +247,10 @@ class Tests_Rx_Model_AbstractTest
      * @covers Rx_Model_Abstract::load
      * @dataProvider provide_load
      */
-    public function test_load ($row, $identity, $formValues = array())
+    public function test_load ($row, $identity)
     {
-        $model = $this->getMockBuilder('Rx_Model_Abstract')
-            ->setMethods(array('getTable', 'getForm'))
+        $subject = $this->getMockBuilder('Rx_Model_Abstract')
+            ->setMethods(array('getTable', 'fromRow'))
             ->disableOriginalConstructor()
             ->getMock();
 
@@ -259,29 +259,15 @@ class Tests_Rx_Model_AbstractTest
             ->disableOriginalConstructor()
             ->getMock();
 
-        $select = $this->getMockBuilder('Rx_Model_DbTable_Abstract')
-            ->setMethods(array('where', 'fetchRow'))
-            ->disableOriginalConstructor()
-            ->getMock();
-
-        $form = $this->getMockBuilder('Rx_Form_Abstract')
-            ->setMethods(array('populate'))
+        $select = $this->getMockBuilder('Zend_Db_Table_Select')
+            ->setMethods(array('where'))
             ->disableOriginalConstructor()
             ->getMock();
 
         if ($row) {
-            $row = $this->getMockBuilder('Zend_Db_Table_Row')
-                ->setMethods(array('toArray'))
-                ->disableOriginalConstructor()
-                ->getMock();
-
-            $row->expects($this->once())
-                ->method('toArray')
-                ->will($this->returnValue($formValues));
-
-            $form->expects($this->once())
-                ->method('populate')
-                ->with($this->equalTo($formValues));
+            $subject->expects($this->once())
+                ->method('fromRow')
+                ->with($this->equalTo($row));
         }
 
         $select->expects($this->once())
@@ -298,17 +284,13 @@ class Tests_Rx_Model_AbstractTest
             ->method('select')
             ->will($this->returnValue($select));
 
-        $model->expects($this->once())
+        $subject->expects($this->once())
             ->method('getTable')
             ->will($this->returnValue($table));
 
-        $model->expects($this->once())
-            ->method('getForm')
-            ->will($this->returnValue($form));
+        $result = $subject->load($identity);
 
-        $result = $model->load($identity);
-
-        $this->assertSame($model, $result);
+        $this->assertSame($subject, $result);
 
     } // END function test_load
 

@@ -133,45 +133,6 @@ class App_Model_Competition
     } // END function _saveScoring
 
     /**
-     * _getScoreTable()
-     *
-     * Gets a new instance of the score table
-     *
-     * @return App_Model_DbTable_Score
-     */
-    protected function _getScoreTable ( )
-    {
-        return new App_Model_DbTable_Score;
-
-    } // END function _getScoreTable
-
-    /**
-     * _getScoringTable()
-     *
-     * Gets a new instance of the scorings table
-     *
-     * @return App_Model_DbTable_Scoring
-     */
-    protected function _getScoringTable ( )
-    {
-        return new App_Model_DbTable_Scoring;
-
-    } // END function _getScoringTable
-
-    /**
-     * getAthletesTable()
-     *
-     * Gets an instance of the athlete table class
-     *
-     * @return App_Model_DbTable_Competition
-     */
-    public function getAthletesTable ( )
-    {
-        return new App_Model_DbTable_Athlete;
-
-    } // END function getAthletesTable
-
-    /**
      * getLeaderboards()
      *
      * Gets an array representing the leaderboards
@@ -180,8 +141,8 @@ class App_Model_Competition
      */
     public function getLeaderboards ($scaleId)
     {
-        $scoreTable = $this->_getScoreTable();
-        $scoringTable = $this->_getScoringTable();
+        $scoreTable = $this->getTable('Score');
+        $scoringTable = $this->getTable('Scoring');
         $scoring = $scoringTable->fetchRow(sprintf('competition_id = %d', $this->id));
 
         $scores = $scoreTable->fetchAll(
@@ -245,7 +206,7 @@ class App_Model_Competition
      */
     public function getAthleteIds ($scaleId)
     {
-        $table = $this->getAthletesTable();
+        $table = $this->getTable('Athlete');
         $athletes = $table->fetchAll(
             $table->select()
                 ->where(sprintf('scale_id = %d', $scaleId))

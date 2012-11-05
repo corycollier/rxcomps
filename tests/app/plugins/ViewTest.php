@@ -41,11 +41,13 @@ class Tests_App_Plugin_View
      * @covers          App_Plugin_View::preDispatch
      * @dataProvider    provide_preDispatch
      */
-    public function test_preDispatch ( )
+    public function test_preDispatch ($params = array())
     {
         $subject = new App_Plugin_View;
 
         $request = new Zend_Controller_Request_HttpTestCase;
+
+        $request->setParams($params);
 
         $subject->preDispatch($request);
 
@@ -60,7 +62,22 @@ class Tests_App_Plugin_View
     public function provide_preDispatch ( )
     {
         return array(
-            array(),
+            'object value in params' => array(
+                array(
+                    'key' => (object)array(
+                        'id'    => 1,
+                    )
+                )
+            ),
+
+            'array value in params' => array(
+                array(
+                    'key' => array(
+                        'id'    => 1,
+                    )
+                )
+            ),
+
         );
 
     } // END function provide_preDispatch
