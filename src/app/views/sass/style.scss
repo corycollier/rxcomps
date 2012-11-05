@@ -8,6 +8,7 @@
 @import "blueprint/colors";
 @import "blueprint/fancy-type";
 @import "blueprint/buttons";
+@import "blueprint/interaction";
 
 $font-color: #ffffff;
 $header-color: #ffffff;
@@ -34,13 +35,13 @@ $alternate-text-font: Arial;
     @include border-radius;
 }
 
-@include blueprint-typography;
-
 html {
     height: 100%;
 }
 
 body {
+
+@include blueprint-interaction;
     // text-align: center;
     @include fancy-type;
     margin: 0;
