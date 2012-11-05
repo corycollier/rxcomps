@@ -127,13 +127,22 @@ class Rx_Model_Abstract
      *
      * @return Zend_Db_Table_Abstract
      */
-    public function getTable ($forceNew = false)
+    public function getTable ($name = null, $forceNew = false)
     {
+        $class = get_class($this);
+        $class = strtr($class, array(
+            '_Model_' => '_Model_DbTable_',
+        ));
+
+        if ($name) {
+            $parts = explode('_', $class);
+            $last = count($parts) - 1;
+            $parts[$last] = $name;
+            $class = implode('_', $parts);
+            return new $class;
+        }
+
         if (! $this->_table || $forceNew) {
-            $class = get_class($this);
-            $class = strtr($class, array(
-                '_Model_' => '_Model_DbTable_',
-            ));
             $this->_table = new $class;
         }
 
@@ -150,14 +159,11 @@ class Rx_Model_Abstract
     {
         $dbTable = $this->getTable();
         $select = $dbTable->select();
-        $form = $this->getForm();
 
         $row = $dbTable->fetchRow($select->where('id = ?', $identity));
 
         if ($row) {
-            $this->id = $identity;
-            $this->row = $row;
-            $form->populate($row->toArray());
+            $this->fromRow($row);
         }
 
         return $this;
@@ -297,7 +303,10 @@ class Rx_Model_Abstract
         $dbTable    = $this->getTable();
         $paginator  = $dbTable->getPaginationAdapter($params);
 
-        return $paginator->getItems(0, 20);
+        $offset = @$params['offset'] ? $params['offset'] : 0;
+        $count = @$params['count'] ? $params['count'] : 20;
+
+        return $paginator->getItems($offset, $count);
 
     } // END function paginate
 

@@ -139,24 +139,4 @@ class Tests_App_Model_CompetitionTest
 
     } // END function provide_edit
 
-    /**
-     * test__getScoringTable()
-     *
-     * Tests the _getScoringTable method of the App_Model_Competition class
-     *
-     * @covers App_Model_Competition::_getScoringTable
-     */
-    public function test__getScoringTable ( )
-    {
-        $subject = new App_Model_Competition;
-
-        $method = new ReflectionMethod('App_Model_Competition', '_getScoringTable');
-        $method->setAccessible(true);
-
-        $result = $method->invoke($subject);
-
-        $this->assertInstanceOf('App_Model_DbTable_Scoring', $result);
-
-    } // END function test__getScoringTable
-
 } // END class Tests_App_Model_CompetitionTest

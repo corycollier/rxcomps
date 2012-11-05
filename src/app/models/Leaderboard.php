@@ -33,45 +33,6 @@
 class App_Model_Leaderboard
 {
     /**
-     * getScoreTable()
-     *
-     * Gets an instance of the score table class
-     *
-     * @return App_Model_DbTable_Score
-     */
-    public function getScoreTable ( )
-    {
-        return new App_Model_DbTable_Score;
-
-    } // END function getScoreTable
-
-    /**
-     * getCompetitionTable()
-     *
-     * Gets an instance of the competition table class
-     *
-     * @return App_Model_DbTable_Competition
-     */
-    public function getCompetitionTable ( )
-    {
-        return new App_Model_DbTable_Competition;
-
-    } // END function getCompetitionTable
-
-    /**
-     * getEventTable()
-     *
-     * Gets an instance of the event table class
-     *
-     * @return App_Model_DbTable_Competition
-     */
-    public function getEventTable ( )
-    {
-        return new App_Model_DbTable_Event;
-
-    } // END function getEventTable
-
-    /**
      * event()
      *
      * Returns the aggregate results of an event's competitions leaderboard results
@@ -83,9 +44,7 @@ class App_Model_Leaderboard
     public function load ($eventId, $scaleId)
     {
         $event = $this->_getEventModel();
-        $table = $this->getEventTable();
-        $row = $table->fetchRow(sprintf('id = %d', $eventId));
-        $event->fromRow($row);
+        $event->load($eventId);
 
         $competitions = $event->getChildren('Competition');
 
@@ -97,44 +56,71 @@ class App_Model_Leaderboard
         $athletes = array();
         foreach ($results as $competitionId => $competitionResults) {
             foreach ($competitionResults as $athleteId => $athleteResults) {
-                if (! array_key_exists($athleteId, $athletes)) {
-                    $athletes[$athleteId] = $athleteResults;
-                    $athletes[$athleteId]['competitions'] = array();
-
-                } else {
-                    $athletes[$athleteId]['points'] = (int)($athletes[$athleteId]['points'] + $athleteResults['points']);
-                }
-
-                $athletes[$athleteId]['competitions'][$athleteResults['competition_id']] = array(
-                    'score' => $athleteResults['score'],
-                    'rank'  => $athleteResults['rank'],
-                    'points' => $athleteResults['points'],
-                );
-
-                unset($athletes[$athleteId]['competition_id']);
-                unset($athletes[$athleteId]['rank']);
-                unset($athletes[$athleteId]['score']);
+                $athletes = $this->_mergeAthleteResults($athletes, $athleteId, $athleteResults);
             }
         }
 
-        // var_dump($athletes); die;
+        return $this->_sortAthleteResults($athletes);
 
+    } // END function event
+
+    /**
+     * _mergeAthleteResults()
+     *
+     * Merges the current results (id, and data) into the rest of the results (athletes)
+     *
+     * @param array $athletes
+     * @param string|integer $id
+     * @param array $data
+     * @return array
+     */
+    protected function _mergeAthleteResults ($athletes, $id, $data = array())
+    {
+        if (! array_key_exists($id, $athletes)) {
+            $athletes[$id] = $data;
+            $athletes[$id]['competitions'] = array();
+        } else {
+            $athletes[$id]['points'] = (int)($athletes[$id]['points'] + $data['points']);
+        }
+
+        $athletes[$id]['competitions'][$data['competition_id']] = array(
+            'score' => $data['score'],
+            'rank'  => $data['rank'],
+            'points' => $data['points'],
+        );
+
+        unset($athletes[$id]['competition_id']);
+        unset($athletes[$id]['rank']);
+        unset($athletes[$id]['score']);
+
+        return $athletes;
+
+    } // END function _mergeAthleteResults
+
+    /**
+     * _sortAthleteResults()
+     *
+     * Sorts the athlete results information by points (in descending order)
+     *
+     * @param array $athletes
+     * @return array
+     */
+    protected function _sortAthleteResults ($athletes)
+    {
         // remove the numeric index
         sort($athletes);
 
         // create a sorting index
         $sortingIndex = array();
-        foreach ($athletes as $athleteId => $athleteResults) {
-            $sortingIndex[$athleteId] = (int)$athleteResults['points'];
+        foreach ($athletes as $i => $athleteResults) {
+            $sortingIndex[$i] = (int)$athleteResults['points'];
         }
 
         array_multisort($sortingIndex, SORT_DESC, $athletes);
 
-        // var_dump($athletes); die;
-
         return $athletes;
 
-    } // END function event
+    } // END function _sortAthleteResults
 
     /**
      * _getEventModel()
