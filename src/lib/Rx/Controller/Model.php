@@ -249,4 +249,13 @@ class Rx_Controller_Model
 
     } // END function listAction
 
+    public function postDispatch ( )
+    {
+        parent::postDispatch();
+
+        $this->view->paginator = new Zend_Paginator(
+            $this->getModel($this->_modelName)->getTable()->getPaginationAdapter()
+        );
+    }
+
 } // END class Rx_Controller_Model

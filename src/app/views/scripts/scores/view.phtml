@@ -14,12 +14,10 @@
  */
 ?>
 
-<?php echo $this->htmlList(array(
+<?php echo $this->actionList(array(
     $this->htmlAnchor('Add Score', array(
         'action'    => 'create',
     ))
-), false, array(
-    'class' => 'actions',
-), false); ?>
+)); ?>
 
 <?php echo $this->scoreItem($this->model->row); ?>

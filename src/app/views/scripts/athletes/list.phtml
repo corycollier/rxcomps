@@ -13,14 +13,12 @@
  * @since       File available since release 1.0.0
  */
 ?>
-<?php echo $this->htmlList(array(
+<?php echo $this->actionList(array(
     $this->htmlAnchor('Add Athlete', array(
         'action'    => 'create',
     )),
     'Filter by: ' . $this->scaleFilter(),
-), false, array(
-    'class' => 'actions',
-), false); ?>
+)); ?>
 
 <?php foreach ($this->items as $event) : ?>
 

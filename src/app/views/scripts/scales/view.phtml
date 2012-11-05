@@ -14,8 +14,10 @@
  */
 ?>
 
-<?php echo $this->htmlAnchor('Create Scale', array(
-    'action'    => 'create',
+<?php echo $this->actionList(array(
+    $this->htmlAnchor('Create Scale', array(
+        'action'    => 'create',
+    )),
 )); ?>
 
 <h2><?php echo $this->model->getValue('name'); ?></h2>

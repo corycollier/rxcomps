@@ -79,8 +79,16 @@ class App_View_Helper_LeaderboardItem
         $competitions = $this->getCompetitionResults($data);
 
         return implode(PHP_EOL, array(
-            sprintf('<tr class="%s">', $rank % 2 ? 'striped' : ''),
-            sprintf('<td>%d (%d) %s</td>', $rank, $data['points'], $athlete->name),
+            '<tr>',
+            sprintf('<td class="athlete-name">%d <span class="alt">(%d)</span> %s</td>',
+                $rank,
+                $data['points'],
+                $this->view->htmlAnchor($athlete->name, array(
+                    'controller'    => 'athletes',
+                    'action'        => 'view',
+                    'id'            => $athlete->id,
+                ))
+            ),
             sprintf('<td>%s</td>', implode('</td><td>', $this->getCompetitionResults($data))),
             '</tr>',
         ));

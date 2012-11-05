@@ -96,7 +96,7 @@ class App_Model_Competition
 
         $form = $this->getForm();
 
-        $table = $this->_getScoringTable();
+        $table = $this->getTable('Scoring');
 
         $row = $table->fetchRow(sprintf('competition_id = %d', $this->id));
 
