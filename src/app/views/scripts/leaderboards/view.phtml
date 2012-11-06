@@ -13,9 +13,16 @@
  * @since       File available since release 1.0.0
  */
 ?>
+<?php echo $this->actionList(array(
+    $this->htmlAnchor('full screen', array(
+        'action' => 'full-screen'
+    )),
+    $this->htmlAnchor('normal view', array(
+        'action' => 'view',
+    )),
+)); ?>
 
-<?php echo $this->scaleFilter(); ?>
-<?php echo $this->htmlAnchor('full screen', array('action' => 'full-screen')); ?>
+<?php echo 'Filter By: ' . $this->scaleFilter(); ?>
 <table class="data-table leaderboards-table">
 <?php echo $this->leaderboardHeaders(@$this->items[0]); ?>
 <?php foreach ($this->items as $index => $athlete) : ?>
