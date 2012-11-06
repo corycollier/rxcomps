@@ -70,7 +70,7 @@ class App_View_Helper_LeaderboardHeaders
 
         return implode(PHP_EOL, array(
             '<tr>',
-            '<th>Team</th>',
+            '<th class="athlete-name">Team</th>',
             sprintf('<th><p class="rotate">%s</p></th>',
                 implode('</p></th><th><p class="rotate">', $results)
             ),
