@@ -87,6 +87,7 @@ class App_Model_Leaderboard
             'score' => $data['score'],
             'rank'  => $data['rank'],
             'points' => $data['points'],
+            'score_id' => $data['id'],
         );
 
         unset($athletes[$id]['competition_id']);

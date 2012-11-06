@@ -112,18 +112,34 @@ class App_View_Helper_LeaderboardItem
             $results[] = sprintf(implode(PHP_EOL, array(
                     '<a href="#" class="expand-details">%d</a>',
                     '<ul class="details">',
-                    '<li><strong>Score</strong> %d</li>',
+                    '<li><strong>Score</strong> %d %s</li>',
                     '<li><strong>Points</strong> %d</li>',
                     '</ul>',
                 )),
                 $competitionResults['rank'],
                 $competitionResults['score'],
+                $this->_getScoreEditLink($competitionId, $data),
                 $competitionResults['points']
             );
         }
         return $results;
 
     } // END function getCompetitionResults
+
+    protected function _getScoreEditLink ($competitionId, $data)
+    {
+        if (! $this->view->auth()) {
+            return '';
+        }
+
+        return $this->view->htmlAnchor('(edit)', array(
+            'module'        => 'default',
+            'controller'    => 'scores',
+            'action'        => 'edit',
+            'id'            => @$data['competitions'][$competitionId]['score_id'],
+
+        ));
+    }
 
 
 } // END class App_View_Helper_LeaderboardItem
