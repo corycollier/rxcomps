@@ -137,12 +137,12 @@ class Tests_App_View_Helper_CompetitionItem
         return array(
             array('<h3>html-anchor</h3>', 'html-anchor', (object)array(
                 'id'    => 1,
-                'name'  => 'Competition name',
+                'name'  => 'Competition Name',
             )),
 
             array('<h3>another Html-anchor</h3>', 'another html-anchor', (object)array(
                 'id'    => 1,
-                'name'  => 'Competition name does not matter here',
+                'name'  => 'Competition Name Does Not Matter Here',
             )),
         );
 
