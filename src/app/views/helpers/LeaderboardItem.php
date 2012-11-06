@@ -128,7 +128,7 @@ class App_View_Helper_LeaderboardItem
 
     protected function _getScoreEditLink ($competitionId, $data)
     {
-        if (! $this->view->auth()) {
+        if (! $this->view->auth()->hasIdentity()) {
             return '';
         }
 
