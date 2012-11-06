@@ -284,7 +284,7 @@ a:focus {
 }
 /* line 24, ../../../../../../../opt/local/lib/ruby/gems/1.8/gems/compass-0.11.7/frameworks/compass/stylesheets/compass/typography/links/_link-colors.scss */
 a:hover {
-  color: white;
+  color: rgba(255, 0, 0, 0.8);
 }
 /* line 27, ../../../../../../../opt/local/lib/ruby/gems/1.8/gems/compass-0.11.7/frameworks/compass/stylesheets/compass/typography/links/_link-colors.scss */
 a:active {
@@ -325,13 +325,13 @@ h1 {
 /* line 173, ../../app/views/sass/style.scss */
 h2 {
   font-size: 2.5em;
-  line-height: 2.5em;
+  line-height: 2em;
 }
 
 /* line 179, ../../app/views/sass/style.scss */
 h3 {
   font-size: 1.8em;
-  line-height: 2em;
+  line-height: 1.2em;
 }
 
 /* line 185, ../../app/views/sass/style.scss */
@@ -384,7 +384,7 @@ body .container {
 .nav li a {
   *display: inline;
 }
-/* line 214, ../../app/views/sass/style.scss */
+/* line 215, ../../app/views/sass/style.scss */
 .nav li.active {
   background: rgba(0, 0, 0, 0.1);
   border: 1px solid rgba(0, 0, 0, 0.25);
@@ -402,16 +402,16 @@ body .container {
   border-radius: 5px;
 }
 
-/* line 220, ../../app/views/sass/style.scss */
+/* line 221, ../../app/views/sass/style.scss */
 .flash-messages ul {
   margin: 0;
 }
-/* line 223, ../../app/views/sass/style.scss */
+/* line 224, ../../app/views/sass/style.scss */
 .flash-messages li {
   list-style: none;
 }
 
-/* line 228, ../../app/views/sass/style.scss */
+/* line 229, ../../app/views/sass/style.scss */
 ul.actions {
   padding: 5px;
   margin: 0;
@@ -441,7 +441,7 @@ ul.actions {
 ul.actions {
   *display: inline;
 }
-/* line 238, ../../app/views/sass/style.scss */
+/* line 239, ../../app/views/sass/style.scss */
 ul.actions li {
   vertical-align: middle;
   display: -moz-inline-box;
@@ -454,13 +454,13 @@ ul.actions li {
 ul.actions li {
   *display: inline;
 }
-/* line 242, ../../app/views/sass/style.scss */
+/* line 243, ../../app/views/sass/style.scss */
 ul.actions li a {
   padding: 5px;
   font-size: 0.8em;
 }
 
-/* line 252, ../../app/views/sass/style.scss */
+/* line 253, ../../app/views/sass/style.scss */
 .competition-item
 , .athlete-item
 , .event-item
@@ -482,7 +482,7 @@ ul.actions li a {
   -khtml-border-radius: 5px;
   border-radius: 5px;
 }
-/* line 257, ../../app/views/sass/style.scss */
+/* line 258, ../../app/views/sass/style.scss */
 .competition-item
 h3, .athlete-item
 h3, .event-item
@@ -491,14 +491,12 @@ h3, .score-item h3 {
   padding: 0.5em 0;
 }
 
-/* line 263, ../../app/views/sass/style.scss */
+/* line 264, ../../app/views/sass/style.scss */
 .details {
   display: none;
   position: absolute;
   background: #222;
   color: #fff;
-  margin-left: 1em;
-  margin-top: -1em;
   padding: 1em;
   font-size: 0.8em;
   -moz-box-shadow: 0 0 4px rgba(0, 0, 0, 0.8);
@@ -554,20 +552,26 @@ h3, .score-item h3 {
 .data-table th {
   text-align: center;
   color: #fff;
+  padding: 5px 0;
+  -moz-box-shadow: 0px -1px 0 rgba(0, 0, 0, 0.8) inset;
+  -webkit-box-shadow: 0px -1px 0 rgba(0, 0, 0, 0.8) inset;
+  -o-box-shadow: 0px -1px 0 rgba(0, 0, 0, 0.8) inset;
+  box-shadow: 0px -1px 0 rgba(0, 0, 0, 0.8) inset;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.15);
 }
-/* line 326, ../../app/views/sass/style.scss */
+/* line 329, ../../app/views/sass/style.scss */
 .data-table th p {
   line-height: 1em;
 }
 
-/* line 333, ../../app/views/sass/style.scss */
+/* line 337, ../../app/views/sass/style.scss */
 .data-table td {
   vertical-align: middle;
   padding: 5px;
   text-align: center;
 }
 
-/* line 345, ../../app/views/sass/style.scss */
+/* line 349, ../../app/views/sass/style.scss */
 .data-table tr:hover {
   background: rgba(0, 0, 0, 0.1);
   border: 1px solid rgba(0, 0, 0, 0.25);
@@ -585,11 +589,31 @@ h3, .score-item h3 {
   border-radius: 5px;
 }
 
-/* line 351, ../../app/views/sass/style.scss */
+/* line 355, ../../app/views/sass/style.scss */
 .leaderboards-table .rank {
   width: auto;
   max-width: 2em;
   text-align: right;
+}
+
+/* line 368, ../../app/views/sass/style.scss */
+.paginationControl {
+  padding: 10px 0;
+  text-align: center;
+  background: rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(0, 0, 0, 0.25);
+  color: rgba(255, 255, 255, 0.8);
+  -moz-box-shadow: 0 1px 0 rgba(255, 255, 255, 0.09) inset, 0 1px 0 rgba(255, 255, 255, 0.09);
+  -webkit-box-shadow: 0 1px 0 rgba(255, 255, 255, 0.09) inset, 0 1px 0 rgba(255, 255, 255, 0.09);
+  -o-box-shadow: 0 1px 0 rgba(255, 255, 255, 0.09) inset, 0 1px 0 rgba(255, 255, 255, 0.09);
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.09) inset, 0 1px 0 rgba(255, 255, 255, 0.09);
+  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.8);
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  -o-border-radius: 5px;
+  -ms-border-radius: 5px;
+  -khtml-border-radius: 5px;
+  border-radius: 5px;
 }
 
 /* ==========================================================================
@@ -598,7 +622,7 @@ h3, .score-item h3 {
 /*
  * Image replacement
  */
-/* line 373, ../../app/views/sass/style.scss */
+/* line 383, ../../app/views/sass/style.scss */
 .ir {
   background-color: transparent;
   border: 0;
@@ -607,7 +631,7 @@ h3, .score-item h3 {
   *text-indent: -9999px;
 }
 
-/* line 381, ../../app/views/sass/style.scss */
+/* line 391, ../../app/views/sass/style.scss */
 .ir:before {
   content: "";
   display: block;
@@ -618,7 +642,7 @@ h3, .score-item h3 {
 /*
  * Hide from both screenreaders and browsers: h5bp.com/u
  */
-/* line 392, ../../app/views/sass/style.scss */
+/* line 402, ../../app/views/sass/style.scss */
 .hidden {
   display: none !important;
   visibility: hidden;
