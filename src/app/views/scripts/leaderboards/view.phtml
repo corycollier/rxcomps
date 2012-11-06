@@ -15,6 +15,7 @@
 ?>
 
 <?php echo $this->scaleFilter(); ?>
+<?php echo $this->htmlAnchor('full screen', array('action' => 'full-screen')); ?>
 <table class="data-table leaderboards-table">
 <?php echo $this->leaderboardHeaders(@$this->items[0]); ?>
 <?php foreach ($this->items as $index => $athlete) : ?>

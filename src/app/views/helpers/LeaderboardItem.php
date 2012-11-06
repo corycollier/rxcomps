@@ -82,7 +82,7 @@ class App_View_Helper_LeaderboardItem
             '<tr>',
             sprintf('<td class="athlete-name"><span class="alt">(%d)</span> %s %d</td>',
                 $data['points'],
-                $this->view->htmlAnchor($athlete->name, array(
+                $this->view->htmlAnchor(ucwords($athlete->name), array(
                     'controller'    => 'athletes',
                     'action'        => 'view',
                     'id'            => $athlete->id,

@@ -1,10 +1,14 @@
 @charset "utf-8";
-/* line 39, ../../app/views/sass/style.scss */
+/*
+  Mixins are slightly modified from Benjamin Doherty's first implementations: http://gist.github.com/377912
+  rgba-background mixin can now be passed an option $dir variable
+*/
+/* line 41, ../../app/views/sass/style.scss */
 html {
   height: 100%;
 }
 
-/* line 43, ../../app/views/sass/style.scss */
+/* line 45, ../../app/views/sass/style.scss */
 body {
   margin: 0;
   padding: 0;
@@ -180,7 +184,7 @@ form textarea {
   width: 390px;
   height: 250px;
 }
-/* line 61, ../../app/views/sass/style.scss */
+/* line 63, ../../app/views/sass/style.scss */
 form fieldset {
   background: rgba(0, 0, 0, 0.1);
   border: 1px solid rgba(0, 0, 0, 0.25);
@@ -197,7 +201,7 @@ form fieldset {
   -khtml-border-radius: 5px;
   border-radius: 5px;
 }
-/* line 64, ../../app/views/sass/style.scss */
+/* line 66, ../../app/views/sass/style.scss */
 form fieldset label {
   text-align: right;
   width: 20%;
@@ -219,7 +223,7 @@ form fieldset label {
  * Credit left inline and big thanks to Nicolas Gallagher, Jonathan Neal,
  * Kroc Camen, and the H5BP dev community and team.
  */
-/* line 80, ../../app/views/sass/style.scss */
+/* line 82, ../../app/views/sass/style.scss */
 hr {
   display: block;
   height: 1px;
@@ -232,7 +236,7 @@ hr {
 /*
  * Remove the gap between images and the bottom of their containers: h5bp.com/i/440
  */
-/* line 93, ../../app/views/sass/style.scss */
+/* line 95, ../../app/views/sass/style.scss */
 img {
   vertical-align: middle;
 }
@@ -240,7 +244,7 @@ img {
 /*
  * Remove default fieldset styles.
  */
-/* line 101, ../../app/views/sass/style.scss */
+/* line 103, ../../app/views/sass/style.scss */
 fieldset {
   border: 0;
   margin: 0;
@@ -250,7 +254,7 @@ fieldset {
 /*
  * Allow only vertical resizing of textareas.
  */
-/* line 111, ../../app/views/sass/style.scss */
+/* line 113, ../../app/views/sass/style.scss */
 textarea {
   resize: vertical;
 }
@@ -258,7 +262,7 @@ textarea {
 /* ==========================================================================
    Chrome Frame prompt
    ========================================================================== */
-/* line 119, ../../app/views/sass/style.scss */
+/* line 121, ../../app/views/sass/style.scss */
 .chromeframe {
   margin: 0.2em 0;
   background: #ccc;
@@ -269,7 +273,7 @@ textarea {
 /* ==========================================================================
    Author's custom styles
    ========================================================================== */
-/* line 130, ../../app/views/sass/style.scss */
+/* line 132, ../../app/views/sass/style.scss */
 a {
   color: rgba(255, 255, 255, 0.75);
   text-decoration: none;
@@ -291,24 +295,24 @@ a:active {
   color: rgba(255, 255, 255, 0.75);
 }
 
-/* line 136, ../../app/views/sass/style.scss */
+/* line 138, ../../app/views/sass/style.scss */
 a:hover {
   text-shadow: 0 1px 0 rgba(0, 0, 0, 0.8);
 }
 
-/* line 141, ../../app/views/sass/style.scss */
+/* line 143, ../../app/views/sass/style.scss */
 ul, ol {
   margin: 0;
   padding: 0;
 }
 
-/* line 147, ../../app/views/sass/style.scss */
+/* line 149, ../../app/views/sass/style.scss */
 p {
   line-height: 2em;
 }
 
-/* line 162, ../../app/views/sass/style.scss */
-h1, h2, h3, h4, h5, h6, h7 {
+/* line 164, ../../app/views/sass/style.scss */
+h2, h3, h4, h5, h6, h7 {
   -moz-box-shadow: 0px -1px 0 rgba(0, 0, 0, 0.8) inset;
   -webkit-box-shadow: 0px -1px 0 rgba(0, 0, 0, 0.8) inset;
   -o-box-shadow: 0px -1px 0 rgba(0, 0, 0, 0.8) inset;
@@ -316,40 +320,64 @@ h1, h2, h3, h4, h5, h6, h7 {
   border-bottom: 1px solid rgba(255, 255, 255, 0.15);
 }
 
-/* line 167, ../../app/views/sass/style.scss */
+/* line 169, ../../app/views/sass/style.scss */
 h1 {
-  font-size: 3em;
+  font-size: 2em;
   line-height: 2em;
 }
 
-/* line 173, ../../app/views/sass/style.scss */
+/* line 175, ../../app/views/sass/style.scss */
 h2 {
-  font-size: 2.5em;
+  font-size: 2em;
   line-height: 2em;
 }
 
-/* line 179, ../../app/views/sass/style.scss */
+/* line 181, ../../app/views/sass/style.scss */
 h3 {
   font-size: 1.8em;
   line-height: 1.2em;
 }
 
-/* line 185, ../../app/views/sass/style.scss */
+/* line 187, ../../app/views/sass/style.scss */
 h4 {
   font-size: 1.5em;
   line-height: 2em;
 }
 
-/* line 191, ../../app/views/sass/style.scss */
+/* line 193, ../../app/views/sass/style.scss */
 body .container {
-  width: 950px;
+  min-width: 950px;
+  width: 80%;
   margin: 0 auto;
   overflow: hidden;
   *zoom: 1;
   text-align: left;
 }
 
-/* line 197, ../../app/views/sass/style.scss */
+/* line 198, ../../app/views/sass/style.scss */
+body .header {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  background: url('/./src/pub/img/rgbapng/0000007f.png?1352168514');
+  background: rgba(0, 0, 0, 0.5);
+}
+
+/* line 205, ../../app/views/sass/style.scss */
+body .main-navigation {
+  position: fixed;
+  top: 64px;
+  width: 100%;
+  background: url('/./src/pub/img/rgbapng/0000007f.png?1352168514');
+  background: rgba(0, 0, 0, 0.5);
+}
+
+/* line 212, ../../app/views/sass/style.scss */
+body .main-content {
+  margin-top: 6em;
+}
+
+/* line 217, ../../app/views/sass/style.scss */
 .nav li {
   list-style: none;
   padding: 0 10px;
@@ -366,11 +394,9 @@ body .container {
 .nav li {
   *display: inline;
 }
-/* line 205, ../../app/views/sass/style.scss */
+/* line 225, ../../app/views/sass/style.scss */
 .nav li a {
   text-align: center;
-  font-size: 1.5em;
-  line-height: 2em;
   width: auto;
   display: -moz-inline-box;
   -moz-box-orient: vertical;
@@ -384,34 +410,21 @@ body .container {
 .nav li a {
   *display: inline;
 }
-/* line 215, ../../app/views/sass/style.scss */
-.nav li.active {
-  background: rgba(0, 0, 0, 0.1);
-  border: 1px solid rgba(0, 0, 0, 0.25);
-  color: rgba(255, 255, 255, 0.8);
-  -moz-box-shadow: 0 1px 0 rgba(255, 255, 255, 0.09) inset, 0 1px 0 rgba(255, 255, 255, 0.09);
-  -webkit-box-shadow: 0 1px 0 rgba(255, 255, 255, 0.09) inset, 0 1px 0 rgba(255, 255, 255, 0.09);
-  -o-box-shadow: 0 1px 0 rgba(255, 255, 255, 0.09) inset, 0 1px 0 rgba(255, 255, 255, 0.09);
-  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.09) inset, 0 1px 0 rgba(255, 255, 255, 0.09);
-  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.8);
-  -moz-border-radius: 5px;
-  -webkit-border-radius: 5px;
-  -o-border-radius: 5px;
-  -ms-border-radius: 5px;
-  -khtml-border-radius: 5px;
-  border-radius: 5px;
+/* line 235, ../../app/views/sass/style.scss */
+.nav li.active a {
+  color: #f00;
 }
 
-/* line 221, ../../app/views/sass/style.scss */
+/* line 241, ../../app/views/sass/style.scss */
 .flash-messages ul {
   margin: 0;
 }
-/* line 224, ../../app/views/sass/style.scss */
+/* line 244, ../../app/views/sass/style.scss */
 .flash-messages li {
   list-style: none;
 }
 
-/* line 229, ../../app/views/sass/style.scss */
+/* line 249, ../../app/views/sass/style.scss */
 ul.actions {
   padding: 5px;
   margin: 0;
@@ -441,7 +454,7 @@ ul.actions {
 ul.actions {
   *display: inline;
 }
-/* line 239, ../../app/views/sass/style.scss */
+/* line 259, ../../app/views/sass/style.scss */
 ul.actions li {
   vertical-align: middle;
   display: -moz-inline-box;
@@ -454,13 +467,13 @@ ul.actions li {
 ul.actions li {
   *display: inline;
 }
-/* line 243, ../../app/views/sass/style.scss */
+/* line 263, ../../app/views/sass/style.scss */
 ul.actions li a {
   padding: 5px;
   font-size: 0.8em;
 }
 
-/* line 253, ../../app/views/sass/style.scss */
+/* line 273, ../../app/views/sass/style.scss */
 .competition-item
 , .athlete-item
 , .event-item
@@ -482,7 +495,7 @@ ul.actions li a {
   -khtml-border-radius: 5px;
   border-radius: 5px;
 }
-/* line 258, ../../app/views/sass/style.scss */
+/* line 278, ../../app/views/sass/style.scss */
 .competition-item
 h3, .athlete-item
 h3, .event-item
@@ -491,7 +504,7 @@ h3, .score-item h3 {
   padding: 0.5em 0;
 }
 
-/* line 264, ../../app/views/sass/style.scss */
+/* line 284, ../../app/views/sass/style.scss */
 .details {
   display: none;
   position: absolute;
@@ -504,17 +517,17 @@ h3, .score-item h3 {
   -o-box-shadow: 0 0 4px rgba(0, 0, 0, 0.8);
   box-shadow: 0 0 4px rgba(0, 0, 0, 0.8);
 }
-/* line 274, ../../app/views/sass/style.scss */
+/* line 294, ../../app/views/sass/style.scss */
 .details li {
   list-style: none;
 }
 
-/* line 279, ../../app/views/sass/style.scss */
+/* line 299, ../../app/views/sass/style.scss */
 .striped {
   background: rgba(0, 0, 0, 0.05);
 }
 
-/* line 284, ../../app/views/sass/style.scss */
+/* line 304, ../../app/views/sass/style.scss */
 .page-content {
   height: 100%;
   width: auto;
@@ -522,33 +535,34 @@ h3, .score-item h3 {
   overflow-x: hidden;
 }
 
-/* line 292, ../../app/views/sass/style.scss */
+/* line 312, ../../app/views/sass/style.scss */
 .filtered {
   background: rgba(0, 0, 0, 0.1);
   color: rgba(0, 0, 0, 0.8);
   text-shadow: 0 1px 0 rgba(255, 255, 255, 0.15);
 }
 
-/* line 298, ../../app/views/sass/style.scss */
+/* line 318, ../../app/views/sass/style.scss */
 .filtered .alt {
   color: rgba(0, 0, 0, 0.8);
 }
 
-/* line 303, ../../app/views/sass/style.scss */
+/* line 323, ../../app/views/sass/style.scss */
 .data-table {
+  width: 100%;
   -moz-box-shadow: 0px -1px 0 rgba(0, 0, 0, 0.8) inset;
   -webkit-box-shadow: 0px -1px 0 rgba(0, 0, 0, 0.8) inset;
   -o-box-shadow: 0px -1px 0 rgba(0, 0, 0, 0.8) inset;
   box-shadow: 0px -1px 0 rgba(0, 0, 0, 0.8) inset;
   border-bottom: 1px solid rgba(255, 255, 255, 0.15);
 }
-/* line 306, ../../app/views/sass/style.scss */
+/* line 327, ../../app/views/sass/style.scss */
 .data-table .athlete-name {
   white-space: nowrap;
   text-align: right;
 }
 
-/* line 323, ../../app/views/sass/style.scss */
+/* line 344, ../../app/views/sass/style.scss */
 .data-table th {
   text-align: center;
   color: #fff;
@@ -559,19 +573,19 @@ h3, .score-item h3 {
   box-shadow: 0px -1px 0 rgba(0, 0, 0, 0.8) inset;
   border-bottom: 1px solid rgba(255, 255, 255, 0.15);
 }
-/* line 329, ../../app/views/sass/style.scss */
+/* line 350, ../../app/views/sass/style.scss */
 .data-table th p {
   line-height: 1em;
 }
 
-/* line 337, ../../app/views/sass/style.scss */
+/* line 358, ../../app/views/sass/style.scss */
 .data-table td {
   vertical-align: middle;
   padding: 5px;
   text-align: center;
 }
 
-/* line 349, ../../app/views/sass/style.scss */
+/* line 370, ../../app/views/sass/style.scss */
 .data-table tr:hover {
   background: rgba(0, 0, 0, 0.1);
   border: 1px solid rgba(0, 0, 0, 0.25);
@@ -589,14 +603,14 @@ h3, .score-item h3 {
   border-radius: 5px;
 }
 
-/* line 355, ../../app/views/sass/style.scss */
+/* line 376, ../../app/views/sass/style.scss */
 .leaderboards-table .rank {
   width: auto;
   max-width: 2em;
   text-align: right;
 }
 
-/* line 368, ../../app/views/sass/style.scss */
+/* line 389, ../../app/views/sass/style.scss */
 .paginationControl {
   padding: 10px 0;
   text-align: center;
@@ -622,7 +636,7 @@ h3, .score-item h3 {
 /*
  * Image replacement
  */
-/* line 383, ../../app/views/sass/style.scss */
+/* line 403, ../../app/views/sass/style.scss */
 .ir {
   background-color: transparent;
   border: 0;
@@ -631,7 +645,7 @@ h3, .score-item h3 {
   *text-indent: -9999px;
 }
 
-/* line 391, ../../app/views/sass/style.scss */
+/* line 411, ../../app/views/sass/style.scss */
 .ir:before {
   content: "";
   display: block;
@@ -642,7 +656,7 @@ h3, .score-item h3 {
 /*
  * Hide from both screenreaders and browsers: h5bp.com/u
  */
-/* line 402, ../../app/views/sass/style.scss */
+/* line 422, ../../app/views/sass/style.scss */
 .hidden {
   display: none !important;
   visibility: hidden;
