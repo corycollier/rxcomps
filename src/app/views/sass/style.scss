@@ -13,7 +13,7 @@
 $font-color: #ffffff;
 $header-color: #ffffff;
 $link-color: rgba(255,255,255,0.75);
-$link-hover-color: rgba(255,255,255,1);
+$link-hover-color: rgba(255,0,0,0.8);
 
 $blueprint-grid-columns: 10;
 $blueprint-grid-margin: 0;
@@ -172,13 +172,13 @@ h1
 h2
 {
     font-size: 2.5em;
-    line-height: 2.5em;
+    line-height: 2em;
 }
 
 h3
 {
     font-size: 1.8em;
-    line-height: 2em;
+    line-height: 1.2em;
 }
 
 h4
@@ -211,6 +211,7 @@ body .container {
             @include header-text;
         }
     }
+
     li.active {
         @include etched-content;
     }
@@ -265,8 +266,7 @@ ul.actions {
     position: absolute;
     background: #222;
     color: #fff;
-    margin-left: 1em;
-    margin-top: -1em;
+    // margin-top: 1em;
     padding: 1em;
     font-size: 0.8em;
     @include box-shadow(0 0 4px rgba(0,0,0,0.8));
@@ -323,10 +323,14 @@ ul.actions {
 {
     text-align: center;
     color: #fff;
+    padding: 5px 0;
+    @include bottom-etch;
+
     p {
         line-height: 1em;
         // font-weight: normal;
     }
+
 }
 
 .data-table td
@@ -360,6 +364,12 @@ ul.actions {
     }
 }
 
+.paginationControl
+{
+    padding: 10px 0;
+    text-align: center;
+    @include etched-content;
+}
 
 
 /* ==========================================================================
