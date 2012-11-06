@@ -42,11 +42,11 @@
         <apply executable="php" failonerror="true">
             <arg value="-l" />
 
-            <fileset dir="${basedir}/src/application">
+            <fileset dir="${basedir}/src/app">
                 <include name="**/*.php" />
                 <modified />
             </fileset>
-            <fileset dir="${basedir}/src/library/Firebase">
+            <fileset dir="${basedir}/src/lib/Rx">
                 <include name="**/*.php" />
                 <modified />
             </fileset>
