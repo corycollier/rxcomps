@@ -1,3 +1,4 @@
+@import "rgbapng";
 @import "compass";
 @import "compass/typography";
 @import "compass/css3";
@@ -9,6 +10,7 @@
 @import "blueprint/fancy-type";
 @import "blueprint/buttons";
 @import "blueprint/interaction";
+@import "blueprint/liquid";
 
 $font-color: #ffffff;
 $header-color: #ffffff;
@@ -158,20 +160,20 @@ p
 
 }
 
-h1, h2, h3, h4, h5, h6, h7
+h2, h3, h4, h5, h6, h7
 {
     @include bottom-etch;
 }
 
 h1
 {
-    font-size: 3em;
+    font-size: 2em;
     line-height: 2em;
 }
 
 h2
 {
-    font-size: 2.5em;
+    font-size: 2em;
     line-height: 2em;
 }
 
@@ -193,6 +195,24 @@ body .container {
     text-align: left;
 }
 
+body .header {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    @include rgba-background(rgba(0,0,0,0.5));
+}
+
+body .main-navigation {
+    position: fixed;
+    top: 64px;
+    width: 100%;
+    @include rgba-background(rgba(0,0,0,0.5));
+}
+
+body .main-content {
+    margin-top: 6em;
+}
+
 .nav {
     li {
         list-style: none;
@@ -204,16 +224,16 @@ body .container {
 
         a {
             text-align: center;
-            font-size: 1.5em;
-            line-height: 2em;
+            // font-size: 1.5em;
+            // line-height: 2em;
             width: auto;
             @include inline-block;
             @include header-text;
         }
     }
 
-    li.active {
-        @include etched-content;
+    li.active a {
+        color: #f00;
     }
 }
 
@@ -301,6 +321,7 @@ ul.actions {
 
 .data-table
 {
+    width: 100%;
     @include bottom-etch;
 
     .athlete-name {
@@ -370,7 +391,6 @@ ul.actions {
     text-align: center;
     @include etched-content;
 }
-
 
 /* ==========================================================================
    Helper classes
