@@ -14,64 +14,50 @@
  */
 ?>
 
-<?php
-    $hasIdentity = $this->auth()->hasIdentity();
-?>
 <h2><?php echo $this->model->getValue('name'); ?></h2>
+<?php if ($this->auth()->hasIdentity()) : ?>
+<?php echo $this->actionList(array(
+    $this->htmlAnchor('Edit', array(
+        'controller' => 'events',
+        'action'    => 'edit',
+        'event_id'  => $this->model->id,
+    )),
+    $this->htmlAnchor('Delete', array(
+        'controller'    => 'events',
+        'action'        => 'delete',
+        'event_id'      => $this->model->id,
+    )),
+    $this->htmlAnchor('Add Scales', array(
+        'controller'    => 'scales',
+        'action'        => 'create',
+        'event_id'      => $this->model->id,
+    )),
+    $this->htmlAnchor('Add Competitions', array(
+        'controller'    => 'competitions',
+        'action'        => 'create',
+        'event_id'      => $this->model->id,
+    )),
+)); ?>
+
+<?php endif; ?>
 
 <p><?php echo $this->model->getValue('description'); ?></p>
 
-<p><?php echo $this->htmlAnchor('Leaderboards', array(
-    'controller' => 'leaderboards',
-    'action'    => 'full-screen',
-    'event_id'  => $this->model->id,
-)); ?></p>
-
-<?php if ($hasIdentity) : ?>
-<p><?php echo $this->htmlAnchor('Athletes', array(
-    'controller'    => 'athletes',
-    'action'        => 'list',
-    'event_id'      => $this->model->id,
-)); ?></p>
-<?php endif; ?>
-
-<?php if ($hasIdentity) : ?>
-<ul>
-    <?php foreach ($this->model->getChildren('Scale') as $scale) : ?>
-
-        <li><?php echo $this->htmlAnchor($scale->getValue('name'), array(
-            'module'    => 'default',
-            'controller'=> 'scale',
-            'action'    => 'view',
-            'id'        => $scale->getValue('id'),
-        )); ?></li>
-
-    <?php endforeach; ?>
-</ul>
-<?php echo $this->htmlAnchor('Enter Scales', array(
-    'controller'    => 'scales',
-    'action'        => 'create',
-    'event_id'     => $this->model->id,
+<?php echo $this->actionList(array(
+    $this->htmlAnchor('Leaderboards', array(
+        'controller' => 'leaderboards',
+        'action'    => 'full-screen',
+        'event_id'  => $this->model->id,
+    )),
+    $this->htmlAnchor('Athletes', array(
+        'controller'    => 'athletes',
+        'action'        => 'list',
+        'event_id'      => $this->model->id,
+    )),
+    $this->htmlAnchor('Competitions', array(
+        'controller'    => 'competitions',
+        'action'        => 'list',
+        'event_id'      => $this->model->id,
+    )),
 )); ?>
 
-<?php echo $this->htmlAnchor('Enter Competitions', array(
-    'controller'    => 'competitions',
-    'action'        => 'create',
-    'event_id'     => $this->model->id,
-)); ?>
-
-
-<ol>
-    <?php foreach ($this->model->getChildren('Competition') as $competition) : ?>
-
-        <li><?php echo $this->htmlAnchor($competition->getValue('name'), array(
-            'module'    => 'default',
-            'controller'=> 'competitions',
-            'action'    => 'view',
-            'id'        => $competition->getValue('id'),
-        )); ?></li>
-
-    <?php endforeach; ?>
-</ol>
-
-<?php endif; ?>

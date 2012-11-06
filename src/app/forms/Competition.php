@@ -89,6 +89,22 @@ class App_Form_Competition
             'ignore'        => true,
         ));
 
+        $this->setElementDecorators(array(
+            'ViewHelper',
+            'Label',
+            'Errors',
+            array('HtmlTag', array(
+                'tag'   => 'div',
+                'class' => 'form-element'
+            )),
+        ));
+
+        $this->setDecorators(array(
+            'FormElements',
+            'Fieldset',
+            'Form',
+        ));
+
     } // END function init
 
     /**

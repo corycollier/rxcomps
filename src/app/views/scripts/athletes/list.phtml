@@ -17,8 +17,8 @@
     $this->htmlAnchor('Add Athlete', array(
         'action'    => 'create',
     )),
-    'Filter by: ' . $this->scaleFilter(),
 )); ?>
+<?php echo 'Filter by: ' . $this->scaleFilter() ;?>
 
 <?php foreach ($this->items as $event) : ?>
 
