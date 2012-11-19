@@ -41,10 +41,12 @@ class App_Model_Leaderboard
      * @param integer $eventId
      * @return array
      */
-    public function load ($eventId, $scaleId)
+    public function load ($eventId, $scaleId, $competitionFilters = '')
     {
         $event = $this->_getEventModel();
         $event->load($eventId);
+
+        $competitionFilters = explode(',', trim($competitionFilters));
 
         $competitions = $event->getChildren('Competition');
 
@@ -56,7 +58,12 @@ class App_Model_Leaderboard
         $athletes = array();
         foreach ($results as $competitionId => $competitionResults) {
             foreach ($competitionResults as $athleteId => $athleteResults) {
-                $athletes = $this->_mergeAthleteResults($athletes, $athleteId, $athleteResults);
+                $athletes = $this->_mergeAthleteResults(
+                    $athletes,
+                    $athleteId,
+                    $competitionFilters,
+                    $athleteResults
+                );
             }
         }
 
@@ -74,13 +81,19 @@ class App_Model_Leaderboard
      * @param array $data
      * @return array
      */
-    protected function _mergeAthleteResults ($athletes, $id, $data = array())
+    protected function _mergeAthleteResults ($athletes, $id, $competitionFilters, $data = array())
     {
+
         if (! array_key_exists($id, $athletes)) {
             $athletes[$id] = $data;
             $athletes[$id]['competitions'] = array();
         } else {
             $athletes[$id]['points'] = (int)($athletes[$id]['points'] + $data['points']);
+        }
+
+        // if these results should be filtered ...
+        if (in_array($data['competition_id'], $competitionFilters)) {
+            $athletes[$id]['points'] = $athletes[$id]['points'] - $data['points'];
         }
 
         $athletes[$id]['competitions'][$data['competition_id']] = array(

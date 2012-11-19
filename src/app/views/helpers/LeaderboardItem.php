@@ -89,7 +89,7 @@ class App_View_Helper_LeaderboardItem
                 )),
                 $rank
             ),
-            sprintf('<td>%s</td>', implode('</td><td>', $this->getCompetitionResults($data))),
+            implode(PHP_EOL, $this->getCompetitionResults($data)),
             '</tr>',
         ));
 
@@ -110,12 +110,15 @@ class App_View_Helper_LeaderboardItem
             // $results[] = sprintf('%d (%d)', $competitionResults['rank'], $competitionResults['score']);
             // $results[] = sprintf('%d', $competitionResults['rank']);
             $results[] = sprintf(implode(PHP_EOL, array(
+                    '<td class="%s">',
                     '<a href="#" class="expand-details">%d</a>',
                     '<ul class="details">',
                     '<li><strong>Score</strong> %d %s</li>',
                     '<li><strong>Points</strong> %d</li>',
                     '</ul>',
+                    '</td>',
                 )),
+                $this->isFiltered($competitionId) ? 'filtered' : '',
                 $competitionResults['rank'],
                 $competitionResults['score'],
                 $this->_getScoreEditLink($competitionId, $data),
@@ -140,6 +143,39 @@ class App_View_Helper_LeaderboardItem
 
         ));
     }
+
+    public function isFiltered ($competitionId)
+    {
+        $request = $this->getRequest();
+
+        $filters = $request->getParam('filters');
+
+        $filters = $this->getFilters();
+
+        if (in_array($competitionId, $filters)) {
+            return true;
+        }
+
+        return false;
+
+    }
+
+    public function getFilters ( )
+    {
+        $request = $this->getRequest();
+
+        $filters = $request->getParam('filters');
+
+        $filters = explode(',', trim($filters));
+
+        return $filters;
+    }
+
+    public function getRequest ( )
+    {
+        return Zend_Controller_Front::getInstance()->getRequest();
+
+    } // END function getRequest
 
 
 } // END class App_View_Helper_LeaderboardItem

@@ -333,6 +333,14 @@ ul.actions {
         white-space: nowrap;
         text-align: right;
     }
+
+    .filtered {
+        color: #111;
+
+        a {
+            color: #111;
+        }
+    }
 }
 
 .data-table:hover
