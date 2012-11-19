@@ -44,17 +44,22 @@ html {
 
 body {
 
-@include blueprint-interaction;
+    background: #333;
+    color: #ccc;
+    font-size: 1em;
+    height: 100%;
+    line-height: 1.1em;
     // text-align: center;
-    @include fancy-type;
     margin: 0;
     padding: 0;
     text-align: center;
-    height: 100%;
-    font-size: 1em;
-    line-height: 1.1em;
     // background: #E25C28;
-    background: #333;
+    @include fancy-type;
+    @include blueprint-interaction;
+
+    p + p {
+        margin: auto;
+    }
 }
 
 form {

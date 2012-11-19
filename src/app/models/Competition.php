@@ -114,7 +114,7 @@ class App_Model_Competition
      */
     protected function _saveScoring ($definition)
     {
-        $table = $this->_getScoringTable();
+        $table = $this->getTable('Scoring');
 
         $row = $table->fetchRow(sprintf('competition_id = %d', $this->id));
 
