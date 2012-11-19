@@ -93,6 +93,7 @@ class App_Model_Leaderboard
         unset($athletes[$id]['competition_id']);
         unset($athletes[$id]['rank']);
         unset($athletes[$id]['score']);
+        unset($athletes[$id]['id']);
 
         return $athletes;
 
