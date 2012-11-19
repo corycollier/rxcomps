@@ -151,6 +151,7 @@ class Tests_App_Model_LeaderboardTest
                                 'score'     => 500,
                                 'rank'      => 3,
                                 'points'    => 80,
+                                'score_id'  => 1,
                             ),
                         ),
                     ),
@@ -158,6 +159,7 @@ class Tests_App_Model_LeaderboardTest
                 'athletes'  => array(),
                 'id'        => 100,
                 'data'      => array(
+                    'id'                => 1,
                     'score'             => 500,
                     'rank'              => 3,
                     'points'            => 80,
@@ -184,6 +186,7 @@ class Tests_App_Model_LeaderboardTest
                                 'score'     => 500,
                                 'rank'      => 3,
                                 'points'    => 80,
+                                'score_id'  => 1,
                             ),
                         ),
                     ),
@@ -202,6 +205,7 @@ class Tests_App_Model_LeaderboardTest
                 ),
                 'id'        => 100,
                 'data'      => array(
+                    'id'                => 1,
                     'score'             => 500,
                     'rank'              => 3,
                     'points'            => 80,
@@ -233,6 +237,7 @@ class Tests_App_Model_LeaderboardTest
                                 'score'     => 200,
                                 'rank'      => 6,
                                 'points'    => 50,
+                                'score_id'  => 1,
                             ),
                         ),
                     ),
@@ -261,6 +266,7 @@ class Tests_App_Model_LeaderboardTest
                 ),
                 'id'        => 100,
                 'data'      => array(
+                    'id'                => 1,
                     'score'             => 200,
                     'rank'              => 6,
                     'points'            => 50,
