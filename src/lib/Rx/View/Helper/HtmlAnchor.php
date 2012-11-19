@@ -42,7 +42,7 @@ class Rx_View_Helper_HtmlAnchor
 
         return sprintf(
             $template,
-            $this->view->url($urlOptions),
+            $this->view->url($urlOptions, 'default', false, false),
             $this->_htmlAttribs($attribs),
             $text
         );

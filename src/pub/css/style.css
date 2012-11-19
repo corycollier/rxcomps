@@ -566,8 +566,16 @@ h3, .score-item h3 {
   white-space: nowrap;
   text-align: right;
 }
+/* line 337, ../../app/views/sass/style.scss */
+.data-table .filtered {
+  color: #111;
+}
+/* line 340, ../../app/views/sass/style.scss */
+.data-table .filtered a {
+  color: #111;
+}
 
-/* line 349, ../../app/views/sass/style.scss */
+/* line 357, ../../app/views/sass/style.scss */
 .data-table th {
   text-align: center;
   color: #fff;
@@ -578,19 +586,19 @@ h3, .score-item h3 {
   box-shadow: 0px -1px 0 rgba(0, 0, 0, 0.8) inset;
   border-bottom: 1px solid rgba(255, 255, 255, 0.15);
 }
-/* line 355, ../../app/views/sass/style.scss */
+/* line 363, ../../app/views/sass/style.scss */
 .data-table th p {
   line-height: 1em;
 }
 
-/* line 363, ../../app/views/sass/style.scss */
+/* line 371, ../../app/views/sass/style.scss */
 .data-table td {
   vertical-align: middle;
   padding: 5px;
   text-align: center;
 }
 
-/* line 375, ../../app/views/sass/style.scss */
+/* line 383, ../../app/views/sass/style.scss */
 .data-table tr:hover {
   background: rgba(0, 0, 0, 0.1);
   border: 1px solid rgba(0, 0, 0, 0.25);
@@ -608,14 +616,14 @@ h3, .score-item h3 {
   border-radius: 5px;
 }
 
-/* line 381, ../../app/views/sass/style.scss */
+/* line 389, ../../app/views/sass/style.scss */
 .leaderboards-table .rank {
   width: auto;
   max-width: 2em;
   text-align: right;
 }
 
-/* line 394, ../../app/views/sass/style.scss */
+/* line 402, ../../app/views/sass/style.scss */
 .paginationControl {
   padding: 10px 0;
   text-align: center;
@@ -641,7 +649,7 @@ h3, .score-item h3 {
 /*
  * Image replacement
  */
-/* line 408, ../../app/views/sass/style.scss */
+/* line 416, ../../app/views/sass/style.scss */
 .ir {
   background-color: transparent;
   border: 0;
@@ -650,7 +658,7 @@ h3, .score-item h3 {
   *text-indent: -9999px;
 }
 
-/* line 416, ../../app/views/sass/style.scss */
+/* line 424, ../../app/views/sass/style.scss */
 .ir:before {
   content: "";
   display: block;
@@ -661,7 +669,7 @@ h3, .score-item h3 {
 /*
  * Hide from both screenreaders and browsers: h5bp.com/u
  */
-/* line 427, ../../app/views/sass/style.scss */
+/* line 435, ../../app/views/sass/style.scss */
 .hidden {
   display: none !important;
   visibility: hidden;
