@@ -15,6 +15,25 @@
 ?>
 
 <h2><?php echo $this->model->getValue('name'); ?></h2>
+
+<?php echo $this->actionList(array(
+    $this->htmlAnchor('Leaderboards', array(
+        'controller' => 'leaderboards',
+        'action'    => 'full-screen',
+        'event_id'  => $this->model->id,
+    )),
+    $this->htmlAnchor('Athletes', array(
+        'controller'    => 'athletes',
+        'action'        => 'list',
+        'event_id'      => $this->model->id,
+    )),
+    $this->htmlAnchor('Competitions', array(
+        'controller'    => 'competitions',
+        'action'        => 'list',
+        'event_id'      => $this->model->id,
+    )),
+)); ?>
+
 <?php if ($this->auth()->hasIdentity()) : ?>
 <?php echo $this->actionList(array(
     $this->htmlAnchor('Edit', array(
@@ -43,21 +62,9 @@
 
 <p><?php echo $this->model->getValue('description'); ?></p>
 
-<?php echo $this->actionList(array(
-    $this->htmlAnchor('Leaderboards', array(
-        'controller' => 'leaderboards',
-        'action'    => 'full-screen',
-        'event_id'  => $this->model->id,
-    )),
-    $this->htmlAnchor('Athletes', array(
-        'controller'    => 'athletes',
-        'action'        => 'list',
-        'event_id'      => $this->model->id,
-    )),
-    $this->htmlAnchor('Competitions', array(
-        'controller'    => 'competitions',
-        'action'        => 'list',
-        'event_id'      => $this->model->id,
-    )),
+<h3>Competitions</h3>
+<?php echo $this->action('list', 'competitions', 'default', array(
+    'event_id'  => $this->model->id,
+
 )); ?>
 
