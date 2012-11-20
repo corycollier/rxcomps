@@ -55,11 +55,11 @@ class App_View_Helper_ScaleFilter
      *
      * @return Zend_Db_Table_Rowset
      */
-    public function getScales ( )
+    public function getScales ($eventId)
     {
         $table = $this->_getScaleTable();
 
-        $scales = $table->fetchAll();
+        $scales = $table->fetchAll(sprintf('event_id = "%d"', $eventId));
 
         return $scales;
 
@@ -72,9 +72,9 @@ class App_View_Helper_ScaleFilter
      *
      * @return string
      */
-    public function scaleFilter ( )
+    public function scaleFilter ($eventId)
     {
-        $scales = $this->getScales();
+        $scales = $this->getScales($eventId);
 
         $urls = array();
 

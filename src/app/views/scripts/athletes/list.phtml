@@ -18,7 +18,7 @@
         'action'    => 'create',
     )),
 )); ?>
-<?php echo 'Filter by: ' . $this->scaleFilter() ;?>
+<?php echo 'Filter by: ' . $this->scaleFilter($this->request()->getParam('event_id')) ;?>
 
 <?php foreach ($this->items as $event) : ?>
 

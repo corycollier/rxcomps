@@ -61,6 +61,7 @@ class App_View_Helper_CompetitionItem
     {
         $view = $this->view;
         $title = sprintf('<h3>%s</h3>', $view->htmlAnchor(ucwords($competition->name), array(
+            'controller'    => 'competitions',
             'action'    => 'view',
             'id'        => $competition->id,
         )));
@@ -87,10 +88,12 @@ class App_View_Helper_CompetitionItem
         if ($auth->hasIdentity()) {
             $actions = $view->htmlList(array(
                 $view->htmlAnchor('Edit', array(
+                    'controller'    => 'competitions',
                     'action'    => 'edit',
                     'id'        => $competition->id,
                 )),
                 $view->htmlAnchor('Delete', array(
+                    'controller'    => 'competitions',
                     'action'    => 'delete',
                     'id'        => $competition->id,
                 )),
