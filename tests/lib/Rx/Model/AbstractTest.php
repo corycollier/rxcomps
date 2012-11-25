@@ -31,7 +31,7 @@
  */
 
 class Tests_Rx_Model_AbstractTest
-    extends PHPUnit_Framework_TestCase
+    extends Rx_PHPUnit_TestCase
 {
     /**
      * test_getName()
@@ -60,15 +60,8 @@ class Tests_Rx_Model_AbstractTest
      */
     public function test_getValue ($expected, $name)
     {
-        $model = $this->getMockBuilder('Rx_Model_Abstract')
-            ->setMethods(array('getForm'))
-            ->disableOriginalConstructor()
-            ->getMock();
-
-        $form = $this->getMockBuilder('Rx_Form_Abstract')
-            ->setMethods(array('getValue'))
-            ->disableOriginalConstructor()
-            ->getMock();
+        $model = $this->getBuiltMock('Rx_Model_Abstract', array('getForm'));
+        $form = $this->getBuiltMock('Rx_Form_Abstract', array('getValue'));
 
         $form->expects($this->once())
             ->method('getValue')

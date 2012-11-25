@@ -31,7 +31,7 @@
  */
 
 class Tests_App_Bootstrap
-    extends PHPUnit_Framework_TestCase
+    extends Rx_PHPUnit_TestCase
 {
 
     /**
@@ -44,13 +44,10 @@ class Tests_App_Bootstrap
      */
     public function test__initAutoloader ( )
     {
-        $subject = $this->getMockBuilder('App_Bootstrap')
-            ->disableOriginalConstructor()
-            ->getMock();
+        $subject = $this->getBuiltMock('App_Bootstrap');
 
-        $method = new ReflectionMethod('App_Bootstrap', '_initAutoloader');
-        $method->setAccessible(true);
-        $method->invoke($subject);
+        $this->getMethod('App_Bootstrap', '_initAutoloader')
+            ->invoke($subject);
 
     } // END function test__initAutoloader
 
@@ -82,9 +79,8 @@ class Tests_App_Bootstrap
             ->disableOriginalConstructor()
             ->getMock();
 
-        $method = new ReflectionMethod('App_Bootstrap', '_initControllers');
-        $method->setAccessible(true);
-        $method->invoke($subject);
+        $this->getMethod('App_Bootstrap', '_initControllers')
+            ->invoke($subject);
 
     } // END function test__initControllers
 
@@ -113,15 +109,9 @@ class Tests_App_Bootstrap
     public function test__initPlugins ( )
     {
         $this->markTestIncomplete("not ready yet");
-        $subject = $this->getMockBuilder('App_Bootstrap')
-            ->setMethods(array('bootstrap', 'getResource'))
-            ->disableOriginalConstructor()
-            ->getMock();
+        $subject = $this->getBuiltMock('App_Bootstrap', array('bootstrap', 'getResource'));
 
-        $front = $this->getMockBuilder('Zend_Controller_Front')
-            ->setMethods(array('registerPlugin'))
-            ->disableOriginalConstructor()
-            ->getMock();
+        $front = $this->getBuiltMock('Zend_Controller_Front', array('registerPlugin'));
 
         $front->expects($this->exactly(3))
             ->method('registerPlugin');

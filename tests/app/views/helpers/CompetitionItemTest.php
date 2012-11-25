@@ -109,6 +109,7 @@ class Tests_App_View_Helper_CompetitionItem
             ->with(
                 $this->equalTo(@$competition->name),
                 $this->equalTo(array(
+                    'controller'=> 'competitions',
                     'action'    => 'view',
                     'id'        => @$competition->id,
                 ))

@@ -31,7 +31,7 @@
  */
 
 class Tests_Rx_Controller_ModelTest
-    extends PHPUnit_Framework_TestCase
+    extends Rx_PHPUnit_TestCase
 {
     /**
      * test_init()
@@ -84,21 +84,9 @@ class Tests_Rx_Controller_ModelTest
     public function test_listAction ($modelName, $items, $params = array())
     {
         $view = new Zend_View;
-
-        $subject = $this->getMockBuilder('Rx_Controller_Model')
-            ->setMethods(array('getModel', 'getRequest'))
-            ->disableOriginalConstructor()
-            ->getMock();
-
-        $model = $this->getMockBuilder('Rx_Model_Abstract')
-            ->setMethods(array('paginate'))
-            ->disableOriginalConstructor()
-            ->getMock();
-
-        $request = $this->getMockBuilder('Zend_Controller_Request_Http')
-            ->setMethods(array('getParams'))
-            ->disableOriginalConstructor()
-            ->getMock();
+        $subject = $this->getBuiltMock('Rx_Controller_Model', array('getModel', 'getRequest'));
+        $model = $this->getBuiltMock('Rx_Model_Abstract', array('paginate'));
+        $request = $this->getBuiltMock('Zend_Controller_Request_Http', array('getParams'));
 
         $request->expects($this->once())
             ->method('getParams')

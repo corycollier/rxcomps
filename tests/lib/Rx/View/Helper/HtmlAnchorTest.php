@@ -31,7 +31,7 @@
  */
 
 class Tests_Rx_View_Helper_HtmlAnchorTest
-    extends PHPUnit_Framework_TestCase
+    extends Rx_PHPUnit_TestCase
 {
 
     /**
