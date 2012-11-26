@@ -42,8 +42,8 @@ class Tests_Rx_Form_AbstractTest
      */
     public function test_getButtonSubForm ( )
     {
-        $form = $this->getBuiltMock('Rx_Form_Abstract', array('buildSubForm'));
-        $subForm = new Zend_Form_SubForm;
+        $subForm    = new Zend_Form_SubForm;
+        $form       = $this->getBuiltMock('Rx_Form_Abstract', array('buildSubForm'));
 
         $form->expects($this->once())
             ->method('buildSubForm')

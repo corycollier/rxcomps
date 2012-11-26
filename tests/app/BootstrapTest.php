@@ -49,6 +49,11 @@ class Tests_App_Bootstrap
         $this->getMethod('App_Bootstrap', '_initAutoloader')
             ->invoke($subject);
 
+        $namespaces = Zend_Loader_Autoloader::getInstance()->getRegisteredNamespaces();
+
+        $this->assertTrue(in_array('Rx_', $namespaces));
+
+
     } // END function test__initAutoloader
 
     /**
@@ -75,12 +80,14 @@ class Tests_App_Bootstrap
      */
     public function test__initControllers ( )
     {
-        $subject = $this->getMockBuilder('App_Bootstrap')
-            ->disableOriginalConstructor()
-            ->getMock();
+        $subject = $this->getBuiltMock('App_Bootstrap');
 
         $this->getMethod('App_Bootstrap', '_initControllers')
             ->invoke($subject);
+
+        $stack = Zend_Controller_Action_HelperBroker::getPluginLoader()->getPaths();
+
+        $this->assertTrue(array_key_exists('Rx_Controller_Action_Helper_', $stack));
 
     } // END function test__initControllers
 
@@ -108,9 +115,8 @@ class Tests_App_Bootstrap
      */
     public function test__initPlugins ( )
     {
-        $this->markTestIncomplete("not ready yet");
-        $subject = $this->getBuiltMock('App_Bootstrap', array('bootstrap', 'getResource'));
-
+        // $this->markTestIncomplete("not ready yet");
+        $subject = $this->getBuiltMock('App_Bootstrap');
         $front = $this->getBuiltMock('Zend_Controller_Front', array('registerPlugin'));
 
         $front->expects($this->exactly(3))

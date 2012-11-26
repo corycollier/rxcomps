@@ -31,7 +31,7 @@
  */
 
 class Tests_App_Model_LeaderboardTest
-    extends PHPUnit_Framework_TestCase
+    extends Rx_PHPUnit_TestCase
 {
 
     /**
@@ -45,10 +45,7 @@ class Tests_App_Model_LeaderboardTest
     {
         $subject = new App_Model_Leaderboard;
 
-        $method = new ReflectionMethod('App_Model_Leaderboard', '_getEventModel');
-        $method->setAccessible(true);
-
-        $result = $method->invoke($subject);
+        $result = $this->getMethod('App_Model_Leaderboard', '_getEventModel')->invoke($subject);
 
         $this->assertInstanceOf('App_Model_Event', $result);
 
@@ -66,11 +63,10 @@ class Tests_App_Model_LeaderboardTest
     {
         $subject = new App_Model_Leaderboard;
 
-        $method = new ReflectionMethod('App_Model_Leaderboard', '_sortAthleteResults');
-        $method->setAccessible(true);
-        $results = $method->invoke($subject, $athletes);
+        $result = $this->getMethod('App_Model_Leaderboard', '_sortAthleteResults')
+            ->invoke($subject, $athletes);
 
-        $this->assertEquals($expected, $results);
+        $this->assertEquals($expected, $result);
 
     } // END function test__sortAthleteResults
 
@@ -119,15 +115,15 @@ class Tests_App_Model_LeaderboardTest
      * @covers App_Model_Leaderboard::_mergeAthleteResults
      * @dataProvider provide__mergeAthleteResults
      */
-    public function test__mergeAthleteResults ($expected, $athletes, $id, $data = array())
+    public function test__mergeAthleteResults ($expected, $athletes, $id,
+        $competitionFilters = array(), $data = array())
     {
         $subject = new App_Model_Leaderboard;
 
-        $method = new ReflectionMethod('App_Model_Leaderboard', '_mergeAthleteResults');
-        $method->setAccessible(true);
-        $results = $method->invoke($subject, $athletes, $id, $data);
+        $result = $this->getMethod('App_Model_Leaderboard', '_mergeAthleteResults')
+            ->invoke($subject, $athletes, $id, $competitionFilters, $data);
 
-        $this->assertEquals($expected, $results);
+        $this->assertEquals($expected, $result);
 
     } // END function test__mergeAthleteResults
 
@@ -158,6 +154,7 @@ class Tests_App_Model_LeaderboardTest
                 ),
                 'athletes'  => array(),
                 'id'        => 100,
+                'filters'   => array(),
                 'data'      => array(
                     'id'                => 1,
                     'score'             => 500,
@@ -204,6 +201,7 @@ class Tests_App_Model_LeaderboardTest
                     ),
                 ),
                 'id'        => 100,
+                'filters'   => array(),
                 'data'      => array(
                     'id'                => 1,
                     'score'             => 500,
@@ -265,6 +263,7 @@ class Tests_App_Model_LeaderboardTest
                     ),
                 ),
                 'id'        => 100,
+                'filters'   => array(),
                 'data'      => array(
                     'id'                => 1,
                     'score'             => 200,

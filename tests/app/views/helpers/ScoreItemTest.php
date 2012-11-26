@@ -31,7 +31,7 @@
  */
 
 class Tests_App_View_Helper_ScoreItem
-    extends PHPUnit_Framework_TestCase
+    extends Rx_PHPUnit_TestCase
 {
     /**
      * test_scoreItem()
@@ -43,10 +43,9 @@ class Tests_App_View_Helper_ScoreItem
      */
     public function test_scoreItem ($expected, $score, $title, $actions = null)
     {
-        $subject = $this->getMockBuilder('App_View_Helper_ScoreItem')
-            ->setMethods(array('_getTitle', '_getActions'))
-            ->disableOriginalConstructor()
-            ->getMock();
+        $subject = $this->getBuiltMock('App_View_Helper_ScoreItem', array(
+            '_getTitle', '_getActions'
+        ));
 
         $subject->expects($this->once())
             ->method('_getTitle')
@@ -95,19 +94,9 @@ class Tests_App_View_Helper_ScoreItem
     public function test__getTitle ($expected, $htmlAnchor, $score)
     {
         $this->markTestIncomplete('need to revisit');
-        $subject = $this->getMockBuilder('App_View_Helper_ScoreItem')
-            ->disableOriginalConstructor()
-            ->getMock();
-
-        $row = $this->getMockBuilder('Zend_Db_Table_Row')
-            ->setMethods(array('findParentRow'))
-            ->disableOriginalConstructor()
-            ->getMock();
-
-        $view = $this->getMockBuilder('Zend_View')
-            ->setMethods(array('htmlAnchor'))
-            ->disableOriginalConstructor()
-            ->getMock();
+        $subject = $this->getBuiltMock('App_View_Helper_ScoreItem');
+        $row = $this->getBuiltMock('Zend_Db_Table_Row', array('findParentRow'));
+        $view = $this->getBuiltMock('Zend_View', array('htmlAnchor'));
 
         $view->expects($this->once())
             ->method('htmlAnchor')
@@ -164,19 +153,9 @@ class Tests_App_View_Helper_ScoreItem
     public function test__getActions ($expected, $score, $hasIdentity,
         $editLink = null, $deleteLink = null)
     {
-        $subject = $this->getMockBuilder('App_View_Helper_ScoreItem')
-            ->disableOriginalConstructor()
-            ->getMock();
-
-        $view = $this->getMockBuilder('Zend_View')
-            ->setMethods(array('auth', 'htmlAnchor', 'htmlList'))
-            ->disableOriginalConstructor()
-            ->getMock();
-
-        $auth = $this->getMockBuilder('Zend_Auth')
-            ->setMethods(array('hasIdentity'))
-            ->disableOriginalConstructor()
-            ->getMock();
+        $subject = $this->getBuiltMock('App_View_Helper_ScoreItem');
+        $view = $this->getBuiltMock('Zend_View', array('auth', 'htmlAnchor', 'htmlList'));
+        $auth = $this->getBuiltMock('Zend_Auth', array('hasIdentity'));
 
         $auth->expects($this->once())
             ->method('hasIdentity')
@@ -214,9 +193,8 @@ class Tests_App_View_Helper_ScoreItem
 
         $subject->view = $view;
 
-        $method = new ReflectionMethod('App_View_Helper_ScoreItem', '_getActions');
-        $method->setAccessible(true);
-        $result = $method->invoke($subject, $score);
+        $result = $this->getMethod('App_View_Helper_ScoreItem', '_getActions')
+            ->invoke($subject, $score);
 
         $this->assertEquals($expected, $result);
 

@@ -46,9 +46,7 @@ class Tests_Rx_Controller_ActionTest
     public function test_preDispatch ( )
     {
         $request = new Zend_Controller_Request_HttpTestCase;
-
         $aclHelper = $this->getBuiltMock('Rx_Controller_Action_Helper_Acl', array('check'));
-
         $controller = $this->getBuiltMock('Rx_Controller_Action', array('getHelper', 'getRequest'));
 
         $aclHelper->expects($this->once())

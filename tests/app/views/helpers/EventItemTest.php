@@ -31,7 +31,7 @@
  */
 
 class Tests_App_View_Helper_EventItem
-    extends PHPUnit_Framework_TestCase
+    extends Rx_PHPUnit_TestCase
 {
 
     /**
@@ -44,10 +44,7 @@ class Tests_App_View_Helper_EventItem
      */
     public function test_eventItem ($expected, $event, $title, $actions = null)
     {
-        $subject = $this->getMockBuilder('App_View_Helper_EventItem')
-            ->setMethods(array('_getTitle', '_getActions'))
-            ->disableOriginalConstructor()
-            ->getMock();
+        $subject = $this->getBuiltMock('App_View_Helper_EventItem', array('_getTitle', '_getActions'));
 
         $subject->expects($this->once())
             ->method('_getTitle')
@@ -95,14 +92,8 @@ class Tests_App_View_Helper_EventItem
      */
     public function test__getTitle ($expected, $htmlAnchor, $event)
     {
-        $subject = $this->getMockBuilder('App_View_Helper_EventItem')
-            ->disableOriginalConstructor()
-            ->getMock();
-
-        $view = $this->getMockBuilder('Zend_View')
-            ->setMethods(array('htmlAnchor'))
-            ->disableOriginalConstructor()
-            ->getMock();
+        $subject = $this->getBuiltMock('App_View_Helper_EventItem');
+        $view = $this->getBuiltMock('Zend_View', array('htmlAnchor'));
 
         $view->expects($this->once())
             ->method('htmlAnchor')
@@ -118,9 +109,8 @@ class Tests_App_View_Helper_EventItem
 
         $subject->view = $view;
 
-        $method = new ReflectionMethod('App_View_Helper_EventItem', '_getTitle');
-        $method->setAccessible(true);
-        $result = $method->invoke($subject, $event);
+        $result = $this->getMethod('App_View_Helper_EventItem', '_getTitle')
+            ->invoke($subject, $event);
 
         $this->assertEquals($expected, $result);
 
@@ -159,19 +149,9 @@ class Tests_App_View_Helper_EventItem
     public function test__getActions ($expected, $event, $hasIdentity,
         $editLink = null, $deleteLink = null)
     {
-        $subject = $this->getMockBuilder('App_View_Helper_EventItem')
-            ->disableOriginalConstructor()
-            ->getMock();
-
-        $view = $this->getMockBuilder('Zend_View')
-            ->setMethods(array('auth', 'htmlAnchor', 'htmlList'))
-            ->disableOriginalConstructor()
-            ->getMock();
-
-        $auth = $this->getMockBuilder('Zend_Auth')
-            ->setMethods(array('hasIdentity'))
-            ->disableOriginalConstructor()
-            ->getMock();
+        $subject = $this->getBuiltMock('App_View_Helper_EventItem');
+        $view = $this->getBuiltMock('Zend_View', array('auth', 'htmlAnchor', 'htmlList'));
+        $auth = $this->getBuiltMock('Zend_Auth', array('hasIdentity'));
 
         $auth->expects($this->once())
             ->method('hasIdentity')

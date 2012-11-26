@@ -33,7 +33,6 @@
 class Tests_Rx_Controller_Action_Helper_AclTest
     extends Rx_PHPUnit_TestCase
 {
-
     /**
      * test_check()
      *
@@ -45,12 +44,22 @@ class Tests_Rx_Controller_Action_Helper_AclTest
     public function test_check ($isAllowed)
     {
         // create test subjects
-        $request    = new Zend_Controller_Request_HttpTestCase;
-        $helper     = $this->getBuiltMock('Rx_Controller_Action_Helper_Acl', array('getActionController'));
-        $controller = $this->getBuiltMock('Rx_Controller_Action', array('getModel', 'getHelper'));
-        $user       = $this->getBuiltMock('App_Model_User', array('isAllowed'));
-        $flashHelper = $this->getBuiltMock('Zend_Controller_Action_Helper_FlashMessenger', array('addMessage'));
-        $redirectHelper = $this->getBuiltMock('Zend_Controller_Action_Helper_Redirector', array('gotoRoute'));
+        $request        = new Zend_Controller_Request_HttpTestCase;
+        $user           = $this->getBuiltMock('App_Model_User', array(
+            'isAllowed'
+        ));
+        $controller     = $this->getBuiltMock('Rx_Controller_Action', array(
+            'getModel', 'getHelper'
+        ));
+        $helper         = $this->getBuiltMock('Rx_Controller_Action_Helper_Acl', array(
+            'getActionController',
+        ));
+        $redirectHelper = $this->getBuiltMock('Zend_Controller_Action_Helper_Redirector', array(
+            'gotoRoute',
+        ));
+        $flashHelper    = $this->getBuiltMock('Zend_Controller_Action_Helper_FlashMessenger', array(
+            'addMessage',
+        ));
 
         // set expectations
         if (! $isAllowed) {
@@ -101,7 +110,7 @@ class Tests_Rx_Controller_Action_Helper_AclTest
     public function provide_check ( )
     {
         return array(
-            'the check passes'     => array(true),
+            'the check passes'    => array(true),
             'the check fails'     => array(false),
         );
 

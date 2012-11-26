@@ -31,7 +31,7 @@
  */
 
 class Tests_App_View_Helper_AtheleteItem
-    extends PHPUnit_Framework_TestCase
+    extends Rx_PHPUnit_TestCase
 {
 
     /**
@@ -44,10 +44,9 @@ class Tests_App_View_Helper_AtheleteItem
      */
     public function test_athleteItem ($expected, $athlete, $title, $actions = null)
     {
-        $subject = $this->getMockBuilder('App_View_Helper_AthleteItem')
-            ->setMethods(array('_getTitle', '_getActions'))
-            ->disableOriginalConstructor()
-            ->getMock();
+        $subject = $this->getBuiltMock('App_View_Helper_AthleteItem', array(
+            '_getTitle', '_getActions'
+        ));
 
         $subject->expects($this->once())
             ->method('_getTitle')
@@ -95,14 +94,8 @@ class Tests_App_View_Helper_AtheleteItem
      */
     public function test__getTitle ($expected, $htmlAnchor, $athlete)
     {
-        $subject = $this->getMockBuilder('App_View_Helper_AthleteItem')
-            ->disableOriginalConstructor()
-            ->getMock();
-
-        $view = $this->getMockBuilder('Zend_View')
-            ->setMethods(array('htmlAnchor'))
-            ->disableOriginalConstructor()
-            ->getMock();
+        $subject = $this->getBuiltMock('App_View_Helper_AthleteItem');
+        $view = $this->getBuiltMock('Zend_View', array('htmlAnchor'));
 
         $view->expects($this->once())
             ->method('htmlAnchor')
@@ -118,9 +111,8 @@ class Tests_App_View_Helper_AtheleteItem
 
         $subject->view = $view;
 
-        $method = new ReflectionMethod('App_View_Helper_AthleteItem', '_getTitle');
-        $method->setAccessible(true);
-        $result = $method->invoke($subject, $athlete);
+        $result = $this->getMethod('App_View_Helper_AthleteItem', '_getTitle')
+            ->invoke($subject, $athlete);
 
         $this->assertEquals($expected, $result);
 
@@ -159,19 +151,9 @@ class Tests_App_View_Helper_AtheleteItem
     public function test__getActions ($expected, $athlete, $hasIdentity,
         $editLink = null, $deleteLink = null)
     {
-        $subject = $this->getMockBuilder('App_View_Helper_AthleteItem')
-            ->disableOriginalConstructor()
-            ->getMock();
-
-        $view = $this->getMockBuilder('Zend_View')
-            ->setMethods(array('auth', 'htmlAnchor', 'htmlList'))
-            ->disableOriginalConstructor()
-            ->getMock();
-
-        $auth = $this->getMockBuilder('Zend_Auth')
-            ->setMethods(array('hasIdentity'))
-            ->disableOriginalConstructor()
-            ->getMock();
+        $subject = $this->getBuiltMock('App_View_Helper_AthleteItem');
+        $view   = $this->getBuiltMock('Zend_View', array('auth', 'htmlAnchor', 'htmlList'));
+        $auth   = $this->getBuiltMock('Zend_Auth', array('hasIdentity'));
 
         $auth->expects($this->once())
             ->method('hasIdentity')
@@ -208,9 +190,8 @@ class Tests_App_View_Helper_AtheleteItem
 
         $subject->view = $view;
 
-        $method = new ReflectionMethod('App_View_Helper_AthleteItem', '_getActions');
-        $method->setAccessible(true);
-        $result = $method->invoke($subject, $athlete);
+        $result = $this->getMethod('App_View_Helper_AthleteItem', '_getActions')
+            ->invoke($subject, $athlete);
 
         $this->assertEquals($expected, $result);
 

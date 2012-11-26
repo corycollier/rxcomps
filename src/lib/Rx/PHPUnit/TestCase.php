@@ -28,7 +28,7 @@
  * @since       Class available since release 2.0.0
  */
 
-class Rx_PHPUnit_TestCase
+abstract class Rx_PHPUnit_TestCase
     extends PHPUnit_Framework_TestCase
 {
     /**
@@ -83,5 +83,7 @@ class Rx_PHPUnit_TestCase
         return $property;
 
     } // END function getProperty
+
+    // public function setExpectsOnce ()
 
 } // END class Rx_PHPUnit_TestCase

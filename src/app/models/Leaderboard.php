@@ -33,6 +33,11 @@
 class App_Model_Leaderboard
 {
     /**
+     *  Message to indicate an exception due to invalid data
+     */
+    const EXCEPTION_INVALID_DATA = 'Invalid Data Exception. Missing %s';
+
+    /**
      * event()
      *
      * Returns the aggregate results of an event's competitions leaderboard results
@@ -81,7 +86,8 @@ class App_Model_Leaderboard
      * @param array $data
      * @return array
      */
-    protected function _mergeAthleteResults ($athletes, $id, $competitionFilters, $data = array())
+    protected function _mergeAthleteResults ($athletes, $id,
+        $competitionFilters = array(), $data = array())
     {
 
         if (! array_key_exists($id, $athletes)) {
