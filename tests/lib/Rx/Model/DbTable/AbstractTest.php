@@ -31,7 +31,7 @@
  */
 
 class Tests_Rx_Model_DbTable_Abstract
-    extends PHPUnit_Framework_TestCase
+    extends Rx_PHPUnit_TestCase
 {
     /**
      * test_getPaginationAdapter()
@@ -42,14 +42,8 @@ class Tests_Rx_Model_DbTable_Abstract
      */
     public function test_getPaginationAdapter ( )
     {
-        $subject = $this->getMockBuilder('Rx_Model_DbTable_Abstract')
-            ->setMethods(array('buildWhere'))
-            ->disableOriginalConstructor()
-            ->getMock();
-
-        $select = $this->getMockBuilder('Zend_Db_Table_Select')
-            ->disableOriginalConstructor()
-            ->getMock();
+        $subject = $this->getBuiltMock('Rx_Model_DbTable_Abstract', array('buildWhere'));
+        $select = $this->getBuiltMock('Zend_Db_Table_Select');
 
         $subject->expects($this->once())
             ->method('buildWhere')

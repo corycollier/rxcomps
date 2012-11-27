@@ -31,7 +31,7 @@
  */
 
 class Tests_Rx_Form_AbstractTest
-    extends PHPUnit_Framework_TestCase
+    extends Rx_PHPUnit_TestCase
 {
     /**
      * test_getButtonSubForm()
@@ -42,12 +42,8 @@ class Tests_Rx_Form_AbstractTest
      */
     public function test_getButtonSubForm ( )
     {
-        $form = $this->getMockBuilder('Rx_Form_Abstract')
-            ->setMethods(array('buildSubForm'))
-            ->disableOriginalConstructor()
-            ->getMock();
-
-        $subForm = new Zend_Form_SubForm;
+        $subForm    = new Zend_Form_SubForm;
+        $form       = $this->getBuiltMock('Rx_Form_Abstract', array('buildSubForm'));
 
         $form->expects($this->once())
             ->method('buildSubForm')

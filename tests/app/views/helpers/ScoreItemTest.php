@@ -31,7 +31,7 @@
  */
 
 class Tests_App_View_Helper_ScoreItem
-    extends PHPUnit_Framework_TestCase
+    extends Rx_PHPUnit_TestCase
 {
     /**
      * test_scoreItem()
@@ -43,10 +43,9 @@ class Tests_App_View_Helper_ScoreItem
      */
     public function test_scoreItem ($expected, $score, $title, $actions = null)
     {
-        $subject = $this->getMockBuilder('App_View_Helper_ScoreItem')
-            ->setMethods(array('_getTitle', '_getActions'))
-            ->disableOriginalConstructor()
-            ->getMock();
+        $subject = $this->getBuiltMock('App_View_Helper_ScoreItem', array(
+            '_getTitle', '_getActions'
+        ));
 
         $subject->expects($this->once())
             ->method('_getTitle')
@@ -92,33 +91,63 @@ class Tests_App_View_Helper_ScoreItem
      * @covers          App_View_Helper_ScoreItem::_getTitle
      * @dataProvider    provide__getTitle
      */
-    public function test__getTitle ($expected, $htmlAnchor, $score)
+    public function test__getTitle ($expected,
+        $scoreLink, $athleteLink, $competitionLink,
+        $scoreValue, $scoreId,
+        $athleteName, $athleteId,
+        $competitionName, $competitionId)
     {
-        $this->markTestIncomplete('need to revisit');
-        $subject = $this->getMockBuilder('App_View_Helper_ScoreItem')
-            ->disableOriginalConstructor()
-            ->getMock();
+        $subject = $this->getBuiltMock('App_View_Helper_ScoreItem');
+        $row    = $this->getBuiltMock('Zend_Db_Table_Row', array('findParentRow'));
+        $view   = $this->getBuiltMock('Zend_View', array('htmlAnchor'));
+        $score  = $this->getBuiltMock('App_Model_DbTable_Score', array('findParentRow'));
 
-        $row = $this->getMockBuilder('Zend_Db_Table_Row')
-            ->setMethods(array('findParentRow'))
-            ->disableOriginalConstructor()
-            ->getMock();
+        $athlete = (object)array(
+            'name'  => $athleteName,
+            'id'    => $athleteId,
+        );
 
-        $view = $this->getMockBuilder('Zend_View')
-            ->setMethods(array('htmlAnchor'))
-            ->disableOriginalConstructor()
-            ->getMock();
+        $competition = (object)array(
+            'name'  => $competitionName,
+            'id'    => $competitionId,
+        );
 
-        $view->expects($this->once())
+
+        $score->id = $scoreId;
+        $score->score = $scoreValue;
+
+        $score->expects($this->any())
+            ->method('findParentRow')
+            ->will($this->returnValueMap(array(
+                array('App_Model_DbTable_Athlete', $athlete),
+                array('App_Model_DbTable_Competition', $competition),
+            )));
+
+        $scoreParams = array(
+            'action'    => 'view',
+            'id'        => $scoreId,
+        );
+
+        $athleteParams = array(
+            'controller'=> 'athletes',
+            'action'    => 'view',
+            'id'        => $athleteId,
+        );
+
+        $competitionParams = array(
+            'controller'=> 'competitions',
+            'action'    => 'view',
+            'id'        => $competitionId,
+        );
+
+
+        $view->expects($this->any())
             ->method('htmlAnchor')
-            ->with(
-                $this->equalTo(@$score->name),
-                $this->equalTo(array(
-                    'action'    => 'view',
-                    'id'        => @$score->id,
-                ))
-            )
-            ->will($this->returnValue($htmlAnchor));
+            ->will($this->returnValueMap(array(
+                array($scoreValue, $scoreParams, $scoreLink),
+                array($athleteName, $athleteParams, $athleteLink),
+                array($competitionName, $competitionParams, $competitionLink),
+            )));
 
 
         $subject->view = $view;
@@ -140,15 +169,38 @@ class Tests_App_View_Helper_ScoreItem
     public function provide__getTitle ( )
     {
         return array(
-            array('<h3>html-anchor</h3>', 'html-anchor', (object)array(
-                'id'    => 1,
-                'name'  => 'score name',
-            )),
+            array(
+                implode('', array(
+                    '<h3>score-link</h3>',
+                    '<p>Performed by: athlete-link for the event: competition-link</p>',
+                )),
+                'score-link',
+                'athlete-link',
+                'competition-link',
+                1,
+                100,
+                'athlete-name',
+                200,
+                'competition-name',
+                300,
+            ),
 
-            array('<h3>another html-anchor</h3>', 'another html-anchor', (object)array(
-                'id'    => 1,
-                'name'  => 'score name does not matter here',
-            )),
+            array(
+                implode('', array(
+                    '<h3>another Score-link</h3>',
+                    '<p>Performed by: another athlete-link for the event: ',
+                    'another competition-link</p>',
+                )),
+                'another score-link',
+                'another athlete-link',
+                'another competition-link',
+                1,
+                100,
+                'another athlete-name',
+                200,
+                'another competition-name',
+                300,
+            ),
         );
 
     } // END function provide__getTitle
@@ -164,19 +216,9 @@ class Tests_App_View_Helper_ScoreItem
     public function test__getActions ($expected, $score, $hasIdentity,
         $editLink = null, $deleteLink = null)
     {
-        $subject = $this->getMockBuilder('App_View_Helper_ScoreItem')
-            ->disableOriginalConstructor()
-            ->getMock();
-
-        $view = $this->getMockBuilder('Zend_View')
-            ->setMethods(array('auth', 'htmlAnchor', 'htmlList'))
-            ->disableOriginalConstructor()
-            ->getMock();
-
-        $auth = $this->getMockBuilder('Zend_Auth')
-            ->setMethods(array('hasIdentity'))
-            ->disableOriginalConstructor()
-            ->getMock();
+        $subject = $this->getBuiltMock('App_View_Helper_ScoreItem');
+        $view = $this->getBuiltMock('Zend_View', array('auth', 'htmlAnchor', 'htmlList'));
+        $auth = $this->getBuiltMock('Zend_Auth', array('hasIdentity'));
 
         $auth->expects($this->once())
             ->method('hasIdentity')
@@ -214,9 +256,8 @@ class Tests_App_View_Helper_ScoreItem
 
         $subject->view = $view;
 
-        $method = new ReflectionMethod('App_View_Helper_ScoreItem', '_getActions');
-        $method->setAccessible(true);
-        $result = $method->invoke($subject, $score);
+        $result = $this->getMethod('App_View_Helper_ScoreItem', '_getActions')
+            ->invoke($subject, $score);
 
         $this->assertEquals($expected, $result);
 

@@ -31,9 +31,8 @@
  */
 
 class Tests_Rx_Controller_Action_Helper_AclTest
-    extends PHPUnit_Framework_TestCase
+    extends Rx_PHPUnit_TestCase
 {
-
     /**
      * test_check()
      *
@@ -45,32 +44,22 @@ class Tests_Rx_Controller_Action_Helper_AclTest
     public function test_check ($isAllowed)
     {
         // create test subjects
-        $request = new Zend_Controller_Request_HttpTestCase;
-
-        $helper = $this->getMockBuilder('Rx_Controller_Action_Helper_Acl')
-            ->setMethods(array('getActionController'))
-            ->disableOriginalConstructor()
-            ->getMock();
-
-        $controller = $this->getMockBuilder('Rx_Controller_Action')
-            ->setMethods(array('getModel', 'getHelper'))
-            ->disableOriginalConstructor()
-            ->getMock();
-
-        $user = $this->getMockBuilder('App_Model_User')
-            ->setMethods(array('isAllowed'))
-            ->disableOriginalConstructor()
-            ->getMock();
-
-        $flashHelper = $this->getMockBuilder('Zend_Controller_Action_Helper_FlashMessenger')
-            ->setMethods(array('addMessage'))
-            ->disableOriginalConstructor()
-            ->getMock();
-
-        $redirectHelper = $this->getMockBuilder('Zend_Controller_Action_Helper_Redirector')
-            ->setMethods(array('gotoRoute'))
-            ->disableOriginalConstructor()
-            ->getMock();
+        $request        = new Zend_Controller_Request_HttpTestCase;
+        $user           = $this->getBuiltMock('App_Model_User', array(
+            'isAllowed'
+        ));
+        $controller     = $this->getBuiltMock('Rx_Controller_Action', array(
+            'getModel', 'getHelper'
+        ));
+        $helper         = $this->getBuiltMock('Rx_Controller_Action_Helper_Acl', array(
+            'getActionController',
+        ));
+        $redirectHelper = $this->getBuiltMock('Zend_Controller_Action_Helper_Redirector', array(
+            'gotoRoute',
+        ));
+        $flashHelper    = $this->getBuiltMock('Zend_Controller_Action_Helper_FlashMessenger', array(
+            'addMessage',
+        ));
 
         // set expectations
         if (! $isAllowed) {
@@ -85,7 +74,6 @@ class Tests_Rx_Controller_Action_Helper_AclTest
                     'controller'=> 'error',
                     'action'    => 'denied',
                 )));
-
         }
 
         $controller->expects($this->any())
@@ -122,7 +110,7 @@ class Tests_Rx_Controller_Action_Helper_AclTest
     public function provide_check ( )
     {
         return array(
-            'the check passes'     => array(true),
+            'the check passes'    => array(true),
             'the check fails'     => array(false),
         );
 

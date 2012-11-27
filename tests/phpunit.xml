@@ -1,4 +1,7 @@
-<phpunit bootstrap="../src/pub/index.php" colors="true">
+<phpunit bootstrap="../src/pub/index.php"
+    colors="true"
+    verbose="true"
+    >
 
 <testsuite name="RxCompetition Test Suite">
     <directory>./app</directory>

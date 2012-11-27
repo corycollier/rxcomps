@@ -31,7 +31,7 @@
  */
 
 class Tests_Rx_View_Helper_FlashMessengerTest
-    extends PHPUnit_Framework_TestCase
+    extends Rx_PHPUnit_TestCase
 {
     /**
      * test_flashMessenger()
@@ -46,10 +46,9 @@ class Tests_Rx_View_Helper_FlashMessengerTest
         $subject = new Rx_View_Helper_FlashMessenger;
         $subject->view = new Zend_View;
 
-        $flashMessenger = $this->getMockBuilder('Zend_Controller_Action_Helper_FlashMessenger')
-            ->setMethods(array('getMessages'))
-            ->disableOriginalConstructor()
-            ->getMock();
+        $flashMessenger = $this->getBuiltMock(
+            'Zend_Controller_Action_Helper_FlashMessenger', array('getMessages')
+        );
 
         $flashMessenger->expects($this->any())
             ->method('getMessages')

@@ -31,7 +31,7 @@
  */
 
 class Tests_App_View_Helper_CompetitionItem
-    extends PHPUnit_Framework_TestCase
+    extends Rx_PHPUnit_TestCase
 {
 
     /**
@@ -44,10 +44,7 @@ class Tests_App_View_Helper_CompetitionItem
      */
     public function test_competitionItem ($expected, $competition, $title, $actions = null)
     {
-        $subject = $this->getMockBuilder('App_View_Helper_CompetitionItem')
-            ->setMethods(array('_getTitle', '_getActions'))
-            ->disableOriginalConstructor()
-            ->getMock();
+        $subject = $this->getBuiltMock('App_View_Helper_CompetitionItem', array('_getTitle', '_getActions'));
 
         $subject->expects($this->once())
             ->method('_getTitle')
@@ -95,20 +92,15 @@ class Tests_App_View_Helper_CompetitionItem
      */
     public function test__getTitle ($expected, $htmlAnchor, $competition)
     {
-        $subject = $this->getMockBuilder('App_View_Helper_CompetitionItem')
-            ->disableOriginalConstructor()
-            ->getMock();
-
-        $view = $this->getMockBuilder('Zend_View')
-            ->setMethods(array('htmlAnchor'))
-            ->disableOriginalConstructor()
-            ->getMock();
+        $subject = $this->getBuiltMock('App_View_Helper_CompetitionItem');
+        $view   = $this->getBuiltMock('Zend_View', array('htmlAnchor'));
 
         $view->expects($this->once())
             ->method('htmlAnchor')
             ->with(
                 $this->equalTo(@$competition->name),
                 $this->equalTo(array(
+                    'controller'=> 'competitions',
                     'action'    => 'view',
                     'id'        => @$competition->id,
                 ))
@@ -118,9 +110,8 @@ class Tests_App_View_Helper_CompetitionItem
 
         $subject->view = $view;
 
-        $method = new ReflectionMethod('App_View_Helper_CompetitionItem', '_getTitle');
-        $method->setAccessible(true);
-        $result = $method->invoke($subject, $competition);
+        $result = $this->getMethod('App_View_Helper_CompetitionItem', '_getTitle')
+            ->invoke($subject, $competition);
 
         $this->assertEquals($expected, $result);
 
@@ -159,19 +150,9 @@ class Tests_App_View_Helper_CompetitionItem
     public function test__getActions ($expected, $competition, $hasIdentity,
         $editLink = null, $deleteLink = null)
     {
-        $subject = $this->getMockBuilder('App_View_Helper_CompetitionItem')
-            ->disableOriginalConstructor()
-            ->getMock();
-
-        $view = $this->getMockBuilder('Zend_View')
-            ->setMethods(array('auth', 'htmlAnchor', 'htmlList'))
-            ->disableOriginalConstructor()
-            ->getMock();
-
-        $auth = $this->getMockBuilder('Zend_Auth')
-            ->setMethods(array('hasIdentity'))
-            ->disableOriginalConstructor()
-            ->getMock();
+        $subject = $this->getBuiltMock('App_View_Helper_CompetitionItem');
+        $view = $this->getBuiltMock('Zend_View', array('auth', 'htmlAnchor', 'htmlList'));
+        $auth = $this->getBuiltMock('Zend_Auth', array('hasIdentity'));
 
         $auth->expects($this->once())
             ->method('hasIdentity')
@@ -186,12 +167,14 @@ class Tests_App_View_Helper_CompetitionItem
                 ->method('htmlAnchor')
                 ->will($this->returnValueMap(array(
                     array('Edit', array(
-                        'action' => 'edit',
-                        'id' => @$competition->id
+                        'controller'    => 'competitions',
+                        'action'        => 'edit',
+                        'id'            => @$competition->id
                     ), $editLink),
                     array('Delete', array(
-                        'action' => 'delete',
-                        'id' => @$competition->id
+                        'controller'    => 'competitions',
+                        'action'        => 'delete',
+                        'id'            => @$competition->id
                     ), $deleteLink),
                 )));
 
@@ -208,9 +191,8 @@ class Tests_App_View_Helper_CompetitionItem
 
         $subject->view = $view;
 
-        $method = new ReflectionMethod('App_View_Helper_CompetitionItem', '_getActions');
-        $method->setAccessible(true);
-        $result = $method->invoke($subject, $competition);
+        $result = $this->getMethod('App_View_Helper_CompetitionItem', '_getActions')
+            ->invoke($subject, $competition);
 
         $this->assertEquals($expected, $result);
 

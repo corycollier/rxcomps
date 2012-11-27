@@ -31,7 +31,7 @@
  */
 
 class Tests_App_Bootstrap
-    extends PHPUnit_Framework_TestCase
+    extends Rx_PHPUnit_TestCase
 {
 
     /**
@@ -44,13 +44,15 @@ class Tests_App_Bootstrap
      */
     public function test__initAutoloader ( )
     {
-        $subject = $this->getMockBuilder('App_Bootstrap')
-            ->disableOriginalConstructor()
-            ->getMock();
+        $subject = $this->getBuiltMock('App_Bootstrap');
 
-        $method = new ReflectionMethod('App_Bootstrap', '_initAutoloader');
-        $method->setAccessible(true);
-        $method->invoke($subject);
+        $this->getMethod('App_Bootstrap', '_initAutoloader')
+            ->invoke($subject);
+
+        $namespaces = Zend_Loader_Autoloader::getInstance()->getRegisteredNamespaces();
+
+        $this->assertTrue(in_array('Rx_', $namespaces));
+
 
     } // END function test__initAutoloader
 
@@ -78,13 +80,14 @@ class Tests_App_Bootstrap
      */
     public function test__initControllers ( )
     {
-        $subject = $this->getMockBuilder('App_Bootstrap')
-            ->disableOriginalConstructor()
-            ->getMock();
+        $subject = $this->getBuiltMock('App_Bootstrap');
 
-        $method = new ReflectionMethod('App_Bootstrap', '_initControllers');
-        $method->setAccessible(true);
-        $method->invoke($subject);
+        $this->getMethod('App_Bootstrap', '_initControllers')
+            ->invoke($subject);
+
+        $stack = Zend_Controller_Action_HelperBroker::getPluginLoader()->getPaths();
+
+        $this->assertTrue(array_key_exists('Rx_Controller_Action_Helper_', $stack));
 
     } // END function test__initControllers
 
@@ -112,24 +115,16 @@ class Tests_App_Bootstrap
      */
     public function test__initPlugins ( )
     {
-        $this->markTestIncomplete("not ready yet");
-        $subject = $this->getMockBuilder('App_Bootstrap')
-            ->setMethods(array('bootstrap', 'getResource'))
-            ->disableOriginalConstructor()
-            ->getMock();
-
-        $front = $this->getMockBuilder('Zend_Controller_Front')
-            ->setMethods(array('registerPlugin'))
-            ->disableOriginalConstructor()
-            ->getMock();
+        // $this->markTestIncomplete("not ready yet");
+        $subject = $this->getBuiltMock('App_Bootstrap', array('_bootstrap', 'getResource'));
+        $front = $this->getBuiltMock('Zend_Controller_Front', array('registerPlugin'));
 
         $front->expects($this->exactly(3))
             ->method('registerPlugin');
 
         $subject->expects($this->once())
-            ->method('bootstrap')
-            ->with($this->equalTo('frontcontroller'))
-            ->will($this->returnSelf());
+            ->method('_bootstrap')
+            ->with($this->equalTo('frontcontroller'));
 
         $subject->expects($this->once())
             ->method('getResource')

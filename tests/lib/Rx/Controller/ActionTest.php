@@ -33,7 +33,7 @@
  */
 
 class Tests_Rx_Controller_ActionTest
-    extends PHPUnit_Framework_TestCase
+    extends Rx_PHPUnit_TestCase
 {
     /**
      * test_preDispatch()
@@ -46,16 +46,8 @@ class Tests_Rx_Controller_ActionTest
     public function test_preDispatch ( )
     {
         $request = new Zend_Controller_Request_HttpTestCase;
-
-        $aclHelper = $this->getMockBuilder('Rx_Controller_Action_Helper_Acl')
-            ->setMethods(array('check'))
-            ->disableOriginalConstructor()
-            ->getMock();
-
-        $controller = $this->getMockBuilder('Rx_Controller_Action')
-            ->setMethods(array('getHelper', 'getRequest'))
-            ->disableOriginalConstructor()
-            ->getMock();
+        $aclHelper = $this->getBuiltMock('Rx_Controller_Action_Helper_Acl', array('check'));
+        $controller = $this->getBuiltMock('Rx_Controller_Action', array('getHelper', 'getRequest'));
 
         $aclHelper->expects($this->once())
             ->method('check')
@@ -168,15 +160,9 @@ class Tests_Rx_Controller_ActionTest
      */
     public function test_getLog ($expected, $hasResource = false)
     {
-        $bootstrap = $this->getMockBuilder('App_Bootstrap')
-            ->setMethods(array('hasResource', 'getResource'))
-            ->disableOriginalConstructor()
-            ->getMock();
+        $bootstrap = $this->getBuiltMock('App_Bootstrap', array('hasResource', 'getResource'));
 
-        $controller = $this->getMockBuilder('Rx_Controller_Action')
-            ->setMethods(array('getInvokeArg'))
-            ->disableOriginalConstructor()
-            ->getMock();
+        $controller = $this->getBuiltMock('Rx_Controller_Action', array('getInvokeArg'));
 
         if ($hasResource) {
             $bootstrap->expects($this->once())

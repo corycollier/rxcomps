@@ -31,7 +31,7 @@
  */
 
 class Tests_Rx_Model_AbstractTest
-    extends PHPUnit_Framework_TestCase
+    extends Rx_PHPUnit_TestCase
 {
     /**
      * test_getName()
@@ -60,15 +60,8 @@ class Tests_Rx_Model_AbstractTest
      */
     public function test_getValue ($expected, $name)
     {
-        $model = $this->getMockBuilder('Rx_Model_Abstract')
-            ->setMethods(array('getForm'))
-            ->disableOriginalConstructor()
-            ->getMock();
-
-        $form = $this->getMockBuilder('Rx_Form_Abstract')
-            ->setMethods(array('getValue'))
-            ->disableOriginalConstructor()
-            ->getMock();
+        $model = $this->getBuiltMock('Rx_Model_Abstract', array('getForm'));
+        $form = $this->getBuiltMock('Rx_Form_Abstract', array('getValue'));
 
         $form->expects($this->once())
             ->method('getValue')
@@ -188,15 +181,8 @@ class Tests_Rx_Model_AbstractTest
      */
     public function test_filterValues ($expected, $info, $values = array())
     {
-        $model = $this->getMockBuilder('Rx_Model_Abstract')
-            ->setMethods(array('getTable'))
-            ->disableOriginalConstructor()
-            ->getMock();
-
-        $table = $this->getMockBuilder('Rx_Model_DbTable_Abstract')
-            ->setMethods(array('info'))
-            ->disableOriginalConstructor()
-            ->getMock();
+        $model = $this->getBuiltMock('Rx_Model_Abstract', array('getTable'));
+        $table = $this->getBuiltMock('Rx_Model_DbTable_Abstract', array('info'));
 
         $table->expects($this->once())
             ->method('info')
@@ -249,20 +235,9 @@ class Tests_Rx_Model_AbstractTest
      */
     public function test_load ($row, $identity)
     {
-        $subject = $this->getMockBuilder('Rx_Model_Abstract')
-            ->setMethods(array('getTable', 'fromRow'))
-            ->disableOriginalConstructor()
-            ->getMock();
-
-        $table = $this->getMockBuilder('Rx_Model_DbTable_Abstract')
-            ->setMethods(array('select', 'fetchRow'))
-            ->disableOriginalConstructor()
-            ->getMock();
-
-        $select = $this->getMockBuilder('Zend_Db_Table_Select')
-            ->setMethods(array('where'))
-            ->disableOriginalConstructor()
-            ->getMock();
+        $subject = $this->getBuiltMock('Rx_Model_Abstract', array('getTable', 'fromRow'));
+        $select = $this->getBuiltMock('Zend_Db_Table_Select', array('where'));
+        $table  = $this->getBuiltMock('Rx_Model_DbTable_Abstract', array('select', 'fetchRow'));
 
         if ($row) {
             $subject->expects($this->once())
@@ -304,10 +279,7 @@ class Tests_Rx_Model_AbstractTest
      */
     public function provide_load ( )
     {
-        $row = $this->getMockBuilder('Zend_Db_Table_Row')
-            ->setMethods(array('toArray'))
-            ->disableOriginalConstructor()
-            ->getMock();
+        $row = $this->getBuiltMock('Zend_Db_Table_Row', array('toArray'));
 
         return array(
             array(false, 1),
@@ -326,15 +298,8 @@ class Tests_Rx_Model_AbstractTest
      */
     public function test__delete ($identity, $exception = '')
     {
-        $model = $this->getMockBuilder('Rx_Model_Abstract')
-            ->setMethods(array('getTable'))
-            ->disableOriginalConstructor()
-            ->getMock();
-
-        $table = $this->getMockBuilder('Rx_Model_DbTable_Abstract')
-            ->setMethods(array('select', 'delete'))
-            ->disableOriginalConstructor()
-            ->getMock();
+        $model = $this->getBuiltMock('Rx_Model_Abstract', array('getTable'));
+        $table = $this->getBuiltMock('Rx_Model_DbTable_Abstract', array('select', 'delete'));
 
         if ($exception) {
             $this->setExpectedException($exception);
@@ -350,9 +315,8 @@ class Tests_Rx_Model_AbstractTest
 
         $model->id = $identity;
 
-        $method = new ReflectionMethod('Rx_Model_Abstract', '_delete');
-        $method->setAccessible(true);
-        $method->invoke($model, $identity);
+        $this->getMethod('Rx_Model_Abstract', '_delete')
+            ->invoke($model, $identity);
 
     } // END function test__delete
 
@@ -385,20 +349,15 @@ class Tests_Rx_Model_AbstractTest
      */
     public function test__edit ($isValid, $identity, $values, $exception = '')
     {
-        $model = $this->getMockBuilder('Rx_Model_Abstract')
-            ->setMethods(array('getTable', 'getForm', 'filterValues'))
-            ->disableOriginalConstructor()
-            ->getMock();
-
-        $table = $this->getMockBuilder('Rx_Model_DbTable_Abstract')
-            ->setMethods(array('update', 'select'))
-            ->disableOriginalConstructor()
-            ->getMock();
-
-        $form = $this->getMockBuilder('Rx_Form_Abstract')
-            ->setMethods(array('isValid', 'getValues'))
-            ->disableOriginalConstructor()
-            ->getMock();
+        $form   = $this->getBuiltMock('Rx_Form_Abstract', array(
+            'isValid', 'getValues'
+        ));
+        $model  = $this->getBuiltMock('Rx_Model_Abstract', array(
+            'getTable', 'getForm', 'filterValues'
+        ));
+        $table  = $this->getBuiltMock('Rx_Model_DbTable_Abstract', array(
+            'update', 'select'
+        ));
 
         if ($exception) {
             $this->setExpectedException($exception);
@@ -427,9 +386,8 @@ class Tests_Rx_Model_AbstractTest
 
         $model->id = $identity;
 
-        $method = new ReflectionMethod('Rx_Model_Abstract', '_edit');
-        $method->setAccessible(true);
-        $result = $method->invoke($model, $values);
+        $result = $this->getMethod('Rx_Model_Abstract', '_edit')
+            ->invoke($model, $values);
 
         $this->assertSame($model, $result);
 
@@ -468,20 +426,9 @@ class Tests_Rx_Model_AbstractTest
      */
     public function test__create ($isValid, $identity, $values, $exception = '')
     {
-        $model = $this->getMockBuilder('Rx_Model_Abstract')
-            ->setMethods(array('getTable', 'getForm'))
-            ->disableOriginalConstructor()
-            ->getMock();
-
-        $table = $this->getMockBuilder('Rx_Model_DbTable_Abstract')
-            ->setMethods(array('insert'))
-            ->disableOriginalConstructor()
-            ->getMock();
-
-        $form = $this->getMockBuilder('Rx_Form_Abstract')
-            ->setMethods(array('isValid', 'getValues'))
-            ->disableOriginalConstructor()
-            ->getMock();
+        $model = $this->getBuiltMock('Rx_Model_Abstract', array('getTable', 'getForm'));
+        $table = $this->getBuiltMock('Rx_Model_DbTable_Abstract', array('insert'));
+        $form = $this->getBuiltMock('Rx_Form_Abstract', array('isValid', 'getValues'));
 
         if ($exception) {
             $this->setExpectedException($exception);
@@ -509,9 +456,8 @@ class Tests_Rx_Model_AbstractTest
             ->method('getTable')
             ->will($this->returnValue($table));
 
-        $method = new ReflectionMethod('Rx_Model_Abstract', '_create');
-        $method->setAccessible(true);
-        $result = $method->invoke($model, $values);
+        $result = $this->getMethod('Rx_Model_Abstract', '_create')
+            ->invoke($model, $values);
 
         $this->assertSame($model, $result);
 
@@ -552,25 +498,18 @@ class Tests_Rx_Model_AbstractTest
      */
     public function test_paginate ($expected, $params = array())
     {
-        $model = $this->getMockBuilder('Rx_Model_Abstract')
-            ->setMethods(array('getTable', 'getForm'))
-            ->disableOriginalConstructor()
-            ->getMock();
-
-        $table = $this->getMockBuilder('Rx_Model_DbTable_Abstract')
-            ->setMethods(array('getPaginationAdapter'))
-            ->disableOriginalConstructor()
-            ->getMock();
-
-        $paginator = $this->getMockBuilder('Zend_Paginator_Adapter_DbTableSelect')
-            ->setMethods(array('getItems'))
-            ->disableOriginalConstructor()
-            ->getMock();
-
-        $rowset = $this->getMockBuilder('Zend_Db_Table_Rowset_Abstract')
-            ->setMethods(array('toArray'))
-            ->disableOriginalConstructor()
-            ->getMock();
+        $model      = $this->getBuiltMock('Rx_Model_Abstract', array(
+            'getTable', 'getForm'
+        ));
+        $table      = $this->getBuiltMock('Rx_Model_DbTable_Abstract', array(
+            'getPaginationAdapter'
+        ));
+        $rowset     = $this->getBuiltMock('Zend_Db_Table_Rowset_Abstract', array(
+            'toArray'
+        ));
+        $paginator  = $this->getBuiltMock('Zend_Paginator_Adapter_DbTableSelect', array(
+            'getItems'
+        ));
 
         $rowset->expects($this->once())
             ->method('toArray')
@@ -628,10 +567,7 @@ class Tests_Rx_Model_AbstractTest
      */
     public function test_edit ($values = array())
     {
-        $subject = $this->getMockBuilder('Rx_Model_Abstract')
-            ->setMethods(array('_edit'))
-            ->disableOriginalConstructor()
-            ->getMock();
+        $subject = $this->getBuiltMock('Rx_Model_Abstract', array('_edit'));
 
         $subject->expects($this->once())
             ->method('_edit')
@@ -672,10 +608,7 @@ class Tests_Rx_Model_AbstractTest
      */
     public function test_create ($values = array())
     {
-        $subject = $this->getMockBuilder('Rx_Model_Abstract')
-            ->setMethods(array('_create'))
-            ->disableOriginalConstructor()
-            ->getMock();
+        $subject = $this->getBuiltMock('Rx_Model_Abstract', array('_create'));
 
         $subject->expects($this->once())
             ->method('_create')
@@ -715,10 +648,7 @@ class Tests_Rx_Model_AbstractTest
      */
     public function test_delete ( )
     {
-        $subject = $this->getMockBuilder('Rx_Model_Abstract')
-            ->setMethods(array('_delete'))
-            ->disableOriginalConstructor()
-            ->getMock();
+        $subject = $this->getBuiltMock('Rx_Model_Abstract', array('_delete'));
 
         $subject->expects($this->once())
             ->method('_delete')
@@ -740,20 +670,9 @@ class Tests_Rx_Model_AbstractTest
      */
     public function test_fromRow ($id, $array = array())
     {
-        $subject = $this->getMockBuilder('Rx_Model_Abstract')
-            ->setMethods(array('getForm'))
-            ->disableOriginalConstructor()
-            ->getMock();
-
-        $row = $this->getMockBuilder('Zend_Db_Table_Row')
-            ->setMethods(array('toArray', '__get'))
-            ->disableOriginalConstructor()
-            ->getMock();
-
-        $form = $this->getMockBuilder('Rx_Form_Abstract')
-            ->setMethods(array('populate'))
-            ->disableOriginalConstructor()
-            ->getMock();
+        $subject = $this->getBuiltMock('Rx_Model_Abstract', array('getForm'));
+        $row    = $this->getBuiltMock('Zend_Db_Table_Row', array('toArray', '__get'));
+        $form   = $this->getBuiltMock('Rx_Form_Abstract', array('populate'));
 
         $row->expects($this->once())
             ->method('toArray')
