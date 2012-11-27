@@ -111,9 +111,9 @@ class Tests_App_Controller_LeaderboardsControllerTest
      */
     public function test_fullScreenAction ( )
     {
-        $this->markTestIncomplete('need to figure out the issue with _forward');
+        // $this->markTestIncomplete('need to figure out the issue with _forward');
         $subject = $this->getMockBuilder('LeaderboardsController')
-            ->setMethods(array('getHelper', '_forward'))
+            ->setMethods(array('getHelper', 'getRequest'))
             ->disableOriginalConstructor()
             ->getMock();
 
@@ -141,8 +141,8 @@ class Tests_App_Controller_LeaderboardsControllerTest
             ->will($this->returnValue($helper));
 
         $subject->expects($this->once())
-            ->method('_forward')
-            ->with($this->equalTo('view'));
+            ->method('getRequest')
+            ->will($this->returnValue(new Zend_Controller_Request_HttpTestCase));
 
         $subject->fullScreenAction();
 
