@@ -91,23 +91,63 @@ class Tests_App_View_Helper_ScoreItem
      * @covers          App_View_Helper_ScoreItem::_getTitle
      * @dataProvider    provide__getTitle
      */
-    public function test__getTitle ($expected, $htmlAnchor, $score)
+    public function test__getTitle ($expected,
+        $scoreLink, $athleteLink, $competitionLink,
+        $scoreValue, $scoreId,
+        $athleteName, $athleteId,
+        $competitionName, $competitionId)
     {
-        $this->markTestIncomplete('need to revisit');
         $subject = $this->getBuiltMock('App_View_Helper_ScoreItem');
-        $row = $this->getBuiltMock('Zend_Db_Table_Row', array('findParentRow'));
-        $view = $this->getBuiltMock('Zend_View', array('htmlAnchor'));
+        $row    = $this->getBuiltMock('Zend_Db_Table_Row', array('findParentRow'));
+        $view   = $this->getBuiltMock('Zend_View', array('htmlAnchor'));
+        $score  = $this->getBuiltMock('App_Model_DbTable_Score', array('findParentRow'));
 
-        $view->expects($this->once())
+        $athlete = (object)array(
+            'name'  => $athleteName,
+            'id'    => $athleteId,
+        );
+
+        $competition = (object)array(
+            'name'  => $competitionName,
+            'id'    => $competitionId,
+        );
+
+
+        $score->id = $scoreId;
+        $score->score = $scoreValue;
+
+        $score->expects($this->any())
+            ->method('findParentRow')
+            ->will($this->returnValueMap(array(
+                array('App_Model_DbTable_Athlete', $athlete),
+                array('App_Model_DbTable_Competition', $competition),
+            )));
+
+        $scoreParams = array(
+            'action'    => 'view',
+            'id'        => $scoreId,
+        );
+
+        $athleteParams = array(
+            'controller'=> 'athletes',
+            'action'    => 'view',
+            'id'        => $athleteId,
+        );
+
+        $competitionParams = array(
+            'controller'=> 'competitions',
+            'action'    => 'view',
+            'id'        => $competitionId,
+        );
+
+
+        $view->expects($this->any())
             ->method('htmlAnchor')
-            ->with(
-                $this->equalTo(@$score->name),
-                $this->equalTo(array(
-                    'action'    => 'view',
-                    'id'        => @$score->id,
-                ))
-            )
-            ->will($this->returnValue($htmlAnchor));
+            ->will($this->returnValueMap(array(
+                array($scoreValue, $scoreParams, $scoreLink),
+                array($athleteName, $athleteParams, $athleteLink),
+                array($competitionName, $competitionParams, $competitionLink),
+            )));
 
 
         $subject->view = $view;
@@ -129,15 +169,38 @@ class Tests_App_View_Helper_ScoreItem
     public function provide__getTitle ( )
     {
         return array(
-            array('<h3>html-anchor</h3>', 'html-anchor', (object)array(
-                'id'    => 1,
-                'name'  => 'score name',
-            )),
+            array(
+                implode('', array(
+                    '<h3>score-link</h3>',
+                    '<p>Performed by: athlete-link for the event: competition-link</p>',
+                )),
+                'score-link',
+                'athlete-link',
+                'competition-link',
+                1,
+                100,
+                'athlete-name',
+                200,
+                'competition-name',
+                300,
+            ),
 
-            array('<h3>another html-anchor</h3>', 'another html-anchor', (object)array(
-                'id'    => 1,
-                'name'  => 'score name does not matter here',
-            )),
+            array(
+                implode('', array(
+                    '<h3>another Score-link</h3>',
+                    '<p>Performed by: another athlete-link for the event: ',
+                    'another competition-link</p>',
+                )),
+                'another score-link',
+                'another athlete-link',
+                'another competition-link',
+                1,
+                100,
+                'another athlete-name',
+                200,
+                'another competition-name',
+                300,
+            ),
         );
 
     } // END function provide__getTitle

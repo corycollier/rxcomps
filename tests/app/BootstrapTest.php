@@ -116,16 +116,15 @@ class Tests_App_Bootstrap
     public function test__initPlugins ( )
     {
         // $this->markTestIncomplete("not ready yet");
-        $subject = $this->getBuiltMock('App_Bootstrap');
+        $subject = $this->getBuiltMock('App_Bootstrap', array('_bootstrap', 'getResource'));
         $front = $this->getBuiltMock('Zend_Controller_Front', array('registerPlugin'));
 
         $front->expects($this->exactly(3))
             ->method('registerPlugin');
 
         $subject->expects($this->once())
-            ->method('bootstrap')
-            ->with($this->equalTo('frontcontroller'))
-            ->will($this->returnSelf());
+            ->method('_bootstrap')
+            ->with($this->equalTo('frontcontroller'));
 
         $subject->expects($this->once())
             ->method('getResource')
