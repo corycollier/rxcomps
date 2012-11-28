@@ -74,14 +74,25 @@ class App_Form_Competition
             'required'      => true,
         ));
 
+        $this->addElement('radio', 'scoring_type', array(
+            'label'         => 'Scoring Type',
+            'label_class'   => 'form-radio',
+            'separator'     => PHP_EOL,
+            'multiOptions'  => array(
+                'points'    => 'Points',
+                'rank'      => 'Rank',
+            ),
+            'class'         => 'toggle-scoring-type',
+        ));
+
         $this->addElement('textarea', 'scoring', array(
             'label'         => 'Scoring System',
             'placeholder'   => implode(' ', array(
                 'Enter the points for each rank, in order of first to last.',
                 'Separate each rank/points with a newline'
             )),
-            'required'      => true,
             'filters'       => array('StringTrim'),
+            'class'         => 'hidden scoring-type-points',
         ));
 
         $this->addElement('submit', 'save', array(

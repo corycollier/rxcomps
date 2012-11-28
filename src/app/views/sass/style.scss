@@ -73,6 +73,10 @@ form {
         width: 20%;
         @include inline-block;
     }
+
+    label.form-radio {
+        width: auto;
+    }
   }
 }
 

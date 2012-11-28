@@ -50,6 +50,10 @@ class App_Model_Competition
 
         $this->_create($values);
 
+        if ($values['scoring_type'] != 'points') {
+            return $this;
+        }
+
         $this->_saveScoring(@$values['scoring']);
 
         return $this;
@@ -75,6 +79,10 @@ class App_Model_Competition
 
         $this->_edit($values);
 
+        if ($values['scoring_type'] != 'points') {
+            return;
+        }
+
         $this->_saveScoring(@$values['scoring']);
 
         return $this;
@@ -95,6 +103,10 @@ class App_Model_Competition
         parent::load($identity);
 
         $form = $this->getForm();
+
+        if ($this->getScoringType() != 'points') {
+            return;
+        }
 
         $table = $this->getTable('Scoring');
 
@@ -141,25 +153,14 @@ class App_Model_Competition
      */
     public function getLeaderboards ($scaleId)
     {
-        $scoreTable = $this->getTable('Score');
-        $scoringTable = $this->getTable('Scoring');
-        $scoring = $scoringTable->fetchRow(sprintf('competition_id = %d', $this->id));
-
-        $scores = $scoreTable->fetchAll(
-            $scoreTable->buildWhere(array(
-                'competition_id' => $this->id,
-            ))
-            ->where('athlete_id IN (?)', $this->getAthleteIds($scaleId))
-            ->order($this->_getOrder())
-        )->toArray();
-
-        $points = explode(PHP_EOL, $scoring->definition);
-
-        $results = array();
-
-        $scoreValue = 0;
+        $scores     = $this->getScores($scaleId);
+        $points     = $this->getPoints($scaleId, $scores);
+        $results    = array();
         $pointValue = current($points);
-        $rankValue = 1;
+        $scoreValue = 0;
+        $rankValue  = 1;
+
+
         foreach ($scores as $i => $score) {
             if ($score['score'] != $scoreValue) {
                 $scoreValue = $score['score'];
@@ -173,9 +174,79 @@ class App_Model_Competition
             ));
         }
 
+        // var_dump($results); die;
         return $results;
 
     } // END function leaderboards
+
+    /**
+     * getScores()
+     *
+     * Gets all of the scores for a given scale
+     *
+     * @param  string $scaleId the numeric identifier for the scale
+     * @return array the resulting scores
+     */
+    public function getScores ($scaleId)
+    {
+        $scores = array();
+        $athleteIds = $this->getAthleteIds($scaleId);
+        if (count($athleteIds)) {
+            $scoreTable = $this->getTable('Score');
+            $scores = $scoreTable->fetchAll(
+                $scoreTable->buildWhere(array(
+                    'competition_id' => $this->id,
+                ))
+                ->where('athlete_id IN (?)', $athleteIds)
+                ->order($this->_getOrder())
+            )->toArray();
+        }
+
+        return $scores;
+
+    } // END function getScores
+
+    /**
+     * getPoints()
+     *
+     * Gets the points associated for the given scale
+     * @param  string|integer $scaleId the numeric identifier for the scale
+     * @return array          the points to associate by rank
+     */
+    public function getPoints ($scaleId, $scores)
+    {
+        $points = range(1, count($scores));
+
+        if ($this->getScoringType() == 'points') {
+            $scoringTable = $this->getTable('Scoring');
+            $scoring = $scoringTable->fetchRow(sprintf('competition_id = %d', $this->id));
+            $points = explode(PHP_EOL, $scoring->definition);
+        }
+
+        return $points;
+
+    } // END function getPoints
+
+    /**
+     * getScoringType()
+     *
+     * Returns if the type of scoring is by points (custom), or rank (standard)
+     *
+     * @return string the type of scoring [points|rank]
+     */
+    public function getScoringType ( )
+    {
+        $scoringTable = $this->getTable('Scoring');
+        $scoring = $scoringTable->fetchRow(sprintf('competition_id = %d', $this->id));
+
+        // if there is an associated scorings record, then this must be scored by points
+        if ($scoring) {
+            return 'points';
+        }
+
+        return 'rank';
+
+    } // END function getScoringType
 
     /**
      * _getOrder()
