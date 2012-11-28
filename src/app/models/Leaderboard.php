@@ -55,6 +55,8 @@ class App_Model_Leaderboard
 
         $competitions = $event->getChildren('Competition');
 
+        $scoringType = current($competitions)->getScoringType();
+
         $results = array();
         foreach ($competitions as $competition) {
             $results[$competition->id] = $competition->getLeaderboards($scaleId);
@@ -72,7 +74,7 @@ class App_Model_Leaderboard
             }
         }
 
-        return $this->_sortAthleteResults($athletes);
+        return $this->_sortAthleteResults($athletes, $scoringType);
 
     } // END function event
 
@@ -126,10 +128,12 @@ class App_Model_Leaderboard
      * @param array $athletes
      * @return array
      */
-    protected function _sortAthleteResults ($athletes)
+    protected function _sortAthleteResults ($athletes, $scoringType = 'rank')
     {
         // remove the numeric index
         sort($athletes);
+
+        // var_dump($athletes); die;
 
         // create a sorting index
         $sortingIndex = array();
@@ -137,7 +141,13 @@ class App_Model_Leaderboard
             $sortingIndex[$i] = (int)$athleteResults['points'];
         }
 
-        array_multisort($sortingIndex, SORT_DESC, $athletes);
+        array_multisort(
+            $sortingIndex,
+            ($scoringType == 'points')
+                ? SORT_DESC
+                : SORT_ASC,
+            $athletes
+        );
 
         return $athletes;
 

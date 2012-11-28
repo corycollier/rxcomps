@@ -40,7 +40,6 @@ class App_Plugin_View
     {
         $front = Zend_Controller_Front::getInstance();
         $view = $front->getParam('bootstrap')->getResource('view');
-        $view->addHelperPath(APPLICATION_PATH . '/views/helpers/', 'App_View_Helper_');
 
         $params = $request->getParams();
         foreach ($params as $key => $value) {

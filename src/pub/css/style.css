@@ -220,6 +220,10 @@ form fieldset label {
 form fieldset label {
   *display: inline;
 }
+/* line 77, ../../app/views/sass/style.scss */
+form fieldset label.form-radio {
+  width: auto;
+}
 
 /*
  * HTML5 Boilerplate
@@ -228,7 +232,7 @@ form fieldset label {
  * Credit left inline and big thanks to Nicolas Gallagher, Jonathan Neal,
  * Kroc Camen, and the H5BP dev community and team.
  */
-/* line 87, ../../app/views/sass/style.scss */
+/* line 91, ../../app/views/sass/style.scss */
 hr {
   display: block;
   height: 1px;
@@ -241,7 +245,7 @@ hr {
 /*
  * Remove the gap between images and the bottom of their containers: h5bp.com/i/440
  */
-/* line 100, ../../app/views/sass/style.scss */
+/* line 104, ../../app/views/sass/style.scss */
 img {
   vertical-align: middle;
 }
@@ -249,7 +253,7 @@ img {
 /*
  * Remove default fieldset styles.
  */
-/* line 108, ../../app/views/sass/style.scss */
+/* line 112, ../../app/views/sass/style.scss */
 fieldset {
   border: 0;
   margin: 0;
@@ -259,7 +263,7 @@ fieldset {
 /*
  * Allow only vertical resizing of textareas.
  */
-/* line 118, ../../app/views/sass/style.scss */
+/* line 122, ../../app/views/sass/style.scss */
 textarea {
   resize: vertical;
 }
@@ -267,7 +271,7 @@ textarea {
 /* ==========================================================================
    Chrome Frame prompt
    ========================================================================== */
-/* line 126, ../../app/views/sass/style.scss */
+/* line 130, ../../app/views/sass/style.scss */
 .chromeframe {
   margin: 0.2em 0;
   background: #ccc;
@@ -278,7 +282,7 @@ textarea {
 /* ==========================================================================
    Author's custom styles
    ========================================================================== */
-/* line 137, ../../app/views/sass/style.scss */
+/* line 141, ../../app/views/sass/style.scss */
 a {
   color: rgba(255, 255, 255, 0.75);
   text-decoration: none;
@@ -300,23 +304,23 @@ a:active {
   color: rgba(255, 255, 255, 0.75);
 }
 
-/* line 143, ../../app/views/sass/style.scss */
+/* line 147, ../../app/views/sass/style.scss */
 a:hover {
   text-shadow: 0 1px 0 rgba(0, 0, 0, 0.8);
 }
 
-/* line 148, ../../app/views/sass/style.scss */
+/* line 152, ../../app/views/sass/style.scss */
 ul, ol {
   margin: 0;
   padding: 0;
 }
 
-/* line 154, ../../app/views/sass/style.scss */
+/* line 158, ../../app/views/sass/style.scss */
 p {
   line-height: 2em;
 }
 
-/* line 169, ../../app/views/sass/style.scss */
+/* line 173, ../../app/views/sass/style.scss */
 h2, h3, h4, h5, h6, h7 {
   -moz-box-shadow: 0px -1px 0 rgba(0, 0, 0, 0.8) inset;
   -webkit-box-shadow: 0px -1px 0 rgba(0, 0, 0, 0.8) inset;
@@ -325,31 +329,31 @@ h2, h3, h4, h5, h6, h7 {
   border-bottom: 1px solid rgba(255, 255, 255, 0.15);
 }
 
-/* line 174, ../../app/views/sass/style.scss */
+/* line 178, ../../app/views/sass/style.scss */
 h1 {
   font-size: 2em;
   line-height: 2em;
 }
 
-/* line 180, ../../app/views/sass/style.scss */
+/* line 184, ../../app/views/sass/style.scss */
 h2 {
   font-size: 2em;
   line-height: 2em;
 }
 
-/* line 186, ../../app/views/sass/style.scss */
+/* line 190, ../../app/views/sass/style.scss */
 h3 {
   font-size: 1.8em;
   line-height: 1.2em;
 }
 
-/* line 192, ../../app/views/sass/style.scss */
+/* line 196, ../../app/views/sass/style.scss */
 h4 {
   font-size: 1.5em;
   line-height: 2em;
 }
 
-/* line 198, ../../app/views/sass/style.scss */
+/* line 202, ../../app/views/sass/style.scss */
 body .container {
   min-width: 950px;
   width: 80%;
@@ -359,30 +363,30 @@ body .container {
   text-align: left;
 }
 
-/* line 203, ../../app/views/sass/style.scss */
+/* line 207, ../../app/views/sass/style.scss */
 body .header {
   position: fixed;
   top: 0;
   width: 100%;
-  background: url('/./src/pub/img/rgbapng/0000007f.png?1352232530');
+  background: url('/./src/pub/img/rgbapng/0000007f.png?1352169703');
   background: rgba(0, 0, 0, 0.5);
 }
 
-/* line 210, ../../app/views/sass/style.scss */
+/* line 214, ../../app/views/sass/style.scss */
 body .main-navigation {
   position: fixed;
   top: 64px;
   width: 100%;
-  background: url('/./src/pub/img/rgbapng/0000007f.png?1352232530');
+  background: url('/./src/pub/img/rgbapng/0000007f.png?1352169703');
   background: rgba(0, 0, 0, 0.5);
 }
 
-/* line 217, ../../app/views/sass/style.scss */
+/* line 221, ../../app/views/sass/style.scss */
 body .main-content {
   margin-top: 6em;
 }
 
-/* line 222, ../../app/views/sass/style.scss */
+/* line 226, ../../app/views/sass/style.scss */
 .nav li {
   list-style: none;
   padding: 0 10px;
@@ -399,7 +403,7 @@ body .main-content {
 .nav li {
   *display: inline;
 }
-/* line 230, ../../app/views/sass/style.scss */
+/* line 234, ../../app/views/sass/style.scss */
 .nav li a {
   text-align: center;
   width: auto;
@@ -415,21 +419,21 @@ body .main-content {
 .nav li a {
   *display: inline;
 }
-/* line 240, ../../app/views/sass/style.scss */
+/* line 244, ../../app/views/sass/style.scss */
 .nav li.active a {
   color: #f00;
 }
 
-/* line 246, ../../app/views/sass/style.scss */
+/* line 250, ../../app/views/sass/style.scss */
 .flash-messages ul {
   margin: 0;
 }
-/* line 249, ../../app/views/sass/style.scss */
+/* line 253, ../../app/views/sass/style.scss */
 .flash-messages li {
   list-style: none;
 }
 
-/* line 254, ../../app/views/sass/style.scss */
+/* line 258, ../../app/views/sass/style.scss */
 ul.actions {
   padding: 5px;
   margin: 0;
@@ -459,7 +463,7 @@ ul.actions {
 ul.actions {
   *display: inline;
 }
-/* line 264, ../../app/views/sass/style.scss */
+/* line 268, ../../app/views/sass/style.scss */
 ul.actions li {
   vertical-align: middle;
   display: -moz-inline-box;
@@ -472,13 +476,13 @@ ul.actions li {
 ul.actions li {
   *display: inline;
 }
-/* line 268, ../../app/views/sass/style.scss */
+/* line 272, ../../app/views/sass/style.scss */
 ul.actions li a {
   padding: 5px;
   font-size: 0.8em;
 }
 
-/* line 278, ../../app/views/sass/style.scss */
+/* line 282, ../../app/views/sass/style.scss */
 .competition-item
 , .athlete-item
 , .event-item
@@ -500,7 +504,7 @@ ul.actions li a {
   -khtml-border-radius: 5px;
   border-radius: 5px;
 }
-/* line 283, ../../app/views/sass/style.scss */
+/* line 287, ../../app/views/sass/style.scss */
 .competition-item
 h3, .athlete-item
 h3, .event-item
@@ -509,7 +513,7 @@ h3, .score-item h3 {
   padding: 0.5em 0;
 }
 
-/* line 289, ../../app/views/sass/style.scss */
+/* line 293, ../../app/views/sass/style.scss */
 .details {
   display: none;
   position: absolute;
@@ -522,17 +526,17 @@ h3, .score-item h3 {
   -o-box-shadow: 0 0 4px rgba(0, 0, 0, 0.8);
   box-shadow: 0 0 4px rgba(0, 0, 0, 0.8);
 }
-/* line 299, ../../app/views/sass/style.scss */
+/* line 303, ../../app/views/sass/style.scss */
 .details li {
   list-style: none;
 }
 
-/* line 304, ../../app/views/sass/style.scss */
+/* line 308, ../../app/views/sass/style.scss */
 .striped {
   background: rgba(0, 0, 0, 0.05);
 }
 
-/* line 309, ../../app/views/sass/style.scss */
+/* line 313, ../../app/views/sass/style.scss */
 .page-content {
   height: 100%;
   width: auto;
@@ -540,19 +544,19 @@ h3, .score-item h3 {
   overflow-x: hidden;
 }
 
-/* line 317, ../../app/views/sass/style.scss */
+/* line 321, ../../app/views/sass/style.scss */
 .filtered {
   background: rgba(0, 0, 0, 0.1);
   color: rgba(0, 0, 0, 0.8);
   text-shadow: 0 1px 0 rgba(255, 255, 255, 0.15);
 }
 
-/* line 323, ../../app/views/sass/style.scss */
+/* line 327, ../../app/views/sass/style.scss */
 .filtered .alt {
   color: rgba(0, 0, 0, 0.8);
 }
 
-/* line 328, ../../app/views/sass/style.scss */
+/* line 332, ../../app/views/sass/style.scss */
 .data-table {
   width: 100%;
   -moz-box-shadow: 0px -1px 0 rgba(0, 0, 0, 0.8) inset;
@@ -561,21 +565,21 @@ h3, .score-item h3 {
   box-shadow: 0px -1px 0 rgba(0, 0, 0, 0.8) inset;
   border-bottom: 1px solid rgba(255, 255, 255, 0.15);
 }
-/* line 332, ../../app/views/sass/style.scss */
+/* line 336, ../../app/views/sass/style.scss */
 .data-table .athlete-name {
   white-space: nowrap;
   text-align: right;
 }
-/* line 337, ../../app/views/sass/style.scss */
+/* line 341, ../../app/views/sass/style.scss */
 .data-table .filtered {
   color: #111;
 }
-/* line 340, ../../app/views/sass/style.scss */
+/* line 344, ../../app/views/sass/style.scss */
 .data-table .filtered a {
   color: #111;
 }
 
-/* line 357, ../../app/views/sass/style.scss */
+/* line 361, ../../app/views/sass/style.scss */
 .data-table th {
   text-align: center;
   color: #fff;
@@ -586,19 +590,19 @@ h3, .score-item h3 {
   box-shadow: 0px -1px 0 rgba(0, 0, 0, 0.8) inset;
   border-bottom: 1px solid rgba(255, 255, 255, 0.15);
 }
-/* line 363, ../../app/views/sass/style.scss */
+/* line 367, ../../app/views/sass/style.scss */
 .data-table th p {
   line-height: 1em;
 }
 
-/* line 371, ../../app/views/sass/style.scss */
+/* line 375, ../../app/views/sass/style.scss */
 .data-table td {
   vertical-align: middle;
   padding: 5px;
   text-align: center;
 }
 
-/* line 383, ../../app/views/sass/style.scss */
+/* line 387, ../../app/views/sass/style.scss */
 .data-table tr:hover {
   background: rgba(0, 0, 0, 0.1);
   border: 1px solid rgba(0, 0, 0, 0.25);
@@ -616,14 +620,14 @@ h3, .score-item h3 {
   border-radius: 5px;
 }
 
-/* line 389, ../../app/views/sass/style.scss */
+/* line 393, ../../app/views/sass/style.scss */
 .leaderboards-table .rank {
   width: auto;
   max-width: 2em;
   text-align: right;
 }
 
-/* line 402, ../../app/views/sass/style.scss */
+/* line 406, ../../app/views/sass/style.scss */
 .paginationControl {
   padding: 10px 0;
   text-align: center;
@@ -649,7 +653,7 @@ h3, .score-item h3 {
 /*
  * Image replacement
  */
-/* line 416, ../../app/views/sass/style.scss */
+/* line 420, ../../app/views/sass/style.scss */
 .ir {
   background-color: transparent;
   border: 0;
@@ -658,7 +662,7 @@ h3, .score-item h3 {
   *text-indent: -9999px;
 }
 
-/* line 424, ../../app/views/sass/style.scss */
+/* line 428, ../../app/views/sass/style.scss */
 .ir:before {
   content: "";
   display: block;
@@ -669,7 +673,7 @@ h3, .score-item h3 {
 /*
  * Hide from both screenreaders and browsers: h5bp.com/u
  */
-/* line 435, ../../app/views/sass/style.scss */
+/* line 439, ../../app/views/sass/style.scss */
 .hidden {
   display: none !important;
   visibility: hidden;
