@@ -154,7 +154,7 @@ class App_Model_Competition
     public function getLeaderboards ($scaleId)
     {
         $scores     = $this->getScores($scaleId);
-        $points     = $this->getPoints($scaleId, $scores);
+        $points     = $this->getPoints($scores);
         $results    = array();
         $pointValue = current($points);
         $scoreValue = 0;
@@ -210,10 +210,10 @@ class App_Model_Competition
      * getPoints()
      *
      * Gets the points associated for the given scale
-     * @param  string|integer $scaleId the numeric identifier for the scale
-     * @return array          the points to associate by rank
+     * @param  array the scores associated with this competition
+     * @return array the points to associate by rank
      */
-    public function getPoints ($scaleId, $scores)
+    public function getPoints ($scores)
     {
         $points = range(1, count($scores));
 
