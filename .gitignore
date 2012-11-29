@@ -5,3 +5,5 @@ build/phpdox
 build/coverage
 build/logs
 src/lib/Zend
+var/tmp/zend*
+var/tmp/sess*

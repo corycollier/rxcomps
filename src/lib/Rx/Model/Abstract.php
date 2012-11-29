@@ -48,11 +48,25 @@ class Rx_Model_Abstract
     protected $_form;
 
     /**
-     * Property to hold an instance of the table class associated with this model
+     * List of tables that have been loaded into this model
      *
-     * @var Zend_Db_Table_Abstract
+     * @var array
      */
-    protected $_table;
+    protected $_tables = array();
+
+    /**
+     * Property holds the autoloader to use for loading tables
+     *
+     * @var Zend_Loader_PluginLoader
+     */
+    protected $_tableAutoloader;
+
+    /**
+     * Property holds the autoloader to use for loading models
+     *
+     * @var Zend_Loader_PluginLoader
+     */
+    protected $_modelAutoloader;
 
     /**
      * holds a row object, which contains the currently loaded record
@@ -67,6 +81,27 @@ class Rx_Model_Abstract
      * @var integer
      */
     public $id;
+
+
+    /**
+     * __construct()
+     *
+     * Setup the autoloader
+     */
+    public function __construct()
+    {
+        $this->_tableAutoloader = new Zend_Loader_PluginLoader;
+        $this->_modelAutoloader = new Zend_Loader_PluginLoader;
+
+        $this->_tableAutoloader
+            ->addPrefixPath('Rx_Model_DbTable', ROOT_PATH . '/lib/Rx/Model/DbTable')
+            ->addPrefixPath('App_Model_DbTable', APPLICATION_PATH . '/models/DbTable/');
+
+        $this->_modelAutoloader
+            ->addPrefixPath('Rx_Model', ROOT_PATH . '/lib/Rx/Model/')
+            ->addPrefixPath('App_Model', APPLICATION_PATH . '/models/');
+
+    } // END function __construct
 
     /**
      * getName()
@@ -120,33 +155,67 @@ class Rx_Model_Abstract
 
     } // END function getForm()
 
+    // /**
+    //  * getTable()
+    //  *
+    //  * Gets the table, which is loosely tied to this model
+    //  *
+    //  * @return Zend_Db_Table_Abstract
+    //  */
+    // public function getTable ($name = null, $forceNew = false)
+    // {
+    //     $class = get_class($this);
+    //     $class = strtr($class, array(
+    //         '_Model_' => '_Model_DbTable_',
+    //     ));
+
+    //     if ($name) {
+    //         $parts = explode('_', $class);
+    //         $last = count($parts) - 1;
+    //         $parts[$last] = $name;
+    //         $class = implode('_', $parts);
+    //         return new $class;
+    //     }
+
+    //     if (! $this->_table || $forceNew) {
+    //         $this->_table = new $class;
+    //     }
+
+    //     return $this->_table;
+
+    // } // END function getTable
+
+
     /**
      * getTable()
      *
-     * Gets the table, which is loosely tied to this model
+     * Returns the first instance of a DbTable class that matches the shortName given
      *
-     * @return Zend_Db_Table_Abstract
+     * @param string $shortName
+     * @return D2E_Db_Table_Abstract
      */
-    public function getTable ($name = null, $forceNew = false)
+    public function getTable ($shortName = null, $forceNew = false)
     {
-        $class = get_class($this);
-        $class = strtr($class, array(
-            '_Model_' => '_Model_DbTable_',
-        ));
+        // if (! array_key_exists($shortName, $this->_tables) || $forceNew) {
+        //     $this->_tables[$shortName] = new $table;
+        // }
 
-        if ($name) {
+        if (! $shortName) {
+            $class = get_class($this);
+            $class = strtr($class, array(
+                '_Model_' => '_Model_DbTable_',
+            ));
             $parts = explode('_', $class);
-            $last = count($parts) - 1;
-            $parts[$last] = $name;
-            $class = implode('_', $parts);
-            return new $class;
+            $shortName = end($parts);
         }
 
-        if (! $this->_table || $forceNew) {
-            $this->_table = new $class;
+        $table = $this->_tableAutoloader->load($shortName);
+
+        if (! array_key_exists($table, $this->_tables) || $forceNew) {
+            $this->_tables[$table] = new $table;
         }
 
-        return $this->_table;
+        return $this->_tables[$table];
 
     } // END function getTable
 
