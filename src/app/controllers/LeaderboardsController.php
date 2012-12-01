@@ -34,6 +34,18 @@ class LeaderboardsController
     extends Rx_Controller_Action
 {
     /**
+     * init()
+     *
+     * Local override of the init hook
+     */
+    public function init ( )
+    {
+        $contextSwitch = $this->_helper->getHelper('contextSwitch');
+
+        $contextSwitch->addActionContext('view', 'json')
+            ->initContext();
+    }
+    /**
      * indexAction()
      *
      * Default action for the leaderboards controller

@@ -158,6 +158,8 @@ class App_Model_Competition
 
 
         foreach ($scores as $i => $score) {
+            // print_r($score); die;
+
             if ($score['score'] != $scoreValue) {
                 $scoreValue = $score['score'];
                 $pointValue = $points[$i];
@@ -187,14 +189,19 @@ class App_Model_Competition
     {
         $scores = array();
         $athleteIds = $this->getAthleteIds($scaleId);
+
+
+
         if (count($athleteIds)) {
-            $scoreTable = $this->getTable('Score');
-            $scores = $scoreTable->fetchAll(
-                $scoreTable->buildWhere(array(
-                    'competition_id' => $this->id,
-                ))
-                ->where('athlete_id IN (?)', $athleteIds)
-                ->order($this->_getOrder())
+            $table = $this->getTable('Score');
+
+            $scores = $table->fetchAll(
+                $table->select(Zend_Db_Table::SELECT_WITH_FROM_PART)
+                    ->setIntegrityCheck(false)
+                    ->join('athletes', 'athletes.id = scores.athlete_id')
+                    ->where(sprintf("scores.competition_id = '%d'", $this->id))
+                    ->where('scores.athlete_id IN (?)', $athleteIds)
+                    ->order($this->_getOrder())
             )->toArray();
         }
 
