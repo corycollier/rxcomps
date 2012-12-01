@@ -41,9 +41,14 @@ class LeaderboardsController
     public function init ( )
     {
         $this->_helper->getHelper('contextSwitch')
-            ->addContext('html', array('html'))
+            ->addContexts(array(
+                'remote'  => array(
+                    'suffix'    => 'remote',
+                    'headers'   => array('Content-Type' => 'text/html'),
+                )
+            ))
             ->addActionContext('view', 'json')
-            ->addActionContext('view', 'html')
+            ->addActionContext('view', 'remote')
             ->initContext();
     }
 
