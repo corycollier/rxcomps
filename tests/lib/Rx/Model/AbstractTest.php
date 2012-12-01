@@ -153,7 +153,7 @@ class Tests_Rx_Model_AbstractTest
 
         $this->assertInstanceOf('Rx_Model_DbTable_Abstract', $secondResult);
 
-        $this->assertNotSame($firstResult, $secondResult);
+        $this->assertSame($firstResult, $secondResult);
 
     } // END function test_getTable
 

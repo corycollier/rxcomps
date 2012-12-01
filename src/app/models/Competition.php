@@ -50,11 +50,9 @@ class App_Model_Competition
 
         $this->_create($values);
 
-        if ($values['scoring_type'] != 'points') {
-            return $this;
+        if (@$values['scoring_type'] == 'points') {
+            $this->_saveScoring(@$values['scoring']);
         }
-
-        $this->_saveScoring(@$values['scoring']);
 
         return $this;
 
@@ -79,11 +77,9 @@ class App_Model_Competition
 
         $this->_edit($values);
 
-        if ($values['scoring_type'] != 'points') {
-            return;
+        if (@$values['scoring_type'] == 'points') {
+            $this->_saveScoring(@$values['scoring']);
         }
-
-        $this->_saveScoring(@$values['scoring']);
 
         return $this;
 

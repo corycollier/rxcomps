@@ -84,12 +84,12 @@ class Tests_App_Model_LeaderboardTest
             '2 athletes' => array(
                 'expected' => array(
                     0 => array(
-                        'id' => 2,
-                        'points' => 50,
-                    ),
-                    1 => array(
                         'id' => 1,
                         'points' => 30,
+                    ),
+                    1 => array(
+                        'id' => 2,
+                        'points' => 50,
                     ),
                 ),
                 'athletes' => array(
