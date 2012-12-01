@@ -47,16 +47,19 @@ class AthletesController
     {
         parent::init();
 
-        $this->_helper->getHelper('contextSwitch')
-            ->addContexts(array(
+        $helper = $this->_helper->getHelper('contextSwitch');
+
+        if (! $helper->hasContext('remote')) {
+            $helper->addContexts(array(
                 'remote'  => array(
                     'suffix'    => 'remote',
                     'headers'   => array('Content-Type' => 'text/html'),
                 )
-            ))
-            ->addActionContext('view', 'json')
-            ->addActionContext('view', 'remote')
-            ->initContext();
+            ));
+            $helper->addActionContext('view', 'json')
+                ->addActionContext('view', 'remote')
+                ->initContext();
+        }
     }
 
     /**
