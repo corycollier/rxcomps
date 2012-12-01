@@ -154,7 +154,7 @@ class Tests_App_Model_CompetitionTest
     public function test_getScores ($expected, $scaleId, $id, $order, $athleteIds = array())
     {
         $table  = $this->getBuiltMock('Zend_Db_Table', array(
-            'fetchAll', 'buildWhere', 'toArray'
+            'fetchAll', 'select', 'toArray'
         ));
         $subject = $this->getBuiltMock('App_Model_Competition', array(
             'getTable', 'getAthleteIds', '_getOrder'
@@ -176,14 +176,16 @@ class Tests_App_Model_CompetitionTest
                 ->with($this->equalTo($order))
                 ->will($this->returnSelf());
 
-            $select->expects($this->once())
+            $select->expects($this->any())
                 ->method('where')
-                ->with($this->equalTo('athlete_id IN (?)'), $this->equalTo($athleteIds))
-                ->will($this->returnSelf());
+                ->will($this->returnValueMap(array(
+                    array(sprintf("scores.competition_id = '%d'", $id), $select),
+                    array('scores.athlete_id IN (?)', $athleteIds, $select),
+                )));
 
             $table->expects($this->once())
-                ->method('buildWhere')
-                ->with($this->equalTo(array('competition_id' => $id)))
+                ->method('select')
+                ->with($this->equalTo(Zend_Db_Table::SELECT_WITH_FROM_PART))
                 ->will($this->returnValue($select));
 
             $table->expects($this->once())
@@ -220,13 +222,6 @@ class Tests_App_Model_CompetitionTest
     public function provide_getScores ( )
     {
         return array(
-            'no athleteIds found' => array(
-                array(),
-                1,
-                1,
-                'order',
-            ),
-
             'athleteIds found' => array(
                 array(100, 200),
                 1,
@@ -234,6 +229,13 @@ class Tests_App_Model_CompetitionTest
                 'order',
                 array(1, 2),
             ),
+            'no athleteIds found' => array(
+                array(),
+                1,
+                1,
+                'order',
+            ),
+
 
         );
 
@@ -462,5 +464,67 @@ class Tests_App_Model_CompetitionTest
         );
 
     } // END function provide_getAthleteIds
+
+    /**
+     * test_getLeaderboards()
+     *
+     * Tests the getLeaderboards of the App_Model_Competition
+     *
+     * @covers          App_Model_Competition::getLeaderboards
+     * @dataProvider    provide_getLeaderboards
+     */
+    public function test_getLeaderboards ( )
+    {
+        /*
+    public function getLeaderboards ($scaleId)
+    {
+        $scores     = $this->getScores($scaleId);
+        $points     = $this->getPoints($scores);
+        $results    = array();
+        $pointValue = current($points);
+        $scoreValue = 0;
+        $rankValue  = 1;
+
+
+        foreach ($scores as $i => $score) {
+            print_r($score); die;
+
+            if ($score['score'] != $scoreValue) {
+                $scoreValue = $score['score'];
+                $pointValue = $points[$i];
+                $rankValue = $i + 1;
+            }
+
+            $results[$score['athlete_id']] = array_merge($score, array(
+                'points'    => (int)$pointValue,
+                'rank'      => (int)$rankValue,
+            ));
+        }
+
+        // var_dump($results); die;
+        return $results;
+
+         */
+
+        $subject    = $this->getBuiltMock('App_Model_Competition', array(
+            'getScores', 'getPoints'
+        ));
+
+
+    } // END function test_getLeaderboards
+
+    /**
+     * provide_getLeaderboards()
+     *
+     * Provides data for the getLeaderboards method of the
+     * App_Model_Competition class
+     */
+    public function provide_getLeaderboards ( )
+    {
+        return array(
+            array(),
+        );
+
+    } // END function provide_getLeaderboards
 
 } // END class Tests_App_Model_CompetitionTest

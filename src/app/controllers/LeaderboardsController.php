@@ -34,6 +34,20 @@ class LeaderboardsController
     extends Rx_Controller_Action
 {
     /**
+     * init()
+     *
+     * Local override of the init hook
+     */
+    public function init ( )
+    {
+        $this->_helper->getHelper('contextSwitch')
+            ->addContext('html', array('html'))
+            ->addActionContext('view', 'json')
+            ->addActionContext('view', 'html')
+            ->initContext();
+    }
+
+    /**
      * indexAction()
      *
      * Default action for the leaderboards controller
@@ -62,6 +76,17 @@ class LeaderboardsController
         if ($eventId && $scaleId) {
             $items = $leaderboards->load($eventId, $scaleId, $filters);
         }
+
+        $eventsTable = $this->getTable('Event');
+        $scalesTable = $this->getTable('Scale');
+
+        $this->view->event = $eventsTable->fetchRow(
+            $eventsTable->select()->where(sprintf('id = %d', $eventId))
+        )->toArray();
+
+        $this->view->scale = $scalesTable->fetchRow(
+            $scalesTable->select()->where(sprintf('id = %d', $scaleId))
+        )->toArray();
 
         $this->view->items = $items;
 

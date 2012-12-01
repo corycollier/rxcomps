@@ -158,13 +158,13 @@ class App_Model_Competition
 
 
         foreach ($scores as $i => $score) {
-            if ($score['score'] != $scoreValue) {
-                $scoreValue = $score['score'];
+            if ($score->score != $scoreValue) {
+                $scoreValue = $score->score;
                 $pointValue = $points[$i];
                 $rankValue = $i + 1;
             }
 
-            $results[$score['athlete_id']] = array_merge($score, array(
+            $results[$score->athlete_id] = array_merge($score->toArray(), array(
                 'points'    => (int)$pointValue,
                 'rank'      => (int)$rankValue,
             ));
@@ -174,6 +174,7 @@ class App_Model_Competition
         return $results;
 
     } // END function leaderboards
+
 
     /**
      * getScores()
@@ -187,15 +188,18 @@ class App_Model_Competition
     {
         $scores = array();
         $athleteIds = $this->getAthleteIds($scaleId);
+
         if (count($athleteIds)) {
-            $scoreTable = $this->getTable('Score');
-            $scores = $scoreTable->fetchAll(
-                $scoreTable->buildWhere(array(
-                    'competition_id' => $this->id,
-                ))
-                ->where('athlete_id IN (?)', $athleteIds)
-                ->order($this->_getOrder())
-            )->toArray();
+            $table = $this->getTable('Score');
+
+            $scores = $table->fetchAll(
+                $table->select(Zend_Db_Table::SELECT_WITH_FROM_PART)
+                    ->setIntegrityCheck(false)
+                    ->join('athletes', 'athletes.id = scores.athlete_id')
+                    ->where(sprintf("scores.competition_id = '%d'", $this->id))
+                    ->where('scores.athlete_id IN (?)', $athleteIds)
+                    ->order($this->_getOrder())
+            );
         }
 
         return $scores;
