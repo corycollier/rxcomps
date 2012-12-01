@@ -40,11 +40,13 @@ class LeaderboardsController
      */
     public function init ( )
     {
-        $contextSwitch = $this->_helper->getHelper('contextSwitch');
-
-        $contextSwitch->addActionContext('view', 'json')
+        $this->_helper->getHelper('contextSwitch')
+            ->addContext('html', array('html'))
+            ->addActionContext('view', 'json')
+            ->addActionContext('view', 'html')
             ->initContext();
     }
+
     /**
      * indexAction()
      *
@@ -74,6 +76,17 @@ class LeaderboardsController
         if ($eventId && $scaleId) {
             $items = $leaderboards->load($eventId, $scaleId, $filters);
         }
+
+        $eventsTable = $this->getTable('Event');
+        $scalesTable = $this->getTable('Scale');
+
+        $this->view->event = $eventsTable->fetchRow(
+            $eventsTable->select()->where(sprintf('id = %d', $eventId))
+        )->toArray();
+
+        $this->view->scale = $scalesTable->fetchRow(
+            $scalesTable->select()->where(sprintf('id = %d', $scaleId))
+        )->toArray();
 
         $this->view->items = $items;
 

@@ -158,15 +158,13 @@ class App_Model_Competition
 
 
         foreach ($scores as $i => $score) {
-            // print_r($score); die;
-
-            if ($score['score'] != $scoreValue) {
-                $scoreValue = $score['score'];
+            if ($score->score != $scoreValue) {
+                $scoreValue = $score->score;
                 $pointValue = $points[$i];
                 $rankValue = $i + 1;
             }
 
-            $results[$score['athlete_id']] = array_merge($score, array(
+            $results[$score->athlete_id] = array_merge($score->toArray(), array(
                 'points'    => (int)$pointValue,
                 'rank'      => (int)$rankValue,
             ));
@@ -176,6 +174,7 @@ class App_Model_Competition
         return $results;
 
     } // END function leaderboards
+
 
     /**
      * getScores()
@@ -190,8 +189,6 @@ class App_Model_Competition
         $scores = array();
         $athleteIds = $this->getAthleteIds($scaleId);
 
-
-
         if (count($athleteIds)) {
             $table = $this->getTable('Score');
 
@@ -202,7 +199,7 @@ class App_Model_Competition
                     ->where(sprintf("scores.competition_id = '%d'", $this->id))
                     ->where('scores.athlete_id IN (?)', $athleteIds)
                     ->order($this->_getOrder())
-            )->toArray();
+            );
         }
 
         return $scores;

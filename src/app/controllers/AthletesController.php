@@ -39,6 +39,22 @@ class AthletesController
     protected $_modelName = 'Athlete';
 
     /**
+     * init()
+     *
+     * Local override of the init hook
+     */
+    public function init ( )
+    {
+        parent::init();
+
+        $this->_helper->getHelper('contextSwitch')
+            ->addContext('html', array('html'))
+            ->addActionContext('view', 'json')
+            ->addActionContext('view', 'html')
+            ->initContext();
+    }
+
+    /**
      * indexAction()
      *
      * This is the main action for the Athletes controller

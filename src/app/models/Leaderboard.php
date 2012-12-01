@@ -91,7 +91,6 @@ class App_Model_Leaderboard
     protected function _mergeAthleteResults ($athletes, $id,
         $competitionFilters = array(), $data = array())
     {
-
         if (! array_key_exists($id, $athletes)) {
             $athletes[$id] = $data;
             $athletes[$id]['competitions'] = array();
