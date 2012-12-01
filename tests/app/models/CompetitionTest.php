@@ -59,9 +59,11 @@ class Tests_App_Model_CompetitionTest
             ->with($this->equalTo($modified))
             ->will($this->returnSelf());
 
-        $subject->expects($this->once())
-            ->method('_saveScoring')
-            ->with($this->equalTo(@$values['scoring']));
+        if (@$values['scoring_type'] == 'points') {
+            $subject->expects($this->once())
+                ->method('_saveScoring')
+                ->with($this->equalTo(@$values['scoring']));
+        }
 
         $result = $subject->create($values);
 
@@ -111,9 +113,11 @@ class Tests_App_Model_CompetitionTest
             ->with($this->equalTo($modified))
             ->will($this->returnSelf());
 
-        $subject->expects($this->once())
-            ->method('_saveScoring')
-            ->with($this->equalTo(@$values['scoring']));
+        if (@$values['scoring_type'] == 'points') {
+            $subject->expects($this->once())
+                ->method('_saveScoring')
+                ->with($this->equalTo(@$values['scoring']));
+        }
 
         $result = $subject->edit($values);
 
