@@ -95,7 +95,7 @@ class App_Model_Leaderboard
             $athletes[$id] = $data;
             $athletes[$id]['competitions'] = array();
         } else {
-            $athletes[$id]['points'] = (int)($athletes[$id]['points'] + $data['points']);
+            $athletes[$id]['points'] = (float)($athletes[$id]['points'] + $data['points']);
         }
 
         // if these results should be filtered ...
