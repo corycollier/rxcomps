@@ -92,9 +92,13 @@ class LeaderboardsController
             $eventsTable->select()->where(sprintf('id = %d', $eventId))
         )->toArray();
 
-        $this->view->scale = $scalesTable->fetchRow(
+        $scale = $scalesTable->fetchRow(
             $scalesTable->select()->where(sprintf('id = %d', $scaleId))
-        )->toArray();
+        );
+
+        if ($scale){
+            $this->view->scale = $scale->toArray();
+        }
 
         $this->view->items = $items;
 
