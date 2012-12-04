@@ -165,7 +165,7 @@ class App_Model_Competition
             }
 
             $results[$score->athlete_id] = array_merge($score->toArray(), array(
-                'points'    => (int)$pointValue,
+                'points'    => (float)$pointValue,
                 'rank'      => (int)$rankValue,
             ));
         }

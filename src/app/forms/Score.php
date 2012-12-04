@@ -48,7 +48,7 @@ class App_Form_Score
             'label'         => 'Score',
             'placeholder'   => 'Enter Score',
             'required'      => true,
-            'filters'       => array('StringTrim', 'Digits'),
+            'filters'       => array('StringTrim'),
         ));
 
         $this->addElement('select', 'athlete_id', array(

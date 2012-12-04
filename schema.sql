@@ -76,7 +76,7 @@ ENGINE = InnoDB;
 
 CREATE  TABLE IF NOT EXISTS `scores` (
   `id` INT NOT NULL AUTO_INCREMENT ,
-  `score` INT NOT NULL DEFAULT 0 ,
+  `score` FLOAT(10,3) NOT NULL DEFAULT 0.000 ,
   `athlete_id` INT NOT NULL ,
   `competition_id` INT NOT NULL ,
   PRIMARY KEY (`id`) ,
