@@ -86,6 +86,7 @@ class App_Form_Score
 
     } // END function init
 
+
     /**
      * injectDependencies()
      *
