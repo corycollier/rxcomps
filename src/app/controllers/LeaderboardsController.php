@@ -77,12 +77,13 @@ class LeaderboardsController
 
         $eventId = $request->getParam('event_id');
         $scaleId = $request->getParam('scale_id');
+        $gender = $request->getParam('gender');
         $filters = $request->getParam('filters');
 
         $items = array();
 
         if ($eventId && $scaleId) {
-            $items = $leaderboards->load($eventId, $scaleId, $filters);
+            $items = $leaderboards->load($eventId, $scaleId, $gender, $filters);
         }
 
         $eventsTable = $this->getTable('Event');
