@@ -147,15 +147,14 @@ class App_Model_Competition
      *
      * @return array
      */
-    public function getLeaderboards ($scaleId)
+    public function getLeaderboards ($scaleId, $gender = 'team')
     {
-        $scores     = $this->getScores($scaleId);
+        $scores     = $this->getScores($scaleId, $gender);
         $points     = $this->getPoints($scores);
         $results    = array();
         $pointValue = current($points);
         $scoreValue = 0;
         $rankValue  = 1;
-
 
         foreach ($scores as $i => $score) {
             if ($score->score != $scoreValue) {
@@ -184,10 +183,10 @@ class App_Model_Competition
      * @param  string $scaleId the numeric identifier for the scale
      * @return array the resulting scores
      */
-    public function getScores ($scaleId)
+    public function getScores ($scaleId, $gender = 'team')
     {
         $scores = array();
-        $athleteIds = $this->getAthleteIds($scaleId);
+        $athleteIds = $this->getAthleteIds($scaleId, $gender);
 
         if (count($athleteIds)) {
             $table = $this->getTable('Score');
@@ -275,13 +274,17 @@ class App_Model_Competition
      * @param integer $scaleId
      * @return array
      */
-    public function getAthleteIds ($scaleId)
+    public function getAthleteIds ($scaleId, $gender = 'team')
     {
+        $event = $this->getParent('Event');
         $table = $this->getTable('Athlete');
         $athletes = $table->fetchAll(
             $table->select()
                 ->where(sprintf('scale_id = %d', $scaleId))
+                ->where(sprintf('gender = "%s"', $gender))
+                ->where(sprintf('event_id = %d', $event->id))
         );
+
 
         $results = array();
         foreach ($athletes as $athlete) {
@@ -290,5 +293,6 @@ class App_Model_Competition
 
         return $results;
     }
+
 
 }// END class App_Model_Competitions

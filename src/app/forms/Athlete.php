@@ -51,6 +51,18 @@ class App_Form_Athlete
             'filters'       => array('StringTrim'),
         ));
 
+        $this->addElement('select', 'gender', array(
+            'label'         => 'Gender',
+            'placeholder'   => 'Select Gender',
+            'required'      => true,
+            'filters'       => array('StringTrim', 'StringToLower'),
+            'multiOptions'  => array(
+                'male'      => 'Male',
+                'female'    => 'Female',
+                'team'      => 'Team'
+            ),
+        ));
+
         $this->addElement('select', 'event_id', array(
             'label'         => 'Event',
             'placeholder'   => 'Select Event',

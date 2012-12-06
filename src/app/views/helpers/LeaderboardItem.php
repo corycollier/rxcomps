@@ -113,7 +113,7 @@ class App_View_Helper_LeaderboardItem
                     '<td class="%s">',
                     '<a href="#" class="expand-details">%d</a>',
                     '<ul class="details">',
-                    '<li><strong>Score</strong> %d %s</li>',
+                    '<li><strong>Score</strong> %01.2f %s</li>',
                     '<li><strong>Points</strong> %d</li>',
                     '</ul>',
                     '</td>',
