@@ -46,7 +46,7 @@ class App_Model_Leaderboard
      * @param integer $eventId
      * @return array
      */
-    public function load ($eventId, $scaleId, $competitionFilters = '')
+    public function load ($eventId, $scaleId, $gender = 'team', $competitionFilters = '')
     {
         $event = $this->_getEventModel();
         $event->load($eventId);
@@ -59,8 +59,9 @@ class App_Model_Leaderboard
 
         $results = array();
         foreach ($competitions as $competition) {
-            $results[$competition->id] = $competition->getLeaderboards($scaleId);
+            $results[$competition->id] = $competition->getLeaderboards($scaleId, $gender);
         }
+
 
         $athletes = array();
         foreach ($results as $competitionId => $competitionResults) {

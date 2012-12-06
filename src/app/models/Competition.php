@@ -169,7 +169,6 @@ class App_Model_Competition
             ));
         }
 
-        // var_dump($results); die;
         return $results;
 
     } // END function leaderboards
