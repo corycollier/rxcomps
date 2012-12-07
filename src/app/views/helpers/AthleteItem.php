@@ -60,10 +60,13 @@ class App_View_Helper_AthleteItem
     protected function _getTitle ($athlete)
     {
         $view = $this->view;
-        $title = sprintf('<h3>%s</h3>', $view->htmlAnchor(ucwords($athlete->name), array(
+
+        $link = $view->htmlAnchor(ucwords($athlete->name), array(
             'action'    => 'view',
             'id'        => $athlete->id,
-        )));
+        ));
+
+        $title = sprintf('<h3>%s <span class="alt">(%s)</span></h3>', $link, $athlete->gym);
 
         return $title;
 
