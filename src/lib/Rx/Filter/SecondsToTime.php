@@ -50,10 +50,10 @@ class Rx_Filter_SecondsToTime
         );
 
         if (! $hours) {
-            return sprintf('%d:%d', $minutes, $seconds);
+            return sprintf('%d:%02d', $minutes, $seconds);
         }
 
-        return sprintf('%d:%d:%d', $hours, $minutes, $seconds);
+        return sprintf('%d:%02d:%02d', $hours, $minutes, $seconds);
 
     } // END function filter
 
