@@ -32,7 +32,9 @@
 ), false); ?>
 
 <h2><?php echo $this->model->getValue('name'); ?></h2>
-<p><?php echo $this->model->getValue('description'); ?></p>
+<p><?php echo strtr($this->model->getValue('description'), array(
+    PHP_EOL => '</p><p>',
+)); ?></p>
 <p></p>
 
 

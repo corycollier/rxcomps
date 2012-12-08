@@ -13,4 +13,8 @@
  * @since       File available since release 1.0.0
  */
 ?>
+Filter By:
+<?php echo $this->scaleFilter($this->request()->getParam('event_id')); ?>
+<?php echo $this->genderFilter($this->request()->getParam('event_id')); ?>
+
 <?php echo $this->form; ?>

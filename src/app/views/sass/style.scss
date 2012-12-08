@@ -315,6 +315,10 @@ ul.actions {
     width: auto;
     font-size: 0.9em;
     overflow-x: hidden;
+
+    p + p {
+        text-indent: 0;
+    }
 }
 
 .filtered
