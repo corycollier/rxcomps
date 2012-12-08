@@ -155,6 +155,7 @@ class App_Model_Competition
         $pointValue = current($points);
         $scoreValue = 0;
         $rankValue  = 1;
+        $goal = $this->getValue('goal');
 
         foreach ($scores as $i => $score) {
             if ($score->score != $scoreValue) {
@@ -166,6 +167,7 @@ class App_Model_Competition
             $results[$score->athlete_id] = array_merge($score->toArray(), array(
                 'points'    => (float)$pointValue,
                 'rank'      => (int)$rankValue,
+                'goal'      => $goal,
             ));
         }
 

@@ -106,14 +106,23 @@ class App_View_Helper_LeaderboardItem
     {
         $results = array();
 
+        $filter = new Rx_Filter_SecondsToTime;
+
+        $goal = $data['goal'];
+
         foreach ($data['competitions'] as $competitionId => $competitionResults) {
+
+            if ($goal == 'time') {
+                $competitionResults['score'] = $filter->filter($competitionResults['score']);
+            }
+
             // $results[] = sprintf('%d (%d)', $competitionResults['rank'], $competitionResults['score']);
             // $results[] = sprintf('%d', $competitionResults['rank']);
             $results[] = sprintf(implode(PHP_EOL, array(
                     '<td class="%s">',
                     '<a href="#" class="expand-details">%d</a>',
                     '<ul class="details">',
-                    '<li><strong>Score</strong> %01.2f %s</li>',
+                    '<li><strong>Score</strong> %s</li>',
                     '<li><strong>Points</strong> %d</li>',
                     '</ul>',
                     '</td>',
