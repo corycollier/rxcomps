@@ -70,6 +70,7 @@ class App_View_Helper_ScoreItem
         }
 
         $title = sprintf('<h3>%s</h3>', $view->htmlAnchor($score->score, array(
+            'controller'    => 'scores',
             'action'    => 'view',
             'id'        => $score->id,
         )));
@@ -109,10 +110,12 @@ class App_View_Helper_ScoreItem
         if ($auth->hasIdentity()) {
             $actions = $view->htmlList(array(
                 $view->htmlAnchor('Edit', array(
+                    'controller'    => 'scores',
                     'action'    => 'edit',
                     'id'        => $score->id,
                 )),
                 $view->htmlAnchor('Delete', array(
+                    'controller'    => 'scores',
                     'action'    => 'delete',
                     'id'        => $score->id,
                 )),
