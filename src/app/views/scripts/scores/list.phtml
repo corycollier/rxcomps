@@ -14,11 +14,14 @@
  */
 ?>
 
+<?php if ($this->auth()->hasIdentity()) :?>
 <?php echo $this->actionList(array(
     $this->htmlAnchor('Add Score', array(
+        'controller'    => 'scores',
         'action'    => 'create',
     ))
 )); ?>
+<?php endif; ?>
 
 <?php foreach ($this->items as $event) : ?>
 

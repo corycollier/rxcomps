@@ -22,7 +22,9 @@
     )),
 )); ?>
 
-<?php echo 'Filter By: ' . $this->scaleFilter($this->request()->getParam('event_id')); ?>
+Filter By:
+<?php echo $this->scaleFilter($this->request()->getParam('event_id')); ?>
+<?php echo $this->genderFilter($this->request()->getParam('event_id')); ?>
 <table class="data-table leaderboards-table">
 <?php echo $this->leaderboardHeaders(@$this->items[0]); ?>
 <?php foreach ($this->items as $index => $athlete) : ?>

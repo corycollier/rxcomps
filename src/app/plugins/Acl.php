@@ -63,9 +63,8 @@ class App_Plugin_Acl
             'logout',
             'success',
             'full-screen',
+            'list',
         ));
-
-        $acl->allow('guest', 'events', 'list');
 
         $acl->allow('admin');
 

@@ -64,6 +64,11 @@ class App_View_Helper_ScoreItem
         $athlete = $score->findParentRow('App_Model_DbTable_Athlete');
         $competition = $score->findParentRow('App_Model_DbTable_Competition');
 
+        if ($competition->goal == 'time') {
+            $filter = new Rx_Filter_SecondsToTime;
+            $score->score = $filter->filter($score->score);
+        }
+
         $title = sprintf('<h3>%s</h3>', $view->htmlAnchor($score->score, array(
             'action'    => 'view',
             'id'        => $score->id,

@@ -14,12 +14,14 @@
  */
 ?>
 
+<?php if ($this->auth()->hasIdentity()) :?>
 <?php echo $this->actionList(array(
     $this->htmlAnchor('Create Event', array(
         'action'    => 'create',
     ))
 ));
 ?>
+<?php endif; ?>
 
 <?php foreach ($this->items as $event) : ?>
 

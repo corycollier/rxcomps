@@ -48,7 +48,7 @@ class App_Form_Score
             'label'         => 'Score',
             'placeholder'   => 'Enter Score',
             'required'      => true,
-            'filters'       => array('StringTrim'),
+            'filters'       => array('StringTrim', new Rx_Filter_TimeToSeconds),
         ));
 
         $this->addElement('select', 'athlete_id', array(
@@ -123,7 +123,9 @@ class App_Form_Score
         $element = $this->getElement('athlete_id');
 
         foreach ($athletes as $athlete) {
-            $element->addMultiOption($athlete->id, $athlete->name);
+            $element->addMultiOption($athlete->id, sprintf('%d - %s',
+                $athlete->id, $athlete->name
+            ));
         }
 
         return $this;

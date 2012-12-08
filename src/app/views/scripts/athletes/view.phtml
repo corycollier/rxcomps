@@ -13,11 +13,15 @@
  * @since       File available since release 1.0.0
  */
 ?>
+
+<?php if ($this->auth()->hasIdentity()) :?>
 <?php echo $this->actionList(array(
     $this->htmlAnchor('Add Athlete', array(
+        'controller'    => 'athletes',
         'action'    => 'create',
     ))
 )); ?>
+<?php endif; ?>
 
 <?php echo $this->athleteItem($this->model->row); ?>
 

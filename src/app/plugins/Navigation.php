@@ -77,7 +77,7 @@ class App_Plugin_Navigation
     protected function _addExtraPages ($container)
     {
         $auth = $this->_getAuth();
-        if ($auth->hasIdentity()) {
+        // if ($auth->hasIdentity()) {
             $container->addPage(array(
                 'label'         => 'Competitions',
                 'controller'    => 'competitions',
@@ -93,7 +93,7 @@ class App_Plugin_Navigation
                 'controller'    => 'scores',
                 'action'        => 'list',
             ));
-        }
+        // }
 
     } // END function _addExtraPages
 
