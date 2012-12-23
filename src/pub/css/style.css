@@ -368,7 +368,7 @@ body .header {
   position: fixed;
   top: 0;
   width: 100%;
-  background: url('/./src/pub/img/rgbapng/0000007f.png?1352232530');
+  background: url('/./src/pub/img/rgbapng/0000007f.png?1352169703');
   background: rgba(0, 0, 0, 0.5);
 }
 
@@ -377,7 +377,7 @@ body .main-navigation {
   position: fixed;
   top: 64px;
   width: 100%;
-  background: url('/./src/pub/img/rgbapng/0000007f.png?1352232530');
+  background: url('/./src/pub/img/rgbapng/0000007f.png?1352169703');
   background: rgba(0, 0, 0, 0.5);
 }
 
@@ -547,20 +547,32 @@ h3, .score-item h3 {
 .page-content p + p {
   text-indent: 0;
 }
+/* line 323, ../../app/views/sass/style.scss */
+.page-content .two-column {
+  float: left;
+  width: 45%;
+  margin-right: 5%;
+}
+/* line 329, ../../app/views/sass/style.scss */
+.page-content .clear-all {
+  clear: both;
+  float: left;
+  width: 100%;
+}
 
-/* line 325, ../../app/views/sass/style.scss */
+/* line 337, ../../app/views/sass/style.scss */
 .filtered {
   background: rgba(0, 0, 0, 0.1);
   color: rgba(0, 0, 0, 0.8);
   text-shadow: 0 1px 0 rgba(255, 255, 255, 0.15);
 }
 
-/* line 331, ../../app/views/sass/style.scss */
+/* line 343, ../../app/views/sass/style.scss */
 .filtered .alt {
   color: rgba(0, 0, 0, 0.8);
 }
 
-/* line 336, ../../app/views/sass/style.scss */
+/* line 348, ../../app/views/sass/style.scss */
 .data-table {
   width: 100%;
   -moz-box-shadow: 0px -1px 0 rgba(0, 0, 0, 0.8) inset;
@@ -569,21 +581,21 @@ h3, .score-item h3 {
   box-shadow: 0px -1px 0 rgba(0, 0, 0, 0.8) inset;
   border-bottom: 1px solid rgba(255, 255, 255, 0.15);
 }
-/* line 340, ../../app/views/sass/style.scss */
+/* line 352, ../../app/views/sass/style.scss */
 .data-table .athlete-name {
   white-space: nowrap;
   text-align: right;
 }
-/* line 345, ../../app/views/sass/style.scss */
+/* line 357, ../../app/views/sass/style.scss */
 .data-table .filtered {
   color: #111;
 }
-/* line 348, ../../app/views/sass/style.scss */
+/* line 360, ../../app/views/sass/style.scss */
 .data-table .filtered a {
   color: #111;
 }
 
-/* line 365, ../../app/views/sass/style.scss */
+/* line 377, ../../app/views/sass/style.scss */
 .data-table th {
   text-align: center;
   color: #fff;
@@ -594,19 +606,19 @@ h3, .score-item h3 {
   box-shadow: 0px -1px 0 rgba(0, 0, 0, 0.8) inset;
   border-bottom: 1px solid rgba(255, 255, 255, 0.15);
 }
-/* line 371, ../../app/views/sass/style.scss */
+/* line 383, ../../app/views/sass/style.scss */
 .data-table th p {
   line-height: 1em;
 }
 
-/* line 379, ../../app/views/sass/style.scss */
+/* line 391, ../../app/views/sass/style.scss */
 .data-table td {
   vertical-align: middle;
   padding: 5px;
   text-align: center;
 }
 
-/* line 391, ../../app/views/sass/style.scss */
+/* line 403, ../../app/views/sass/style.scss */
 .data-table tr:hover {
   background: rgba(0, 0, 0, 0.1);
   border: 1px solid rgba(0, 0, 0, 0.25);
@@ -624,14 +636,14 @@ h3, .score-item h3 {
   border-radius: 5px;
 }
 
-/* line 397, ../../app/views/sass/style.scss */
+/* line 409, ../../app/views/sass/style.scss */
 .leaderboards-table .rank {
   width: auto;
   max-width: 2em;
   text-align: right;
 }
 
-/* line 410, ../../app/views/sass/style.scss */
+/* line 422, ../../app/views/sass/style.scss */
 .paginationControl {
   padding: 10px 0;
   text-align: center;
@@ -657,7 +669,7 @@ h3, .score-item h3 {
 /*
  * Image replacement
  */
-/* line 424, ../../app/views/sass/style.scss */
+/* line 436, ../../app/views/sass/style.scss */
 .ir {
   background-color: transparent;
   border: 0;
@@ -666,7 +678,7 @@ h3, .score-item h3 {
   *text-indent: -9999px;
 }
 
-/* line 432, ../../app/views/sass/style.scss */
+/* line 444, ../../app/views/sass/style.scss */
 .ir:before {
   content: "";
   display: block;
@@ -677,7 +689,7 @@ h3, .score-item h3 {
 /*
  * Hide from both screenreaders and browsers: h5bp.com/u
  */
-/* line 443, ../../app/views/sass/style.scss */
+/* line 455, ../../app/views/sass/style.scss */
 .hidden {
   display: none !important;
   visibility: hidden;

@@ -61,6 +61,7 @@ class App_View_Helper_EventItem
     {
         $view = $this->view;
         $title = sprintf('<h3>%s</h3>', $view->htmlAnchor($event->name, array(
+            'controller'=> 'events',
             'action'    => 'view',
             'id'        => $event->id,
         )));

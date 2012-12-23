@@ -16,24 +16,6 @@
 
 <h2><?php echo $this->model->getValue('name'); ?></h2>
 
-<?php echo $this->actionList(array(
-    $this->htmlAnchor('Leaderboards', array(
-        'controller' => 'leaderboards',
-        'action'    => 'full-screen',
-        'event_id'  => $this->model->id,
-    )),
-    $this->htmlAnchor('Athletes', array(
-        'controller'    => 'athletes',
-        'action'        => 'list',
-        'event_id'      => $this->model->id,
-    )),
-    $this->htmlAnchor('Competitions', array(
-        'controller'    => 'competitions',
-        'action'        => 'list',
-        'event_id'      => $this->model->id,
-    )),
-)); ?>
-
 <?php if ($this->auth()->hasIdentity()) : ?>
 <?php echo $this->actionList(array(
     $this->htmlAnchor('Edit', array(
@@ -46,25 +28,39 @@
         'action'        => 'delete',
         'event_id'      => $this->model->id,
     )),
-    $this->htmlAnchor('Add Scales', array(
-        'controller'    => 'scales',
-        'action'        => 'create',
-        'event_id'      => $this->model->id,
-    )),
-    $this->htmlAnchor('Add Competitions', array(
-        'controller'    => 'competitions',
-        'action'        => 'create',
-        'event_id'      => $this->model->id,
-    )),
 )); ?>
 
 <?php endif; ?>
 
 <p><?php echo $this->model->getValue('description'); ?></p>
 
+<h3>Leaderboards</h3>
+<?php echo $this->action('view', 'leaderboards', 'default', array_merge(
+    $this->request()->getParams(),
+    array(
+        'event_id'  => $this->model->id,
+    )
+)); ?>
+
+<div class="two-column">
 <h3>Competitions</h3>
 <?php echo $this->action('list', 'competitions', 'default', array(
     'event_id'  => $this->model->id,
-
 )); ?>
+
+</div>
+
+<div class="two-column">
+<h3>Scales</h3>
+<?php echo $this->action('list', 'scales', 'default', array(
+    'event_id'  => $this->model->id,
+)); ?>
+</div>
+
+<div class="clear-all">
+<h3>Athletes</h3>
+<?php echo $this->action('list', 'athletes', 'default', array(
+    'event_id'  => $this->model->id,
+)); ?>
+</div>
 

@@ -149,13 +149,13 @@ class App_Model_Competition
      */
     public function getLeaderboards ($scaleId, $gender = 'team')
     {
+        $goal       = $this->getValue('goal');
         $scores     = $this->getScores($scaleId, $gender);
         $points     = $this->getPoints($scores);
         $results    = array();
         $pointValue = current($points);
         $scoreValue = 0;
         $rankValue  = 1;
-        $goal = $this->getValue('goal');
 
         foreach ($scores as $i => $score) {
             if ($score->score != $scoreValue) {
@@ -173,7 +173,7 @@ class App_Model_Competition
 
         return $results;
 
-    } // END function leaderboards
+    } // END function getLeaderboards
 
 
     /**
@@ -186,25 +186,69 @@ class App_Model_Competition
      */
     public function getScores ($scaleId, $gender = 'team')
     {
-        $scores = array();
-        $athleteIds = $this->getAthleteIds($scaleId, $gender);
+        $athletes = $this->getAthletes($scaleId, $gender);
 
-        if (count($athleteIds)) {
-            $table = $this->getTable('Score');
-
-            $scores = $table->fetchAll(
-                $table->select(Zend_Db_Table::SELECT_WITH_FROM_PART)
-                    ->setIntegrityCheck(false)
-                    ->join('athletes', 'athletes.id = scores.athlete_id')
-                    ->where(sprintf("scores.competition_id = '%d'", $this->id))
-                    ->where('scores.athlete_id IN (?)', $athleteIds)
-                    ->order($this->_getOrder())
-            );
+        if (! count($athletes)) {
+            return array();
         }
+
+        $scores = array();
+        foreach ($athletes as $athlete) {
+            $scores[] = $this->getAthleteScore($athlete);
+        }
+
+        // echo count($scores), PHP_EOL; die;
+
+        // var_dump('miss'); die;
+
+        // print_r($scores);
+
+        // die;
+
+
+
+        $athleteIds = $this->getAthleteIds($scaleId, $gender);
+        $table = $this->getTable('Score');
+
+        $scores = $table->fetchAll(
+            $table->select(Zend_Db_Table::SELECT_WITH_FROM_PART)
+                ->where(sprintf("scores.competition_id = '%d'", $this->id))
+                ->where('scores.athlete_id IN (?)', $athleteIds)
+                ->order($this->_getOrder())
+        );
+
+        if (count($athletes) != count($scores)) {
+            foreach ($athletes as $athlete) {
+                foreach ($scores as $score) {
+                    if ($athlete->id == $score->athlete_id) {
+                        break(2);
+                    }
+                }
+
+            }
+        }
+
 
         return $scores;
 
     } // END function getScores
+
+    public function getAthleteScore ($athleteRow)
+    {
+        $table = $this->getTable('Score');
+
+        $score = $table->fetchRow(
+            $table->select()
+                ->where(sprintf('athlete_id = %d', $athleteRow->id))
+        );
+
+        // if (! $score) {
+        //     var_dump('fuck');
+        //     die;
+        // }
+
+        return $score;
+    }
 
     /**
      * getPoints()
@@ -277,6 +321,26 @@ class App_Model_Competition
      */
     public function getAthleteIds ($scaleId, $gender = 'team')
     {
+        $athletes = $this->getAthletes($scaleId, $gender);
+        $results = array();
+        foreach ($athletes as $athlete) {
+            $results[] = $athlete->id;
+        }
+
+        return $results;
+    }
+
+    /**
+     * getAthletes()
+     *
+     * This method gets all of the athletes associated with this competition
+     *
+     * @param  [type] $scaleId [description]
+     * @param  string $gender  [description]
+     * @return [type]          [description]
+     */
+    public function getAthletes ($scaleId, $gender = 'team')
+    {
         $event = $this->getParent('Event');
         $table = $this->getTable('Athlete');
         $athletes = $table->fetchAll(
@@ -286,14 +350,9 @@ class App_Model_Competition
                 ->where(sprintf('event_id = %d', $event->id))
         );
 
+        return $athletes;
 
-        $results = array();
-        foreach ($athletes as $athlete) {
-            $results[] = $athlete->id;
-        }
-
-        return $results;
-    }
+    } // END function getAthletes
 
 
 }// END class App_Model_Competitions

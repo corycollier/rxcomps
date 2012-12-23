@@ -62,6 +62,7 @@ class App_View_Helper_AthleteItem
         $view = $this->view;
 
         $link = $view->htmlAnchor(ucwords($athlete->name), array(
+            'controller'=> 'athletes',
             'action'    => 'view',
             'id'        => $athlete->id,
         ));

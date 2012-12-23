@@ -78,21 +78,21 @@ class App_Plugin_Navigation
     {
         $auth = $this->_getAuth();
         // if ($auth->hasIdentity()) {
-            $container->addPage(array(
-                'label'         => 'Competitions',
-                'controller'    => 'competitions',
-                'action'        => 'list',
-            ));
-            $container->addPage(array(
-                'label'         => 'Athletes',
-                'controller'    => 'athletes',
-                'action'        => 'list',
-            ));
-            $container->addPage(array(
-                'label'         => 'Scores',
-                'controller'    => 'scores',
-                'action'        => 'list',
-            ));
+            // $container->addPage(array(
+            //     'label'         => 'Competitions',
+            //     'controller'    => 'competitions',
+            //     'action'        => 'list',
+            // ));
+            // $container->addPage(array(
+            //     'label'         => 'Athletes',
+            //     'controller'    => 'athletes',
+            //     'action'        => 'list',
+            // ));
+            // $container->addPage(array(
+            //     'label'         => 'Scores',
+            //     'controller'    => 'scores',
+            //     'action'        => 'list',
+            // ));
         // }
 
     } // END function _addExtraPages

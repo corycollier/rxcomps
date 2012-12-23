@@ -319,6 +319,18 @@ ul.actions {
     p + p {
         text-indent: 0;
     }
+
+    .two-column {
+        float: left;
+        width: 45%;
+        margin-right: 5%;
+    }
+
+    .clear-all {
+        clear: both;
+        float: left;
+        width: 100%;
+    }
 }
 
 .filtered
