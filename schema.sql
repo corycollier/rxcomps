@@ -27,6 +27,7 @@ CREATE  TABLE IF NOT EXISTS `athletes` (
   `scale_id` INT NOT NULL ,
   `event_id` INT NOT NULL ,
   `gender` ENUM('male', 'female', 'team') NOT NULL DEFAULT 'team',
+  `gym` TEXT,
   PRIMARY KEY (`id`) ,
   INDEX `fk_events_idx` (`event_id` ASC) ,
   CONSTRAINT `fk_athletes_events`

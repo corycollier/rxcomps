@@ -17,6 +17,7 @@
 <?php if ($this->auth()->hasIdentity()) :?>
 <?php echo $this->actionList(array(
     $this->htmlAnchor('Create Event', array(
+        'controller'=> 'events',
         'action'    => 'create',
     ))
 ));

@@ -16,6 +16,7 @@
 <?php if ($this->auth()->hasIdentity()) :?>
 <?php echo $this->actionList(array(
     $this->htmlAnchor('Add Athlete', array(
+        'controller'=> 'athletes',
         'action'    => 'create',
     )),
 )); ?>
