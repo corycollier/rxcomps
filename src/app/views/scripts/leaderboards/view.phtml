@@ -15,9 +15,11 @@
 ?>
 <?php echo $this->actionList(array(
     $this->htmlAnchor('full screen', array(
+        'controller'=> 'leaderboards',
         'action' => 'full-screen'
     )),
     $this->htmlAnchor('normal view', array(
+        'controller'=> 'leaderboards',
         'action' => 'view',
     )),
 )); ?>
