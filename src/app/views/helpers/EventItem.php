@@ -88,10 +88,12 @@ class App_View_Helper_EventItem
         if ($auth->hasIdentity()) {
             $actions = $view->htmlList(array(
                 $view->htmlAnchor('Edit', array(
+                    'controller'=> 'events',
                     'action'    => 'edit',
                     'id'        => $event->id,
                 )),
                 $view->htmlAnchor('Delete', array(
+                    'controller'=> 'events',
                     'action'    => 'delete',
                     'id'        => $event->id,
                 )),

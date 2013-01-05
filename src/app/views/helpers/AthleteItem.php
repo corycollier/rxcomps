@@ -91,10 +91,12 @@ class App_View_Helper_AthleteItem
         if ($auth->hasIdentity()) {
             $actions = $view->htmlList(array(
                 $view->htmlAnchor('Edit', array(
+                    'controller'=> 'athletes',
                     'action'    => 'edit',
                     'id'        => $athlete->id,
                 )),
                 $view->htmlAnchor('Delete', array(
+                    'controller'=> 'athletes',
                     'action'    => 'delete',
                     'id'        => $athlete->id,
                 )),
