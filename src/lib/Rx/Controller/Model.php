@@ -109,7 +109,8 @@ class Rx_Controller_Model
 
         if ($request->isPost()) {
             try {
-                $model->create($request->getParams());
+                $params = array_merge($request->getParams(), $request->getPost());
+                $model->create($params);
                 $flash->addMessage(sprintf(
                     self::MSG_CREATE_SUCCESS, $this->_modelName
                 ), 'success');
@@ -157,7 +158,8 @@ class Rx_Controller_Model
 
         if ($request->isPost()) {
             try {
-                $model->edit($request->getParams());
+                $params = array_merge($request->getParams(), $request->getPost());
+                $model->edit($params);
                 $flash->addMessage(sprintf(
                     self::MSG_EDIT_SUCCESS, $this->_modelName
                 ), 'success');

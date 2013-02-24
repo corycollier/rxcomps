@@ -282,11 +282,24 @@ ul.actions {
 , .score-item {
     margin: 1em 0;
     padding: 0.5em ;
+    position: relative;
     @include etched-content;
 
     h3 {
         margin: 0;
         padding: 0.5em 0;
+        border: none;
+        @include box-shadow();
+
+        a {
+            display: block;
+        }
+    }
+
+    ul.actions {
+        position: absolute;
+        top: 1.5em;
+        right: 0.5em;
     }
 }
 

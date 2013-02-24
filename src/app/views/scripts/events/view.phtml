@@ -34,16 +34,16 @@
 
 <p><?php echo $this->model->getValue('description'); ?></p>
 
-<h3><?php echo $this->htmlAnchor('Leaderboards', array(
+<h2><?php echo $this->htmlAnchor('Leaderboards', array(
     'controller'=> 'leaderboards',
     'action' => 'view',
     'event_id' => $this->model->id,
 
 )); ?>
-</h3>
+</h2>
 
 <div class="two-column">
-<h3>Competitions</h3>
+<h2>Competitions</h2>
 <?php echo $this->action('list', 'competitions', 'default', array(
     'event_id'  => $this->model->id,
 )); ?>
@@ -51,14 +51,14 @@
 </div>
 
 <div class="two-column">
-<h3>Scales</h3>
+<h2>Scales</h2>
 <?php echo $this->action('list', 'scales', 'default', array(
     'event_id'  => $this->model->id,
 )); ?>
 </div>
 
 <div class="clear-all">
-<h3>Athletes</h3>
+<h2>Athletes</h2>
 <?php echo $this->action('list', 'athletes', 'default', array(
     'event_id'  => $this->model->id,
 )); ?>
