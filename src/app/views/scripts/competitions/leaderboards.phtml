@@ -13,29 +13,33 @@
  * @since       File available since release 1.0.0
  */
 ?>
-
-<h2>Leaderboards for <?php echo ucwords($this->model->getValue('name')); ?></h2>
-
 <?php
-    // setup the actors for the view
-    $athleteTable       = new App_Model_DbTable_Athlete;
-    $competitionTable   = new App_Model_DbTable_Competition;
+    $eventId = $this->eventId ? $this->eventId : $this->request()->getParam('event_id');
 ?>
-<table>
-    <tr>
-        <th>Result</th>
-        <th>Score</th>
-        <th>Athlete</th>
-    </tr>
-<?php foreach ($this->leaderboards as $entry) : ?>
-<?php
-    $athlete        = $athleteTable->fetchRow(sprintf('id = %d', $entry['athlete_id']));
-    $competition    = $competitionTable->fetchRow(sprintf('id = %d', $entry['competition_id']));
-?>
-    <tr>
-        <td><?php echo $entry['score']; ?></td>
-        <td><?php echo $entry['points']; ?></td>
-        <td><?php echo $athlete->name; ?></td>
-    </tr>
+Filter By:
+<?php echo $this->scaleFilter($eventId); ?>
+<?php echo $this->genderFilter($eventId); ?>
+<table class="data-table leaderboards-table">
+<thead>
+    <th class="athlete-name"><p class="rotate">Athlete / Team</p></th>
+    <th class=""><p class="rotate">Score</p></th>
+</thead>
+<tbody>
+
+<?php foreach ($this->items as $index => $athlete) : ?>
+
+    <?php $athlete['competitions'] = array(
+        $athlete['competition_id'] => array(
+            'score'     => $athlete['score'],
+            'rank'      => $athlete['rank'],
+            'points'    => $athlete['points'],
+        ),
+    ); ?>
+
+    <?php echo $this->leaderboardItem($athlete, $athlete['rank']); ?>
+
 <?php endforeach; ?>
+</tbody>
+
 </table>
+

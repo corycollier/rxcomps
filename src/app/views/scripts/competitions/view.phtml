@@ -37,19 +37,11 @@
 )); ?></p>
 <p></p>
 
-
-
-<table>
-    <tr>
-        <th>Score</th>
-        <th>Athlete</th>
-        <th>Actions</th>
-    </tr>
-<?php foreach ($this->model->getChildren('Score') as $score) : ?>
-    <tr>
-        <td><?php echo $score->getValue('score'); ?></td>
-        <td><?php echo $score->getParent('Athlete')->getValue('name'); ?></td>
-        <td></td>
-    </tr>
-<?php endforeach; ?>
-</table>
+<h3>Leaderboards</h3>
+<?php
+    $event = $this->model->getParent('Event');
+?>
+<?php echo $this->action('leaderboards', 'competitions', 'default', array_merge(
+    $this->request()->getParams(),
+    array('event_id' => $event->id,)
+));?>

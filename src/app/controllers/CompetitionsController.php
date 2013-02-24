@@ -56,15 +56,23 @@ class CompetitionsController
     public function leaderboardsAction ( )
     {
         $model = $this->getModel('Competition');
+        $leaderboards = $this->getModel('Leaderboard');
         $request = $this->getRequest();
 
-        $competitionId = $request->getParam('id');
+        $eventId = $request->getParam('event_id');
         $scaleId = $request->getParam('scale_id');
+        $gender = $request->getParam('gender');
 
-        $model->load($competitionId);
+        $items = array();
+
+        $model->load($request->getParam('id'));
+        if ($eventId && $scaleId) {
+            $items = $model->getLeaderboards($scaleId, $gender);
+        }
 
         $this->view->model = $model;
-        $this->view->leaderboards = $model->getLeaderboards($scaleId);
+        $this->view->items = $items;
+        $this->view->eventId = $eventId;
 
     } // END function leaderboardsAction
 

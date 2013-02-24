@@ -64,6 +64,7 @@ class App_Plugin_Acl
             'success',
             'full-screen',
             'list',
+            'leaderboards',
         ));
 
         $acl->allow('admin');

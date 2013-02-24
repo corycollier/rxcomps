@@ -175,7 +175,6 @@ class App_Model_Competition
 
     } // END function getLeaderboards
 
-
     /**
      * getScores()
      *
@@ -353,6 +352,5 @@ class App_Model_Competition
         return $athletes;
 
     } // END function getAthletes
-
 
 }// END class App_Model_Competitions
