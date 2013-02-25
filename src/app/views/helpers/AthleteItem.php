@@ -101,7 +101,7 @@ class App_View_Helper_AthleteItem
                     'id'        => $athlete->id,
                 )),
             ), false, array(
-                'class' => 'actions',
+                'class' => 'subnav',
             ), false);
         }
 

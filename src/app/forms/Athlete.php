@@ -80,21 +80,7 @@ class App_Form_Athlete
             'ignore'        => true,
         ));
 
-        $this->setElementDecorators(array(
-            'ViewHelper',
-            'Label',
-            'Errors',
-            array('HtmlTag', array(
-                'tag'   => 'div',
-                'class' => 'form-element'
-            )),
-        ));
-
-        $this->setDecorators(array(
-            'FormElements',
-            'Fieldset',
-            'Form',
-        ));
+        $this->setStandardDecorators();
 
     } // END function init
 

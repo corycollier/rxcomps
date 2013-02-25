@@ -46,7 +46,7 @@ class App_View_Helper_ActionList
      */
     public function actionList (array $items, $ordered = false, $attribs = false, $escape = false)
     {
-        $attribs['class'] = @$attribs['class'] . ' actions';
+        $attribs['class'] = @$attribs['class'] . ' subnav';
 
         return $this->htmlList($items, $ordered, $attribs, $escape);
 

@@ -42,25 +42,28 @@
 )); ?>
 </h2>
 
-<div class="two-column">
-<h2>Competitions</h2>
-<?php echo $this->action('list', 'competitions', 'default', array(
-    'event_id'  => $this->model->id,
-)); ?>
+<section class="row">
 
+    <div class="row six columns">
+        <h2>Competitions</h2>
+        <?php echo $this->action('list', 'competitions', 'default', array(
+            'event_id'  => $this->model->id,
+        )); ?>
+    </div>
+
+
+    <div class="row six columns">
+        <h2>Scales</h2>
+        <?php echo $this->action('list', 'scales', 'default', array(
+            'event_id'  => $this->model->id,
+        )); ?>
+    </div>
+
+</section>
+
+<div class="row">
+    <h2>Athletes</h2>
+    <?php echo $this->action('list', 'athletes', 'default', array(
+        'event_id'  => $this->model->id,
+    )); ?>
 </div>
-
-<div class="two-column">
-<h2>Scales</h2>
-<?php echo $this->action('list', 'scales', 'default', array(
-    'event_id'  => $this->model->id,
-)); ?>
-</div>
-
-<div class="clear-all">
-<h2>Athletes</h2>
-<?php echo $this->action('list', 'athletes', 'default', array(
-    'event_id'  => $this->model->id,
-)); ?>
-</div>
-

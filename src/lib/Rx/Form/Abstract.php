@@ -33,6 +33,40 @@
 class Rx_Form_Abstract
     extends Zend_Form
 {
+
+    public function __construct ( )
+    {
+        $this->addPrefixPath('Rx_Form_Element_', 'Rx/Form/Element/', 'element');
+        parent::__construct();
+        // $this->addElementPrefixPath('Rx_Form_Element_', 'Rx/Form/Element/');
+        $this->setStandardDecorators();
+
+    }
+    /**
+     * setStandardDecorators()
+     *
+     * This method sets the standard decorators for forms
+     */
+    public function setStandardDecorators ( )
+    {
+        // $this->setElementDecorators(array(
+        //     'ViewHelper',
+        //     'Label',
+        //     'Errors',
+        //     array('HtmlTag', array(
+        //         'tag'   => 'div',
+        //         'class' => 'field'
+        //     )),
+        // ));
+
+        $this->setDecorators(array(
+            'FormElements',
+            'Fieldset',
+            'Form',
+        ));
+
+    } // END function setStandardDecorators
+
     /**
      * getButtonSubForm()
      *

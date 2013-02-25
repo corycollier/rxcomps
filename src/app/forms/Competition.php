@@ -42,6 +42,8 @@ class App_Form_Competition
             'ignore'        => true,
         ));
 
+        // var_dump($this->getPluginLoader('element')->getPaths());die;
+
         $this->addElement('select', 'goal', array(
             'label'         => 'Goal',
             'placeholder'   => 'Select goal',
@@ -98,22 +100,6 @@ class App_Form_Competition
         $this->addElement('submit', 'save', array(
             'label'         => 'Save',
             'ignore'        => true,
-        ));
-
-        $this->setElementDecorators(array(
-            'ViewHelper',
-            'Label',
-            'Errors',
-            array('HtmlTag', array(
-                'tag'   => 'div',
-                'class' => 'form-element'
-            )),
-        ));
-
-        $this->setDecorators(array(
-            'FormElements',
-            'Fieldset',
-            'Form',
         ));
 
     } // END function init

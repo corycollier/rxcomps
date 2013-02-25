@@ -47,7 +47,7 @@ class App_View_Helper_GenderFilter
             ));
         }
 
-        return $this->htmlList($urls, false, array('class' => 'actions'), false);
+        return $this->htmlList($urls, false, array('class' => 'subnav'), false);
 
     }
 

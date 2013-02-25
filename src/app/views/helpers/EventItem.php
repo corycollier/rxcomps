@@ -98,7 +98,7 @@ class App_View_Helper_EventItem
                     'id'        => $event->id,
                 )),
             ), false, array(
-                'class' => 'actions',
+                'class' => 'subnav',
             ), false);
         }
 

@@ -120,7 +120,7 @@ class App_View_Helper_ScoreItem
                     'id'        => $score->id,
                 )),
             ), false, array(
-                'class' => 'actions',
+                'class' => 'subnav',
             ), false);
         }
 

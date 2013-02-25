@@ -98,7 +98,7 @@ class App_View_Helper_CompetitionItem
                     'id'        => $competition->id,
                 )),
             ), false, array(
-                'class' => 'actions',
+                'class' => 'subnav',
             ), false);
         }
 
