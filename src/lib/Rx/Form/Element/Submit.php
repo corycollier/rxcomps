@@ -32,15 +32,14 @@
 class Rx_Form_Element_Submit
     extends Zend_Form_Element_Submit
 {
-
     /**
-     * Default decorators
+     * Load default decorators
      *
-     * Uses only 'Submit' and 'DtDdWrapper' decorators by default.
+     * Disables "for" attribute of label if label decorator enabled.
      *
-     * @return Zend_Form_Element_Submit
+     * @return Zend_Form_Element_Radio
      */
-    public function loadDefaultDecorators()
+    public function loadDefaultDecorators ( )
     {
         if ($this->loadDefaultDecoratorsIsDisabled()) {
             return $this;
@@ -48,10 +47,22 @@ class Rx_Form_Element_Submit
 
         $decorators = $this->getDecorators();
         if (empty($decorators)) {
-            $this->addDecorator('Tooltip')
-                 ->addDecorator('ViewHelper')
-                 ->addDecorator('DtDdWrapper');
+            $this->addDecorator('ViewHelper')
+                 ->addDecorator('Errors')
+                 ->addDecorator('Description', array('tag' => 'p', 'class' => 'description'));
         }
+
+        // $this->addDecorators(array(
+        //     array(array('elementDiv' => 'HtmlTag'), array(
+        //         'tag' => 'div',
+        //         'class' => 'btn',
+        //     )),
+        //     array(array('td' => 'HtmlTag'), array(
+        //         'tag' => 'div',
+        //         'class' => 'row',
+        //     )),
+        // ));
+
         return $this;
     }
 }

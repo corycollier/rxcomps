@@ -33,4 +33,37 @@ class Rx_Form_Element_Password
     extends Zend_Form_Element_Password
 {
 
+    /**
+     * Load default decorators
+     *
+     * Disables "for" attribute of label if label decorator enabled.
+     *
+     * @return Zend_Form_Element_Radio
+     */
+    public function loadDefaultDecorators ( )
+    {
+        if ($this->loadDefaultDecoratorsIsDisabled()) {
+            return $this;
+        }
+
+        $decorators = $this->getDecorators();
+        if (empty($decorators)) {
+            $this->addDecorator('ViewHelper')
+                 ->addDecorator('Errors')
+                 ->addDecorator('Description', array('tag' => 'p', 'class' => 'description'));
+        }
+
+        $this->addDecorators(array(
+            array(array('elementDiv' => 'HtmlTag'), array(
+                'tag' => 'div',
+                'class' => 'text',
+            )),
+            array(array('td' => 'HtmlTag'), array(
+                'tag' => 'div',
+                'class' => 'field',
+            )),
+        ));
+
+        return $this;
+    }
 }

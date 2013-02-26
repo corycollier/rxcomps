@@ -45,7 +45,12 @@ class Rx_Form_Element_Text
             return $this;
         }
 
-        parent::loadDefaultDecorators();
+        $decorators = $this->getDecorators();
+        if (empty($decorators)) {
+            $this->addDecorator('ViewHelper')
+                 ->addDecorator('Errors')
+                 ->addDecorator('Description', array('tag' => 'p', 'class' => 'description'));
+        }
 
         $this->addDecorators(array(
             array(array('elementDiv' => 'HtmlTag'), array(

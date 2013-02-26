@@ -43,14 +43,14 @@ class App_Form_User
         ));
 
     	$this->addElement('text', 'email', array(
-    		'label' 		=> 'Email',
+    		// 'label' 		=> 'Email',
     		'placeholder'	=> 'Enter email',
     		'required'		=> true,
             'filters'    	=> array('StringTrim', 'StringToLower'),
 		));
 
     	$this->addElement('password', 'passwd', array(
-    		'label' 		=> 'Password',
+    		// 'label' 		=> 'Password',
     		'placeholder'	=> 'Enter password',
     		'required'		=> true,
 		));
