@@ -42,7 +42,19 @@ class App_Bootstrap
         $loader->setFallbackAutoloader(true);
         $loader->registerNamespace('Rx_');
 
+        $resourceLoader = new Zend_Loader_Autoloader_Resource(array(
+            'namespace' => 'App',
+            'basePath'  => APPLICATION_PATH,
+        ));
+
+        $resourceLoader->addResourceType('assertions', 'models/assertions/', 'Model_Assertion_')
+            // ->addResourceType('dbTable', 'models/DbTable/', 'Model_DbTable_')
+        ;
+
+        $loader->pushAutoloader($resourceLoader);
+
     } // END function _initAutoloader
+
 
     /**
      * _initControllers()

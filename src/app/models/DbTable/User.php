@@ -38,4 +38,8 @@ class App_Model_DbTable_User
      */
     protected $_name = 'users';
 
+    protected $_dependentTables = array(
+        'App_Model_DbTable_EventsUsers',
+    );
+
 } // END class App_Model_DbTable_Users

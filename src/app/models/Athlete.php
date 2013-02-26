@@ -30,7 +30,19 @@
 
 class App_Model_Athlete
     extends Rx_Model_Abstract
+    implements Zend_Acl_Resource_Interface
 {
+    /**
+     * getResourceId()
+     *
+     * Gets the resource id
+     *
+     * @return string
+     */
+    public function getResourceId ( )
+    {
+        return 'athletes';
+    }
 
 }// END class App_Model_Athletes
 

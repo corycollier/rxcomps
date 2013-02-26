@@ -31,6 +31,7 @@
  */
 
 class App_Model_Leaderboard
+    implements Zend_Acl_Resource_Interface
 {
     /**
      *  Message to indicate an exception due to invalid data
@@ -165,5 +166,17 @@ class App_Model_Leaderboard
         return new App_Model_Event;
 
     } // END function _getEventModel
+
+    /**
+     * getResourceId()
+     *
+     * Gets the resource id
+     *
+     * @return string
+     */
+    public function getResourceId ( )
+    {
+        return 'leaderboards';
+    }
 
 } // END class App_Model_Leaderboard

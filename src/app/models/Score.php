@@ -30,7 +30,19 @@
 
 class App_Model_Score
     extends Rx_Model_Abstract
+    implements Zend_Acl_Resource_Interface
 {
+    /**
+     * getResourceId()
+     *
+     * Gets the resource id
+     *
+     * @return string
+     */
+    public function getResourceId ( )
+    {
+        return 'scores';
+    }
 
 }// END class App_Model_Score
 

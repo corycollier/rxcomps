@@ -41,8 +41,9 @@ class App_Plugin_Acl
     {
         $acl = new Zend_Acl;
 
-        $guest = $acl->addRole(new Zend_Acl_Role('guest'));
-        $admin = $acl->addRole(new Zend_Acl_Role('admin'));
+        $guest  = $acl->addRole(new Zend_Acl_Role('guest'));
+        $user   = $acl->addRole(new Zend_Acl_Role('user'), array('guest'));
+        $admin  = $acl->addRole(new Zend_Acl_Role('admin'), array('user'));
 
         $acl->addResource(new Zend_Acl_Resource('index'));
         $acl->addResource(new Zend_Acl_Resource('error'));
@@ -54,6 +55,8 @@ class App_Plugin_Acl
         $acl->addResource(new Zend_Acl_Resource('competitions'));
         $acl->addResource(new Zend_Acl_Resource('leaderboards'));
 
+        $acl->allow('guest', array('index', 'error', 'leaderboards'));
+
         $acl->allow('guest', null, array(
             'index',
             'view',
@@ -62,12 +65,14 @@ class App_Plugin_Acl
             'login',
             'logout',
             'success',
-            'full-screen',
             'list',
             'leaderboards',
         ));
 
-        $acl->allow('admin');
+        $acl->allow('user', null, null, new App_Model_Assertion_Event);
+        $acl->allow('admin', null, null, new App_Model_Assertion_Event);
+
+        // $acl->allow('admin');
 
         Zend_Registry::getInstance()->set('acl', $acl);
     }

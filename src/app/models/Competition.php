@@ -30,6 +30,7 @@
 
 class App_Model_Competition
     extends Rx_Model_Abstract
+    implements Zend_Acl_Resource_Interface
 {
     /**
      * create()
@@ -352,5 +353,17 @@ class App_Model_Competition
         return $athletes;
 
     } // END function getAthletes
+
+    /**
+     * getResourceId()
+     *
+     * Gets the resource id
+     *
+     * @return string
+     */
+    public function getResourceId ( )
+    {
+        return 'competitions';
+    }
 
 }// END class App_Model_Competitions

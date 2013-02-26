@@ -82,7 +82,6 @@ class Rx_Model_Abstract
      */
     public $id;
 
-
     /**
      * __construct()
      *

@@ -102,7 +102,18 @@ CREATE  TABLE IF NOT EXISTS `users` (
   `id` INT NOT NULL AUTO_INCREMENT ,
   `email` VARCHAR(255) NOT NULL ,
   `passwd` VARCHAR(40) NOT NULL ,
+  `role` VARCHAR(40) NOT NULL DEFAULT 'user' ,
   PRIMARY KEY (`id`) ,
   UNIQUE INDEX `email_UNIQUE` (`email` ASC)
+)
+ENGINE = InnoDB;
+
+CREATE TABLE events_users (
+    event_id INT(11) NOT NULL,
+    user_id INT(11) NOT NULL,
+    role VARCHAR(40) NOT NULL default 'user',
+    PRIMARY KEY(`event_id`, `user_id`),
+    CONSTRAINT `fk_events_users_event_id` FOREIGN KEY (`event_id`) REFERENCES `events` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+    CONSTRAINT `fk_events_users_user_id` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 )
 ENGINE = InnoDB;

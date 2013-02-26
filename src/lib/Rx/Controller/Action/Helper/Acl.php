@@ -50,8 +50,18 @@ class Rx_Controller_Action_Helper_Acl
     public function check (Zend_Controller_Request_Http $request)
     {
         $controller = $this->getActionController();
-        $user       = $controller->getModel('User');
-        $isAllowed  = $user->isAllowed($request);
+
+        $controllerName = ucwords(trim($request->getControllerName(), 's'));
+
+        $user   = $this->getModel('User');
+        $model  = $this->getModel($controllerName);
+        $id = $request->getParam('id');
+
+        if ($model && $id) {
+            $model->load($id);
+        }
+
+        $isAllowed  = $user->isAllowed($request, $model);
 
         if (! $isAllowed) {
             $controller->getHelper('FlashMessenger')->addMessage(self::MSG_ACCESS_DENIED);
@@ -63,6 +73,30 @@ class Rx_Controller_Action_Helper_Acl
         }
 
     } // END function request
+
+    /**
+     * getModel()
+     *
+     * Gets a new instance of a model
+     *
+     * @return App_Model_Users
+     */
+    public function getModel ($model)
+    {
+        $class = sprintf('App_Model_%s', $model);
+
+        if (class_exists($class) || $this->getAutoloader()->autoload($class)) {
+            return new $class;
+        }
+
+
+    } // END function getModel
+
+    public function getAutoloader ( )
+    {
+        return Zend_Loader_Autoloader::getInstance();
+    }
+
 
 
 } // END class Rx_Controller_Action_Helper_Acl

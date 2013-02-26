@@ -88,14 +88,13 @@ class App_Plugin_Cache
      */
     public function dispatchLoopShutdown()
     {
+        return;
         if ($this->doNotCache
             || $this->getResponse()->isRedirect()
             || (null === $this->key)
         ) {
             return;
         }
-
-
 
         $this->getCache()->save($this->getResponse(), $this->key);
     }
@@ -112,7 +111,6 @@ class App_Plugin_Cache
         $front = Zend_Controller_Front::getInstance();
         $cacheManager = $front->getParam('bootstrap')->getResource('cachemanager');
         $cache = $cacheManager->getCache('page');
-
 
         return $cache;
 

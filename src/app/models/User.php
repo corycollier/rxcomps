@@ -30,6 +30,7 @@
 
 class App_Model_User
     extends Rx_Model_Abstract
+    implements Zend_Acl_Role_Interface, Zend_Acl_Resource_Interface
 {
     /**
      * Excpetion message to indicate that the login form is invalid
@@ -150,39 +151,55 @@ class App_Model_User
      *
      * @return boolean
      */
-    public function isAllowed ($request)
+    public function isAllowed ($request, $model = null)
     {
         // create local variables for the needed entities
         $acl = $this->getAcl();
-        $role = $this->getRole();
+        $auth = $this->getAuth();
+
+        $data = $auth->getStorage()->read();
+
+        $this->load($data->id);
+
+        $resource = $model ? $model : $request->getControllerName();
 
         return $acl->isAllowed(
-            $role, $request->getControllerName(), $request->getActionName()
+            $this, $resource, $request->getActionName()
         );
 
-    } // END function getRole
+    } // END function isAllowed
 
     /**
-     * getRole()
+     * getRoleId()
      *
      * Returns the role of the user
      *
      * @return string
      */
-    public function getRole ( )
+    public function getRoleId ( )
     {
         $auth = $this->getAuth();
         $role = 'guest';
 
         $data = $auth->getStorage()->read();
 
-        if (@$data->email) {
-            $role = 'admin';
-        }
+        $role = isset($data->role) ? $data->role : $role;
 
         return $role;
 
-    } // END function getRole
+    } // END function getRoleId
+
+    /**
+     * getResourceId()
+     *
+     * Gets the resource id
+     *
+     * @return string
+     */
+    public function getResourceId ( )
+    {
+        return 'users';
+    }
 
     /**
      * edit()
