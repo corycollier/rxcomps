@@ -14,5 +14,11 @@ $(".toggle-scoring-type").on('click', function(event){
         $(".scoring-type-points").addClass('hidden');
     }
 
+});
 
+// since the submit buttons have been changed to links, it's important
+// to make those links work like submit buttons
+$("form .btn a").on('click', function(event){
+    $(this).closest('form').submit(); //.submit();
+    return false;
 });

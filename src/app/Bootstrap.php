@@ -64,6 +64,7 @@ class App_Bootstrap
         $front->registerPlugin(new App_Plugin_Acl);
         $front->registerPlugin(new App_Plugin_Navigation);
         $front->registerPlugin(new App_Plugin_View);
+        $front->registerPlugin(new App_Plugin_Cache);
     }
 
 } // END class Bootstrap

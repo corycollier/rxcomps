@@ -108,6 +108,7 @@ class Rx_View_Helper_FormSelect
         // build the list of options
         $list       = array();
         $links      = array();
+        $linkLabel = '';
         $translator = $this->getTranslator();
         foreach ((array) $options as $opt_value => $opt_label) {
             if (is_array($opt_label)) {
@@ -131,20 +132,21 @@ class Rx_View_Helper_FormSelect
             } else {
                 $list[] = $this->_build($opt_value, $opt_label, $value, $disable);
                 $links[] = $this->_buildLink($opt_value, $opt_label, $value, $disable);
+                if (in_array($opt_value, $value)) {
+                    $linkLabel = $opt_label;
+                }
             }
         }
 
         // add the options to the xhtml and close the select
         $xhtml .= implode("\n    ", $list) . "\n</select>";
 
-        $label = end($value);
-
-        $label = $label ? $label : 'Please Select';
+        $linkLabel = $linkLabel ? $linkLabel : 'Please Select';
 
         $result = '<ul class="picker">'
             . '<li class="picker">'
             . $xhtml
-            . '<a href="#" class="toggle">' . $label . '<span class="caret"></span></a>'
+            . '<a href="#" class="toggle">' . $linkLabel . '<span class="caret"></span></a>'
             . '<ul>' . implode(PHP_EOL, $links) . '</ul>'
             . '</li>'
             . '</ul>';
