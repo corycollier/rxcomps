@@ -13,17 +13,6 @@
  * @since       File available since release 1.0.0
  */
 ?>
-<?php echo $this->actionList(array(
-    $this->htmlAnchor('full screen', array(
-        'controller'=> 'leaderboards',
-        'action' => 'full-screen'
-    )),
-    $this->htmlAnchor('normal view', array(
-        'controller'=> 'leaderboards',
-        'action' => 'view',
-    )),
-)); ?>
-
 Filter By:
 <?php echo $this->scaleFilter($this->request()->getParam('event_id')); ?>
 <?php echo $this->genderFilter($this->request()->getParam('event_id')); ?>
