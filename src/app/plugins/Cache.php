@@ -35,7 +35,7 @@ class App_Plugin_Cache
 /**
      *  @var bool Whether or not to disable caching
      */
-    public $doNotCache = false;
+    public $doNotCache = true;
 
     /**
      * @var Zend_Cache_Frontend
@@ -58,14 +58,23 @@ class App_Plugin_Cache
      */
     public function dispatchLoopStartup(Zend_Controller_Request_Abstract $request)
     {
-        if (!$request->isGet()) {
-            $this->doNotCache = true;
-            return;
-        }
-
         $path = $request->getPathInfo();
 
-        $this->key = md5($path);
+        $cache = $this->getCache();
+
+        $cacheablePaths = $cache->getOption('regexps');
+
+        foreach ($cacheablePaths as $cacheablePath => $options) {
+            $match = preg_match($cacheablePath, $path);
+            if ($match) {
+                if (!$options['cache']) {
+                    continue;
+                }
+                $this->doNotCache = false;
+            }
+        }
+
+        $this->key = 'page__' . md5($path);
         if (false !== ($response = $this->getCache()->load($this->key))) {
             $response->sendResponse();
             exit;
@@ -86,6 +95,8 @@ class App_Plugin_Cache
             return;
         }
 
+
+
         $this->getCache()->save($this->getResponse(), $this->key);
     }
 
@@ -101,6 +112,7 @@ class App_Plugin_Cache
         $front = Zend_Controller_Front::getInstance();
         $cacheManager = $front->getParam('bootstrap')->getResource('cachemanager');
         $cache = $cacheManager->getCache('page');
+
 
         return $cache;
 
