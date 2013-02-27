@@ -46,8 +46,7 @@ class Tests_App_Bootstrap
     {
         $subject = $this->getBuiltMock('App_Bootstrap');
 
-        $this->getMethod('App_Bootstrap', '_initAutoloader')
-            ->invoke($subject);
+        $this->getMethod('App_Bootstrap', '_initAutoloader')->invoke($subject);
 
         $namespaces = Zend_Loader_Autoloader::getInstance()->getRegisteredNamespaces();
 
@@ -115,7 +114,7 @@ class Tests_App_Bootstrap
      */
     public function test__initPlugins ( )
     {
-        // $this->markTestIncomplete("not ready yet");
+        $this->markTestIncomplete("not ready yet");
         $subject = $this->getBuiltMock('App_Bootstrap', array('_bootstrap', 'getResource'));
         $front = $this->getBuiltMock('Zend_Controller_Front', array('registerPlugin'));
 

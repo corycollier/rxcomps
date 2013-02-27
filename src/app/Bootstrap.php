@@ -47,14 +47,11 @@ class App_Bootstrap
             'basePath'  => APPLICATION_PATH,
         ));
 
-        $resourceLoader->addResourceType('assertions', 'models/assertions/', 'Model_Assertion_')
-            // ->addResourceType('dbTable', 'models/DbTable/', 'Model_DbTable_')
-        ;
+        $resourceLoader->addResourceType('assertions', 'models/assertions/', 'Model_Assertion_');
 
         $loader->pushAutoloader($resourceLoader);
 
     } // END function _initAutoloader
-
 
     /**
      * _initControllers()

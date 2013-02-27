@@ -213,23 +213,49 @@ class Tests_Rx_Controller_ActionTest
      * Tests the postDispatch method of the Rx_Controller_Action
      *
      * @covers Rx_Controller_Action::postDispatch
+     * @dataProvider    provide_postDispatch
      */
-    public function test_postDispatch ( )
+    public function test_postDispatch ($expected)
     {
-        $controller = new Rx_Controller_Action(
-            new Zend_Controller_Request_HttpTestCase,
-            new Zend_Controller_Response_HttpTestCase
-        );
+        $controller = $this->getMockBuilder('Rx_Controller_Action')
+            ->setConstructorArgs(array(
+                new Zend_Controller_Request_HttpTestCase,
+                new Zend_Controller_Response_HttpTestCase,
+            ))
+            ->setMethods(array('getHelper'))
+            ->getMock();
+
+        $controller->expects($this->once())
+            ->method('getHelper')
+            ->with($this->equalTo('FlashMessenger'))
+            ->will($this->returnValue($expected));
 
         $controller->view = new Zend_View;
 
         $controller->postDispatch();
 
-        $this->assertInstanceOf(
-            'Zend_Controller_Action_Helper_FlashMessenger',
+        $this->assertSame(
+            $expected,
             $controller->view->flashMessenger
         );
 
+        // $this->view->flashMessenger = $this->getHelper('FlashMessenger');
+
     } // END function test_getModel
+
+    /**
+     * provide_postDispatch()
+     *
+     * Provides data for the postDispatch method of the
+     * Rx_Controller_Action class
+     */
+    public function provide_postDispatch ( )
+    {
+        return array(
+            array('expected value'),
+        );
+
+    } // END function provide_postDispatch
+
 
 } // END class Tests_Rx_Controller_Action

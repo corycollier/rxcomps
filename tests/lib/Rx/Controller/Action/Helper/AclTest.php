@@ -41,25 +41,26 @@ class Tests_Rx_Controller_Action_Helper_AclTest
      * @covers          Rx_Controller_Action_Helper_Acl::check
      * @dataProvider    provide_check
      */
-    public function test_check ($isAllowed)
+    public function test_check ($isAllowed, $controllerName, $id = null)
     {
         // create test subjects
+        $subject         = $this->getBuiltMock('Rx_Controller_Action_Helper_Acl', array(
+            'getActionController', 'getModel',
+        ));
+
         $request        = new Zend_Controller_Request_HttpTestCase;
-        $user           = $this->getBuiltMock('App_Model_User', array(
-            'isAllowed'
-        ));
-        $controller     = $this->getBuiltMock('Rx_Controller_Action', array(
-            'getModel', 'getHelper'
-        ));
-        $helper         = $this->getBuiltMock('Rx_Controller_Action_Helper_Acl', array(
-            'getActionController',
-        ));
+        $user           = $this->getBuiltMock('App_Model_User', array('isAllowed'));
+        $model          = $this->getBuiltMock('Rx_Model_Abstract', array('load'));
+        $controller     = $this->getBuiltMock('Rx_Controller_Action', array('getHelper'));
         $redirectHelper = $this->getBuiltMock('Zend_Controller_Action_Helper_Redirector', array(
             'gotoRoute',
         ));
         $flashHelper    = $this->getBuiltMock('Zend_Controller_Action_Helper_FlashMessenger', array(
             'addMessage',
         ));
+
+        $request->setControllerName($controllerName);
+        $request->setParam('id', $id);
 
         // set expectations
         if (! $isAllowed) {
@@ -85,19 +86,21 @@ class Tests_Rx_Controller_Action_Helper_AclTest
 
         $user->expects($this->once())
             ->method('isAllowed')
-            ->with($this->equalTo($request))
+            ->with($this->equalTo($request), $this->equalTo($model))
             ->will($this->returnValue($isAllowed));
 
-        $controller->expects($this->once())
+        $subject->expects($this->any())
             ->method('getModel')
-            ->with($this->equalTo('User'))
-            ->will($this->returnValue($user));
+            ->will($this->returnValueMap(array(
+                array('User', $user),
+                array(ucwords(trim($request->getControllerName(), 's')), $model),
+            )));
 
-        $helper->expects($this->once())
+        $subject->expects($this->once())
             ->method('getActionController')
             ->will($this->returnValue($controller));
 
-        $result = $helper->check($request);
+        $result = $subject->check($request);
 
     } // END function test_check
 
@@ -110,8 +113,8 @@ class Tests_Rx_Controller_Action_Helper_AclTest
     public function provide_check ( )
     {
         return array(
-            'the check passes'    => array(true),
-            'the check fails'     => array(false),
+            'the check passes'    => array(true, 'checks'),
+            'the check fails'     => array(false, 'checks'),
         );
 
     } // END function provide_check

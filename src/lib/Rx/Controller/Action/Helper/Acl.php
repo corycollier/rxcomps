@@ -55,7 +55,7 @@ class Rx_Controller_Action_Helper_Acl
 
         $user   = $this->getModel('User');
         $model  = $this->getModel($controllerName);
-        $id = $request->getParam('id');
+        $id     = $request->getParam('id');
 
         if ($model && $id) {
             $model->load($id);

@@ -77,7 +77,9 @@ class App_Plugin_Cache
         $this->key = 'page__' . md5($path);
         if (false !== ($response = $this->getCache()->load($this->key))) {
             $response->sendResponse();
-            exit;
+            if (strtolower(PHP_SAPI) != 'cli') {
+                exit;
+            }
         }
     }
 
