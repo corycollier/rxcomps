@@ -186,16 +186,18 @@ class App_Model_Competition
      */
     public function getScores ($scaleId, $gender = 'team')
     {
-        $athletes = $this->getAthletes($scaleId, $gender);
+        // $athletes = $this->getAthletes($scaleId, $gender);
 
-        if (! count($athletes)) {
-            return array();
-        }
+        // if (! count($athletes)) {
+        //     return array();
+        // }
 
-        $scores = array();
-        foreach ($athletes as $athlete) {
-            $scores[] = $this->getAthleteScore($athlete);
-        }
+        // $scores = array();
+        // foreach ($athletes as $athlete) {
+        //     $scores[] = $this->getAthleteScore($athlete);
+        // }
+
+        // var_dump($scores); die;
 
         // echo count($scores), PHP_EOL; die;
 
@@ -207,8 +209,17 @@ class App_Model_Competition
 
 
 
+
         $athleteIds = $this->getAthleteIds($scaleId, $gender);
         $table = $this->getTable('Score');
+
+        $maxScore = $table->fetchRow(
+            $table->select()->from($table, array(
+                new Zend_Db_Expr('max(scores.score) as score')
+            ))
+            ->where(sprintf('competition_id = %d', $this->id))
+        );
+
 
         $scores = $table->fetchAll(
             $table->select(Zend_Db_Table::SELECT_WITH_FROM_PART)
@@ -217,14 +228,17 @@ class App_Model_Competition
                 ->order($this->_getOrder())
         );
 
+        var_dump($scores); die;
+
         if (count($athletes) != count($scores)) {
             foreach ($athletes as $athlete) {
                 foreach ($scores as $score) {
                     if ($athlete->id == $score->athlete_id) {
                         break(2);
                     }
-                }
+                    $scores[] = $maxScore;
 
+                }
             }
         }
 
@@ -236,16 +250,22 @@ class App_Model_Competition
     public function getAthleteScore ($athleteRow)
     {
         $table = $this->getTable('Score');
+        $select = $table->select();
 
         $score = $table->fetchRow(
-            $table->select()
+            $select
                 ->where(sprintf('athlete_id = %d', $athleteRow->id))
+                ->where(sprintf('competition_id = %d', $this->id))
         );
 
-        // if (! $score) {
-        //     var_dump('fuck');
-        //     die;
-        // }
+        if (! $score) {
+            $score = $table->fetchRow(
+                $select->from($table, array(
+                    new Zend_Db_Expr('max(scores.score) as score')
+                ))
+                ->where(sprintf('competition_id = %d', $this->id))
+            );
+        }
 
         return $score;
     }

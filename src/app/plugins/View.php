@@ -38,7 +38,7 @@ class App_Plugin_View
      */
     public function preDispatch (Zend_Controller_Request_Abstract $request)
     {
-        $front = Zend_Controller_Front::getInstance();
+        $front = $this->getFrontController();
         $view = $front->getParam('bootstrap')->getResource('view');
 
         $params = $request->getParams();
@@ -51,5 +51,18 @@ class App_Plugin_View
         $view->title = 'Rx Competition : ' . implode(' : ', $params);
 
     } // END function preDispatch
+
+    /**
+     * getFrontController()
+     *
+     * Gets the front controller instance
+     *
+     * @return Zend_Controller_Front
+     */
+    public function getFrontController ( )
+    {
+        return Zend_Controller_Front::getInstance();
+
+    } // END function getFrontController
 
 } // END class App_Plugin_View

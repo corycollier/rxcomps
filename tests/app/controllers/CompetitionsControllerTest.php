@@ -117,36 +117,32 @@ class CompetitionsControllerTest
      * @covers CompetitionsController::leaderboardsAction
      * @dataProvider provide_leaderboardsAction
      */
-    public function test_leaderboardsAction ($id, $scaleId, $leaderboards = array())
+    public function test_leaderboardsAction ($competitionId, $scaleId, $eventId, $gender, $leaderboards = array())
     {
         $subject = $this->getMockBuilder('CompetitionsController')
             ->setMethods(array('getModel', 'getRequest'))
             ->disableOriginalConstructor()
             ->getMock();
 
-        $request = $this->getMockBuilder('Zend_Controller_Request_Http')
-            ->setMethods(array('getParam'))
-            ->disableOriginalConstructor()
-            ->getMock();
-
-        $model = $this->getMockBuilder('App_Model_Competition')
+        $competitionModel = $this->getMockBuilder('App_Model_Competition')
             ->setMethods(array('getLeaderboards', 'load'))
             ->disableOriginalConstructor()
             ->getMock();
 
-        $request->expects($this->any())
-            ->method('getParam')
-            ->will($this->returnValueMap(array(
-                array('id', $id),
-                array('scale_id', $scaleId),
-            )));
+        $request = new Zend_Controller_Request_HttpTestCase;
+        $request->setParam('id', $competitionId);
+        $request->setParam('scale_id', $scaleId);
+        $request->setParam('event_id', $eventId);
+        $request->setParam('gender', $gender);
 
-        $model->expects($this->once())
-            ->method('getLeaderboards')
-            // ->with($this->equalTo($scaleId))
-            ->will($this->returnValue($leaderboards));
+        if ($gender && $scaleId) {
+            $competitionModel->expects($this->once())
+                ->method('getLeaderboards')
+                // ->with($this->equalTo($scaleId))
+                ->will($this->returnValue($leaderboards));
+        }
 
-        $model->expects($this->once())
+        $competitionModel->expects($this->once())
             ->method('load')
             // ->with($this->equalTo($id))
         ;
@@ -158,7 +154,7 @@ class CompetitionsControllerTest
         $subject->expects($this->once())
             ->method('getModel')
             ->with($this->equalTo('Competition'))
-            ->will($this->returnValue($model));
+            ->will($this->returnValue($competitionModel));
 
         $subject->leaderboardsAction();
 
@@ -175,11 +171,11 @@ class CompetitionsControllerTest
     public function provide_leaderboardsAction ( )
     {
         return array(
-            array(1, 1, array(
+            array(1, 1, 1, 'male', array(
 
             )),
 
-            array(2, 1, array(
+            array(2, 1, 1, 'male', array(
 
             )),
         );

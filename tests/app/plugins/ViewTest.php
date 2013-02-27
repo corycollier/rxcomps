@@ -43,9 +43,37 @@ class Tests_App_Plugin_View
      */
     public function test_preDispatch ($params = array())
     {
-        $subject = new App_Plugin_View;
+        $subject = $this->getMockBuilder('App_Plugin_View')
+            ->setMethods(array('getFrontController'))
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $front = $this->getMockBuilder('Zend_Controller_Front')
+            ->setMethods(array('getParam'))
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $bootstrap = $this->getMockBuilder('App_Bootstrap')
+            ->setMethods(array('getResource'))
+            ->disableOriginalConstructor()
+            ->getMock();
 
         $request = new Zend_Controller_Request_HttpTestCase;
+        $view = new Zend_View;
+
+        $bootstrap->expects($this->once())
+            ->method('getResource')
+            ->with($this->equalTo('view'))
+            ->will($this->returnValue($view));
+
+        $front->expects($this->once())
+            ->method('getParam')
+            ->with($this->equalTo('bootstrap'))
+            ->will($this->returnValue($bootstrap));
+
+        $subject->expects($this->once())
+            ->method('getFrontController')
+            ->will($this->returnValue($front));
 
         $request->setParams($params);
 

@@ -151,13 +151,13 @@ class Tests_App_Model_CompetitionTest
      * @covers          App_Model_Competition::getScores
      * @dataProvider    provide_getScores
      */
-    public function test_getScores ($expected, $scaleId, $id, $order, $athleteIds = array())
+    public function test_getScores ($expected, $scaleId, $id, $order, $gender, $athletes = array(), $athleteIds = array())
     {
         $table  = $this->getBuiltMock('Zend_Db_Table', array(
             'fetchAll', 'select', 'toArray'
         ));
         $subject = $this->getBuiltMock('App_Model_Competition', array(
-            'getTable', 'getAthleteIds', '_getOrder'
+            'getTable', 'getAthleteIds', '_getOrder', 'getAthleteScore', 'getAthletes',
         ));
         $select = $this->getBuiltMock('Zend_Db_Table_Select', array(
             'where', 'order'
@@ -170,7 +170,14 @@ class Tests_App_Model_CompetitionTest
             ->with($this->equalTo($scaleId))
             ->will($this->returnValue($athleteIds));
 
-        if (count($athleteIds)) {
+        $subject->expects($this->once())
+            ->method('getAthletes')
+            ->with($this->equalTo($scaleId), $this->equalTo($gender))
+            ->will($this->returnValue($athletes));
+
+        $subject->expects($this->exactly(count($athletes)))
+            ->method('getAthleteScore');
+
             $select->expects($this->once())
                 ->method('order')
                 ->with($this->equalTo($order))
@@ -205,11 +212,10 @@ class Tests_App_Model_CompetitionTest
             $subject->expects($this->once())
                 ->method('_getOrder')
                 ->will($this->returnValue($order));
-        }
 
-        $result = $subject->getScores($scaleId);
+        $result = $subject->getScores($scaleId, $gender);
 
-        $this->assertEquals($expected, $result);
+        $this->assertEquals($table, $result);
 
     } // END function test_getScores
 
@@ -227,6 +233,8 @@ class Tests_App_Model_CompetitionTest
                 1,
                 1,
                 'order',
+                'male',
+                array(),
                 array(1, 2),
             ),
             'no athleteIds found' => array(
@@ -234,6 +242,8 @@ class Tests_App_Model_CompetitionTest
                 1,
                 1,
                 'order',
+                'male',
+                array(),
             ),
 
 
@@ -526,5 +536,98 @@ class Tests_App_Model_CompetitionTest
         );
 
     } // END function provide_getLeaderboards
+
+    /**
+     * test_getAthleteScore()
+     *
+     * Tests the getAthleteScore method of the App_Model_Competition class
+     *
+     * @covers App_Model_Competition::getAthleteScore
+     * @dataProvider provide_getAthleteScore
+     */
+    public function test_getAthleteScore ($expected, $score, $athlete)
+    {
+        /*
+
+        $table = $this->getTable('Score');
+
+        $score = $table->fetchRow(
+            $table->select()
+                ->where(sprintf('athlete_id = %d', $athleteRow->id))
+        );
+
+        if (! $score) {
+            var_dump('fuck');
+            die;
+        }
+        */
+
+        $subject = $this->getBuiltMock('App_Model_Competition', array('getTable'));
+        $select = $this->getBuiltMock('Zend_Db_Table_Select', array('where', 'from'));
+        $table = $this->getBuiltMock('App_Model_DbTable_Score', array(
+            'fetchRow',
+            'select',
+        ));
+
+        $select->expects($this->once())
+            ->method('where')
+            ->with($this->equalTo(sprintf('athlete_id = %d', $athlete->id)))
+            ->will($this->returnSelf());
+
+        $table->expects($this->once())
+            ->method('select')
+            ->will($this->returnValue($select));
+
+        $table->expects($this->any())
+            ->method('fetchRow')
+            // ->with($this->equalTo($select))
+            ->will($this->onConsecutiveCalls($score, $expected));
+
+        $subject->expects($this->once())
+            ->method('getTable')
+            ->with($this->equalTo('Score'))
+            ->will($this->returnValue($table));
+
+        $result = $subject->getAthleteScore($athlete);
+
+        $this->assertEquals($expected, $result);
+
+    } // END function test_getAthleteScore
+
+    /**
+     * provide_getAthleteScore()
+     *
+     * Provides data to use for testing the getAthleteScore method of
+     * the App_Model_Competition class
+     *
+     * @return array
+     */
+    public function provide_getAthleteScore ( )
+    {
+        return array(
+            'simple test' => array(
+                'expected' => (object)array(
+                    'score' => 100,
+                ),
+                'score' => (object)array(
+                    'score' => 100,
+                ),
+                'athlete' => (object)array(
+                    'id' => 1,
+                ),
+            ),
+
+            'no score found' => array(
+                'expected' => (object)array(
+                    'score' => 100,
+                ),
+                'score' => null,
+                'athlete' => (object)array(
+                    'id' => 1,
+                ),
+            )
+        );
+
+    } // END function provide_getAthleteScore
 
 } // END class Tests_App_Model_CompetitionTest
