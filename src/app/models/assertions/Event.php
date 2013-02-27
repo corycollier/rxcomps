@@ -58,12 +58,19 @@ class App_Model_Assertion_Event
 
         $results = $role->row->findDependentRowset('App_Model_DbTable_EventsUsers')->toArray();
 
+        // var_dump($results);
+        // var_dump($role, $resource); die;
+
+        // if the model is loaded ...
         if ($resource->row) {
 
             $eventId = $resource->id;
             if ($resource->getResourceId() != 'events') {
                 $eventId = $resource->row->findParentRow('App_Model_DbTable_Event')->id;
             }
+
+            // var_dump($eventId);
+            // var_dump($results); die;
 
             foreach ($results as $result) {
                 if ($eventId == $result['event_id']) {
@@ -95,7 +102,7 @@ class App_Model_Assertion_Event
         );
 
         $rights['admin'] = array(
-            'edit', 'delete', 'create',
+            'view', 'list', 'edit', 'delete', 'create',
         );
 
         if (! isset($rights[$role])) {

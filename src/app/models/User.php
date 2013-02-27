@@ -159,7 +159,9 @@ class App_Model_User
 
         $data = $auth->getStorage()->read();
 
-        $this->load($data->id);
+        if ($data) {
+            $this->load($data->id);
+        }
 
         $resource = $model ? $model : $request->getControllerName();
 

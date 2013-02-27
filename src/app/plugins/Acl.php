@@ -72,7 +72,7 @@ class App_Plugin_Acl
         $acl->allow('user', null, null, new App_Model_Assertion_Event);
         $acl->allow('admin', null, null, new App_Model_Assertion_Event);
 
-        // $acl->allow('admin');
+        $acl->allow('admin');
 
         Zend_Registry::getInstance()->set('acl', $acl);
     }
