@@ -128,14 +128,16 @@ class Tests_App_View_Helper_AtheleteItem
     public function provide__getTitle ( )
     {
         return array(
-            array('<h3>html-anchor</h3>', 'html-anchor', (object)array(
+            array('<h3>html-anchor <span class="alt">()</span></h3>', 'html-anchor', (object)array(
                 'id'    => 1,
                 'name'  => 'Athlete Name',
+                'gym'   => null,
             )),
 
-            array('<h3>another html-anchor</h3>', 'another html-anchor', (object)array(
+            array('<h3>another html-anchor <span class="alt">(some gym)</span></h3>', 'another html-anchor', (object)array(
                 'id'    => 1,
                 'name'  => 'Athlete Name Does Not Matter Here',
+                'gym'   => 'some gym',
             )),
         );
 
@@ -211,11 +213,11 @@ class Tests_App_View_Helper_AtheleteItem
         // $expected, $athlete, $hasIdentity, $editLink = null, $deleteLink = null
         return array(
             'no identity' => array(
-                '', (object)array('name' => 'name', 'id' => 1), false
+                '', (object)array('name' => 'name', 'id' => 1, 'gym' => ''), false
             ),
 
             'has identity' => array(
-                '', (object)array('name' => 'name', 'id' => 1), true, 'edit link', 'delete link'
+                '', (object)array('name' => 'name', 'id' => 1, 'gym' => ''), true, 'edit link', 'delete link'
             ),
 
         );

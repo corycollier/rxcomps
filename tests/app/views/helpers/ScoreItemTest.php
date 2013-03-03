@@ -92,10 +92,15 @@ class Tests_App_View_Helper_ScoreItem
      * @dataProvider    provide__getTitle
      */
     public function test__getTitle ($expected,
-        $scoreLink, $athleteLink, $competitionLink,
-        $scoreValue, $scoreId,
-        $athleteName, $athleteId,
-        $competitionName, $competitionId)
+        $scoreLink,
+        $athleteLink,
+        $competitionLink,
+        $scoreValue,
+        $scoreId,
+        $athleteName,
+        $athleteId,
+        $competitionName,
+        $competitionId)
     {
         $subject = $this->getBuiltMock('App_View_Helper_ScoreItem');
         $row    = $this->getBuiltMock('Zend_Db_Table_Row', array('findParentRow'));
@@ -125,6 +130,7 @@ class Tests_App_View_Helper_ScoreItem
             )));
 
         $scoreParams = array(
+            'controller'=> 'scores',
             'action'    => 'view',
             'id'        => $scoreId,
         );
@@ -141,7 +147,6 @@ class Tests_App_View_Helper_ScoreItem
             'id'        => $competitionId,
         );
 
-
         $view->expects($this->any())
             ->method('htmlAnchor')
             ->will($this->returnValueMap(array(
@@ -149,7 +154,6 @@ class Tests_App_View_Helper_ScoreItem
                 array($athleteName, $athleteParams, $athleteLink),
                 array($competitionName, $competitionParams, $competitionLink),
             )));
-
 
         $subject->view = $view;
 
@@ -169,12 +173,22 @@ class Tests_App_View_Helper_ScoreItem
      */
     public function provide__getTitle ( )
     {
+        /**
+        $expected,
+        $scoreLink,
+        $athleteLink,
+        $competitionLink,
+        $scoreValue,
+        $scoreId,
+        $athleteName,
+        $athleteId,
+        $competitionName,
+        $competitionId
+         */
         return array(
             array(
-                implode('', array(
-                    '<h3>score-link</h3>',
-                    '<p>Performed by: athlete-link for the event: competition-link</p>',
-                )),
+                '<h3>score-link</h3>'
+                    . '<p>Performed by: athlete-link for the event: competition-link</p>',
                 'score-link',
                 'athlete-link',
                 'competition-link',
@@ -187,11 +201,9 @@ class Tests_App_View_Helper_ScoreItem
             ),
 
             array(
-                implode('', array(
-                    '<h3>another Score-link</h3>',
-                    '<p>Performed by: another athlete-link for the event: ',
-                    'another competition-link</p>',
-                )),
+                '<h3>another Score-link</h3>'
+                    . '<p>Performed by: another athlete-link for the event: '
+                    . 'another competition-link</p>',
                 'another score-link',
                 'another athlete-link',
                 'another competition-link',

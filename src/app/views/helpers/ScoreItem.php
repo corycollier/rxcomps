@@ -70,7 +70,7 @@ class App_View_Helper_ScoreItem
         }
 
         $title = sprintf('<h3>%s</h3>', $view->htmlAnchor($score->score, array(
-            'controller'    => 'scores',
+            'controller'=> 'scores',
             'action'    => 'view',
             'id'        => $score->id,
         )));
