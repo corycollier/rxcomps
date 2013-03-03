@@ -244,29 +244,6 @@ class App_Model_Competition
 
     } // END function getWorstScore
 
-    public function getAthleteScore ($athleteRow)
-    {
-        $table = $this->getTable('Score');
-        $select = $table->select();
-
-        $score = $table->fetchRow(
-            $select
-                ->where(sprintf('athlete_id = %d', $athleteRow->id))
-                ->where(sprintf('competition_id = %d', $this->id))
-        );
-
-        if (! $score) {
-            $score = $table->fetchRow(
-                $select->from($table, array(
-                    new Zend_Db_Expr('max(scores.score) as score')
-                ))
-                ->where(sprintf('competition_id = %d', $this->id))
-            );
-        }
-
-        return $score;
-    }
-
     /**
      * getPoints()
      *

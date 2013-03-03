@@ -68,7 +68,6 @@ class App_Model_Leaderboard
             $results[$competition->id] = $competition->getLeaderboards($scaleId, $gender);
         }
 
-
         $athletes = array();
         foreach ($results as $competitionId => $competitionResults) {
             foreach ($competitionResults as $athleteId => $athleteResults) {

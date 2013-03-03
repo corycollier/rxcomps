@@ -100,6 +100,7 @@ class Tests_App_View_Helper_EventItem
             ->with(
                 $this->equalTo(@$event->name),
                 $this->equalTo(array(
+                    'controller' => 'events',
                     'action'    => 'view',
                     'id'        => @$event->id,
                 ))
@@ -166,10 +167,12 @@ class Tests_App_View_Helper_EventItem
                 ->method('htmlAnchor')
                 ->will($this->returnValueMap(array(
                     array('Edit', array(
+                        'controller' => 'events',
                         'action' => 'edit',
                         'id' => @$event->id
                     ), $editLink),
                     array('Delete', array(
+                        'controller' => 'events',
                         'action' => 'delete',
                         'id' => @$event->id
                     ), $deleteLink),

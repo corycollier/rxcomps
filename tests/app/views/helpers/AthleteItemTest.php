@@ -102,6 +102,7 @@ class Tests_App_View_Helper_AtheleteItem
             ->with(
                 $this->equalTo(@$athlete->name),
                 $this->equalTo(array(
+                    'controller' => 'athletes',
                     'action'    => 'view',
                     'id'        => @$athlete->id,
                 ))
@@ -168,10 +169,12 @@ class Tests_App_View_Helper_AtheleteItem
                 ->method('htmlAnchor')
                 ->will($this->returnValueMap(array(
                     array('Edit', array(
+                        'controller' => 'athletes',
                         'action' => 'edit',
                         'id' => @$athlete->id
                     ), $editLink),
                     array('Delete', array(
+                        'controller' => 'athletes',
                         'action' => 'delete',
                         'id' => @$athlete->id
                     ), $deleteLink),
