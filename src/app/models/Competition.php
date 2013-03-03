@@ -159,13 +159,13 @@ class App_Model_Competition
         $rankValue  = 1;
 
         foreach ($scores as $i => $score) {
-            if ($score->score != $scoreValue) {
-                $scoreValue = $score->score;
+            if ($score['score'] != $scoreValue) {
+                $scoreValue = $score['score'];
                 $pointValue = $points[$i];
                 $rankValue = $i + 1;
             }
 
-            $results[$score->athlete_id] = array_merge($score->toArray(), array(
+            $results[$score['athlete_id']] = array_merge($score, array(
                 'points'    => (float)$pointValue,
                 'rank'      => (int)$rankValue,
                 'goal'      => $goal,
@@ -186,33 +186,53 @@ class App_Model_Competition
      */
     public function getScores ($scaleId, $gender = 'team')
     {
-        // $athletes = $this->getAthletes($scaleId, $gender);
-
-        // if (! count($athletes)) {
-        //     return array();
-        // }
-
-        // $scores = array();
-        // foreach ($athletes as $athlete) {
-        //     $scores[] = $this->getAthleteScore($athlete);
-        // }
-
-        // var_dump($scores); die;
-
-        // echo count($scores), PHP_EOL; die;
-
-        // var_dump('miss'); die;
-
-        // print_r($scores);
-
-        // die;
-
-
-
-
         $athleteIds = $this->getAthleteIds($scaleId, $gender);
         $table = $this->getTable('Score');
 
+        $scores = $table->fetchAll(
+            $table->select(Zend_Db_Table::SELECT_WITH_FROM_PART)
+                ->where(sprintf("scores.competition_id = '%d'", $this->id))
+                ->where('scores.athlete_id IN (?)', $athleteIds)
+                ->order($this->_getOrder())
+        )->toArray();
+
+        $worstScore = $this->getWorstScore();
+
+        if (count($athleteIds) != count($scores)) {
+            foreach ($athleteIds as $athleteId) {
+                $found = false;
+                foreach ($scores as $score) {
+                    if ($athleteId == $score['athlete_id']) {
+                        $found = true;
+                    }
+
+                }
+
+                if (! $found) {
+                    $scores[] = array_merge($worstScore, array(
+                        'athlete_id' => $athleteId,
+                        'competition_id' => $this->id,
+                    ));
+
+                }
+
+            }
+        }
+
+        return $scores;
+
+    } // END function getScores
+
+    /**
+     * getWorstScore()
+     *
+     * Returns the worst score for the event
+     *
+     * @return Zend_Db_Table_Row a row object representing the worst score
+     */
+    public function getWorstScore ( )
+    {
+        $table = $this->getTable('Score');
         $maxScore = $table->fetchRow(
             $table->select()->from($table, array(
                 new Zend_Db_Expr('max(scores.score) as score')
@@ -220,32 +240,9 @@ class App_Model_Competition
             ->where(sprintf('competition_id = %d', $this->id))
         );
 
+        return $maxScore->toArray();
 
-        $scores = $table->fetchAll(
-            $table->select(Zend_Db_Table::SELECT_WITH_FROM_PART)
-                ->where(sprintf("scores.competition_id = '%d'", $this->id))
-                ->where('scores.athlete_id IN (?)', $athleteIds)
-                ->order($this->_getOrder())
-        );
-
-        var_dump($scores); die;
-
-        if (count($athletes) != count($scores)) {
-            foreach ($athletes as $athlete) {
-                foreach ($scores as $score) {
-                    if ($athlete->id == $score->athlete_id) {
-                        break(2);
-                    }
-                    $scores[] = $maxScore;
-
-                }
-            }
-        }
-
-
-        return $scores;
-
-    } // END function getScores
+    } // END function getWorstScore
 
     public function getAthleteScore ($athleteRow)
     {

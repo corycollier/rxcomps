@@ -182,7 +182,7 @@ class Tests_App_View_Helper_AtheleteItem
                 ->with(
                     $this->equalTo(array($editLink, $deleteLink)),
                     $this->equalTo(false),
-                    $this->equalTo(array('class' => 'actions')),
+                    $this->equalTo(array('class' => 'subnav')),
                     $this->equalTo(false)
                 )
                 ->will($this->returnValue($expected));

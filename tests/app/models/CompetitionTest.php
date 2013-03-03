@@ -151,17 +151,18 @@ class Tests_App_Model_CompetitionTest
      * @covers          App_Model_Competition::getScores
      * @dataProvider    provide_getScores
      */
-    public function test_getScores ($expected, $scaleId, $id, $order, $gender, $athletes = array(), $athleteIds = array())
+    public function test_getScores ($expected, $scaleId, $id, $order, $gender, $athleteIds = array())
     {
         $table  = $this->getBuiltMock('Zend_Db_Table', array(
             'fetchAll', 'select', 'toArray'
         ));
         $subject = $this->getBuiltMock('App_Model_Competition', array(
-            'getTable', 'getAthleteIds', '_getOrder', 'getAthleteScore', 'getAthletes',
+            'getTable', 'getAthleteIds', '_getOrder', 'getAthleteScore', 'getWorstScore'
         ));
         $select = $this->getBuiltMock('Zend_Db_Table_Select', array(
             'where', 'order'
         ));
+        $rowset = $this->getBuiltMock('Zend_Db_Table_Rowset', array('toArray'));
 
         $subject->id = $id;
 
@@ -170,48 +171,40 @@ class Tests_App_Model_CompetitionTest
             ->with($this->equalTo($scaleId))
             ->will($this->returnValue($athleteIds));
 
+        $select->expects($this->once())
+            ->method('order')
+            ->with($this->equalTo($order))
+            ->will($this->returnSelf());
+
+        $select->expects($this->any())
+            ->method('where')
+            ->will($this->returnValueMap(array(
+                array(sprintf("scores.competition_id = '%d'", $id), $select),
+                array('scores.athlete_id IN (?)', $athleteIds, $select),
+            )));
+
+        $rowset->expects($this->once())
+            ->method('toArray')
+            ->will($this->returnValue($expected));
+
+        $table->expects($this->once())
+            ->method('select')
+            ->with($this->equalTo(Zend_Db_Table::SELECT_WITH_FROM_PART))
+            ->will($this->returnValue($select));
+
+        $table->expects($this->once())
+            ->method('fetchAll')
+            ->with($this->equalTo($select))
+            ->will($this->returnValue($rowset));
+
         $subject->expects($this->once())
-            ->method('getAthletes')
-            ->with($this->equalTo($scaleId), $this->equalTo($gender))
-            ->will($this->returnValue($athletes));
+            ->method('getTable')
+            ->with($this->equalTo('Score'))
+            ->will($this->returnValue($table));
 
-        $subject->expects($this->exactly(count($athletes)))
-            ->method('getAthleteScore');
-
-            $select->expects($this->once())
-                ->method('order')
-                ->with($this->equalTo($order))
-                ->will($this->returnSelf());
-
-            $select->expects($this->any())
-                ->method('where')
-                ->will($this->returnValueMap(array(
-                    array(sprintf("scores.competition_id = '%d'", $id), $select),
-                    array('scores.athlete_id IN (?)', $athleteIds, $select),
-                )));
-
-            $table->expects($this->once())
-                ->method('select')
-                ->with($this->equalTo(Zend_Db_Table::SELECT_WITH_FROM_PART))
-                ->will($this->returnValue($select));
-
-            $table->expects($this->once())
-                ->method('fetchAll')
-                ->with($this->equalTo($select))
-                ->will($this->returnSelf());
-
-            $table->expects($this->once())
-                ->method('toArray')
-                ->will($this->returnValue($expected));
-
-            $subject->expects($this->once())
-                ->method('getTable')
-                ->with($this->equalTo('Score'))
-                ->will($this->returnValue($table));
-
-            $subject->expects($this->once())
-                ->method('_getOrder')
-                ->will($this->returnValue($order));
+        $subject->expects($this->once())
+            ->method('_getOrder')
+            ->will($this->returnValue($order));
 
         $result = $subject->getScores($scaleId, $gender);
 
@@ -234,7 +227,6 @@ class Tests_App_Model_CompetitionTest
                 1,
                 'order',
                 'male',
-                array(),
                 array(1, 2),
             ),
             'no athleteIds found' => array(
@@ -243,7 +235,7 @@ class Tests_App_Model_CompetitionTest
                 1,
                 'order',
                 'male',
-                array(),
+                null,
             ),
 
 

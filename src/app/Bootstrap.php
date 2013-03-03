@@ -66,6 +66,11 @@ class App_Bootstrap
 
     } // END function _initControllers
 
+    /**
+     * _initPlugins()
+     *
+     * Initialize plugins to the front controller
+     */
     protected function _initPlugins ( )
     {
         $this->bootstrap('frontcontroller');
@@ -74,6 +79,18 @@ class App_Bootstrap
         $front->registerPlugin(new App_Plugin_Navigation);
         $front->registerPlugin(new App_Plugin_View);
         $front->registerPlugin(new App_Plugin_Cache);
+    }
+
+    /**
+     * _initAcl()
+     *
+     * Initialize the ACL model in the registry. Plugins will do the work
+     * of updating it to be useful
+     */
+    protected function _initAcl ( )
+    {
+        $acl = new Zend_Acl;
+        Zend_Registry::set('acl', $acl);
     }
 
 } // END class Bootstrap

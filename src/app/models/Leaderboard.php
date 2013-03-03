@@ -38,6 +38,11 @@ class App_Model_Leaderboard
      */
     const EXCEPTION_INVALID_DATA = 'Invalid Data Exception. Missing %s';
 
+    public function load ( )
+    {
+
+    }
+
     /**
      * event()
      *
@@ -47,7 +52,7 @@ class App_Model_Leaderboard
      * @param integer $eventId
      * @return array
      */
-    public function load ($eventId, $scaleId, $gender = 'team', $competitionFilters = '')
+    public function populate ($eventId, $scaleId, $gender = 'team', $competitionFilters = '')
     {
         $event = $this->_getEventModel();
         $event->load($eventId);
@@ -109,7 +114,7 @@ class App_Model_Leaderboard
             'score' => $data['score'],
             'rank'  => $data['rank'],
             'points' => $data['points'],
-            'score_id' => $data['id'],
+            'score_id' => @$data['id'],
         );
 
         unset($athletes[$id]['competition_id']);

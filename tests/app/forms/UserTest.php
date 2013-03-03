@@ -53,10 +53,6 @@ class Tests_App_Form_User
         $this->assertInstanceOf('Zend_Form_Element_Password', $passwd);
         $this->assertInstanceOf('Zend_Form_Element_Submit', $login);
 
-        $this->assertEquals('Email', $email->getLabel());
-        $this->assertEquals('Password', $passwd->getLabel());
-        $this->assertEquals('Login', $login->getLabel());
-
     } // END function test_init
 
     /**

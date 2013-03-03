@@ -65,8 +65,11 @@ class CompetitionsController
         $items = array();
 
         $model->load($request->getParam('id'));
-        if ($gender && $scaleId) {
+
+        try {
             $items = $model->getLeaderboards($scaleId, $gender);
+        } catch (Zend_Exception $exception) {
+            // nothing to see here
         }
 
         $this->view->model = $model;

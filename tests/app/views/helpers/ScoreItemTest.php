@@ -75,7 +75,7 @@ class Tests_App_View_Helper_ScoreItem
         return array(
             array(
                 '<div class="score-item">title</div>',
-                (object)array('id' => 1, 'name' => 'value'),
+                (object)array('id' => 1, 'name' => 'value', 'gaol' => 'time'),
                 'title',
             ),
         );
@@ -110,6 +110,7 @@ class Tests_App_View_Helper_ScoreItem
         $competition = (object)array(
             'name'  => $competitionName,
             'id'    => $competitionId,
+            'goal' => null,
         );
 
 
@@ -248,7 +249,7 @@ class Tests_App_View_Helper_ScoreItem
                 ->with(
                     $this->equalTo(array($editLink, $deleteLink)),
                     $this->equalTo(false),
-                    $this->equalTo(array('class' => 'actions')),
+                    $this->equalTo(array('class' => 'subnav')),
                     $this->equalTo(false)
                 )
                 ->will($this->returnValue($expected));

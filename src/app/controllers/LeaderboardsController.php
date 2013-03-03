@@ -82,40 +82,36 @@ class LeaderboardsController
 
         $items = array();
 
-        if ($eventId && $scaleId) {
-            $items = $leaderboards->load($eventId, $scaleId, $gender, $filters);
+        try {
+            $items = $leaderboards->populate($eventId, $scaleId, $gender, $filters);
+        } catch (Zend_Exception $exception) {
+            // nothing to see here
         }
 
         $eventsTable = $this->getTable('Event');
         $scalesTable = $this->getTable('Scale');
 
-        $this->view->event = $eventsTable->fetchRow(
-            $eventsTable->select()->where(sprintf('id = %d', $eventId))
-        )->toArray();
+        if ($eventId) {
+            $this->view->event = $eventsTable->fetchRow(
+                $eventsTable->select()->where(sprintf('id = %d', $eventId))
+            )->toArray();
 
-        $scale = $scalesTable->fetchRow(
-            $scalesTable->select()->where(sprintf('id = %d', $scaleId))
-        );
-
-        if ($scale){
-            $this->view->scale = $scale->toArray();
         }
+
+        if ($scaleId) {
+            $scale = $scalesTable->fetchRow(
+                $scalesTable->select()->where(sprintf('id = %d', $scaleId))
+            );
+
+            if ($scale){
+                $this->view->scale = $scale->toArray();
+            }
+        }
+
 
         $this->view->items = $items;
 
     } // END function viewAction
-
-    /**
-     * fullScreenAction()
-     *
-     * Allows for viewing of the leaderboards on a full screen
-     */
-    public function fullScreenAction ( )
-    {
-        $this->getHelper('Layout')->getLayoutInstance()->setLayout('full-screen');
-        $this->_forward('view');
-
-    } // END function fullScreenAction
 
 
 } // END class App_Controller_className

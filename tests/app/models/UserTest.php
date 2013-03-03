@@ -333,30 +333,55 @@ class Tests_App_Model_UserTest
             'action'        => $action,
         ));
 
+        $auth = $this->getMockBuilder('Zend_Auth')
+            ->setMethods(array('getStorage'))
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $authStorage = $this->getMockBuilder('Zend_Auth_Storage_Session')
+            ->setMethods(array('read'))
+            ->disableOriginalConstructor()
+            ->getMock();
+
         $acl = $this->getMockBuilder('Zend_Acl')
             ->setMethods(array('isAllowed'))
             ->disableOriginalConstructor()
             ->getMock();
 
-        $user = $this->getMockBuilder('App_Model_User')
-            ->setMethods(array('getRole', 'getAcl'))
+        $subject = $this->getMockBuilder('App_Model_User')
+            ->setMethods(array('getAuth', 'getAcl', 'getTable', 'load'))
             ->disableOriginalConstructor()
             ->getMock();
 
+        $authStorage->expects($this->once())
+            ->method('read')
+            ->will($this->returnValue((object)array(
+                'id'    => 1,
+                'role'  => $role,
+            )));
+
+        $auth->expects($this->once())
+            ->method('getStorage')
+            ->will($this->returnValue($authStorage));
+
         $acl->expects($this->once())
             ->method('isAllowed')
-            ->with($this->equalTo($role), $this->equalTo($controller), $this->equalTo($action))
+            ->with($this->equalTo($subject), $this->equalTo($controller), $this->equalTo($action))
             ->will($this->returnValue($expected));
 
-        $user->expects($this->once())
-            ->method('getRole')
-            ->will($this->returnValue($role));
+        $subject->expects($this->once())
+            ->method('load')
+            ->with($this->equalTo(1));
 
-        $user->expects($this->once())
+        $subject->expects($this->once())
+            ->method('getAuth')
+            ->will($this->returnValue($auth));
+
+        $subject->expects($this->once())
             ->method('getAcl')
             ->will($this->returnValue($acl));
 
-        $result = $user->isAllowed($request);
+        $result = $subject->isAllowed($request);
 
         $this->assertEquals($expected, $result);
 
@@ -384,14 +409,14 @@ class Tests_App_Model_UserTest
     } // END function provide_isAllowed
 
     /**
-     * test_getRole()
+     * test_getRoleId()
      *
-     * Tests the getRole of the App_Model_User
+     * Tests the getRoleId of the App_Model_User
      *
-     * @covers          App_Model_User::getRole
-     * @dataProvider    provide_getRole
+     * @covers          App_Model_User::getRoleId
+     * @dataProvider    provide_getRoleId
      */
-    public function test_getRole ($expected, $data)
+    public function test_getRoleId ($expected, $data)
     {
         $storage = $this->getMockBuilder('Zend_Auth_Storage_Session')
             ->setMethods(array('read'))
@@ -420,19 +445,19 @@ class Tests_App_Model_UserTest
             ->method('getAuth')
             ->will($this->returnValue($auth));
 
-        $result = $user->getRole();
+        $result = $user->getRoleId();
 
         $this->assertEquals($expected, $result);
 
     } // END function test_getRole
 
     /**
-     * provide_getRole()
+     * provide_getRoleId()
      *
-     * Provides data for the getRole method of the
+     * Provides data for the getRoleId method of the
      * App_Model_User class
      */
-    public function provide_getRole ( )
+    public function provide_getRoleId ( )
     {
         return array(
             'no email set, expect guest role' => array(
@@ -442,16 +467,25 @@ class Tests_App_Model_UserTest
                 ),
             ),
 
-            'email set, expect admin role' => array(
-                'admin',
+            'email set, expect guest role' => array(
+                'guest',
                 (object)array(
                     'data'  => 'values',
                     'email' => 'values',
                 ),
             ),
+
+            'role set, expect role' => array(
+                'user',
+                (object)array(
+                    'data'  => 'values',
+                    'email' => 'values',
+                    'role'  => 'user',
+                ),
+            ),
         );
 
-    } // END function provide_getRole
+    } // END function provide_getRoleId
 
     /**
      * test_edit()

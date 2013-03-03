@@ -84,11 +84,12 @@ class Tests_App_Controller_LeaderboardsControllerTest
     public function test_dispatchViewAction ( )
     {
         $params = array(
-            'action'            => 'view',
-            'controller'        => 'leaderboards',
-            'module'            => 'default',
-            'event_id'          => 1,
-            'scale_id'          => 1,
+            'action'        => 'view',
+            'controller'    => 'leaderboards',
+            'module'        => 'default',
+            'event_id'      => 1,
+            'scale_id'      => 1,
+            'gender'        => 'male'
         );
 
         $urlParams = $this->urlizeOptions($params);
@@ -101,96 +102,5 @@ class Tests_App_Controller_LeaderboardsControllerTest
         $this->assertAction($urlParams['action']);
 
     } // END function test_dispatchViewAction
-
-    /**
-     * test_fullScreenAction()
-     *
-     * Tests the fullScreenAction method of the LeaderboardsController class
-     *
-     * @covers LeaderboardsController::fullScreenAction
-     */
-    public function test_fullScreenAction ( )
-    {
-        // $this->markTestIncomplete('need to figure out the issue with _forward');
-        $subject = $this->getMockBuilder('LeaderboardsController')
-            ->setMethods(array('getHelper', 'getRequest'))
-            ->disableOriginalConstructor()
-            ->getMock();
-
-        $helper = $this->getMockBuilder('Zend_Layout_Controller_Action_Helper_Layout')
-            ->setMethods(array('getLayoutInstance'))
-            ->disableOriginalConstructor()
-            ->getMock();
-
-        $layout = $this->getMockBuilder('Zend_Layout')
-            ->setMethods(array('setLayout'))
-            ->disableOriginalConstructor()
-            ->getMock();
-
-        $layout->expects($this->once())
-            ->method('setLayout')
-            ->with($this->equalTo('full-screen'));
-
-        $helper->expects($this->once())
-            ->method('getLayoutInstance')
-            ->will($this->returnValue($layout));
-
-        $subject->expects($this->once())
-            ->method('getHelper')
-            ->with($this->equalTo('Layout'))
-            ->will($this->returnValue($helper));
-
-        $subject->expects($this->once())
-            ->method('getRequest')
-            ->will($this->returnValue(new Zend_Controller_Request_HttpTestCase));
-
-        $subject->fullScreenAction();
-
-    } // END function test_fullScreenAction
-
-    /**
-     * test_dispatchFullScreenAction()
-     *
-     * Tests the fullScreenAction method of the LeaderboardsController class
-     *
-     * @covers LeaderboardsController::fullScreenAction
-     * @dataProvider provide_dispatchFullScreenAction
-     */
-    public function test_dispatchFullScreenAction ( )
-    {
-        $params = array(
-            'action'            => 'full-screen',
-            'controller'        => 'leaderboards',
-            'module'            => 'default',
-            'event_id'          => 1,
-            'scale_id'          => 1,
-        );
-
-        $urlParams = $this->urlizeOptions($params);
-        $url = $this->url($urlParams);
-        $this->dispatch($url);
-
-        // assertions
-        $this->assertModule($urlParams['module']);
-        $this->assertController($urlParams['controller']);
-        $this->assertAction('view');
-
-    } // END function test_dispatchFullScreenAction
-
-    /**
-     * provide_dispatchFullScreenAction()
-     *
-     * Provides data to use for testing the fullScreenAction method of
-     * the LeaderboardsController class
-     *
-     * @return array
-     */
-    public function provide_dispatchFullScreenAction ( )
-    {
-        return array(
-            array(),
-        );
-
-    } // END function provide_dispatchFullScreenAction
 
 } // END class Tests_App_Controller_LeaderboardsControllerTest
