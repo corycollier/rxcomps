@@ -115,8 +115,64 @@ class Tests_Rx_Controller_Action_Helper_AclTest
         return array(
             'the check passes'    => array(true, 'checks'),
             'the check fails'     => array(false, 'checks'),
+            'the check passes, model id'     => array(false, 'checks', 1),
         );
 
     } // END function provide_check
+
+    /**
+     * test_getModel()
+     *
+     * Tests the getModel of the Rx_Controller_Action_Helper_Acl
+     *
+     * @covers          Rx_Controller_Action_Helper_Acl::getModel
+     * @dataProvider    provide_getModel
+     */
+    public function test_getModel ($expected, $modelName)
+    {
+        $subject = new Rx_Controller_Action_Helper_Acl;
+
+        $result = $subject->getModel($modelName);
+
+        if ($expected) {
+            $this->assertInstanceOf($expected, $result);
+        } else {
+            $this->assertNull($result);
+        }
+
+
+    } // END function test_getModel
+
+    /**
+     * provide_getModel()
+     *
+     * Provides data for the getModel method of the
+     * Rx_Controller_Action_Helper_Acl class
+     */
+    public function provide_getModel ( )
+    {
+        return array(
+            array('App_Model_User', 'User'),
+        );
+
+    } // END function provide_getModel
+
+    /**
+     * test_getAutoloader()
+     *
+     * Tests the getAutoloader of the Rx_Controller_Action_Helper_Acl
+     *
+     * @covers          Rx_Controller_Action_Helper_Acl::getAutoloader
+     */
+    public function test_getAutoloader ( )
+    {
+        $subject = new Rx_Controller_Action_Helper_Acl;
+
+        $result = $subject->getAutoloader();
+
+        $this->assertInstanceOf('Zend_Loader_Autoloader', $result);
+
+    } // END function test_getAutoloader
+
 
 } // END class Tests_Rx_Controller_Action_Helper_Acl

@@ -53,49 +53,14 @@ class App_Plugin_Navigation
                 'controller'    => 'events',
                 'action'        => 'list',
             ),
-            // 'leaderboards' => array(
-            //     'label'         => 'Leaderboards',
-            //     'controller'    => 'leaderboards',
-            // ),
         ));
 
-        $this->_addExtraPages($container);
 
         $this->_addAuthenticationPages($container);
 
         $view->navigation()->setContainer($container);
 
     } // END function preDispatch
-
-    /**
-     * _addExtraPages()
-     *
-     * Adds additional pages to the container, if the user is logged in
-     *
-     * @param Zend_Navigation $container
-     */
-    protected function _addExtraPages ($container)
-    {
-        $auth = $this->_getAuth();
-        // if ($auth->hasIdentity()) {
-            // $container->addPage(array(
-            //     'label'         => 'Competitions',
-            //     'controller'    => 'competitions',
-            //     'action'        => 'list',
-            // ));
-            // $container->addPage(array(
-            //     'label'         => 'Athletes',
-            //     'controller'    => 'athletes',
-            //     'action'        => 'list',
-            // ));
-            // $container->addPage(array(
-            //     'label'         => 'Scores',
-            //     'controller'    => 'scores',
-            //     'action'        => 'list',
-            // ));
-        // }
-
-    } // END function _addExtraPages
 
     /**
      * _addAuthenticationPages()
