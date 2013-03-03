@@ -103,4 +103,35 @@ class Tests_App_Controller_LeaderboardsControllerTest
 
     } // END function test_dispatchViewAction
 
+    /**
+     * test_init()
+     *
+     * Tests the init of the LeaderboardsController
+     *
+     * @covers          LeaderboardsController::init
+     * @dataProvider    provide_init
+     */
+    public function test_init ( )
+    {
+        $subject = new LeaderboardsController(
+            new Zend_Controller_Request_HttpTestCase,
+            new Zend_Controller_Response_HttpTestCase
+        );
+
+    } // END function test_init
+
+    /**
+     * provide_init()
+     *
+     * Provides data for the init method of the
+     * LeaderboardsController class
+     */
+    public function provide_init ( )
+    {
+        return array(
+            array(),
+        );
+
+    } // END function provide_init
+
 } // END class Tests_App_Controller_LeaderboardsControllerTest

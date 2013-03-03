@@ -115,14 +115,14 @@ class Tests_App_Bootstrap
     public function test__initPlugins ( )
     {
         $this->markTestIncomplete("not ready yet");
-        $subject = $this->getBuiltMock('App_Bootstrap', array('_bootstrap', 'getResource'));
+        $subject = $this->getBuiltMock('App_Bootstrap', array('bootstrap', 'getResource'));
         $front = $this->getBuiltMock('Zend_Controller_Front', array('registerPlugin'));
 
         $front->expects($this->exactly(3))
             ->method('registerPlugin');
 
         $subject->expects($this->once())
-            ->method('_bootstrap')
+            ->method('bootstrap')
             ->with($this->equalTo('frontcontroller'));
 
         $subject->expects($this->once())
@@ -149,5 +149,24 @@ class Tests_App_Bootstrap
         );
 
     } // END function provide__initPlugins
+
+    /**
+     * test__initAcl()
+     *
+     * Tests the _initAcl of the App_Bootstrap
+     *
+     * @covers          App_Bootstrap::_initAcl
+     */
+    public function test__initAcl ( )
+    {
+        $subject = $this->getBuiltMock('App_Bootstrap');
+
+        $method = new ReflectionMethod('App_Bootstrap', '_initAcl');
+        $method->setAccessible(true);
+        $method->invoke($subject);
+
+
+    } // END function test__initAcl
+
 
 } // END class Tests_App_Bootstrap
