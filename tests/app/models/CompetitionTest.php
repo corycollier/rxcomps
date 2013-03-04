@@ -503,4 +503,21 @@ class Tests_App_Model_CompetitionTest
 
     } // END function provide_getLeaderboards
 
+    /**
+     * test_getResourceId()
+     *
+     * Tests the getResourceId of the App_Model_Competition
+     *
+     * @covers          App_Model_Competition::getResourceId
+     */
+    public function test_getResourceId ( )
+    {
+        $subject = new App_Model_Competition;
+
+        $result = $subject->getResourceId();
+
+        $this->assertEquals('competitions', $result);
+
+    } // END function test_getResourceId
+
 } // END class Tests_App_Model_CompetitionTest

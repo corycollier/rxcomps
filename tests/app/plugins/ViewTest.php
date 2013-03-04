@@ -110,4 +110,22 @@ class Tests_App_Plugin_View
 
     } // END function provide_preDispatch
 
+    /**
+     * test_getFrontController()
+     *
+     * Tests the getFrontController of the App_Plugin_View
+     *
+     * @covers          App_Plugin_View::getFrontController
+     */
+    public function test_getFrontController ( )
+    {
+        $subject = new App_Plugin_View;
+
+        $result = $subject->getFrontController();
+
+        $this->assertInstanceOf('Zend_Controller_Front', $result);
+
+    } // END function test_getFrontController
+
+
 } // END class Tests_App_Plugin_View
