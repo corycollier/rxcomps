@@ -48,9 +48,6 @@ class Tests_Rx_View_Helper_FormSelectTest
         $view = new Zend_View;
         $subject->view = $view;
 
-        $translator = $this->getBuiltMock('Zend_Translate', array('translate'));
-        $subject->setTranslator($translator);
-
         $result = $subject->formSelect($name, $value, $attribs, $options, $listsep);
 
         $this->assertEquals($expected, $result);
@@ -168,7 +165,7 @@ class Tests_Rx_View_Helper_FormSelectTest
                 ),
             ),
 
-            'simple options with group test and disables' =>array(
+            'simple options with group test and disabled option' =>array(
                 implode(PHP_EOL, array(
                     '<ul class="picker"><li class="picker"><select name="name" id="name">',
                     '<optgroup id="name-optgroup-group1" label="group1">',
@@ -181,6 +178,26 @@ class Tests_Rx_View_Helper_FormSelectTest
                 array(
                     'disable' => array(
                         'value1',
+                    ),
+                ),
+                array(
+                    'group1' => array('value1' => 'label1'),
+                ),
+            ),
+
+            'simple options with group test and disabled group' =>array(
+                implode(PHP_EOL, array(
+                    '<ul class="picker"><li class="picker"><select name="name" id="name">',
+                    '<optgroup disabled="disabled" id="name-optgroup-group1" label="group1">',
+                    '<option value="value1" label="label1">label1</option>',
+                    '</optgroup></select><a href="#" class="toggle">Please Select<span class="caret"></span></a><ul></ul></li></ul>',
+
+                )),
+                'name',
+                'value',
+                array(
+                    'disable' => array(
+                        'group1',
                     ),
                 ),
                 array(

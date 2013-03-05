@@ -117,9 +117,9 @@ class Rx_View_Helper_FormSelect
                 if (is_array($disable) && in_array($opt_value, $disable)) {
                     $opt_disable = ' disabled="disabled"';
                 }
-                if (null !== $translator) {
-                    $opt_value = $translator->translate($opt_value);
-                }
+                // if (null !== $translator) {
+                //     $opt_value = $translator->translate($opt_value);
+                // }
                 $opt_id = ' id="' . $this->view->escape($id) . '-optgroup-'
                         . $this->view->escape($opt_value) . '"';
                 $list[] = '<optgroup'
