@@ -103,7 +103,8 @@ class Rx_View_Helper_FormSelect
                 . $multiple
                 . $disabled
                 . $this->_htmlAttribs($attribs)
-                . ">\n    ";
+                . ">"
+                . PHP_EOL;
 
         // build the list of options
         $list       = array();
@@ -139,7 +140,7 @@ class Rx_View_Helper_FormSelect
         }
 
         // add the options to the xhtml and close the select
-        $xhtml .= implode("\n    ", $list) . "\n</select>";
+        $xhtml .= implode(PHP_EOL, $list) . "</select>";
 
         $linkLabel = $linkLabel ? $linkLabel : 'Please Select';
 

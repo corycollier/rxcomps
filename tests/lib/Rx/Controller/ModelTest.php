@@ -137,6 +137,143 @@ class Tests_Rx_Controller_ModelTest
 
     } // END function provide_listAction
 
+    /**
+     * test_viewAction()
+     *
+     * Tests the viewAction method of the Rx_Controller_Model class
+     *
+     * @covers Rx_Controller_Model::viewAction
+     * @dataProvider provide_viewAction
+     */
+    public function test_viewAction ($controller, $module = 'default', $id = null)
+    {
+        // create objects to mock
+        $subject = $this->getBuiltMock('Rx_Controller_Model', array(
+            'getHelper', 'getModel', 'getRequest'
+        ));
+        $flash = $this->getBuiltMock('Zend_Controller_Action_Helper_FlashMessenger', array(
+            'addMessage',
+        ));
+        $redirector = $this->getBuiltMock('Zend_Controller_Action_Helper_Redirector', array(
+            'gotoRoute',
+        ));
+        $model = $this->getBuiltMock('Rx_Model_Abstract', array('load'));
+        $request = new Zend_Controller_Request_HttpTestCase;
+
+        $request->setParams(array(
+            'id'            => $id,
+            'controller'    => $controller,
+            'module'        => $module,
+        ));
+
+        // set expectations for method calls
+        $model->expects($this->once())
+            ->method('load')
+            ->with($this->equalTo($id));
+
+        if (! $id) {
+            $flash->expects($this->once())->method('addMessage');
+            $redirector->expects($this->once())
+                ->method('gotoRoute')
+                ->with(
+                    $this->equalTo(array(
+                        'module'    => $module,
+                        'controller'=> $controller,
+                        'action'    => 'index',
+                    )),
+                    $this->equalTo('default'),
+                    $this->equalTo(true)
+                );
+        }
+
+        $subject->expects($this->any())
+            ->method('getHelper')
+            ->will($this->returnValueMap(array(
+                array('FlashMessenger', $flash),
+                array('Redirector', $redirector),
+            )));
+
+        $subject->expects($this->once())
+            ->method('getRequest')
+            ->will($this->returnValue($request));
+
+        $subject->expects($this->once())
+            ->method('getModel')
+            ->will($this->returnValue($model));
+
+        $subject->viewAction();
+
+
+    } // END function test_viewAction
+
+    /**
+     * provide_viewAction()
+     *
+     * Provides data to use for testing the viewAction method of
+     * the Rx_Controller_Model class
+     *
+     * @return array
+     */
+    public function provide_viewAction ( )
+    {
+        return array(
+            'no id provided' => array(
+                'controllerName', 'moduleName',
+            ),
+
+            'id provided' => array(
+                'controllerName', 'moduleName', 1
+            ),
+        );
+
+    } // END function provide_viewAction
+
+    /**
+     * test_postDispatch()
+     *
+     * Tests the postDispatch method of the Rx_Controller_Model class
+     *
+     * @covers Rx_Controller_Model::postDispatch
+     * @dataProvider provide_postDispatch
+     */
+    public function test_postDispatch ( )
+    {
+        $subject = $this->getBuiltMock('Rx_Controller_Model', array('getHelper', 'getModel'));
+        $model = $this->getBuiltMock('Rx_Model_Abstract', array('getTable'));
+        $table = $this->getBuiltMock('Rx_Model_DbTable_Abstract', array('getPaginationAdapter'));
+
+        $table->expects($this->once())
+            ->method('getPaginationAdapter')
+            ->will($this->returnValue(new Zend_Paginator_Adapter_Array(array())));
+
+        $model->expects($this->once())
+            ->method('getTable')
+            ->will($this->returnValue($table));
+
+        $subject->expects($this->once())
+            ->method('getModel')
+            ->will($this->returnValue($model));
+
+        $subject->postDispatch();
+
+    } // END function test_postDispatch
+
+    /**
+     * provide_postDispatch()
+     *
+     * Provides data to use for testing the postDispatch method of
+     * the Rx_Controller_Model class
+     *
+     * @return array
+     */
+    public function provide_postDispatch ( )
+    {
+        return array(
+            array(),
+        );
+
+    } // END function provide_postDispatch
+
 } // END class Tests_Rx_Controller_ModelTest
 
 

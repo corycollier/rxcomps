@@ -33,6 +33,49 @@
 class Tests_Rx_Form_AbstractTest
     extends Rx_PHPUnit_TestCase
 {
+
+    /**
+     * test___construct()
+     *
+     * Tests the __construct method of the Rx_Form_Abstract class
+     *
+     * @covers Rx_Form_Abstract::__construct
+     * @dataProvider provide___construct
+     */
+    public function test___construct ( )
+    {
+        $subject = $this->getBuiltMock('Rx_Form_Abstract', array(
+            'setStandardDecorators', 'addPrefixPath'
+        ));
+
+        $subject->expects($this->once())->method('setStandardDecorators');
+        $subject->expects($this->once())
+            ->method('addPrefixPath')
+            ->with(
+                $this->equalTo('Rx_Form_Element_'),
+                $this->equalTo('Rx/Form/Element/'),
+                $this->equalTo('element')
+            );
+
+        $subject->__construct();
+
+    } // END function test___construct
+
+    /**
+     * provide___construct()
+     *
+     * Provides data to use for testing the __construct method of
+     * the Rx_Form_Abstract class
+     *
+     * @return array
+     */
+    public function provide___construct ( )
+    {
+        return array(
+            array(),
+        );
+
+    } // END function provide___construct
     /**
      * test_getButtonSubForm()
      *
@@ -71,5 +114,37 @@ class Tests_Rx_Form_AbstractTest
         $this->assertInstanceOf('Zend_Form_SubForm', $result);
 
     } // END function test_buildSubForm
+
+    /**
+     * test_setStandardDecorators()
+     *
+     * Tests the setStandardDecorators method of the Rx_Form_Abstract class
+     *
+     * @covers Rx_Form_Abstract::setStandardDecorators
+     * @dataProvider provide_setStandardDecorators
+     */
+    public function test_setStandardDecorators ( )
+    {
+        $form = new Rx_Form_Abstract;
+
+        $form->setStandardDecorators();
+
+    } // END function test_setStandardDecorators
+
+    /**
+     * provide_setStandardDecorators()
+     *
+     * Provides data to use for testing the setStandardDecorators method of
+     * the Rx_Form_Abstract class
+     *
+     * @return array
+     */
+    public function provide_setStandardDecorators ( )
+    {
+        return array(
+            array(),
+        );
+
+    } // END function provide_setStandardDecorators
 
 } // END class Rx_Form_Abstract
