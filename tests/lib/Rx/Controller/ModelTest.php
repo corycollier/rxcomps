@@ -229,6 +229,169 @@ class Tests_Rx_Controller_ModelTest
     } // END function provide_viewAction
 
     /**
+     * test_createAction()
+     *
+     * Tests the createAction method of the Rx_Controller_Model class
+     *
+     * @covers Rx_Controller_Model::createAction
+     * @dataProvider provide_createAction
+     */
+    public function test_createAction ($params, $post = false, $filtered = array())
+    {
+        // create objects to mock
+        $subject = $this->getBuiltMock('Rx_Controller_Model', array('getModel', 'getRequest', '_create'));
+        $model  = $this->getBuiltMock('Rx_Model_Abstract', array('filterValues', 'getForm'));
+        $form   = $this->getBuiltMock('Rx_Form_Abstract', array('injectDependencies', 'populate'));
+        $request = new Zend_Controller_Request_HttpTestCase;
+        $view = new Zend_View;
+
+        // set method expectations
+        $request->setParams($params);
+        if ($post) {
+            $request->setMethod('POST');
+        }
+
+        $form->expects($this->once())
+            ->method('populate')
+            ->with($this->equalTo($filtered));
+
+        $form->expects($this->once())
+            ->method('injectDependencies')
+            ->with($this->equalTo($model), $this->equalTo($params));
+
+        $model->expects($this->once())
+            ->method('filterValues')
+            ->will($this->returnValue($filtered));
+
+        $model->expects($this->once())
+            ->method('getForm')
+            ->will($this->returnValue($form));
+
+        $subject->expects($this->once())
+            ->method('getModel')
+            ->will($this->returnValue($model));
+
+        $subject->expects($this->once())
+            ->method('getRequest')
+            ->will($this->returnValue($request));
+
+        if ($post) {
+            $subject->expects($this->once())
+                ->method('_create')
+                ->with($this->equalTo($model), $this->equalTo($request));
+        }
+
+        $subject->view = $view;
+
+        $subject->createAction();
+
+    } // END function test_createAction
+
+    /**
+     * provide_createAction()
+     *
+     * Provides data to use for testing the createAction method of
+     * the Rx_Controller_Model class
+     *
+     * @return array
+     */
+    public function provide_createAction ( )
+    {
+        return array(
+            'no post' => array(array(
+                'module' => 'default',
+            )),
+
+            'with post' => array(
+                array(
+                    'module' => 'default',
+                ),
+                true
+            ),
+        );
+
+    } // END function provide_createAction
+
+    /**
+     * test__create()
+     *
+     * Tests the _create method of the Rx_Controller_Model class
+     *
+     * @covers Rx_Controller_Model::_create
+     * @dataProvider provide__create
+     */
+    public function test__create ($params, $post = array(), $exception = '')
+    {
+        // create objects to mock
+        $subject = $this->getBuiltMock('Rx_Controller_Model', array('getHelper'));
+        $flash = $this->getBuiltMock('Zend_Controller_Action_Helper_FlashMessenger', array(
+            'addMessage',
+        ));
+        $redirector = $this->getBuiltMock('Zend_Controller_Action_Helper_Redirector', array(
+            'gotoRoute',
+        ));
+        $model = $this->getBuiltMock('Rx_Model_Abstract', array('create'));
+        $request = new Zend_Controller_Request_HttpTestCase;
+
+        // set expectations
+        $request->setParams(array_merge($params, $post));
+        $flash->expects($this->once())->method('addMessage');
+        $model->expects($this->once())
+            ->method('create')
+            ->with($this->equalTo(array_merge($params, $post)))
+            ->will($exception
+                ? $this->throwException(new Zend_Exception($exception))
+                : $this->returnSelf()
+            );
+
+        if (! $exception) {
+            $redirector->expects($this->once())->method('gotoRoute');
+        }
+
+        $subject->expects($this->any())
+            ->method('getHelper')
+            ->will($this->returnValueMap(array(
+                array('FlashMessenger', $flash),
+                array('Redirector', $redirector)
+            )));
+
+        $method = new ReflectionMethod('Rx_Controller_Model', '_create');
+        $method->setAccessible(true);
+        $result = $method->invoke($subject, $model, $request);
+
+    } // END function test__create
+
+    /**
+     * provide__create()
+     *
+     * Provides data to use for testing the _create method of
+     * the Rx_Controller_Model class
+     *
+     * @return array
+     */
+    public function provide__create ( )
+    {
+        return array(
+            'simple test' => array(array(
+                'module' => 'default',
+            )),
+
+            'simple test with post' => array(
+                array('module' => 'default'),
+                array('postKey' => 'postVal'),
+            ),
+
+
+            'post with exception' => array(
+                array('module' => 'default'),
+                array('postKey' => 'postVal'),
+                'bad stuff',
+            ),
+        );
+
+    } // END function provide__create
+
+    /**
      * test_postDispatch()
      *
      * Tests the postDispatch method of the Rx_Controller_Model class

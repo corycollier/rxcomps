@@ -98,34 +98,49 @@ class Rx_Controller_Model
      */
     public function createAction ( )
     {
-        $model = $this->getModel($this->_modelName);
-        $form = $model->getForm();
-        $request = $this->getRequest();
-        $flash = $this->getHelper('FlashMessenger');
-        $redirector = $this->getHelper('Redirector');
+        $model      = $this->getModel($this->_modelName);
+        $request    = $this->getRequest();
+        $form       = $model->getForm();
 
         $form->injectDependencies($model, $request->getParams());
         $form->populate($model->filterValues($request->getParams()));
 
         if ($request->isPost()) {
-            try {
-                $params = array_merge($request->getParams(), $request->getPost());
-                $model->create($params);
-                $flash->addMessage(sprintf(
-                    self::MSG_CREATE_SUCCESS, $this->_modelName
-                ), 'success');
-                $redirector->gotoRoute(array(
-                    'action'    => 'view',
-                    'id'        => $model->id
-                ));
-            } catch (Zend_Exception $exception) {
-                $flash->addMessage($exception->getMessage(), 'error');
-            }
+            $this->_create($model, $request);
         }
 
         $this->view->form = $form;
 
     } // END function createAction
+
+    /**
+     * _create()
+     *
+     * Isolating the create logic into a separate method, to ease testing
+     *
+     * @param Rx_Model_Abstract $model
+     * @param Zend_Controller_Request_Abstract $request
+     */
+    protected function _create ($model, $request)
+    {
+        $flash      = $this->getHelper('FlashMessenger');
+        $redirector = $this->getHelper('Redirector');
+
+        try {
+            $params = array_merge($request->getParams(), $request->getPost());
+            $model->create($params);
+            $flash->addMessage(sprintf(
+                self::MSG_CREATE_SUCCESS, $this->_modelName
+            ), 'success');
+            $redirector->gotoRoute(array(
+                'action'    => 'view',
+                'id'        => $model->id
+            ));
+        } catch (Zend_Exception $exception) {
+            $flash->addMessage($exception->getMessage(), 'error');
+        }
+
+    }
 
 
     /**
