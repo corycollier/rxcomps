@@ -154,7 +154,7 @@
         </chmod>
     </target>
 
-    <target name="test-sed" description="setup and deploy configurations">
+    <target name="deploy-configurations" description="setup and deploy configurations">
         <copy file="${basedir}/src/etc/httpd-rxcompetition.com.sample.conf"
             tofile="${basedir}/src/etc/httpd-rxcompetition.com.conf" />
         <replace file="${basedir}/src/etc/httpd-rxcompetition.com.conf" token="{ROOT}" value="${basedir}"/>
