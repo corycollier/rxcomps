@@ -212,6 +212,7 @@ class App_Model_Competition
                     $scores[] = array_merge($worstScore, array(
                         'athlete_id' => $athleteId,
                         'competition_id' => $this->id,
+                        'placeholder_score' => true,
                     ));
 
                 }

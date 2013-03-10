@@ -63,6 +63,10 @@ class App_Form_Athlete
             ),
         ));
 
+        $this->addElement('hidden', 'event_id', array(
+            'required'      => true,
+        ));
+
         $this->addElement('select', 'scale_id', array(
             'label'         => 'Scale',
             'placeholder'   => 'Select Scale',

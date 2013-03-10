@@ -50,6 +50,7 @@ class Rx_View_Helper_FormSubmit
      */
     public function formSubmit($name, $value = null, $attribs = null)
     {
+        // return parent::formSubmit($name, $value, $attribs);
         $attribs['class'] = @$attribs['class'] . ' btn';
 
         $info = $this->_getInfo($name, $value, $attribs);

@@ -13,11 +13,21 @@
  * @since       File available since release 1.0.0
  */
 ?>
+
 <?php if ($this->auth()->hasIdentity()) :?>
+
+<?php
+$request =  $this->request();
+
+$eventId =  $request->getParam('event_id')
+    ? $request->getParam('event_id')
+    : $request->getParam('id');
+?>
 <?php echo $this->actionList(array(
     $this->htmlAnchor('Add Athlete', array(
         'controller'=> 'athletes',
         'action'    => 'create',
+        'event_id'  => $eventId,
     )),
 )); ?>
 <?php endif; ?>

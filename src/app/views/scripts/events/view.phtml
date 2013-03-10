@@ -65,25 +65,8 @@
 
 <!-- ATHLETES -->
 <div class="row">
-
-<?php if ($this->auth()->hasIdentity()) :?>
-<?php echo $this->actionList(array(
-    $this->htmlAnchor('Add Athlete', array(
-        'controller'=> 'athletes',
-        'action'    => 'create',
+    <h2>Athletes</h2>
+    <?php echo $this->action('list', 'athletes', 'default', array(
         'event_id'  => $this->model->id,
-    )),
-)); ?>
-<?php endif; ?>
-
-Filter by:
-<?php echo $this->scaleFilter($this->request()->getParam('event_id')) ;?>
-<?php echo $this->genderFilter($this->request()->getParam('event_id')); ?>
-
-<?php foreach ($this->items as $event) : ?>
-
-    <?php echo $this->athleteItem($event); ?>
-
-<?php endforeach; ?>
-
+    )); ?>
 </div>

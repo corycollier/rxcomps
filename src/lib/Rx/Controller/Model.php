@@ -138,6 +138,7 @@ class Rx_Controller_Model
                 'id'        => $model->id
             ));
         } catch (Zend_Exception $exception) {
+            var_dump($exception); die;
             $flash->addMessage($exception->getMessage(), 'error');
         }
 

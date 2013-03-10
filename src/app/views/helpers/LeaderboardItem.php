@@ -116,13 +116,18 @@ class App_View_Helper_LeaderboardItem
                 $competitionResults['score'] = $filter->filter($competitionResults['score']);
             }
 
+            if ($competitionResults['placeholder_score']) {
+                $competitionResults['score'] = '--';
+            }
+
+
             // $results[] = sprintf('%d (%d)', $competitionResults['rank'], $competitionResults['score']);
             // $results[] = sprintf('%d', $competitionResults['rank']);
             $results[] = sprintf(implode(PHP_EOL, array(
                     '<td class="%s">',
                     '<a href="#" class="expand-details">%d</a>',
                     '<ul class="details">',
-                    '<li><strong>Score</strong> %s</li>',
+                    '<li><strong>Score</strong> %s %s</li>',
                     '<li><strong>Points</strong> %d</li>',
                     '</ul>',
                     '</td>',
@@ -144,11 +149,20 @@ class App_View_Helper_LeaderboardItem
             return '';
         }
 
-        return $this->view->htmlAnchor('(edit)', array(
+        $action = 'edit';
+        if ($data['competitions'][$competitionId]['placeholder_score']) {
+            $action = 'create';
+        }
+
+        $label = '(' . $action . ')';
+
+        return $this->view->htmlAnchor($label, array(
             'module'        => 'default',
             'controller'    => 'scores',
-            'action'        => 'edit',
+            'action'        => $action,
             'id'            => @$data['competitions'][$competitionId]['score_id'],
+            'competition_id'=> $competitionId,
+            'athlete_id'    => $data['athlete_id'],
 
         ));
     }
