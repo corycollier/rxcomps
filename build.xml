@@ -147,12 +147,21 @@
         </exec>
     </target>
 
-
     <target name="fix-permissions" description="Fix permissions for security, and functionality">
         <chmod perm="777">
             <dirset dir="${basedir}/src/log/" />
             <dirset dir="${basedir}/src/tmp/" />
         </chmod>
+    </target>
+
+    <target name="test-sed" description="setup and deploy configurations">
+        <copy file="${basedir}/src/etc/httpd-rxcompetition.com.sample.conf"
+            tofile="${basedir}/src/etc/httpd-rxcompetition.com.conf" />
+        <replace file="${basedir}/src/etc/httpd-rxcompetition.com.conf" token="{ROOT}" value="${basedir}"/>
+
+        <copy file="${basedir}/src/etc/nginx-rxcompetition.com.sample.conf"
+            tofile="${basedir}/src/etc/nginx-rxcompetition.com.conf" />
+        <replace file="${basedir}/src/etc/nginx-rxcompetition.com.conf" token="{ROOT}" value="${basedir}"/>
     </target>
 
 </project>
