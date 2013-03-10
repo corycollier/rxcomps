@@ -13,6 +13,11 @@
  * @since       File available since release 1.0.0
  */
 ?>
+<?php echo $this->htmlList(array(
+    $this->backToEventLink($this->model->getParent('Athlete'), $this->request()->getParams()),
+), false, array(
+    'class' => 'subnav',
+), false); ?>
 
 <?php if ($this->auth()->hasIdentity()) :?>
 <?php echo $this->actionList(array(

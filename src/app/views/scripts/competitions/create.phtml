@@ -13,5 +13,10 @@
  * @since       File available since release 1.0.0
  */
 ?>
+<?php echo $this->htmlList(array(
+    $this->backToEventLink($this->model, $this->request()->getParams()),
+), false, array(
+    'class' => 'subnav',
+), false); ?>
 
 <?php echo $this->form; ?>

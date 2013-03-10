@@ -14,13 +14,8 @@
  */
 ?>
 
-<?php $event = $this->model->getParent('Event'); ?>
 <?php echo $this->htmlList(array(
-    $this->htmlAnchor(sprintf('Back to %s', $event->getValue('name')), array(
-        'controller'    => 'events',
-        'action'        => 'view',
-        'id'            => $event->id,
-    )),
+    $this->backToEventLink($this->model, $this->request()->getParams()),
     $this->htmlAnchor('Enter Scores', array(
         'controller'    => 'scores',
         'action'        => 'create',

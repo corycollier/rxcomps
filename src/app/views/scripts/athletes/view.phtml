@@ -14,6 +14,12 @@
  */
 ?>
 
+<?php echo $this->htmlList(array(
+    $this->backToEventLink($this->model, $this->request()->getParams()),
+), false, array(
+    'class' => 'subnav',
+), false); ?>
+
 <?php if ($this->auth()->hasIdentity()) :?>
 <?php echo $this->actionList(array(
     $this->htmlAnchor('Add Athlete', array(

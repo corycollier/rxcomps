@@ -39,7 +39,6 @@ class App_Model_DbTable_Scale
     protected $_name = 'scales';
 
     protected $_dependentTables = array(
-        'App_Model_DbTable_Event',
         'App_Model_DbTable_Athlete',
         'App_Model_DbTable_Score',
     );

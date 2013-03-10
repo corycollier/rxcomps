@@ -34,16 +34,17 @@
 
 <p><?php echo $this->model->getValue('description'); ?></p>
 
+<!-- LEADERBOARDS -->
 <h2><?php echo $this->htmlAnchor('Leaderboards', array(
     'controller'=> 'leaderboards',
     'action' => 'view',
     'event_id' => $this->model->id,
-
 )); ?>
 </h2>
 
 <section class="row">
 
+    <!-- COMPETITONS -->
     <div class="row six columns">
         <h2>Competitions</h2>
         <?php echo $this->action('list', 'competitions', 'default', array(
@@ -52,6 +53,7 @@
     </div>
 
 
+    <!-- SCALES -->
     <div class="row six columns">
         <h2>Scales</h2>
         <?php echo $this->action('list', 'scales', 'default', array(
@@ -61,9 +63,27 @@
 
 </section>
 
+<!-- ATHLETES -->
 <div class="row">
-    <h2>Athletes</h2>
-    <?php echo $this->action('list', 'athletes', 'default', array(
+
+<?php if ($this->auth()->hasIdentity()) :?>
+<?php echo $this->actionList(array(
+    $this->htmlAnchor('Add Athlete', array(
+        'controller'=> 'athletes',
+        'action'    => 'create',
         'event_id'  => $this->model->id,
-    )); ?>
+    )),
+)); ?>
+<?php endif; ?>
+
+Filter by:
+<?php echo $this->scaleFilter($this->request()->getParam('event_id')) ;?>
+<?php echo $this->genderFilter($this->request()->getParam('event_id')); ?>
+
+<?php foreach ($this->items as $event) : ?>
+
+    <?php echo $this->athleteItem($event); ?>
+
+<?php endforeach; ?>
+
 </div>

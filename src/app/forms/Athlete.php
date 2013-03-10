@@ -63,12 +63,6 @@ class App_Form_Athlete
             ),
         ));
 
-        $this->addElement('select', 'event_id', array(
-            'label'         => 'Event',
-            'placeholder'   => 'Select Event',
-            'required'      => true,
-        ));
-
         $this->addElement('select', 'scale_id', array(
             'label'         => 'Scale',
             'placeholder'   => 'Select Scale',
@@ -94,35 +88,11 @@ class App_Form_Athlete
      */
     public function injectDependencies ($model, $params = array())
     {
-        $this->_insertEvents($model, $params);
         $this->_insertScales($model, $params);
 
         return $this;
 
     } // END function injectDependencies
-
-    /**
-     * _insertEvents()
-     *
-     * Inserts event options into the event_id form element
-     *
-     * @param App_Model_Athlete $model
-     * @param array $params
-     * @return App_Form_Athlete $this for object-chaining
-     */
-    protected function _insertEvents ($model, $params = array())
-    {
-        $events = $model->getParent('Event')->getTable()->fetchAll();
-
-        $element = $this->getElement('event_id');
-
-        foreach ($events as $event) {
-            $element->addMultiOption($event->id, $event->name);
-        }
-
-        return $this;
-
-    } // END function _insertEvents
 
     /**
      * _insertScales()
@@ -135,7 +105,11 @@ class App_Form_Athlete
      */
     protected function _insertScales ($model, $params = array())
     {
-        $scales = $model->getParent('Scale')->getTable()->fetchAll();
+        $table = $model->getParent('Scale')->getTable();
+
+        $scales = $table->fetchAll(
+            $table->select()->where(sprintf('event_id = %d', @$params['event_id']))
+        );
 
         $element = $this->getElement('scale_id');
 

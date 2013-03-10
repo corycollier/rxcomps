@@ -110,6 +110,7 @@ class Rx_Controller_Model
         }
 
         $this->view->form = $form;
+        $this->view->model = $model;
 
     } // END function createAction
 
@@ -184,6 +185,7 @@ class Rx_Controller_Model
         }
 
         $this->view->form = $form;
+        $this->view->model = $model;
 
     } // END function editAction
 

@@ -40,9 +40,15 @@ class Rx_View_Helper_HtmlAnchor
     {
         $template = '<a href="%s"%s>%s</a>';
 
+        $resetUrl = isset($urlOptions['reset-url'])
+            ? (bool)$urlOptions['reset-url']
+            : false;
+
+        unset($urlOptions['reset-url']);
+
         return sprintf(
             $template,
-            $this->view->url($urlOptions, 'default', false, false),
+            $this->view->url($urlOptions, 'default', $resetUrl, false),
             $this->_htmlAttribs($attribs),
             $text
         );
