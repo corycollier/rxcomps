@@ -146,4 +146,13 @@
             <arg value="${basedir}/src/lib/Zend/" />
         </exec>
     </target>
+
+
+    <target name="fix-permissions" description="Fix permissions for security, and functionality">
+        <chmod perm="777">
+            <dirset dir="${basedir}/src/log/" />
+            <dirset dir="${basedir}/src/tmp/" />
+        </chmod>
+    </target>
+
 </project>

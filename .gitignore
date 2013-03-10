@@ -7,3 +7,4 @@ build/logs
 src/lib/Zend
 src/tmp/zend*
 src/tmp/sess*
+src/log/*.log
