@@ -1,24 +1,20 @@
+// Gumby is ready to go
+Gumby.ready(function() {
+	console.log('Gumby is ready to go...', Gumby.debug());
 
-$(".expand-details").on('click', function(event){
-    $('.details').not($(this).siblings('.details')).hide();
-    $(this).siblings('.details').toggle();
-
-    return false;
+	// placeholder polyfil
+	if(Gumby.isOldie || Gumby.$dom.find('html').hasClass('ie9')) {
+		$('input, textarea').placeholder();
+	}
 });
 
-
-$(".toggle-scoring-type").on('click', function(event){
-    if ($(this).val() == 'points') {
-        $(".scoring-type-points").removeClass('hidden');
-    } else {
-        $(".scoring-type-points").addClass('hidden');
-    }
+// Oldie document loaded
+Gumby.oldie(function() {
 
 });
 
-// since the submit buttons have been changed to links, it's important
-// to make those links work like submit buttons
-$("form .btn a").on('click', function(event){
-    $(this).closest('form').submit(); //.submit();
-    return false;
+// Document ready
+$(function() {
+
 });
+

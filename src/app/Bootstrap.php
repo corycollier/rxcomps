@@ -76,6 +76,7 @@ class App_Bootstrap
         $this->bootstrap('frontcontroller');
         $front = $this->getResource('frontcontroller');
         $front->registerPlugin(new App_Plugin_Acl);
+        $front->registerPlugin(new App_Plugin_SiteOptions);
         $front->registerPlugin(new App_Plugin_Navigation);
         $front->registerPlugin(new App_Plugin_View);
         $front->registerPlugin(new App_Plugin_Cache);

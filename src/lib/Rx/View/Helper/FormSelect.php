@@ -58,120 +58,18 @@ class Rx_View_Helper_FormSelect
     public function formSelect($name, $value = null, $attribs = null,
         $options = null, $listsep = "<br />\n")
     {
-        $info = $this->_getInfo($name, $value, $attribs, $options, $listsep);
-        extract($info); // name, id, value, attribs, options, listsep, disable
-
-        // force $value to array so we can compare multiple values to multiple
-        // options; also ensure it's a string for comparison purposes.
-        $value = array_map('strval', (array) $value);
-
-        // check if element may have multiple values
-        $multiple = '';
-
-        if (substr($name, -2) == '[]') {
-            // multiple implied by the name
-            $multiple = ' multiple="multiple"';
-        }
-
-        if (isset($attribs['multiple'])) {
-            // Attribute set
-            if ($attribs['multiple']) {
-                // True attribute; set multiple attribute
-                $multiple = ' multiple="multiple"';
-
-                // Make sure name indicates multiple values are allowed
-                if (!empty($multiple) && (substr($name, -2) != '[]')) {
-                    $name .= '[]';
-                }
-            } else {
-                // False attribute; ensure attribute not set
-                $multiple = '';
-            }
-            unset($attribs['multiple']);
-        }
-
-        // now start building the XHTML.
-        $disabled = '';
-        if (true === $disable) {
-            $disabled = ' disabled="disabled"';
-        }
-
-        // Build the surrounding select element first.
-        $xhtml = '<select'
-                . ' name="' . $this->view->escape($name) . '"'
-                . ' id="' . $this->view->escape($id) . '"'
-                . $multiple
-                . $disabled
-                . $this->_htmlAttribs($attribs)
-                . ">"
-                . PHP_EOL;
-
-        // build the list of options
-        $list       = array();
-        $links      = array();
-        $linkLabel = '';
-        $translator = $this->getTranslator();
-        foreach ((array) $options as $opt_value => $opt_label) {
-            if (is_array($opt_label)) {
-                $opt_disable = '';
-                if (is_array($disable) && in_array($opt_value, $disable)) {
-                    $opt_disable = ' disabled="disabled"';
-                }
-                // if (null !== $translator) {
-                //     $opt_value = $translator->translate($opt_value);
-                // }
-                $opt_id = ' id="' . $this->view->escape($id) . '-optgroup-'
-                        . $this->view->escape($opt_value) . '"';
-                $list[] = '<optgroup'
-                        . $opt_disable
-                        . $opt_id
-                        . ' label="' . $this->view->escape($opt_value) .'">';
-                foreach ($opt_label as $val => $lab) {
-                    $list[] = $this->_build($val, $lab, $value, $disable);
-                }
-                $list[] = '</optgroup>';
-            } else {
-                $list[] = $this->_build($opt_value, $opt_label, $value, $disable);
-                $links[] = $this->_buildLink($opt_value, $opt_label, $value, $disable);
-                if (in_array($opt_value, $value)) {
-                    $linkLabel = $opt_label;
-                }
-            }
-        }
-
         // add the options to the xhtml and close the select
-        $xhtml .= implode(PHP_EOL, $list) . "</select>";
-
-        $linkLabel = $linkLabel ? $linkLabel : 'Please Select';
+        $xhtml = parent::formSelect($name, $value, $attribs, $options, $listsep);
 
         $result = '<ul class="picker">'
-            . '<li class="picker">'
+            . '<li class="field">'
+            . '<div class="picker">'
             . $xhtml
-            . '<a href="#" class="toggle">' . $linkLabel . '<span class="caret"></span></a>'
-            . '<ul>' . implode(PHP_EOL, $links) . '</ul>'
+            . '</div>'
             . '</li>'
             . '</ul>';
 
         return $result;
-    }
-
-    /**
-     * _buildLink
-     *
-     * Builds the pretty link markup
-     *
-     * @param string $value Options Value
-     * @param string $label Options Label
-     * @param array  $selected The option value(s) to mark as 'selected'
-     * @param array|bool $disable Whether the select is disabled, or individual options are
-     * @return string
-     */
-    protected function _buildLink($value, $label, $selected, $disable)
-    {
-        $xhtml = sprintf('<li><a href="#">%s</a></li>', $this->view->escape($label));
-
-        return $xhtml;
-
     }
 
 }

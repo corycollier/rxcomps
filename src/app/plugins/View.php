@@ -48,9 +48,35 @@ class App_Plugin_View
             }
         }
 
-        $view->title = 'Rx Competition : ' . implode(' : ', $params);
+        $options = $this->getRegistry()->get('options');
+
+        foreach ($options as $option) {
+            $name = $this->variablize($option->name);
+            $view->$name = $option->value;
+        }
 
     } // END function preDispatch
+
+    public function postDispatch ( )
+    {
+
+    }
+
+    /**
+     * variablize()
+     *
+     * Method to turn a volitile string into a suitable variable name
+     *
+     * @param string $string
+     * @return string
+     */
+    public function variablize ($string)
+    {
+        $filter = new Zend_Filter;
+
+        return $filter->filter($string);
+
+    } // END function variablize
 
     /**
      * getFrontController()
@@ -64,5 +90,18 @@ class App_Plugin_View
         return Zend_Controller_Front::getInstance();
 
     } // END function getFrontController
+
+    /**
+     * getRegistry()
+     *
+     * Gets the registry instance
+     *
+     * @return Zend_Registry
+     */
+    public function getRegistry ( )
+    {
+        return Zend_Registry::getInstance();
+
+    } // END function getRegistry
 
 } // END class App_Plugin_View

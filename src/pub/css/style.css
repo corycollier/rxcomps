@@ -1,11 +1,4 @@
-/*=======================================================================
-
-	❤❤❤ Gumby by Digital Surgeons. ❤❤❤
-
-	*** This is where you should keep all of your design specific styles ***
-
- ========================================================================*/
-/* line 10, ../../app/views/sass/style.scss */
-.filtered {
-  background: rgba(0, 0, 0, 0.25);
-}
+/*
+We highly recommend you use SASS and write your custom styles in sass/_custom.scss.
+However, this blank file is available if you prefer
+*/

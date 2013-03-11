@@ -117,3 +117,12 @@ CREATE TABLE events_users (
     CONSTRAINT `fk_events_users_user_id` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 )
 ENGINE = InnoDB;
+
+CREATE TABLE options (
+    id INT(11) NOT NULL,
+    name VARCHAR(40) NOT NULL,
+    value TEXT,
+    PRIMARY KEY(id),
+    UNIQUE KEY `uk_options_name` (`name`)
+)
+ENGINE = InnoDB;

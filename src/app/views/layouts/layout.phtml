@@ -51,7 +51,7 @@
     <!-- <link rel="stylesheet" href="css/minified.css"> -->
 
     <!-- CSS imports non-minified for staging, minify before moving to production-->
-    <link rel="stylesheet" href="/css/imports.css">
+    <link rel="stylesheet" href="/css/gumby.css">
     <!-- end CSS-->
 
     <!-- More ideas for your <head> here: h5bp.com/d/head-Tips -->
@@ -65,7 +65,7 @@
 <body>
     <div class="container row main-navigation">
         <nav class="pretty navbar clearfix" id="basicnav">
-            <h1 class="logo"><a href="/">Rx Competition</a></h1>
+            <h1 class="logo"><a href="/"><?php echo $this->sitename; ?></a></h1>
             <a href="#" class="toggle" data-for="#prettynav > ul"><img src="/img/icon_nav_toggle.gif" /></a>
             <?php echo $this->navigation()->menu()->setUlClass('container')->menu(); ?>
         </nav>
