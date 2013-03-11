@@ -148,6 +148,7 @@ class Tests_App_Model_LeaderboardTest
                                 'rank'      => 3,
                                 'points'    => 80,
                                 'score_id'  => 1,
+                                'placeholder_score' => null,
                             ),
                         ),
                     ),
@@ -184,6 +185,7 @@ class Tests_App_Model_LeaderboardTest
                                 'rank'      => 3,
                                 'points'    => 80,
                                 'score_id'  => 1,
+                                'placeholder_score' => null,
                             ),
                         ),
                     ),
@@ -224,7 +226,7 @@ class Tests_App_Model_LeaderboardTest
                         ),
                     ),
                     100 => array(
-                        'points'        => 130,
+                        'points'        => 130.0,
                         'competitions'  => array(
                             2 => array(
                                 'score'     => 500,
@@ -236,6 +238,7 @@ class Tests_App_Model_LeaderboardTest
                                 'rank'      => 6,
                                 'points'    => 50,
                                 'score_id'  => 1,
+                                'placeholder_score' => null,
                             ),
                         ),
                     ),

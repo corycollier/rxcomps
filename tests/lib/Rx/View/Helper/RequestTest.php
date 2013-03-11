@@ -33,13 +33,12 @@
 class Tests_Rx_View_HelperTest
     extends Rx_PHPUnit_TestCase
 {
-
     /**
      * test_request()
      *
      * Tests the request of the Rx_View_Helper_Request
      *
-     * @covers          Rx_View_Helper_Request::request
+     * @covers Rx_View_Helper_Request::request
      */
     public function test_request ( )
     {
@@ -47,7 +46,9 @@ class Tests_Rx_View_HelperTest
 
         $result = $subject->request();
 
-        $this->assertInstanceOf('Zend_Controller_Request_Abstract', $result);
+        $expected =  Zend_Controller_Front::getInstance()->getRequest();
+
+        $this->assertEquals($expected, $result);
 
     } // END function test_request
 

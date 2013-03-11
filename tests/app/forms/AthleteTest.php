@@ -46,14 +46,16 @@ class Tests_App_Form_Athlete
 
         $name = $form->getElement('name');
         $event = $form->getElement('event_id');
+        $scale = $form->getElement('scale_id');
         $save = $form->getElement('save');
 
         $this->assertInstanceOf('Zend_Form_Element_Text', $name);
-        $this->assertInstanceOf('Zend_Form_Element_Select', $event);
         $this->assertInstanceOf('Zend_Form_Element_Submit', $save);
+        $this->assertInstanceOf('Zend_Form_Element_Hidden', $event);
+        $this->assertInstanceOf('Zend_Form_Element_Select', $scale);
 
         $this->assertEquals('Name', $name->getLabel());
-        $this->assertEquals('Event', $event->getLabel());
+        $this->assertEquals('Scale', $scale->getLabel());
         $this->assertEquals('Save', $save->getLabel());
 
     } // END function test_init
@@ -74,14 +76,9 @@ class Tests_App_Form_Athlete
             ->getMock();
 
         $subject = $this->getMockBuilder('App_Form_Athlete')
-            ->setMethods(array('_insertEvents', '_insertScales'))
+            ->setMethods(array('_insertScales'))
             ->disableOriginalConstructor()
             ->getMock();
-
-        $subject->expects($this->once())
-            ->method('_insertEvents')
-            ->with($this->equalTo($model), $this->equalTo($params))
-            ->will($this->returnSelf());
 
         $subject->expects($this->once())
             ->method('_insertScales')
@@ -91,45 +88,6 @@ class Tests_App_Form_Athlete
         $result = $subject->injectDependencies($model, $params);
 
         $this->assertSame($subject, $result);
-
-
-        // $eventModel = $this->getMockBuilder('App_Model_Event')
-        //     ->setMethods(array('getTable'))
-        //     ->disableOriginalConstructor()
-        //     ->getMock();
-
-        // $table = $this->getMockBuilder('Zend_Db_Table_Abstract')
-        //     ->setMethods(array('fetchAll'))
-        //     ->disableOriginalConstructor()
-        //     ->getMock();
-
-        // $eventElement = $this->getMockBuilder('Zend_Form_Element_Select')
-        //     ->setMethods(array('addMultiOption'))
-        //     ->disableOriginalConstructor()
-        //     ->getMock();
-
-        // $subject = $this->getMockBuilder('App_Form_Athlete')
-        //     ->setMethods(array('getElement'))
-        //     ->disableOriginalConstructor()
-        //     ->getMock();
-
-        // $eventElement->expects($this->exactly(count($events)))
-        //     ->method('addMultiOption');
-
-        // $table->expects($this->once())
-        //     ->method('fetchAll')
-        //     ->will($this->returnValue($events));
-
-        // $eventModel->expects($this->once())
-        //     ->method('getTable')
-        //     ->will($this->returnValue($table));
-
-        // $model->expects($this->once())
-        //     ->method('getParent')
-        //     ->with($this->equalTo('Event'))
-        //     ->will($this->returnValue($eventModel));
-
-        // $subject->injectDependencies($model);
 
     } // END function test_injectDependencies
 
@@ -150,97 +108,6 @@ class Tests_App_Form_Athlete
     } // END function provide_injectDependencies
 
     /**
-     * test__insertEvents()
-     *
-     * Tests the _insertEvents method of the App_Form_Athlete class
-     *
-     * @covers App_Form_Athlete::_insertEvents
-     * @dataProvider provide__insertEvents
-     */
-    public function test__insertEvents ($params = array(), $events = array())
-    {
-        $subject = $this->getMockBuilder('App_Form_Athlete')
-            ->setMethods(array('getElement'))
-            ->disableOriginalConstructor()
-            ->getMock();
-
-        $model = $this->getMockBuilder('App_Model_Athlete')
-            ->setMethods(array('getParent'))
-            ->disableOriginalConstructor()
-            ->getMock();
-
-        $eventModel = $this->getMockBuilder('App_Model_Event')
-            ->setMethods(array('getTable'))
-            ->disableOriginalConstructor()
-            ->getMock();
-
-        $table = $this->getMockBuilder('Zend_Db_Table_Abstract')
-            ->setMethods(array('fetchAll'))
-            ->disableOriginalConstructor()
-            ->getMock();
-
-        $eventElement = $this->getMockBuilder('Zend_Form_Element_Select')
-            ->setMethods(array('addMultiOption'))
-            ->disableOriginalConstructor()
-            ->getMock();
-
-        $eventElement->expects($this->exactly(count($events)))
-            ->method('addMultiOption');
-
-        $table->expects($this->once())
-            ->method('fetchAll')
-            ->will($this->returnValue($events));
-
-        $eventModel->expects($this->once())
-            ->method('getTable')
-            ->will($this->returnValue($table));
-
-        $model->expects($this->once())
-            ->method('getParent')
-            ->with($this->equalTo('Event'))
-            ->will($this->returnValue($eventModel));
-
-        $subject->expects($this->once())
-            ->method('getElement')
-            ->with($this->equalTo('event_id'))
-            ->will($this->returnValue($eventElement));
-
-        $method = new ReflectionMethod('App_Form_Athlete', '_insertEvents');
-        $method->setAccessible(true);
-        $result = $method->invoke($subject, $model, $params);
-
-        $this->assertSame($subject, $result);
-
-    } // END function test__insertEvents
-
-    /**
-     * provide__insertEvents()
-     *
-     * Provides data to use for testing the _insertEvents method of
-     * the App_Form_Athlete class
-     *
-     * @return array
-     */
-    public function provide__insertEvents ( )
-    {
-        return array(
-            'no params, no events' => array(
-                array(), array(),
-            ),
-
-            'no params, 1 event' => array(
-                array(), array(
-                    (object)array(
-                        'id'    => 1,
-                        'name'  => 'event name',
-                    )
-                ),
-            ),
-        );
-
-    } // END function provide__insertEvents
-
-    /**
      * test__insertScales()
      *
      * Tests the _insertScales method of the App_Form_Athlete class
@@ -250,6 +117,19 @@ class Tests_App_Form_Athlete
      */
     public function test__insertScales ($params = array(), $scales = array())
     {
+
+        // $table = $model->getParent('Scale')->getTable();
+
+        // $scales = $table->fetchAll(
+        //     $table->select()->where(sprintf('event_id = %d', @$params['event_id']))
+        // );
+
+        // $element = $this->getElement('scale_id');
+
+        // foreach ($scales as $scale) {
+        //     $element->addMultiOption($scale->id, $scale->name);
+        // }
+
         $subject = $this->getMockBuilder('App_Form_Athlete')
             ->setMethods(array('getElement'))
             ->disableOriginalConstructor()
@@ -265,8 +145,13 @@ class Tests_App_Form_Athlete
             ->disableOriginalConstructor()
             ->getMock();
 
+        $select = $this->getMockBuilder('Zend_Db_Table_Select')
+            ->setMethods(array('where'))
+            ->disableOriginalConstructor()
+            ->getMock();
+
         $table = $this->getMockBuilder('Zend_Db_Table_Abstract')
-            ->setMethods(array('fetchAll'))
+            ->setMethods(array('fetchAll', 'select'))
             ->disableOriginalConstructor()
             ->getMock();
 
@@ -278,8 +163,18 @@ class Tests_App_Form_Athlete
         $scaleElement->expects($this->exactly(count($scales)))
             ->method('addMultiOption');
 
+        $select->expects($this->once())
+            ->method('where')
+            ->with($this->equalTo(sprintf('event_id = %d', @$params['event_id'])))
+            ->will($this->returnSelf());
+
+        $table->expects($this->once())
+            ->method('select')
+            ->will($this->returnValue($select));
+
         $table->expects($this->once())
             ->method('fetchAll')
+            ->with($this->equalTo($select))
             ->will($this->returnValue($scales));
 
         $scaleModel->expects($this->once())
