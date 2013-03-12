@@ -225,7 +225,7 @@ p { font-family: "Open Sans"; font-weight: 400; font-size: 16px; font-size: 1rem
 p.lead { font-size: 20px; font-size: 1.25rem; margin-bottom: 18px; }
 @media only screen and (max-width: 768px) { p { font-size: 17.6px; font-size: 1.1rem; line-height: 1.625em; } }
 
-a { color: #d04526; text-decoration: none; outline: 0; line-height: inherit; }
+a { color: #cc0000; text-decoration: none; outline: 0; line-height: inherit; }
 a:hover { color: #c03d20; }
 
 /*=====================================================
@@ -1651,34 +1651,34 @@ body .video { width: 100%; position: relative; height: 0; padding-bottom: 56.25%
 .badge a, .label a { color: #fff; }
 .badge.primary, .label.primary { background: #3085d6; }
 .badge.light, .label.light { background: #fff; color: #555555; border: 1px solid #f2f2f2; }
-.badge.light a, .label.light a { color: #d04526; }
+.badge.light a, .label.light a { color: #cc0000; }
 .badge.dark, .label.dark { background: #212121; }
 .badge.secondary, .label.secondary { background: #42a35a; }
 .badge.light, .label.light { background: #fff; color: #555555; border: 1px solid #f2f2f2; }
-.badge.light a, .label.light a { color: #d04526; }
+.badge.light a, .label.light a { color: #cc0000; }
 .badge.dark, .label.dark { background: #212121; }
 .badge.default, .label.default { background: #f2f2f2; color: #555555; border: 1px solid #f2f2f2; }
 .badge.default:hover, .label.default:hover { border: 1px solid #e5e5e5; }
 .badge.default a, .label.default a { color: #555555; }
 .badge.light, .label.light { background: #fff; color: #555555; border: 1px solid #f2f2f2; }
-.badge.light a, .label.light a { color: #d04526; }
+.badge.light a, .label.light a { color: #cc0000; }
 .badge.dark, .label.dark { background: #212121; }
 .badge.info, .label.info { background: #4a4d50; }
 .badge.light, .label.light { background: #fff; color: #555555; border: 1px solid #f2f2f2; }
-.badge.light a, .label.light a { color: #d04526; }
+.badge.light a, .label.light a { color: #cc0000; }
 .badge.dark, .label.dark { background: #212121; }
 .badge.danger, .label.danger { background: #ca3838; }
 .badge.light, .label.light { background: #fff; color: #555555; border: 1px solid #f2f2f2; }
-.badge.light a, .label.light a { color: #d04526; }
+.badge.light a, .label.light a { color: #cc0000; }
 .badge.dark, .label.dark { background: #212121; }
 .badge.warning, .label.warning { background: #f6b83f; color: #644405; }
 .badge.warning a, .label.warning a { color: #644405; }
 .badge.light, .label.light { background: #fff; color: #555555; border: 1px solid #f2f2f2; }
-.badge.light a, .label.light a { color: #d04526; }
+.badge.light a, .label.light a { color: #cc0000; }
 .badge.dark, .label.dark { background: #212121; }
 .badge.success, .label.success { background: #58c026; }
 .badge.light, .label.light { background: #fff; color: #555555; border: 1px solid #f2f2f2; }
-.badge.light a, .label.light a { color: #d04526; }
+.badge.light a, .label.light a { color: #cc0000; }
 .badge.dark, .label.dark { background: #212121; }
 
 .badge { padding: 0 10px; font-size: 14px; font-size: 0.875rem; -webkit-border-radius: 10px; -moz-border-radius: 10px; -ms-border-radius: 10px; -o-border-radius: 10px; border-radius: 10px; }
@@ -1720,7 +1720,7 @@ body .video { width: 100%; position: relative; height: 0; padding-bottom: 56.25%
 /*=====================================================
  Navigation (with dropdowns)
  ======================================================*/
-.navbar { width: 100%; display: block; margin-bottom: 20px; background: #8f8f8f; /* Change this to suit the color theme of your site */ }
+.navbar { width: 100%; display: block; margin-bottom: 20px; background: #c9c9c9; /* Change this to suit the color theme of your site */ }
 .navbar.fixed { top: 0; left: 0; z-index: 99999; }
 .navbar a.toggle { display: none; }
 .navbar .logo { display: inline-block; margin: 0 2.12766% 0 0; padding: 0; height: 60px; line-height: 58px; }
@@ -1728,13 +1728,13 @@ body .video { width: 100%; position: relative; height: 0; padding-bottom: 56.25%
 .navbar .logo a.toggle { display: none; }
 .navbar ul { display: table; vertical-align: middle; margin: 0; float: none; }
 .navbar ul li { display: table-cell; text-align: center; padding-bottom: 0; margin: 0; height: 60px; line-height: 58px; }
-.navbar ul li > a { display: block; padding: 0 16px; white-space: nowrap; color: white; text-shadow: 0 1px 2px #5c5c5c, 0 1px 0 #5c5c5c; height: 60px; line-height: 58px; font-size: 16px; font-size: 1rem; }
-.navbar ul li .btn { border-color: #434343 !important; }
+.navbar ul li > a { display: block; padding: 0 16px; white-space: nowrap; color: white; text-shadow: 0 1px 2px #969696, 0 1px 0 #969696; height: 60px; line-height: 58px; font-size: 16px; font-size: 1rem; }
+.navbar ul li .btn { border-color: #7d7d7d !important; }
 .navbar ul li.field { margin-bottom: 0 !important; margin-right: 0; }
-.navbar ul li.field input.search { background: #5c5c5c; border: none; color: #f2f2f2; }
+.navbar ul li.field input.search { background: #969696; border: none; color: #f2f2f2; }
 .navbar ul li:hover > a { position: relative; background: #868d92; z-index: 1000; }
 .navbar ul li .dropdown { width: auto; min-width: 0px; max-width: 320px; height: 0; position: absolute; background: #fafafa; overflow: hidden; z-index: 999; }
-.navbar ul li:hover .dropdown { min-height: 60px; max-height: 561px; overflow: visible; height: auto; width: 100%; padding: 0; border-top: 1px solid #828282; -webkit-box-shadow: 0px 3px 4px rgba(0, 0, 0, 0.3); box-shadow: 0px 3px 4px rgba(0, 0, 0, 0.3); }
+.navbar ul li:hover .dropdown { min-height: 60px; max-height: 561px; overflow: visible; height: auto; width: 100%; padding: 0; border-top: 1px solid #bcbcbc; -webkit-box-shadow: 0px 3px 4px rgba(0, 0, 0, 0.3); box-shadow: 0px 3px 4px rgba(0, 0, 0, 0.3); }
 .navbar ul a.toggle { display: block; }
 
 .navbar > ul > li > li > a { padding: 0 33px; }
@@ -1753,14 +1753,14 @@ body .video { width: 100%; position: relative; height: 0; padding-bottom: 56.25%
 .ie7 .navbar > ul > li .field { display: block; padding: 12px 18px 0; width: 80%; }
 
 /******** Pretty Navbar Styles *********/
-.pretty.navbar { background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #c2c2c2), color-stop(100%, #767676)); background-image: -webkit-linear-gradient(#c2c2c2, #767676); background-image: -moz-linear-gradient(#c2c2c2, #767676); background-image: -o-linear-gradient(#c2c2c2, #767676); background-image: linear-gradient(#c2c2c2, #767676); -webkit-box-shadow: inset 0 1px 1px #c2c2c2, 0 1px 2px rgba(0, 0, 0, 0.8) !important; /* Remove this line if you dont want a dropshadow on your navigation*/ box-shadow: inset 0 1px 1px #c2c2c2, 0 1px 2px rgba(0, 0, 0, 0.8) !important; /* Remove this line if you dont want a dropshadow on your navigation*/ }
+.pretty.navbar { background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #fcfcfc), color-stop(100%, #b0b0b0)); background-image: -webkit-linear-gradient(#fcfcfc, #b0b0b0); background-image: -moz-linear-gradient(#fcfcfc, #b0b0b0); background-image: -o-linear-gradient(#fcfcfc, #b0b0b0); background-image: linear-gradient(#fcfcfc, #b0b0b0); -webkit-box-shadow: inset 0 1px 1px #fcfcfc, 0 1px 2px rgba(0, 0, 0, 0.8) !important; /* Remove this line if you dont want a dropshadow on your navigation*/ box-shadow: inset 0 1px 1px #fcfcfc, 0 1px 2px rgba(0, 0, 0, 0.8) !important; /* Remove this line if you dont want a dropshadow on your navigation*/ }
 .pretty.navbar.row { border-radius: 4px; }
-.pretty.navbar ul li.field input.search { background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #5c5c5c), color-stop(100%, #949494)); background-image: -webkit-linear-gradient(#5c5c5c, #949494); background-image: -moz-linear-gradient(#5c5c5c, #949494); background-image: -o-linear-gradient(#5c5c5c, #949494); background-image: linear-gradient(#5c5c5c, #949494); border: none; box-shadow: 0 1px 2px #cfcfcf !important; /* Remove this line if you dont want a dropshadow on your navigation*/ }
+.pretty.navbar ul li.field input.search { background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #969696), color-stop(100%, #cecece)); background-image: -webkit-linear-gradient(#969696, #cecece); background-image: -moz-linear-gradient(#969696, #cecece); background-image: -o-linear-gradient(#969696, #cecece); background-image: linear-gradient(#969696, #cecece); border: none; box-shadow: 0 1px 2px white !important; /* Remove this line if you dont want a dropshadow on your navigation*/ }
 .pretty.navbar > ul > li:first-child, .pretty.navbar .pretty.navbar > ul > li:first-child a:hover { box-shadow: none; }
 
 .navbar li .dropdown ul { margin: 0; }
 .navbar li .dropdown ul > li { position: relative; display: block; width: 100%; float: left; text-align: left; height: auto; border-radius: none; }
-.navbar li .dropdown ul > li a { display: block; padding: 0 20px; color: #d04526; border-bottom: 1px solid #cccccc; text-shadow: none; height: 51px; line-height: 49px; }
+.navbar li .dropdown ul > li a { display: block; padding: 0 20px; color: #cc0000; border-bottom: 1px solid #cccccc; text-shadow: none; height: 51px; line-height: 49px; }
 .navbar li .dropdown ul > li .dropdown { display: none; background: white; }
 .navbar li .dropdown ul > li:hover .dropdown { border-top: none; display: block; position: absolute; z-index: 9999; left: 320px; top: 0px; margin-top: 0; }
 .navbar li .dropdown ul li:first-child a { border-radius: 0; }
@@ -1774,22 +1774,22 @@ body .video { width: 100%; position: relative; height: 0; padding-bottom: 56.25%
   .navbar .logo { float: left; display: inline; }
   .navbar .logo a { line-height: 0; padding-left: 2.12766%; }
   .navbar .logo a img { width: auto; height: inherit; }
-  .navbar a.toggle { top: 18%; right: 4%; width: 46px; position: absolute; text-align: center; display: inline-block; color: white; background: #8f8f8f; height: 40px; line-height: 38px; -webkit-border-radius: 4px; -moz-border-radius: 4px; -ms-border-radius: 4px; -o-border-radius: 4px; border-radius: 4px; font-size: 30px; font-size: 1.875rem; }
-  .navbar a.toggle:hover { background: #9c9c9c; }
-  .navbar a.toggle:active, .navbar a.toggle.active { background: #828282; }
-  .navbar.pretty a.toggle { border: 1px solid #828282; background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #c2c2c2), color-stop(100%, #8f8f8f)); background-image: -webkit-linear-gradient(#c2c2c2, #8f8f8f); background-image: -moz-linear-gradient(#c2c2c2, #8f8f8f); background-image: -o-linear-gradient(#c2c2c2, #8f8f8f); background-image: linear-gradient(#c2c2c2, #8f8f8f); -webkit-box-shadow: inset 0 1px 2px #cfcfcf, inset 0 -1px 1px #9c9c9c, inset 1px 0 1px #9c9c9c, inset -1px 0 1px #9c9c9c, 0 1px 1px darkgrey; -moz-box-shadow: inset 0 1px 2px #cfcfcf, inset 0 -1px 1px #9c9c9c, inset 1px 0 1px #9c9c9c, inset -1px 0 1px #9c9c9c, 0 1px 1px darkgrey; box-shadow: inset 0 1px 2px #cfcfcf, inset 0 -1px 1px #9c9c9c, inset 1px 0 1px #9c9c9c, inset -1px 0 1px #9c9c9c, 0 1px 1px darkgrey; }
-  .navbar.pretty a.toggle i { text-shadow: 0 1px 1px #5c5c5c; }
-  .navbar.pretty a.toggle:hover { background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #cfcfcf), color-stop(100%, #9c9c9c)); background-image: -webkit-linear-gradient(#cfcfcf, #9c9c9c); background-image: -moz-linear-gradient(#cfcfcf, #9c9c9c); background-image: -o-linear-gradient(#cfcfcf, #9c9c9c); background-image: linear-gradient(#cfcfcf, #9c9c9c); }
-  .navbar.pretty a.toggle:active, .navbar.pretty a.toggle.active { background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #828282), color-stop(100%, #8f8f8f)); background-image: -webkit-linear-gradient(#828282, #8f8f8f); background-image: -moz-linear-gradient(#828282, #8f8f8f); background-image: -o-linear-gradient(#828282, #8f8f8f); background-image: linear-gradient(#828282, #8f8f8f); -webkit-box-shadow: 0 1px 1px darkgrey; -moz-box-shadow: 0 1px 1px darkgrey; box-shadow: 0 1px 1px darkgrey; }
-  .navbar ul { position: absolute; display: block; width: 100% !important; height: 0; max-height: 0; top: 60px; overflow: hidden; text-align: center; background: #828282; }
-  .navbar ul.active { height: auto; max-height: 600px; z-index: 999999; -webkit-transition-duration: 0.5s; -moz-transition-duration: 0.5s; -o-transition-duration: 0.5s; transition-duration: 0.5s; -webkit-box-shadow: 0 2px 2px dimgrey; -moz-box-shadow: 0 2px 2px dimgrey; box-shadow: 0 2px 2px dimgrey; }
+  .navbar a.toggle { top: 18%; right: 4%; width: 46px; position: absolute; text-align: center; display: inline-block; color: white; background: #c9c9c9; height: 40px; line-height: 38px; -webkit-border-radius: 4px; -moz-border-radius: 4px; -ms-border-radius: 4px; -o-border-radius: 4px; border-radius: 4px; font-size: 30px; font-size: 1.875rem; }
+  .navbar a.toggle:hover { background: #d6d6d6; }
+  .navbar a.toggle:active, .navbar a.toggle.active { background: #bcbcbc; }
+  .navbar.pretty a.toggle { border: 1px solid #bcbcbc; background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #fcfcfc), color-stop(100%, #c9c9c9)); background-image: -webkit-linear-gradient(#fcfcfc, #c9c9c9); background-image: -moz-linear-gradient(#fcfcfc, #c9c9c9); background-image: -o-linear-gradient(#fcfcfc, #c9c9c9); background-image: linear-gradient(#fcfcfc, #c9c9c9); -webkit-box-shadow: inset 0 1px 2px white, inset 0 -1px 1px #d6d6d6, inset 1px 0 1px #d6d6d6, inset -1px 0 1px #d6d6d6, 0 1px 1px #e3e3e3; -moz-box-shadow: inset 0 1px 2px white, inset 0 -1px 1px #d6d6d6, inset 1px 0 1px #d6d6d6, inset -1px 0 1px #d6d6d6, 0 1px 1px #e3e3e3; box-shadow: inset 0 1px 2px white, inset 0 -1px 1px #d6d6d6, inset 1px 0 1px #d6d6d6, inset -1px 0 1px #d6d6d6, 0 1px 1px #e3e3e3; }
+  .navbar.pretty a.toggle i { text-shadow: 0 1px 1px #969696; }
+  .navbar.pretty a.toggle:hover { background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #ffffff), color-stop(100%, #d6d6d6)); background-image: -webkit-linear-gradient(#ffffff, #d6d6d6); background-image: -moz-linear-gradient(#ffffff, #d6d6d6); background-image: -o-linear-gradient(#ffffff, #d6d6d6); background-image: linear-gradient(#ffffff, #d6d6d6); }
+  .navbar.pretty a.toggle:active, .navbar.pretty a.toggle.active { background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #bcbcbc), color-stop(100%, #c9c9c9)); background-image: -webkit-linear-gradient(#bcbcbc, #c9c9c9); background-image: -moz-linear-gradient(#bcbcbc, #c9c9c9); background-image: -o-linear-gradient(#bcbcbc, #c9c9c9); background-image: linear-gradient(#bcbcbc, #c9c9c9); -webkit-box-shadow: 0 1px 1px #e3e3e3; -moz-box-shadow: 0 1px 1px #e3e3e3; box-shadow: 0 1px 1px #e3e3e3; }
+  .navbar ul { position: absolute; display: block; width: 100% !important; height: 0; max-height: 0; top: 60px; overflow: hidden; text-align: center; background: #bcbcbc; }
+  .navbar ul.active { height: auto; max-height: 600px; z-index: 999999; -webkit-transition-duration: 0.5s; -moz-transition-duration: 0.5s; -o-transition-duration: 0.5s; transition-duration: 0.5s; -webkit-box-shadow: 0 2px 2px #a3a3a3; -moz-box-shadow: 0 2px 2px #a3a3a3; box-shadow: 0 2px 2px #a3a3a3; }
   .navbar ul li { display: block; position: relative; min-height: 60px; max-height: 320px; height: auto; width: 100%; border-right: 0 !important; -webkit-box-shadow: none; box-shadow: none; -webkit-transition-duration: 0.5s; -moz-transition-duration: 0.5s; -o-transition-duration: 0.5s; transition-duration: 0.5s; }
   .navbar ul li .dropdown { width: 100%; max-width: 100%; position: relative; -webkit-box-shadow: none !important; -moz-box-shadow: none !important; box-shadow: none !important; }
-  .navbar ul li:hover .dropdown { border-bottom: 1px solid #767676; }
-  .navbar ul li:hover .dropdown ul { position: relative; top: 0; background: #7b7b7b; min-height: 60px; max-height: 250px; height: auto; overflow: scroll; -webkit-box-shadow: none !important; -moz-box-shadow: none !important; box-shadow: none !important; -webkit-transition-duration: 0.5s; -moz-transition-duration: 0.5s; -o-transition-duration: 0.5s; transition-duration: 0.5s; }
-  .navbar ul li:hover .dropdown ul li { min-height: 50px; border-bottom: #828282; }
-  .navbar ul li:hover .dropdown ul li a { color: white; border-bottom: 1px solid #767676; }
-  .navbar ul li:hover .dropdown ul li a:hover { color: #d04526; }
+  .navbar ul li:hover .dropdown { border-bottom: 1px solid #b0b0b0; }
+  .navbar ul li:hover .dropdown ul { position: relative; top: 0; background: #b5b5b5; min-height: 60px; max-height: 250px; height: auto; overflow: scroll; -webkit-box-shadow: none !important; -moz-box-shadow: none !important; box-shadow: none !important; -webkit-transition-duration: 0.5s; -moz-transition-duration: 0.5s; -o-transition-duration: 0.5s; transition-duration: 0.5s; }
+  .navbar ul li:hover .dropdown ul li { min-height: 50px; border-bottom: #bcbcbc; }
+  .navbar ul li:hover .dropdown ul li a { color: white; border-bottom: 1px solid #b0b0b0; }
+  .navbar ul li:hover .dropdown ul li a:hover { color: #cc0000; }
   .pretty.navbar.row { -webkit-border-radius: 0; -moz-border-radius: 0; -ms-border-radius: 0; -o-border-radius: 0; border-radius: 0; } }
 .subnav { display: block; width: auto; overflow: hidden; margin: 0 0 18px 0; padding-top: 4px; }
 .subnav li, .subnav dt, .subnav dd { float: left; display: inline; margin-left: 9px; margin-bottom: 4px; }
@@ -1800,5 +1800,3 @@ body .video { width: 100%; position: relative; height: 0; padding-bottom: 56.25%
 
 .drawer { position: relative; width: 100%; max-height: 0; background: #222; -webkit-box-shadow: inset 0 -3px 5px black, inset 0 3px 5px black; box-shadow: inset 0 -3px 5px black, inset 0 3px 5px black; overflow: hidden; -webkit-transition-duration: .3s; /* Saf3.2+, Chrome */ -moz-transition-duration: .3s; /* FF4+ */ -ms-transition-duration: .3s; /* IE10 */ -o-transition-duration: .3s; /* Opera 10.5+ */ transition-duration: .3s; }
 .drawer.active { height: auto; max-height: 800px; -webkit-transition-duration: .5s; /* Saf3.2+, Chrome */ -moz-transition-duration: .5s; /* FF4+ */ -ms-transition-duration: .5s; /* IE10 */ -o-transition-duration: .5s; /* Opera 10.5+ */ transition-duration: .5s; }
-
-td, th { padding: 1em; }

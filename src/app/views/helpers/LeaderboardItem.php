@@ -120,7 +120,6 @@ class App_View_Helper_LeaderboardItem
                 $competitionResults['score'] = '--';
             }
 
-
             // $results[] = sprintf('%d (%d)', $competitionResults['rank'], $competitionResults['score']);
             // $results[] = sprintf('%d', $competitionResults['rank']);
             $results[] = sprintf(implode(PHP_EOL, array(
@@ -128,15 +127,15 @@ class App_View_Helper_LeaderboardItem
                     '<a href="#" class="expand-details">%d</a>',
                     '<ul class="details">',
                     '<li><strong>Score</strong> %s %s</li>',
-                    '<li><strong>Points</strong> %d</li>',
+                    // '<li><strong>Points</strong> %d</li>',
                     '</ul>',
                     '</td>',
                 )),
                 $this->isFiltered($competitionId) ? 'filtered' : '',
                 $competitionResults['rank'],
                 $competitionResults['score'],
-                $this->_getScoreEditLink($competitionId, $data),
-                $competitionResults['points']
+                $this->_getScoreEditLink($competitionId, $data)
+                // $competitionResults['points']
             );
         }
         return $results;

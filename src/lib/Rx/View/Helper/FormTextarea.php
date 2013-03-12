@@ -17,12 +17,11 @@
  * @subpackage Helper
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: FormSubmit.php 23775 2011-03-01 17:25:24Z ralph $
+ * @version    $Id: FormSelect.php 24158 2011-06-27 15:31:54Z ezimuel $
  */
 
-
 /**
- * Helper to generate a "submit" button
+ * Helper to generate "select" list of options
  *
  * @category   Zend
  * @package    Zend_View
@@ -30,11 +29,11 @@
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Rx_View_Helper_FormSubmit
-    extends Zend_View_Helper_FormSubmit
+class Rx_View_Helper_FormTextarea
+    extends Zend_View_Helper_FormTextarea
 {
     /**
-     * Generates a 'submit' button.
+     * Generates a 'textarea' element.
      *
      * @access public
      *
@@ -48,40 +47,17 @@ class Rx_View_Helper_FormSubmit
      *
      * @return string The element XHTML.
      */
-    public function formSubmit($name, $value = null, $attribs = null)
+    public function formTextarea($name, $value = null, $attribs = null)
     {
         // return parent::formSubmit($name, $value, $attribs);
-        $attribs['class'] = @$attribs['class'] . ' pretty default btn';
+        $attribs['class'] = @$attribs['class'] . ' input textarea';
 
-        $info = $this->_getInfo($name, $value, $attribs);
-        extract($info); // name, value, attribs, options, listsep, disable, id
-        // check if disabled
-        $disabled = '';
-        if ($disable) {
-            $disabled = ' disabled="disabled"';
+        if (! isset($attribs['rows'])) {
+            $attribs['rows'] = 5;
         }
 
-        if ($id) {
-            $id = ' id="' . $this->view->escape($id) . '"';
-        }
-
-        // XHTML or HTML end tag?
-        $endTag = ' />';
-        if (($this->view instanceof Zend_View_Abstract) && !$this->view->doctype()->isXhtml()) {
-            $endTag= '>';
-        }
-
-        $xhtml = sprintf('<p %s><a href="#">%s</a></p>', $this->_htmlAttribs($attribs), $value);
-
-        // // Render the button.
-        // $xhtml = '<input type="submit"'
-        //        . ' name="' . $this->view->escape($name) . '"'
-        //        . $id
-        //        . ' value="' . $this->view->escape($value) . '"'
-        //        . $disabled
-        //        . $this->_htmlAttribs($attribs)
-        //        . $endTag;
-
-        return $xhtml;
+        return parent::formTextarea($name, $value, $attribs);
     }
+
 }
+
