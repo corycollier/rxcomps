@@ -19,7 +19,10 @@
 @import "compass/css3/images";
 @import "compass/utilities/general/clearfix";
 
-@import "functions/all";
+@import "mixins/all";
+
+@import "functions/breakpoints";
+@import "functions/grid-calc";
 
 @import "base";
 @import "fonts";
