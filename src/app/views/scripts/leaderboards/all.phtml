@@ -1,0 +1,55 @@
+<?php
+/**
+ * all view script
+ *
+ * This view script is for viewing all of the leaderboards for an event
+ *
+ * @category    RxCompetition
+ * @package     App
+ * @subpackage  View_Scripts
+ * @copyright   Copyright (c) 2012 RxCompetition.com, Inc (http://www.RxCompetition.com)
+ * @license     All Rights Reserved
+ * @version     Release: 1.0.0
+ * @since       File available since release 1.0.0
+ */
+?>
+<?php
+    // store request params for use later
+    $params = $this->request()->getParams();
+?>
+
+<div class="row">
+    <div class="twelve columns">
+        <section class="tabs">
+            <ul class="tab-nav">
+
+            <?php foreach ($this->scales as $scale) : ?>
+            <?php foreach ($this->genders as $gender) : ?>
+                <li><a href="#">
+                    <?php echo ucwords($gender->gender); ?>
+                    <?php echo $scale->name; ?>
+                </a></li>
+            <?php endforeach; ?>
+            <?php endforeach; ?>
+            </ul>
+
+            <?php foreach ($this->scales as $scale) : ?>
+            <?php foreach ($this->genders as $gender) : ?>
+            <div class="tab-content">
+                <h2>
+                    <?php echo ucwords($gender->gender); ?>
+                    <?php echo $scale->name; ?>
+                </h2>
+
+                <?php echo $this->action(
+                    'view', 'leaderboards', 'default', array_merge($params, array(
+                        'scale_id' => $scale->id,
+                        'gender'   => $gender->gender,
+                    ))
+                ); ?>
+            </div>
+            <?php endforeach; ?>
+            <?php endforeach; ?>
+        </section>
+    </div>
+</div>

@@ -51,7 +51,7 @@
                 <!-- LEADERBOARDS -->
                 <h2>Leaderboards</h2>
                 <?php echo $this->action(
-                    'view', 'leaderboards', 'default', array_merge($params, array(
+                    'all', 'leaderboards', 'default', array_merge($params, array(
                         'event_id'  => $this->model->id,
                     ))
                 ); ?>

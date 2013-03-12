@@ -88,30 +88,33 @@ class LeaderboardsController
             // nothing to see here
         }
 
-        $eventsTable = $this->getTable('Event');
-        $scalesTable = $this->getTable('Scale');
-
-        if ($eventId) {
-            $this->view->event = $eventsTable->fetchRow(
-                $eventsTable->select()->where(sprintf('id = %d', $eventId))
-            )->toArray();
-
-        }
-
-        if ($scaleId) {
-            $scale = $scalesTable->fetchRow(
-                $scalesTable->select()->where(sprintf('id = %d', $scaleId))
-            );
-
-            if ($scale){
-                $this->view->scale = $scale->toArray();
-            }
-        }
-
-
         $this->view->items = $items;
 
     } // END function viewAction
+
+    public function allAction ( )
+    {
+        $request = $this->getRequest();
+        $eventId = $request->getParam('event_id');
+        $eventsTable = $this->getTable('Event');
+        $scalesTable = $this->getTable('Scale');
+        $athletesTable = $this->getTable('Athlete');
+
+        if ($eventId) {
+            $event = $eventsTable->fetchRow(
+                $eventsTable->select()->where(sprintf('id = %d', $eventId))
+            );
+
+            $this->view->competitions = $event->findDependentRowset('App_Model_DbTable_Competition');
+            $this->view->scales = $event->findDependentRowset('App_Model_DbTable_Scale');
+            $this->view->genders = $athletesTable->fetchAll(
+                $athletesTable->select()
+                    ->where('event_id = ?', $eventId)
+                    ->group('gender')
+            );
+        }
+
+    }
 
 
 } // END class App_Controller_className
