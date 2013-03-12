@@ -34,39 +34,37 @@
 
 <p><?php echo $this->model->getValue('description'); ?></p>
 
-<!-- LEADERBOARDS -->
-<h2><?php echo $this->htmlAnchor('Leaderboards', array(
-    'controller'=> 'leaderboards',
-    'action' => 'view',
-    'event_id' => $this->model->id,
-)); ?>
-</h2>
-
-<section class="row">
-
-    <!-- COMPETITONS -->
-    <div class="row six columns">
-        <h2>Competitions</h2>
-        <?php echo $this->action('list', 'competitions', 'default', array(
-            'event_id'  => $this->model->id,
-        )); ?>
-    </div>
-
-
-    <!-- SCALES -->
-    <div class="row six columns">
-        <h2>Scales</h2>
-        <?php echo $this->action('list', 'scales', 'default', array(
-            'event_id'  => $this->model->id,
-        )); ?>
-    </div>
-
-</section>
-
-<!-- ATHLETES -->
 <div class="row">
-    <h2>Athletes</h2>
-    <?php echo $this->action('list', 'athletes', 'default', array(
-        'event_id'  => $this->model->id,
-    )); ?>
+    <div class="twelve columns">
+        <section class="tabs">
+            <ul class="tab-nav">
+                <li><a href="#">Leaderboards</a></li>
+                <li><a href="#">Competitions</a></li>
+                <li><a href="#">Athletes</a></li>
+            </ul>
+            <div class="tab-content">
+                <!-- LEADERBOARDS -->
+                <h2>Leaderboards</h2>
+                <?php echo $this->action('view', 'leaderboards', 'default', array(
+                    'event_id'  => $this->model->id,
+                )); ?>
+            </div>
+
+            <div class="tab-content active">
+                <!-- COMPETITONS -->
+                <h2>Competitions</h2>
+                <?php echo $this->action('list', 'competitions', 'default', array(
+                    'event_id'  => $this->model->id,
+                )); ?>
+            </div>
+
+            <div class="tab-content">
+                <!-- ATHLETES -->
+                <h2>Athletes</h2>
+                <?php echo $this->action('list', 'athletes', 'default', array(
+                    'event_id'  => $this->model->id,
+                )); ?>
+            </div>
+        </section>
+    </div>
 </div>
