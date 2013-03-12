@@ -64,8 +64,8 @@
 
 <body>
     <div class="container row main-navigation">
+        <h2 class="logo"><a href="/"><?php echo $this->sitename; ?></a></h2>
         <nav class=" navbar" id="basicnav">
-            <h2 class="logo"><a href="/"><?php echo $this->sitename; ?></a></h2>
             <a href="#" class="toggle" data-for="#basicnav > ul"><img src="/img/icon_nav_toggle.gif" /></a>
             <?php echo $this->navigation()->menu()->setUlClass('container')->menu(); ?>
         </nav>
