@@ -36,7 +36,7 @@
 <?php
     $event = $this->model->getParent('Event');
 ?>
-<?php echo $this->action('leaderboards', 'competitions', 'default', array_merge(
+<?php echo $this->action('all-leaderboards', 'competitions', 'default', array_merge(
     $this->request()->getParams(),
     array('event_id' => $event->id,)
 ));?>

@@ -67,6 +67,8 @@ class App_Plugin_Acl
             'success',
             'list',
             'leaderboards',
+            'all',
+            'all-leaderboards',
         ));
 
         $acl->allow('user', null, null, new App_Model_Assertion_Event);

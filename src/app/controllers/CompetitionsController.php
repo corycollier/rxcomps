@@ -62,6 +62,7 @@ class CompetitionsController
         $scaleId = $request->getParam('scale_id');
         $gender = $request->getParam('gender');
 
+
         $items = array();
 
         $model->load($request->getParam('id'));
@@ -77,5 +78,29 @@ class CompetitionsController
         $this->view->eventId = $eventId;
 
     } // END function leaderboardsAction
+
+    public function allLeaderboardsAction ( )
+    {
+        $request = $this->getRequest();
+        $eventId = $request->getParam('event_id');
+        $athletesTable = $this->getTable('Athlete');
+        $eventsTable = $this->getTable('Athlete');
+
+        $event = $eventsTable->fetchRow(
+            $eventsTable->select()->where(sprintf('id = %d', $eventId))
+        );
+
+        $genders = $athletesTable->fetchAll(
+            $athletesTable->select()
+                ->where('event_id = ?', $eventId)
+                ->group('gender')
+        );
+
+        $scales = $event->findDependentRowset('App_Model_DbTable_Scale');
+
+        $this->view->scales = $scales;
+        $this->view->genders = $genders;
+        $this->view->eventId = $eventId;
+    }
 
 } // END class App_Controller_CompetitionsController
