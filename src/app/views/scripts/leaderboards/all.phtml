@@ -31,6 +31,7 @@
                 </a></li>
             <?php endforeach; ?>
             <?php endforeach; ?>
+
             </ul>
 
             <?php foreach ($this->scales as $scale) : ?>
@@ -45,6 +46,7 @@
                     'view', 'leaderboards', 'default', array_merge($params, array(
                         'scale_id' => $scale->id,
                         'gender'   => $gender->gender,
+                        'event_id' => $params['id'],
                     ))
                 ); ?>
             </div>
