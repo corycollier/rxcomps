@@ -13,12 +13,7 @@
  * @since       File available since release 1.0.0
  */
 ?>
-<?php
-    $eventId = $this->eventId ? $this->eventId : $this->request()->getParam('event_id');
-?>
-Filter By:
-<?php echo $this->scaleFilter($eventId); ?>
-<?php echo $this->genderFilter($eventId); ?>
+
 <table class="data-table leaderboards-table">
 <thead>
     <th class="athlete-name"><p class="rotate">Athlete / Team</p></th>

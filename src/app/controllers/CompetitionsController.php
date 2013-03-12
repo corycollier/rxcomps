@@ -84,7 +84,7 @@ class CompetitionsController
         $request = $this->getRequest();
         $eventId = $request->getParam('event_id');
         $athletesTable = $this->getTable('Athlete');
-        $eventsTable = $this->getTable('Athlete');
+        $eventsTable = $this->getTable('Event');
 
         $event = $eventsTable->fetchRow(
             $eventsTable->select()->where(sprintf('id = %d', $eventId))
