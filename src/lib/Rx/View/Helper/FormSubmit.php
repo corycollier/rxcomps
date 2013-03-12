@@ -50,38 +50,9 @@ class Rx_View_Helper_FormSubmit
      */
     public function formSubmit($name, $value = null, $attribs = null)
     {
-        // return parent::formSubmit($name, $value, $attribs);
-        $attribs['class'] = @$attribs['class'] . ' pretty default btn';
+        $xhtml = parent::formSubmit($name, $value, $attribs);
 
-        $info = $this->_getInfo($name, $value, $attribs);
-        extract($info); // name, value, attribs, options, listsep, disable, id
-        // check if disabled
-        $disabled = '';
-        if ($disable) {
-            $disabled = ' disabled="disabled"';
-        }
 
-        if ($id) {
-            $id = ' id="' . $this->view->escape($id) . '"';
-        }
-
-        // XHTML or HTML end tag?
-        $endTag = ' />';
-        if (($this->view instanceof Zend_View_Abstract) && !$this->view->doctype()->isXhtml()) {
-            $endTag= '>';
-        }
-
-        $xhtml = sprintf('<p %s><a href="#">%s</a></p>', $this->_htmlAttribs($attribs), $value);
-
-        // // Render the button.
-        // $xhtml = '<input type="submit"'
-        //        . ' name="' . $this->view->escape($name) . '"'
-        //        . $id
-        //        . ' value="' . $this->view->escape($value) . '"'
-        //        . $disabled
-        //        . $this->_htmlAttribs($attribs)
-        //        . $endTag;
-
-        return $xhtml;
+        return '<p class="medium primary btn normarg">' . $xhtml . '</p>';
     }
 }
