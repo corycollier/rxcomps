@@ -32,13 +32,9 @@ $eventId =  $request->getParam('event_id')
 )); ?>
 <?php endif; ?>
 
-Filter by:
-<?php echo $this->scaleFilter($this->request()->getParam('event_id')) ;?>
-<?php echo $this->genderFilter($this->request()->getParam('event_id')); ?>
+<?php foreach ($this->items as $athlete) : ?>
 
-<?php foreach ($this->items as $event) : ?>
-
-    <?php echo $this->athleteItem($event); ?>
+    <?php echo $this->athleteItem($athlete); ?>
 
 <?php endforeach; ?>
 

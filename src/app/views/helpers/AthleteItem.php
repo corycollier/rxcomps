@@ -65,7 +65,10 @@ class App_View_Helper_AthleteItem
             'controller'=> 'athletes',
             'action'    => 'view',
             'id'        => $athlete->id,
+            'event_id'  => $athlete->event_id,
         ));
+
+        // var_dump($athlete); die;
 
         $title = sprintf('<h3>%s <span class="alt">(%s)</span></h3>', $link, $athlete->gym);
 
@@ -94,11 +97,13 @@ class App_View_Helper_AthleteItem
                     'controller'=> 'athletes',
                     'action'    => 'edit',
                     'id'        => $athlete->id,
+                    'event_id'  => $athlete->event_id,
                 )),
                 $view->htmlAnchor('Delete', array(
                     'controller'=> 'athletes',
                     'action'    => 'delete',
                     'id'        => $athlete->id,
+                    'event_id'  => $athlete->event_id,
                 )),
             ), false, array(
                 'class' => 'subnav',

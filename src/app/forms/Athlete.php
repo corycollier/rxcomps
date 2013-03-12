@@ -51,6 +51,13 @@ class App_Form_Athlete
             'filters'       => array('StringTrim'),
         ));
 
+        $this->addElement('text', 'gym', array(
+            'label'         => 'Gym',
+            'placeholder'   => 'Enter gym name',
+            'required'      => true,
+            'filters'       => array('StringTrim'),
+        ));
+
         $this->addElement('select', 'gender', array(
             'label'         => 'Gender',
             'placeholder'   => 'Select Gender',
