@@ -33,6 +33,10 @@
 <?php endif; ?>
 
 <p><?php echo $this->model->getValue('description'); ?></p>
+<?php
+    // store request params for use later
+    $params = $this->request()->getParams();
+?>
 
 <div class="row">
     <div class="twelve columns">
@@ -42,28 +46,35 @@
                 <li><a href="#">Competitions</a></li>
                 <li><a href="#">Athletes</a></li>
             </ul>
+
             <div class="tab-content">
                 <!-- LEADERBOARDS -->
                 <h2>Leaderboards</h2>
-                <?php echo $this->action('view', 'leaderboards', 'default', array(
-                    'event_id'  => $this->model->id,
-                )); ?>
+                <?php echo $this->action(
+                    'view', 'leaderboards', 'default', array_merge($params, array(
+                        'event_id'  => $this->model->id,
+                    ))
+                ); ?>
             </div>
 
             <div class="tab-content active">
                 <!-- COMPETITONS -->
                 <h2>Competitions</h2>
-                <?php echo $this->action('list', 'competitions', 'default', array(
-                    'event_id'  => $this->model->id,
-                )); ?>
+                <?php echo $this->action(
+                    'list', 'competitions', 'default', array_merge($params, array(
+                        'event_id'  => $this->model->id,
+                    ))
+                ); ?>
             </div>
 
             <div class="tab-content">
                 <!-- ATHLETES -->
                 <h2>Athletes</h2>
-                <?php echo $this->action('list', 'athletes', 'default', array(
-                    'event_id'  => $this->model->id,
-                )); ?>
+                <?php echo $this->action(
+                    'list', 'athletes', 'default', array_merge($params, array(
+                        'event_id'  => $this->model->id,
+                    ))
+                ); ?>
             </div>
         </section>
     </div>

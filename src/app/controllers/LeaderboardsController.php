@@ -85,6 +85,7 @@ class LeaderboardsController
         try {
             $items = $leaderboards->populate($eventId, $scaleId, $gender, $filters);
         } catch (Zend_Exception $exception) {
+            var_dump($exception); die;
             // nothing to see here
         }
 
