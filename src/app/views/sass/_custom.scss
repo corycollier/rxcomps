@@ -14,3 +14,12 @@ td, th {
 .data-table .details {
     font-size: 0.8em;
 }
+
+.filtered {
+    background: rgba(0,0,0,0.25);
+    color: rgba(0,0,0,0.5);
+
+    a {
+        color: rgba(0,0,0,0.5);
+    }
+}
