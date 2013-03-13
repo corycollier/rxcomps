@@ -116,7 +116,7 @@ class App_View_Helper_LeaderboardItem
                 $competitionResults['score'] = $filter->filter($competitionResults['score']);
             }
 
-            if ($competitionResults['placeholder_score']) {
+            if (@$competitionResults['placeholder_score']) {
                 $competitionResults['score'] = '--';
             }
 
