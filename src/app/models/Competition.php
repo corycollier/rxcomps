@@ -259,7 +259,11 @@ class App_Model_Competition
         if ($this->getScoringType() == 'points') {
             $scoringTable = $this->getTable('Scoring');
             $scoring = $scoringTable->fetchRow(sprintf('competition_id = %d', $this->id));
-            $points = explode(PHP_EOL, $scoring->definition);
+            $definition = explode(PHP_EOL, $scoring->definition);
+
+            if (count($definition) == count($points)) {
+                $points = $definition;
+            }
         }
 
         return $points;
