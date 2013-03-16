@@ -157,12 +157,19 @@ class App_Model_Competition
         $pointValue = current($points);
         $scoreValue = 0;
         $rankValue  = 1;
+        $worstPoints = $this->getWorstPoints($scores);
+        $worstRank = count($scores);
 
         foreach ($scores as $i => $score) {
             if ($score['score'] != $scoreValue) {
                 $scoreValue = $score['score'];
                 $pointValue = $points[$i];
                 $rankValue = $i + 1;
+            }
+
+            if ($score['placeholder_score']) {
+                $pointValue = $worstPoints;
+                $rankValue = $worstRank;
             }
 
             $results[$score['athlete_id']] = array_merge($score, array(
@@ -210,8 +217,8 @@ class App_Model_Competition
 
                 if (! $found) {
                     $scores[] = array_merge($worstScore, array(
-                        'athlete_id' => $athleteId,
-                        'competition_id' => $this->id,
+                        'athlete_id'        => $athleteId,
+                        'competition_id'    => $this->id,
                         'placeholder_score' => true,
                     ));
 
@@ -223,6 +230,24 @@ class App_Model_Competition
         return $scores;
 
     } // END function getScores
+
+    /**
+     * getWorstPoints()
+     *
+     * Method to get the worst amount of points possible
+     *
+     * @param  array $scores all of the scores
+     * @return float|integer
+     */
+    public function getWorstPoints ($scores)
+    {
+        $points = $this->getPoints($scores);
+
+        $worst = end($points);
+
+        return $worst;
+
+    } // END function getWorstPoints
 
     /**
      * getWorstScore()
