@@ -47,9 +47,9 @@ class Rx_View_Helper_FlashMessenger
         $successes  = $flashMessenger->getMessages('success');
 
         return sprintf('<div class="flash-messages">%s%s%s</div>',
-            $errors       ? $this->htmlList($errors,      false, array('class' => 'error'))   : '',
-            $information  ? $this->htmlList($information, false, array('class' => 'info'))    : '',
-            $successes    ? $this->htmlList($successes,   false, array('class' => 'success')) : ''
+            $errors       ? $this->htmlList($errors,      false, array('class' => 'danger alert'))   : '',
+            $information  ? $this->htmlList($information, false, array('class' => 'primary alert'))    : '',
+            $successes    ? $this->htmlList($successes,   false, array('class' => 'success alert')) : ''
         );
 
     } // END function flashMessenger

@@ -1,0 +1,31 @@
+<?php
+/**
+ * view view script
+ *
+ * This view script is for viewing a single registration record
+ *
+ * @category    RxCompetition
+ * @package     App
+ * @subpackage  View_Scripts
+ * @copyright   Copyright (c) 2012 RxCompetition.com, Inc (http://www.RxCompetition.com)
+ * @license     All Rights Reserved
+ * @version     Release: 1.0.0
+ * @since       File available since release 1.0.0
+ */
+?>
+
+<?php echo $this->htmlList(array(
+    $this->backToEventLink($this->model, $this->request()->getParams()),
+), false, array(
+    'class' => 'subnav',
+), false); ?>
+
+<?php //echo $this->athleteItem($this->model->row); ?>
+
+<?php $athletes = $this->model->getAthletes(); ?>
+<h3>Athlete(s)</h3>
+<?php foreach ($athletes as $athlete) : ?>
+
+    <?php var_dump($athlete); ?>
+
+<?php endforeach; ?>

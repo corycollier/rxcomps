@@ -54,6 +54,7 @@ class App_Plugin_Acl
         $acl->addResource(new Zend_Acl_Resource('athletes'));
         $acl->addResource(new Zend_Acl_Resource('competitions'));
         $acl->addResource(new Zend_Acl_Resource('leaderboards'));
+        $acl->addResource(new Zend_Acl_Resource('registrations'));
 
         $acl->allow('guest', array('index', 'error', 'leaderboards'));
 
@@ -71,8 +72,12 @@ class App_Plugin_Acl
             'all-leaderboards',
         ));
 
+        $acl->allow('guest', 'registrations', 'create');
+
         $acl->allow('user', null, null, new App_Model_Assertion_Event);
         $acl->allow('admin', null, null, new App_Model_Assertion_Event);
+
+        $acl->allow('user', 'scores', null, new App_Model_Assertion_IsOwnScore);
 
         $acl->allow('admin');
 

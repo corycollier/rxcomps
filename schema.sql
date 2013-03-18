@@ -108,18 +108,54 @@ CREATE  TABLE IF NOT EXISTS `users` (
 )
 ENGINE = InnoDB;
 
-CREATE TABLE events_users (
+CREATE TABLE IF NOT EXISTS `events_users` (
     event_id INT(11) NOT NULL,
     user_id INT(11) NOT NULL,
     role VARCHAR(40) NOT NULL default 'user',
     PRIMARY KEY(`event_id`, `user_id`),
-    CONSTRAINT `fk_events_users_event_id` FOREIGN KEY (`event_id`) REFERENCES `events` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-    CONSTRAINT `fk_events_users_user_id` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+    CONSTRAINT `fk_events_users_event_id` FOREIGN KEY (`event_id`)
+        REFERENCES `events` (`id`)
+        ON DELETE CASCADE ON UPDATE CASCADE,
+    CONSTRAINT `fk_events_users_user_id` FOREIGN KEY (`user_id`)
+        REFERENCES `users` (`id`)
+        ON DELETE CASCADE
+        ON UPDATE CASCADE
 )
 ENGINE = InnoDB;
 
-CREATE TABLE options (
-    id INT(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `registrations` (
+    id INT(11) NOT NULL AUTO_INCREMENT,
+    event_id INT(11) NOT NULL,
+    user_id INT(11) NOT NULL,
+    PRIMARY KEY (`id`),
+    CONSTRAINT `fk_registrations_event_id` FOREIGN KEY (`event_id`)
+        REFERENCES `events` (`id`)
+        ON DELETE CASCADE
+        ON UPDATE CASCADE,
+    CONSTRAINT `fk_registrations_user_id` FOREIGN KEY (`user_id`)
+        REFERENCES `users` (`id`)
+        ON DELETE CASCADE
+        ON UPDATE CASCADE
+)
+ENGINE = InnoDB;
+
+CREATE TABLE IF NOT EXISTS `athletes_registrations` (
+    registration_id INT(11) NOT NULL,
+    athlete_id INT(11) NOT NULL,
+    PRIMARY KEY (`registration_id`, `athlete_id`),
+    CONSTRAINT `fk_athletes_registrations_registration_id` FOREIGN KEY (`registration_id`)
+        REFERENCES `registrations` (`id`)
+        ON DELETE CASCADE
+        ON UPDATE CASCADE,
+    CONSTRAINT `fk_athletes_registrations_athlete_id` FOREIGN KEY (`athlete_id`)
+        REFERENCES `athletes` (`id`)
+        ON DELETE CASCADE
+        ON UPDATE CASCADE
+)
+ENGINE = InnoDB;
+
+CREATE TABLE IF NOT EXISTS `options` (
+    id INT(11) NOT NULL AUTO_INCREMENT,
     name VARCHAR(40) NOT NULL,
     value TEXT,
     PRIMARY KEY(id),
