@@ -30,7 +30,7 @@
  */
 
 class App_Plugin_Cache
-    extends Zend_Controller_Plugin_Abstract
+    extends Rx_Controller_Plugin_Abstract
 {
 /**
      *  @var bool Whether or not to disable caching
@@ -110,7 +110,7 @@ class App_Plugin_Cache
      */
     public function getCache ( )
     {
-        $front = Zend_Controller_Front::getInstance();
+        $front = $this->getFrontController();
         $cacheManager = $front->getParam('bootstrap')->getResource('cachemanager');
         $cache = $cacheManager->getCache('page');
 

@@ -28,7 +28,7 @@
  * @since       Class available since release 1.0.0
  */
 
-class App_Model_DbTable_Option
+class App_Model_DbTable_EventOption
     extends Rx_Model_DbTable_Abstract
 {
     /**
@@ -36,6 +36,19 @@ class App_Model_DbTable_Option
      *
      * @var string
      */
-    protected $_name = 'options';
+    protected $_name = 'event_options';
+
+    /**
+     * The name of the database table that this table depends upon
+     *
+     * @var string
+     */
+    protected $_referenceMap    = array(
+        'Event' => array(
+            'columns'           => array('event_id'),
+            'refTableClass'     => 'App_Model_DbTable_Event',
+            'refColumns'        => array('id'),
+        ),
+    );
 
 } // END class App_Model_DbTable_Athletes

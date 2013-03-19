@@ -45,6 +45,8 @@
                 <li><a href="#">Leaderboards</a></li>
                 <li><a href="#">Competitions</a></li>
                 <li><a href="#">Athletes</a></li>
+                <li><a href="#">Registrations</a></li>
+                <li><a href="#">Options</a></li>
             </ul>
 
             <div class="tab-content">
@@ -72,6 +74,26 @@
                 <h2>Athletes</h2>
                 <?php echo $this->action(
                     'list', 'athletes', 'default', array_merge($params, array(
+                        'event_id'  => $this->model->id,
+                    ))
+                ); ?>
+            </div>
+
+            <div class="tab-content">
+                <!-- REGISTRATIONS -->
+                <h2>Registrations</h2>
+                <?php echo $this->action(
+                    'list', 'registrations', 'default', array_merge($params, array(
+                        'event_id'  => $this->model->id,
+                    ))
+                ); ?>
+            </div>
+
+            <div class="tab-content">
+                <!-- EVENT OPTIONS -->
+                <h2>Options</h2>
+                <?php echo $this->action(
+                    'list', 'event-options', 'default', array_merge($params, array(
                         'event_id'  => $this->model->id,
                     ))
                 ); ?>

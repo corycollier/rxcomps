@@ -31,7 +31,7 @@
  */
 
 class App_Plugin_Navigation
-    extends Zend_Controller_Plugin_Abstract
+    extends Rx_Controller_Plugin_Abstract
 {
     /**
      * preDispatch()
@@ -45,7 +45,7 @@ class App_Plugin_Navigation
             return;
         }
 
-        $view = Zend_Layout::getMvcInstance()->getView();
+        $view = $this->getView();
 
         $container = new Zend_Navigation(array(
             'events' => array(
@@ -88,18 +88,5 @@ class App_Plugin_Navigation
         }
 
     } // END function _addAuthenticationPages
-
-    /**
-     * _getAuth
-     *
-     * Gets the global authentication
-     *
-     * @return Zend_Auth
-     */
-    protected function _getAuth ( )
-    {
-        return Zend_Auth::getInstance();
-
-    } // END function _getAuth
 
 } // END class App_Plugin_Navigation

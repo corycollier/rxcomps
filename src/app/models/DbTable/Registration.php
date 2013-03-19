@@ -38,10 +38,6 @@ class App_Model_DbTable_Registration
      */
     protected $_name = 'registrations';
 
-    protected $_dependentTables = array(
-        'App_Model_DbTable_AthletesRegistrations',
-    );
-
     /**
      * The name of the database table that this table depends upon
      *
@@ -51,6 +47,11 @@ class App_Model_DbTable_Registration
         'Event' => array(
             'columns'           => array('event_id'),
             'refTableClass'     => 'App_Model_DbTable_Event',
+            'refColumns'        => array('id'),
+        ),
+        'Athlete' => array(
+            'columns'           => array('athlete_id'),
+            'refTableClass'     => 'App_Model_DbTable_Athlete',
             'refColumns'        => array('id'),
         ),
         'User' => array(

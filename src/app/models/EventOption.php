@@ -1,34 +1,34 @@
 <?php
 /**
- * Registrations Model
+ * Event Option Model
  *
  * This model represents individual events of the application
  *
  * @category    RxCompetition
  * @package     App
  * @subpackage  Model
- * @copyright   Copyright (c) 2012 RxCompetition, Inc (http://www.rxcompetition.com)
+ * @copyright   Copyright (c) 2013 RxCompetition, Inc (http://www.rxcompetition.com)
  * @license     All Rights Reserved
- * @version     Release: 1.0.0
- * @since       File available since release 1.0.0
+ * @version     Release: 2.0.0
+ * @since       File available since release 2.0.0
  * @filesource
  */
 
 /**
- * Registrations Model
+ * Events Model
  *
  * This model represents individual events of the application
  *
  * @category    RxCompetition
  * @package     App
  * @subpackage  Model
- * @copyright   Copyright (c) 2012 RxCompetition, Inc (http://www.rxcompetition.com)
+ * @copyright   Copyright (c) 2013 RxCompetition, Inc (http://www.rxcompetition.com)
  * @license     All Rights Reserved
- * @version     Release: 1.0.0
- * @since       Class available since release 1.0.0
+ * @version     Release: 2.0.0
+ * @since       Class available since release 2.0.0
  */
 
-class App_Model_Registration
+class App_Model_EventOption
     extends Rx_Model_Abstract
     implements Zend_Acl_Resource_Interface
 {
@@ -41,8 +41,7 @@ class App_Model_Registration
      */
     public function getResourceId ( )
     {
-        return 'registrations';
+        return 'event-options';
     }
 
-}// END class App_Model_Registration
-
+}// END class App_Model_Events

@@ -125,8 +125,9 @@ ENGINE = InnoDB;
 
 CREATE TABLE IF NOT EXISTS `registrations` (
     id INT(11) NOT NULL AUTO_INCREMENT,
-    event_id INT(11) NOT NULL,
-    user_id INT(11) NOT NULL,
+    event_id INT(11) NOT NULL, -- what event the registration is for
+    user_id INT(11) NOT NULL, -- who created the registration
+    athlete_id INT(11) NOT NULL, -- the athlete record that will be used for scoring
     PRIMARY KEY (`id`),
     CONSTRAINT `fk_registrations_event_id` FOREIGN KEY (`event_id`)
         REFERENCES `events` (`id`)
@@ -135,30 +136,20 @@ CREATE TABLE IF NOT EXISTS `registrations` (
     CONSTRAINT `fk_registrations_user_id` FOREIGN KEY (`user_id`)
         REFERENCES `users` (`id`)
         ON DELETE CASCADE
-        ON UPDATE CASCADE
-)
-ENGINE = InnoDB;
-
-CREATE TABLE IF NOT EXISTS `athletes_registrations` (
-    registration_id INT(11) NOT NULL,
-    athlete_id INT(11) NOT NULL,
-    PRIMARY KEY (`registration_id`, `athlete_id`),
-    CONSTRAINT `fk_athletes_registrations_registration_id` FOREIGN KEY (`registration_id`)
-        REFERENCES `registrations` (`id`)
-        ON DELETE CASCADE
         ON UPDATE CASCADE,
-    CONSTRAINT `fk_athletes_registrations_athlete_id` FOREIGN KEY (`athlete_id`)
+    CONSTRAINT `fk_registrations_athlete_id` FOREIGN KEY (`athlete_id`)
         REFERENCES `athletes` (`id`)
         ON DELETE CASCADE
         ON UPDATE CASCADE
 )
 ENGINE = InnoDB;
 
-CREATE TABLE IF NOT EXISTS `options` (
+CREATE TABLE IF NOT EXISTS `event_options` (
     id INT(11) NOT NULL AUTO_INCREMENT,
+    event_id INT(11) NOT NULL,
     name VARCHAR(40) NOT NULL,
     value TEXT,
     PRIMARY KEY(id),
-    UNIQUE KEY `uk_options_name` (`name`)
+    UNIQUE KEY `uk_competition_scoring` (`event_id`, `name`)
 )
 ENGINE = InnoDB;

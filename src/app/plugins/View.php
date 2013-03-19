@@ -29,7 +29,7 @@
  */
 
 class App_Plugin_View
-    extends Zend_Controller_Plugin_Abstract
+    extends Rx_Controller_Plugin_Abstract
 {
     /**
      * preDispatch()
@@ -38,17 +38,13 @@ class App_Plugin_View
      */
     public function preDispatch (Zend_Controller_Request_Abstract $request)
     {
-        $front = $this->getFrontController();
-        $view = $front->getParam('bootstrap')->getResource('view');
+        $view = $this->getView();
 
-        $params = $request->getParams();
-        foreach ($params as $key => $value) {
-            if (is_object($value) || is_array($value)) {
-                unset($params[$key]);
-            }
-        }
+        $registry = $this->getRegistry();
 
-        $options = $this->getRegistry()->get('options');
+        $options = isset($registry['options']) ?
+            $registry['options']
+            : array();
 
         foreach ($options as $option) {
             $name = $this->variablize($option->name);
@@ -56,11 +52,6 @@ class App_Plugin_View
         }
 
     } // END function preDispatch
-
-    public function postDispatch ( )
-    {
-
-    }
 
     /**
      * variablize()
@@ -77,31 +68,5 @@ class App_Plugin_View
         return $filter->filter($string);
 
     } // END function variablize
-
-    /**
-     * getFrontController()
-     *
-     * Gets the front controller instance
-     *
-     * @return Zend_Controller_Front
-     */
-    public function getFrontController ( )
-    {
-        return Zend_Controller_Front::getInstance();
-
-    } // END function getFrontController
-
-    /**
-     * getRegistry()
-     *
-     * Gets the registry instance
-     *
-     * @return Zend_Registry
-     */
-    public function getRegistry ( )
-    {
-        return Zend_Registry::getInstance();
-
-    } // END function getRegistry
 
 } // END class App_Plugin_View

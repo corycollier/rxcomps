@@ -1,0 +1,33 @@
+<?php
+/**
+ * list view script
+ *
+ * This view script is the list page for all registrations
+ *
+ * @category    RxCompetition
+ * @package     App
+ * @subpackage  View_Scripts
+ * @copyright   Copyright (c) 2013 RxCompetition.com, Inc (http://www.RxCompetition.com)
+ * @license     All Rights Reserved
+ * @version     Release: 2.0.0
+ * @since       File available since release 2.0.0
+ */
+?>
+
+<?php if ($this->auth()->hasIdentity()) :?>
+<?php echo $this->actionList(array(
+    $this->htmlAnchor('Create Registration', array(
+        'controller'=> 'registrations',
+        'action'    => 'create',
+    ))
+));
+?>
+<?php endif; ?>
+
+<?php foreach ($this->items as $registration) : ?>
+
+    <?php echo $this->eventItem($registration); ?>
+
+<?php endforeach; ?>
+
+<?php echo $this->paginationControl($this->paginator, 'Sliding', 'partials/pagination.phtml'); ?>

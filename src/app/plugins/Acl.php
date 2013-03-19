@@ -29,7 +29,7 @@
  */
 
 class App_Plugin_Acl
-    extends Zend_Controller_Plugin_Abstract
+    extends Rx_Controller_Plugin_Abstract
 {
     /**
      * routeStartup()
@@ -45,6 +45,7 @@ class App_Plugin_Acl
         $user   = $acl->addRole(new Zend_Acl_Role('user'), array('guest'));
         $admin  = $acl->addRole(new Zend_Acl_Role('admin'), array('user'));
 
+        $acl->addResource(new Zend_Acl_Resource('admin'));
         $acl->addResource(new Zend_Acl_Resource('index'));
         $acl->addResource(new Zend_Acl_Resource('error'));
         $acl->addResource(new Zend_Acl_Resource('users'));
@@ -55,6 +56,7 @@ class App_Plugin_Acl
         $acl->addResource(new Zend_Acl_Resource('competitions'));
         $acl->addResource(new Zend_Acl_Resource('leaderboards'));
         $acl->addResource(new Zend_Acl_Resource('registrations'));
+        $acl->addResource(new Zend_Acl_Resource('event-options'));
 
         $acl->allow('guest', array('index', 'error', 'leaderboards'));
 
@@ -81,7 +83,9 @@ class App_Plugin_Acl
 
         $acl->allow('admin');
 
-        Zend_Registry::getInstance()->set('acl', $acl);
+        $this->getRegistry()->set('acl', $acl);
     }
+
+
 
 } // END class App_Plugin_Acl

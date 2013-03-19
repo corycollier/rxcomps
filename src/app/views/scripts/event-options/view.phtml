@@ -1,0 +1,36 @@
+<?php
+/**
+ * view view script
+ *
+ * This view script is for viewing a single event-option record
+ *
+ * @category    RxCompetition
+ * @package     App
+ * @subpackage  View_Scripts
+ * @copyright   Copyright (c) 2013 RxCompetition.com, Inc (http://www.RxCompetition.com)
+ * @license     All Rights Reserved
+ * @version     Release: 2.0.0
+ * @since       File available since release 2.0.0
+ */
+?>
+
+<?php echo $this->htmlList(array(
+    $this->backToEventLink($this->model, $this->request()->getParams()),
+), false, array(
+    'class' => 'subnav',
+), false); ?>
+
+<?php if ($this->auth()->hasIdentity()) :?>
+<?php echo $this->actionList(array(
+    $this->htmlAnchor('Add Option', array(
+        'controller'    => 'event-options',
+        'action'    => 'create',
+        'event_id'  => $this->model->row->event_id,
+    ))
+)); ?>
+<?php endif; ?>
+
+<dl>
+    <dt><?php echo $this->model->row->name; ?></dt>
+    <dd><?php echo $this->model->row->value; ?></dd>
+</dl>
