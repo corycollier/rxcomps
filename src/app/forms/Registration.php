@@ -52,6 +52,9 @@ class App_Form_Registration
             'required'      => true,
         ));
 
+        $this->addSubForm($this->getUserForm(), 'user');
+        $this->addSubForm($this->getAthleteForm(), 'athlete');
+
         $this->addElement('submit', 'save', array(
             'label'         => 'Save',
             'ignore'        => true,
@@ -60,6 +63,40 @@ class App_Form_Registration
         $this->setStandardDecorators();
 
     } // END function init
+
+    /**
+     * getUserForm()
+     *
+     * Gets a User form instance
+     *
+     * @return App_Form_User
+     */
+    public function getUserForm ( )
+    {
+        $form = new App_Form_User;
+        $form->removeDecorator('Form');
+        $form->removeElement('login');
+        $form->getDecorator('Fieldset')->setLegend('User Information');
+        return $form;
+
+    } // END function getUserForm
+
+    /**
+     * getAthleteForm()
+     *
+     * Gets an Athlete form instance
+     *
+     * @return App_Form_Athlete
+     */
+    public function getAthleteForm ( )
+    {
+        $form = new App_Form_Athlete;
+        $form->removeDecorator('Form');
+        $form->removeElement('save');
+        $form->getDecorator('Fieldset')->setLegend('Athlete Information');
+        return $form;
+
+    } // END function getAthleteForm
 
     /**
      * injectDependencies()
@@ -77,20 +114,8 @@ class App_Form_Registration
             $this->getElement('user_id')->setValue($authInfo->id);
         }
 
+        $this->getSubForm('athlete')->injectDependencies($model, $params);
+
     } // END function injectDependencies
-
-    /**
-     * getAuth()
-     *
-     * Gets the global auth adapter
-     *
-     * @return Zend_Auth
-     */
-    public function getAuth ( )
-    {
-        return Zend_Auth::getInstance();
-
-    } // END function getAuth
-
 
 } // END class App_Form_Registration
