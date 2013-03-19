@@ -118,4 +118,17 @@ class App_Form_Registration
 
     } // END function injectDependencies
 
+    /**
+     * _getAuth
+     *
+     * Gets the global authentication
+     *
+     * @return Zend_Auth
+     */
+    protected function getAuth ( )
+    {
+        return Zend_Auth::getInstance();
+
+    } // END function _getAuth
+
 } // END class App_Form_Registration

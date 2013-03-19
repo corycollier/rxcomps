@@ -140,7 +140,6 @@ class Rx_Controller_Model
         } catch (Zend_Exception $exception) {
             $flash->addMessage($exception->getMessage(), 'error');
         }
-
     }
 
 
