@@ -119,7 +119,8 @@ class App_Form_Athlete
         $table = $model->getParent('Scale')->getTable();
 
         $scales = $table->fetchAll(
-            $table->select()->where(sprintf('event_id = %d', @$params['event_id']))
+            $table->select()
+                ->where(sprintf('event_id = %d', @$params['event_id']))
         );
 
         $element = $this->getElement('scale_id');
@@ -143,17 +144,18 @@ class App_Form_Athlete
      */
     public function isValid ($values = array(), $context = null)
     {
-        $element = $this->getElement('scale_id');
-        if (!$element->getMultiOptions()) {
-            $this->_insertScales(new App_Model_Athlete, $values);
-        }
+        // $element = $this->getElement('scale_id');
+        // if (!$element->getMultiOptions()) {
+        //     $this->_insertScales(new App_Model_Athlete, $values);
+        // }
 
-            var_dump($values);
+        //     var_dump($values);
         $result = parent::isValid($values, $context);
 
         if (! $result) {
             var_dump($this->getValues());
             var_dump($values);
+            die;
 
         }
 

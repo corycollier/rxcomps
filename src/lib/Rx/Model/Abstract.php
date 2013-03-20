@@ -303,9 +303,12 @@ class Rx_Model_Abstract
     {
         $dbTable = $this->getTable();
         $form = $this->getForm();
+        $form->injectDependencies($this, $values);
 
         if (! $form->isValid($values)) {
+            var_dump($values);
             var_dump(get_class($form));
+            var_dump($form->getMessages());
             die;
 
             throw new Rx_Model_Exception(self::EXCEPTION_INVALID_DATA);

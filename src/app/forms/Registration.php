@@ -98,13 +98,6 @@ class App_Form_Registration
 
     } // END function getAthleteForm
 
-    public function getValues ( )
-    {
-        $values = parent::getValues();
-
-        var_dump($values); die;
-    }
-
     /**
      * injectDependencies()
      *
@@ -123,8 +116,6 @@ class App_Form_Registration
 
         $this->getSubForm('athlete')
             ->injectDependencies($model->getParent('Athlete'), $params);
-
-        // $this->getElement('event_id')->setValue(@$params['event_id']);
 
     } // END function injectDependencies
 

@@ -101,9 +101,10 @@ class Rx_Controller_Model
         $model      = $this->getModel($this->_modelName);
         $request    = $this->getRequest();
         $form       = $model->getForm();
+        $params     = $request->getParams();
 
-        $form->injectDependencies($model, $request->getParams());
-        $form->populate($model->filterValues($request->getParams()));
+        $form->injectDependencies($model, $params);
+        $form->populate($model->filterValues($params));
 
         if ($request->isPost()) {
             $this->_create($model, $request);
