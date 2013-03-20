@@ -44,5 +44,29 @@ class App_Model_Registration
         return 'registrations';
     }
 
+    /**
+     * create()
+     *
+     * Local override of the create method, to allow for parent model creation
+     * before the registration is created
+     *
+     * @param array $values
+     * @return App_Model_Registration $this for object-chaining
+     */
+    public function create ($values = array())
+    {
+        $athlete = $this->getParent('Athlete');
+        $user = $this->getParent('User');
+
+        $user->create($values);
+        $athlete->create($values);
+
+        return parent::create(array_merge($values, array(
+            'user_id'   => $user->id,
+            'athlete_id' => $athlete->id,
+        )));
+
+    } // END function create
+
 }// END class App_Model_Registration
 
