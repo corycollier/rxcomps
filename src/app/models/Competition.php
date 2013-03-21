@@ -167,7 +167,7 @@ class App_Model_Competition
                 $rankValue = $i + 1;
             }
 
-            if ($score['placeholder_score']) {
+            if (@$score['placeholder_score']) {
                 $pointValue = $worstPoints;
                 $rankValue = $worstRank;
             }
