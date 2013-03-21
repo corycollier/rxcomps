@@ -33,6 +33,11 @@ class App_Model_Registration
     implements Zend_Acl_Resource_Interface
 {
     /**
+     * Message to indicate that the user provided already exists
+     */
+    const EXCEPTION_USER_ALREADY_EXISTS = 'The user with email [%s] already exists';
+
+    /**
      * getResourceId()
      *
      * Gets the resource id
@@ -55,13 +60,26 @@ class App_Model_Registration
      */
     public function create ($values = array())
     {
-        $athlete = $this->getParent('Athlete');
-        $user = $this->getParent('User');
+        if (array_key_exists('user', $values)) {
+            $user = $this->getParent('User');
+            $userTable = $user->getTable();
+            $existingUser = $userTable->fetchRow(
+                $userTable->select()->where('email = ?', $values['user']['email'])
+            );
 
-        $user->create($values['user']);
+            if ($existingUser) {
+                throw new Rx_Model_Exception(sprintf(
+                    self::EXCEPTION_USER_ALREADY_EXISTS, $values['user']['email']
+                ));
+            }
+
+            $user->create($values['user']);
+            $values['user_id'] = $user->id;
+        }
+
+        $athlete = $this->getParent('Athlete');
         $athlete->create($values['athlete']);
 
-        $values['user_id'] = $user->id;
         $values['athlete_id'] = $athlete->id;
 
         $form = $this->getForm();

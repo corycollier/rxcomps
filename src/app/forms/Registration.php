@@ -125,6 +125,7 @@ class App_Form_Registration
 
         if ($authInfo) {
             $this->getElement('user_id')->setValue($authInfo->id);
+            $this->removeSubForm('user');
         }
 
         $athleteSubForm = $this->getSubForm('athlete');

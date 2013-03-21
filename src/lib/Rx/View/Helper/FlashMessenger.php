@@ -42,9 +42,13 @@ class Rx_View_Helper_FlashMessenger
      */
     public function flashMessenger ($flashMessenger)
     {
-        $errors     = $flashMessenger->getMessages('error');
-        $information = $flashMessenger->getMessages('information');
-        $successes  = $flashMessenger->getMessages('success');
+        $errors     = $flashMessenger->getCurrentMessages('error');
+        $information = $flashMessenger->getCurrentMessages('information');
+        $successes  = $flashMessenger->getCurrentMessages('success');
+
+        $flashMessenger->clearMessages('error');
+        $flashMessenger->clearMessages('information');
+        $flashMessenger->clearMessages('success');
 
         return sprintf('<div class="flash-messages">%s%s%s</div>',
             $errors       ? $this->htmlList($errors,      false, array('class' => 'danger alert'))   : '',
