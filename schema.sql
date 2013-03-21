@@ -129,6 +129,7 @@ CREATE TABLE IF NOT EXISTS `registrations` (
     user_id INT(11) NOT NULL, -- who created the registration
     athlete_id INT(11) NOT NULL, -- the athlete record that will be used for scoring
     PRIMARY KEY (`id`),
+    UNIQUE KEY `uk_event_user_registration` (`event_id`,`user_id`),
     CONSTRAINT `fk_registrations_event_id` FOREIGN KEY (`event_id`)
         REFERENCES `events` (`id`)
         ON DELETE CASCADE
