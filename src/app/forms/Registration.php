@@ -40,6 +40,7 @@ class App_Form_Registration
      */
     public function init ( )
     {
+        // $form = new Zend_Form_SubForm;
         $this->addElement('hidden', 'id', array(
             'ignore'        => true,
         ));
@@ -52,6 +53,13 @@ class App_Form_Registration
             'required'      => true,
         ));
 
+        $this->addElement('hidden', 'athlete_id', array(
+            'required'      => true,
+        ));
+
+        // $form->setIsArray(true);
+
+        // $this->addSubForm($form, 'registration');
         $this->addSubForm($this->getUserForm(), 'user');
         $this->addSubForm($this->getAthleteForm(), 'athlete');
 
@@ -62,6 +70,9 @@ class App_Form_Registration
 
         $this->setStandardDecorators();
 
+        // $this->getSubForm('registration')
+        //     ->setDecorators(array('FormElements'))
+        //     ->setElementDecorators(array('ViewHelper'));
     } // END function init
 
     /**
@@ -77,6 +88,7 @@ class App_Form_Registration
         $form->removeDecorator('Form');
         $form->removeElement('login');
         $form->getDecorator('Fieldset')->setLegend('User Information');
+        $form->setIsArray(true);
         return $form;
 
     } // END function getUserForm
@@ -94,6 +106,7 @@ class App_Form_Registration
         $form->removeDecorator('Form');
         $form->removeElement('save');
         $form->getDecorator('Fieldset')->setLegend('Athlete Information');
+        $form->setIsArray(true);
         return $form;
 
     } // END function getAthleteForm
@@ -114,8 +127,12 @@ class App_Form_Registration
             $this->getElement('user_id')->setValue($authInfo->id);
         }
 
-        $this->getSubForm('athlete')
-            ->injectDependencies($model->getParent('Athlete'), $params);
+        $athleteSubForm = $this->getSubForm('athlete');
+
+        if ($athleteSubForm) {
+            $this->getSubForm('athlete')
+                ->injectDependencies($model->getParent('Athlete'), $params);
+        }
 
     } // END function injectDependencies
 

@@ -69,7 +69,7 @@ class App_View_Helper_RegistrationItem
             'id'        => $registration->id,
         )));
 
-        return ucwords($title) . $details;
+        return ucwords($title);
 
     } // END function _getTitle
 

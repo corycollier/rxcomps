@@ -101,6 +101,8 @@ class App_Form_Athlete
     {
         $this->_insertScales($model, $params);
 
+        $element = $this->getElement('event_id')->setValue(@$params['event_id']);
+
         return $this;
 
     } // END function injectDependencies
@@ -132,35 +134,5 @@ class App_Form_Athlete
         return $this;
 
     } // END function _insertScales
-
-    /**
-     * isValid()
-     *
-     * Local override of the isValid method, to ensure that options are set
-     * on the multi-option elements
-     *
-     * @param array $values
-     * @return boolean
-     */
-    public function isValid ($values = array(), $context = null)
-    {
-        // $element = $this->getElement('scale_id');
-        // if (!$element->getMultiOptions()) {
-        //     $this->_insertScales(new App_Model_Athlete, $values);
-        // }
-
-        //     var_dump($values);
-        $result = parent::isValid($values, $context);
-
-        if (! $result) {
-            var_dump($this->getValues());
-            var_dump($values);
-            die;
-
-        }
-
-        return $result;
-
-    } // END function isValid
 
 } // END class App_Form_Athlete

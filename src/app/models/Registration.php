@@ -58,13 +58,17 @@ class App_Model_Registration
         $athlete = $this->getParent('Athlete');
         $user = $this->getParent('User');
 
-        $user->create($values);
-        $athlete->create($values);
+        $user->create($values['user']);
+        $athlete->create($values['athlete']);
 
-        return parent::create(array_merge($values, array(
-            'user_id'   => $user->id,
-            'athlete_id' => $athlete->id,
-        )));
+        $values['user_id'] = $user->id;
+        $values['athlete_id'] = $athlete->id;
+
+        $form = $this->getForm();
+        $form->removeSubForm('athlete');
+        $form->removeSubForm('user');
+
+        return parent::create($values);
 
     } // END function create
 

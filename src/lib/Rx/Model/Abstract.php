@@ -306,22 +306,12 @@ class Rx_Model_Abstract
         $form->injectDependencies($this, $values);
 
         if (! $form->isValid($values)) {
-            var_dump($values);
-            var_dump(get_class($form));
-            var_dump($form->getMessages());
-            die;
-
             throw new Rx_Model_Exception(self::EXCEPTION_INVALID_DATA);
         }
 
         $values = $form->getValues();
 
-        try {
-            $this->id = $dbTable->insert($values);
-        } catch (Zend_Db_Statement_Exception $exception) {
-            var_dump($exception); die;
-            // var_dump($values); die;
-        }
+        $this->id = $dbTable->insert($values);
 
         return $this;
 

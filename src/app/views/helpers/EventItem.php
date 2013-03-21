@@ -59,6 +59,7 @@ class App_View_Helper_EventItem
      */
     protected function _getTitle ($event)
     {
+        var_dump($event); die;
         $view = $this->view;
         $title = sprintf('<h3>%s</h3>', $view->htmlAnchor($event->name, array(
             'controller'=> 'events',
