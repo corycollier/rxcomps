@@ -14,20 +14,17 @@
  */
 ?>
 
-<?php echo $this->htmlList(array(
+<?php
+// echo a link back to the main event
+echo $this->actionList(array(
     $this->backToEventLink($this->model, $this->request()->getParams()),
-), false, array(
-    'class' => 'subnav',
-), false); ?>
-
-<?php if ($this->auth()->hasIdentity()) :?>
-<?php echo $this->actionList(array(
-    $this->htmlAnchor('Create Scale', array(
-        'action'    => 'create',
+    $this->model(new App_Model_Scale)->create($this->user, 'Add Scale', array(
+        'event_id'  => $this->event()->id(),
     )),
-)); ?>
-<?php endif; ?>
+));
 
-<h2><?php echo $this->model->getValue('name'); ?></h2>
+echo $this->scaleItem($this->model->row, $this->user, array(
+    'event_id'  => $this->event()->id(),
+));
 
-<p><?php echo $this->model->getValue('description'); ?></p>
+?>

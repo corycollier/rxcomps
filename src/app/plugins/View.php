@@ -51,6 +51,8 @@ class App_Plugin_View
             $view->$name = $option->value;
         }
 
+        $view->user = new App_Model_User;
+
     } // END function preDispatch
 
     /**

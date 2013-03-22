@@ -39,11 +39,11 @@ class App_View_Helper_RegistrationItem
      * @param array $Registration
      * @return string
      */
-    public function registrationItem ($registration)
+    public function registrationItem ($registration, $user, $params = array())
     {
         $title = $this->_getTitle($registration);
 
-        $actions = $this->_getActions($registration);
+        $actions = $this->view->model($registration, 'App_Model_Registration')->links($user, $params);
 
         return sprintf('<div class="registration-item">%s%s</div>', $title, $actions);
 
@@ -72,41 +72,5 @@ class App_View_Helper_RegistrationItem
         return ucwords($title);
 
     } // END function _getTitle
-
-    /**
-     * _getActions()
-     *
-     * gets markup displaying links to perform actions on a registration
-     *
-     * @param App_Model_Registration
-     * @return string
-     */
-    protected function _getActions ($registration)
-    {
-        $view = $this->view;
-        $auth = $view->auth();
-
-        $actions = '';
-
-        if ($auth->hasIdentity()) {
-            $actions = $view->htmlList(array(
-                $view->htmlAnchor('Edit', array(
-                    'controller'    => 'registrations',
-                    'action'    => 'edit',
-                    'id'        => $registration->id,
-                )),
-                $view->htmlAnchor('Delete', array(
-                    'controller'    => 'registrations',
-                    'action'    => 'delete',
-                    'id'        => $registration->id,
-                )),
-            ), false, array(
-                'class' => 'subnav',
-            ), false);
-        }
-
-        return $actions;
-
-    } // END function _getActions
 
 } // END class App_View_Helper_RegistrationItem

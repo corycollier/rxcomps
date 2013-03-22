@@ -39,11 +39,11 @@ class App_View_Helper_ScoreItem
      * @param array $score
      * @return string
      */
-    public function scoreItem ($score)
+    public function scoreItem ($score, $user, $params = array())
     {
         $title = $this->_getTitle($score);
 
-        $actions = $this->_getActions($score);
+        $actions = $this->view->model($score, 'App_Model_Score')->links($user, $params);
 
         return sprintf('<div class="score-item">%s%s</div>', $title, $actions);
 
@@ -91,41 +91,5 @@ class App_View_Helper_ScoreItem
         return ucwords($title) . $details;
 
     } // END function _getTitle
-
-    /**
-     * _getActions()
-     *
-     * gets markup displaying links to perform actions on an score
-     *
-     * @param App_Model_Score
-     * @return string
-     */
-    protected function _getActions ($score)
-    {
-        $view = $this->view;
-        $auth = $view->auth();
-
-        $actions = '';
-
-        if ($auth->hasIdentity()) {
-            $actions = $view->htmlList(array(
-                $view->htmlAnchor('Edit', array(
-                    'controller'    => 'scores',
-                    'action'    => 'edit',
-                    'id'        => $score->id,
-                )),
-                $view->htmlAnchor('Delete', array(
-                    'controller'    => 'scores',
-                    'action'    => 'delete',
-                    'id'        => $score->id,
-                )),
-            ), false, array(
-                'class' => 'subnav',
-            ), false);
-        }
-
-        return $actions;
-
-    } // END function _getActions
 
 } // END class App_View_Helper_ScoreItem

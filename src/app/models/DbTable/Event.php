@@ -43,6 +43,7 @@ class App_Model_DbTable_Event
         'App_Model_DbTable_Athlete',
         'App_Model_DbTable_Scale',
         'App_Model_DbTable_EventsUsers',
+        'App_Model_DbTable_Registration',
     );
 
 } // END class App_Model_DbTable_Events

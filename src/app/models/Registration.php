@@ -38,6 +38,11 @@ class App_Model_Registration
     const EXCEPTION_USER_ALREADY_EXISTS = 'The user with email [%s] already exists';
 
     /**
+     * The subject to use to message a new registrant
+     */
+    const EMAIL_REGISTRATION_SUBJECT = 'Registered For %s';
+
+    /**
      * getResourceId()
      *
      * Gets the resource id
@@ -60,8 +65,10 @@ class App_Model_Registration
      */
     public function create ($values = array())
     {
+        $user = $this->getParent('User');
+        $event = $this->getParent('Event')->load($values['event_id']);
+
         if (array_key_exists('user', $values)) {
-            $user = $this->getParent('User');
             $userTable = $user->getTable();
             $existingUser = $userTable->fetchRow(
                 $userTable->select()->where('email = ?', $values['user']['email'])
@@ -74,6 +81,7 @@ class App_Model_Registration
             }
 
             $user->create($values['user']);
+            $user->load($user->id);
             $values['user_id'] = $user->id;
         }
 
@@ -86,9 +94,58 @@ class App_Model_Registration
         $form->removeSubForm('athlete');
         $form->removeSubForm('user');
 
-        return parent::create($values);
+        $result = parent::create($values);
+
+        $eventName = $event->getValue('name');
+        $subject = sprintf(self::EMAIL_REGISTRATION_SUBJECT, $eventName);
+        $message = implode(PHP_EOL, array(
+            'Succcess!',
+            'Congratulations on successfully registering for '. $eventName,
+
+        ));
+
+        $this->_mail($user, $subject, $message);
+
+        return $result;
 
     } // END function create
+
+    /**
+     * _mail()
+     *
+     * Mails a user
+     *
+     * @param App_Model_User $user
+     * @return App_Model_Registration $this for object-chaining
+     */
+    protected function _mail ($user, $subject, $message = null)
+    {
+        $mail = $this->_getMailObject();
+
+        $mail->setBodyText($message);
+        $mail->setFrom('no-reply@rxcomps.com', 'No-Reply');
+        $mail->addTo($user->getValue('email'));
+        $mail->addBcc('corycollier@corycollier.com', 'Cory Collier');
+        $mail->setSubject($subject);
+
+        $mail->send();
+
+        return $this;
+
+    } // END function _mail
+
+    /**
+     * _getMailObject()
+     *
+     * Gets a new mail object
+     *
+     * @return Zend_Mail
+     */
+    protected function _getMailObject ()
+    {
+        return new Zend_Mail;
+
+    } // END function _getMailObject
 
 }// END class App_Model_Registration
 

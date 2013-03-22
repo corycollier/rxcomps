@@ -14,9 +14,13 @@
  */
 ?>
 
-<?php echo $this->htmlList(array(
+<?php
+// render a link back to the main event
+echo $this->actionList(array(
     $this->backToEventLink($this->model, $this->request()->getParams()),
-), false, array(
-    'class' => 'subnav',
-), false); ?>
-<?php echo $this->form; ?>
+));
+
+// render the editing form
+echo $this->form;
+
+?>

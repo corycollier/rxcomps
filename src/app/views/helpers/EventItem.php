@@ -39,11 +39,11 @@ class App_View_Helper_EventItem
      * @param array $event
      * @return string
      */
-    public function eventItem ($event)
+    public function eventItem ($event, $user, $params = array())
     {
         $title = $this->_getTitle($event);
 
-        $actions = $this->_getActions($event);
+        $actions = $this->view->model($event, 'App_Model_Event')->links($user, $params);
 
         return sprintf('<div class="event-item">%s%s</div>', $title, $actions);
 
@@ -69,42 +69,5 @@ class App_View_Helper_EventItem
         return $title;
 
     } // END function _getTitle
-
-    /**
-     * _getActions()
-     *
-     * gets markup displaying links to perform actions on an event
-     *
-     * @param App_Model_Event
-     * @return string
-     */
-    protected function _getActions ($event)
-    {
-        $view = $this->view;
-        $auth = $view->auth();
-
-        $actions = '';
-
-        if ($auth->hasIdentity()) {
-            $actions = $view->htmlList(array(
-                $view->htmlAnchor('Edit', array(
-                    'controller'=> 'events',
-                    'action'    => 'edit',
-                    'id'        => $event->id,
-                )),
-                $view->htmlAnchor('Delete', array(
-                    'controller'=> 'events',
-                    'action'    => 'delete',
-                    'id'        => $event->id,
-                )),
-            ), false, array(
-                'class' => 'subnav',
-            ), false);
-        }
-
-        return $actions;
-
-    } // END function _getActions
-
 
 } // END class App_View_Helper_EventItem

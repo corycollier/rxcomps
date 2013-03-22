@@ -39,11 +39,14 @@ class App_View_Helper_AthleteItem
      * @param array $Athlete
      * @return string
      */
-    public function athleteItem ($athlete)
+    public function athleteItem ($athlete, $user, $params = array())
     {
         $title = $this->_getTitle($athlete);
 
-        $actions = $this->_getActions($athlete);
+        $actions = $this->view->model($athlete, 'App_Model_Athlete')
+            ->links($user, array_merge($params, array(
+                'event_id'  => $athlete->event_id,
+            )));
 
         return sprintf('<div class="athlete-item">%s%s</div>', $title, $actions);
 
@@ -75,43 +78,5 @@ class App_View_Helper_AthleteItem
         return $title;
 
     } // END function _getTitle
-
-    /**
-     * _getActions()
-     *
-     * gets markup displaying links to perform actions on an athlete
-     *
-     * @param App_Model_Athlete
-     * @return string
-     */
-    protected function _getActions ($athlete)
-    {
-        $view = $this->view;
-        $auth = $view->auth();
-
-        $actions = '';
-
-        if ($auth->hasIdentity()) {
-            $actions = $view->htmlList(array(
-                $view->htmlAnchor('Edit', array(
-                    'controller'=> 'athletes',
-                    'action'    => 'edit',
-                    'id'        => $athlete->id,
-                    'event_id'  => $athlete->event_id,
-                )),
-                $view->htmlAnchor('Delete', array(
-                    'controller'=> 'athletes',
-                    'action'    => 'delete',
-                    'id'        => $athlete->id,
-                    'event_id'  => $athlete->event_id,
-                )),
-            ), false, array(
-                'class' => 'subnav',
-            ), false);
-        }
-
-        return $actions;
-
-    } // END function _getActions
 
 } // END class App_View_Helper_AthleteItem

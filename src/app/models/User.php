@@ -233,5 +233,34 @@ class App_Model_User
 
     } // END function create
 
+    /**
+     * isRegistered()
+     *
+     * MEthod
+     *
+     */
+    public function isRegistered ($event)
+    {
+        if (! $this->row) {
+            $auth = $this->getAuth();
+            $data = $auth->getStorage()->read();
+            if (! $data) {
+                return false;
+            }
+            $this->load($data->id);
+        }
+
+        $registrations = $this->getChildren('Registration');
+
+        foreach ($registrations as $registration) {
+            if ($registration->getValue('user_id') == $this->id) {
+                return true;
+            }
+        }
+
+        return false;
+
+    } // END function isRegistered
+
 }// END class App_Model_Users
 

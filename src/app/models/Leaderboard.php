@@ -63,10 +63,7 @@ class App_Model_Leaderboard
 
         $scoringType = current($competitions)->getScoringType();
 
-        $results = array();
-        foreach ($competitions as $competition) {
-            $results[$competition->id] = $competition->getLeaderboards($scaleId, $gender);
-        }
+        $results = $this->getLeaderboardsFromCompetitions($competitions, $scaleId, $gender);
 
         $athletes = array();
         foreach ($results as $competitionId => $competitionResults) {
@@ -83,6 +80,27 @@ class App_Model_Leaderboard
         return $this->_sortAthleteResults($athletes, $scoringType);
 
     } // END function event
+
+    /**
+     * getLeaderboardsFromCompetitions()
+     *
+     * Gets the aggregate leaderboards from all competitions, for a given scale and gender
+     *
+     * @param array $competitions
+     * @param string|integer $scaleId
+     * @param string $gender
+     * @return array
+     */
+    public function getLeaderboardsFromCompetitions ($competitions, $scaleId, $gender)
+    {
+        $results = array();
+        foreach ($competitions as $competition) {
+            $results[$competition->id] = $competition->getLeaderboards($scaleId, $gender);
+        }
+
+        return $results;
+
+    } // END function getLeaderboardsFromCompetitions
 
     /**
      * _mergeAthleteResults()

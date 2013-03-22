@@ -39,11 +39,11 @@ class App_View_Helper_CompetitionItem
      * @param array $competition
      * @return string
      */
-    public function competitionItem ($competition)
+    public function competitionItem ($competition, $user, $params = array())
     {
         $title = $this->_getTitle($competition);
 
-        $actions = $this->_getActions($competition);
+        $actions = $this->view->model($competition, 'App_Model_Competition')->links($user, $params);
 
         return sprintf('<div class="competition-item">%s%s</div>', $title, $actions);
 
@@ -64,46 +64,11 @@ class App_View_Helper_CompetitionItem
             'controller'    => 'competitions',
             'action'    => 'view',
             'id'        => $competition->id,
+            'event_id'  => $view->event()->id(),
         )));
 
         return ucwords($title);
 
     } // END function _getTitle
-
-    /**
-     * _getActions()
-     *
-     * gets markup displaying links to perform actions on an competition
-     *
-     * @param App_Model_Competition
-     * @return string
-     */
-    protected function _getActions ($competition)
-    {
-        $view = $this->view;
-        $auth = $view->auth();
-
-        $actions = '';
-
-        if ($auth->hasIdentity()) {
-            $actions = $view->htmlList(array(
-                $view->htmlAnchor('Edit', array(
-                    'controller'    => 'competitions',
-                    'action'    => 'edit',
-                    'id'        => $competition->id,
-                )),
-                $view->htmlAnchor('Delete', array(
-                    'controller'    => 'competitions',
-                    'action'    => 'delete',
-                    'id'        => $competition->id,
-                )),
-            ), false, array(
-                'class' => 'subnav',
-            ), false);
-        }
-
-        return $actions;
-
-    } // END function _getActions
 
 } // END class App_View_Helper_CompetitionItem

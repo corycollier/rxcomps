@@ -14,20 +14,22 @@
  */
 ?>
 
-<?php if ($this->auth()->hasIdentity()) :?>
-<?php echo $this->actionList(array(
-    $this->htmlAnchor('Create Registration', array(
-        'controller'=> 'registrations',
-        'action'    => 'create',
-    ))
+<?php
+// echo a create new link, if appropriate
+echo $this->model(new App_Model_Registration)->create($this->user, 'Create Registration', array(
+    'event_id'  => $this->event()->id(),
 ));
+
+// iterate through the registrations, outputing what's appropriate
+foreach ($this->items as $registration) :
+
+    echo $this->registrationItem($registration, $this->user, array(
+        'event_id' => $this->event()->id(),
+    ));
+
+endforeach;
+
+// render any necessary pagination controls
+echo $this->paginationControl($this->paginator, 'Sliding', 'partials/pagination.phtml');
+
 ?>
-<?php endif; ?>
-
-<?php foreach ($this->items as $registration) : ?>
-
-    <?php echo $this->registrationItem($registration); ?>
-
-<?php endforeach; ?>
-
-<?php echo $this->paginationControl($this->paginator, 'Sliding', 'partials/pagination.phtml'); ?>

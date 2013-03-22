@@ -14,17 +14,21 @@
  */
 ?>
 
-<?php echo $this->htmlList(array(
+<?php
+// echo a link back to the main event
+echo $this->actionList(array(
     $this->backToEventLink($this->model, $this->request()->getParams()),
-    $this->htmlAnchor('Enter Scores', array(
-        'controller'    => 'scores',
-        'action'        => 'create',
-        'event_id'      => $this->model->getParent('Event')->id,
+    $this->model(new App_Model_Competition)->create($this->user, 'Add Score', array(
+        'event_id'  => $this->event()->id(),
         'competition_id'=> $this->model->id,
-    ))
-), false, array(
-    'class' => 'subnav',
-), false); ?>
+    )),
+));
+
+echo $this->competitionItem($this->model->row, $this->user, array(
+    'event_id'  => $this->event()->id(),
+));
+
+?>
 
 <h2><?php echo $this->model->getValue('name'); ?></h2>
 <p><?php echo strtr($this->model->getValue('description'), array(
@@ -34,9 +38,10 @@
 
 <h3>Leaderboards</h3>
 <?php
-    $event = $this->model->getParent('Event');
-?>
-<?php echo $this->action('all-leaderboards', 'competitions', 'default', array_merge(
+// render the all-leaderboards action
+echo $this->action('all-leaderboards', 'competitions', 'default', array_merge(
     $this->request()->getParams(),
-    array('event_id' => $event->id,)
-));?>
+    array('event_id' => $this->event()->id())
+));
+
+?>

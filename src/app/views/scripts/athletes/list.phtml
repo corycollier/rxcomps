@@ -14,28 +14,22 @@
  */
 ?>
 
-<?php if ($this->auth()->hasIdentity()) :?>
-
 <?php
-$request =  $this->request();
+// echo the appropriate link to create a new athlete
+echo $this->model(new App_Model_Event)->create($this->user, 'Add Athlete', array(
+    'event_id'  => $this->event()->id(),
+));
 
-$eventId =  $request->getParam('event_id')
-    ? $request->getParam('event_id')
-    : $request->getParam('id');
+// iterate through the athletes, rendering information
+foreach ($this->items as $athlete) :
+
+    echo $this->athleteItem($athlete, $this->user, array(
+        'event_id'  => $this->event()->id(),
+    ));
+
+endforeach;
+
+// output any pagination control necessary
+echo $this->paginationControl($this->paginator, 'Sliding', 'partials/pagination.phtml');
+
 ?>
-<?php echo $this->actionList(array(
-    $this->htmlAnchor('Add Athlete', array(
-        'controller'=> 'athletes',
-        'action'    => 'create',
-        'event_id'  => $eventId,
-    )),
-)); ?>
-<?php endif; ?>
-
-<?php foreach ($this->items as $athlete) : ?>
-
-    <?php echo $this->athleteItem($athlete); ?>
-
-<?php endforeach; ?>
-
-<?php echo $this->paginationControl($this->paginator, 'Sliding', 'partials/pagination.phtml'); ?>

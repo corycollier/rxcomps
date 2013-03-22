@@ -39,11 +39,11 @@ class App_View_Helper_ScaleItem
      * @param array $scale
      * @return string
      */
-    public function scaleItem ($scale)
+    public function scaleItem ($scale, $user, $params = array())
     {
         $title = $this->_getTitle($scale);
 
-        $actions = $this->_getActions($scale);
+        $actions = $this->view->model($scale, 'App_Model_Scale')->links($user, $params);
 
         return sprintf('<div class="scale-item">%s%s</div>', $title, $actions);
 
@@ -69,42 +69,5 @@ class App_View_Helper_ScaleItem
         return $title;
 
     } // END function _getTitle
-
-    /**
-     * _getActions()
-     *
-     * gets markup displaying links to perform actions on an scale
-     *
-     * @param App_Model_Scale
-     * @return string
-     */
-    protected function _getActions ($scale)
-    {
-        $view = $this->view;
-        $auth = $view->auth();
-
-        $actions = '';
-
-        if ($auth->hasIdentity()) {
-            $actions = $view->htmlList(array(
-                $view->htmlAnchor('Edit', array(
-                    'controller'=> 'scales',
-                    'action'    => 'edit',
-                    'id'        => $scale->id,
-                )),
-                $view->htmlAnchor('Delete', array(
-                    'controller'=> 'scales',
-                    'action'    => 'delete',
-                    'id'        => $scale->id,
-                )),
-            ), false, array(
-                'class' => 'subnav',
-            ), false);
-        }
-
-        return $actions;
-
-    } // END function _getActions
-
 
 } // END class App_View_Helper_ScaleItem

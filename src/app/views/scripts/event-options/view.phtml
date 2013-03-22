@@ -14,23 +14,17 @@
  */
 ?>
 
-<?php echo $this->htmlList(array(
+<?php
+// echo a link back to the main event
+echo $this->actionList(array(
     $this->backToEventLink($this->model, $this->request()->getParams()),
-), false, array(
-    'class' => 'subnav',
-), false); ?>
+    $this->model(new App_Model_EventOption)->create($this->user, 'Add Score', array(
+        'event_id'  => $this->event()->id(),
+    )),
+));
 
-<?php if ($this->auth()->hasIdentity()) :?>
-<?php echo $this->actionList(array(
-    $this->htmlAnchor('Add Option', array(
-        'controller'    => 'event-options',
-        'action'    => 'create',
-        'event_id'  => $this->model->row->event_id,
-    ))
-)); ?>
-<?php endif; ?>
+echo $this->eventOptionItem($this->model->row, $this->user, array(
+    'event_id'  => $this->event()->id(),
+));
 
-<dl>
-    <dt><?php echo $this->model->row->name; ?></dt>
-    <dd><?php echo $this->model->row->value; ?></dd>
-</dl>
+?>

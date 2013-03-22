@@ -13,18 +13,21 @@
  * @since       File available since release 1.0.0
  */
 ?>
-<?php echo $this->htmlList(array(
-    $this->backToEventLink($this->model->getParent('Athlete'), $this->request()->getParams()),
-), false, array(
-    'class' => 'subnav',
-), false); ?>
 
-<?php if ($this->auth()->hasIdentity()) :?>
-<?php echo $this->actionList(array(
-    $this->htmlAnchor('Add Score', array(
-        'action'    => 'create',
-    ))
-)); ?>
-<?php endif; ?>
+<?php
+// echo a link back to the main event
+echo $this->actionList(array(
+    $this->backToEventLink(
+        $this->model->getParent('Athlete'),
+        $this->request()->getParams()
+    ),
+    $this->model(new App_Model_Score)->create($this->user, 'Add Score', array(
+        'event_id'  => $this->event()->id(),
+    )),
+));
 
-<?php echo $this->scoreItem($this->model->row); ?>
+echo $this->scoreItem($this->model->row, $this->user, array(
+    'event_id'  => $this->event()->id(),
+));
+
+?>

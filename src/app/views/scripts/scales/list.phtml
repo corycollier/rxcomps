@@ -14,19 +14,22 @@
  */
 ?>
 
-<?php if ($this->auth()->hasIdentity()) :?>
-<?php echo $this->htmlList(array(
-    $this->htmlAnchor('Add Scale', array(
-        'controller'    => 'scales',
-        'action'    => 'create',
-    ))
-), false, array(
-    'class' => 'subnav',
-), false); ?>
-<?php endif; ?>
+<?php
+// echo a create new link, if appropriate
+echo $this->model(new App_Model_Scale)->create($this->user, 'Add Scale', array(
+    'event_id'  => $this->event()->id(),
+));
 
-<?php foreach ($this->items as $scale) : ?>
+// iterate through the registrations, outputing what's appropriate
+foreach ($this->items as $scale) :
 
-    <?php echo $this->scaleItem($scale); ?>
+    echo $this->scaleItem($scale, $this->user, array(
+        'event_id'  => $this->event()->id(),
+    ));
 
-<?php endforeach; ?>
+endforeach;
+
+// render any necessary pagination controls
+echo $this->paginationControl($this->paginator, 'Sliding', 'partials/pagination.phtml');
+
+?>

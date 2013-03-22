@@ -14,20 +14,17 @@
  */
 ?>
 
-<?php if ($this->auth()->hasIdentity()) :?>
-<?php echo $this->actionList(array(
-    $this->htmlAnchor('Create Event', array(
-        'controller'=> 'events',
-        'action'    => 'create',
-    ))
-));
+<?php
+    echo $this->model(new App_Model_Event)->create($this->user, 'Create Event');
 ?>
-<?php endif; ?>
 
-<?php foreach ($this->items as $event) : ?>
+<?php
+// iterate through the event rows
+foreach ($this->items as $event) :
+    echo $this->eventItem($event, $this->user);
+endforeach;
 
-    <?php echo $this->eventItem($event); ?>
+// render a pagination control
+echo $this->paginationControl($this->paginator, 'Sliding', 'partials/pagination.phtml');
 
-<?php endforeach; ?>
-
-<?php echo $this->paginationControl($this->paginator, 'Sliding', 'partials/pagination.phtml'); ?>
+?>

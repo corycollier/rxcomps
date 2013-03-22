@@ -14,8 +14,17 @@
  */
 ?>
 
-<?php echo $this->htmlList(array(
+<?php
+// echo a link back to the main event
+echo $this->actionList(array(
     $this->backToEventLink($this->model, $this->request()->getParams()),
-), false, array(
-    'class' => 'subnav',
-), false); ?>
+    $this->model(new App_Model_Score)->create($this->user, 'Add Score', array(
+        'event_id'  => $this->event()->id(),
+    )),
+));
+
+echo $this->registrationItem($this->model->row, $this->user, array(
+    'event_id'  => $this->event()->id(),
+));
+
+?>
