@@ -15,11 +15,8 @@
 ?>
 
 <h2><?php echo $this->model->getValue('name'); ?>
-
-(<?php
-    echo $this->event()->register($this->user)
-?>
-)</h2>
+    <?php echo $this->event()->register($this->user); ?>
+</h2>
 
 <?php
 // echo editing links if the user has access to them

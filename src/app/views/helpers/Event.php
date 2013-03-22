@@ -70,14 +70,18 @@ class App_View_Helper_Event
      */
     public function register ($user)
     {
-        $result = 'registered';
+        $result = '';
 
         if (! $user->isRegistered($this->_model)) {
-            $result = $this->view->htmlAnchor('Register', array(
+
+            $link = $this->view->htmlAnchor(' Register ', array(
                 'controller' => 'registrations',
                 'action'    => 'create',
                 'event_id'  => $this->_model->id,
             ));
+
+            $result = '<div class="pretty medium success btn">' . $link . '</div>';
+
         }
 
         return $result;
