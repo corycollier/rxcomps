@@ -80,6 +80,7 @@ class App_Bootstrap
         $front->registerPlugin(new App_Plugin_Navigation);
         $front->registerPlugin(new App_Plugin_View);
         $front->registerPlugin(new App_Plugin_Cache);
+        $front->registerPlugin(new App_Plugin_User);
     }
 
     /**

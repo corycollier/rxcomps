@@ -262,5 +262,23 @@ class App_Model_User
 
     } // END function isRegistered
 
+    /**
+     * fromSession()
+     *
+     * This method allows the loading of the user object by what's in
+     * session (auth)
+     *
+     * @return App_Model_User $this for object-chaining
+     */
+    public function fromSession ( )
+    {
+        $data = $this->getAuth()->getStorage()->read();
+        if (@$data->id) {
+            $this->load($data->id);
+        }
+        return $this;
+
+    }
+
 }// END class App_Model_Users
 

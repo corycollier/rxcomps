@@ -56,36 +56,34 @@ class App_Model_Assertion_Event
         $privilege = null)
     {
 
-        if (! $role->row) {
-            return false;
+        // override the role. It should always be the current user
+        $role = $this->_getRegistry()->get('user');
+
+        $results = array();
+        if (@$role->row) {
+            $results = $role->row->findDependentRowset('App_Model_DbTable_EventsUsers')->toArray();
         }
-
-        $results = $role->row->findDependentRowset('App_Model_DbTable_EventsUsers')->toArray();
-
-        // var_dump($results);
-        // var_dump($role, $resource); die;
 
         // if the model is loaded ...
         if ($resource->row) {
 
-            $eventId = $resource->id;
-            if ($resource->getResourceId() != 'events') {
+            $eventId    = $resource->id;
+            $resourceId = $resource->getResourceId();
+
+            if ($resourceId != 'events') {
                 $eventId = $resource->row->findParentRow('App_Model_DbTable_Event')->id;
             }
 
-            // var_dump($eventId);
-            // var_dump($results); die;
-
             foreach ($results as $result) {
                 if ($eventId == $result['event_id']) {
-                    return $this->hasAccess($result['role'], $privilege);
+                    return $this->hasAccess($result['role'], $resourceId, $privilege);
                 }
             }
 
             return false;
         }
 
-        return true;
+        // return false;
     }
 
     /**
@@ -97,17 +95,21 @@ class App_Model_Assertion_Event
      * @param string $privilege
      * @return boolean
      */
-    public function hasAccess ($role, $privilege)
+    public function hasAccess ($role, $resource, $privilege)
     {
         $rights = array();
 
-        $rights['user'] = array(
-            'view', 'list'
-        );
+        $rights['user']['events']           = array('view', 'list');
+        $rights['user']['registrations']    = array();
+        $rights['user']['event-options']    = array();
+        $rights['user']['competitions']     = array('view', 'list');
+        $rights['user']['athletes']         = array('view', 'list');
 
-        $rights['admin'] = array(
-            'view', 'list', 'edit', 'delete', 'create',
-        );
+        $rights['admin']['events']          = array('view', 'list', 'edit', 'delete', 'create');
+        $rights['admin']['registrations']   = array('view', 'list', 'edit', 'delete', 'create');
+        $rights['admin']['competitions']    = array('view', 'list', 'edit', 'delete', 'create');
+        $rights['admin']['event-options']   = array('view', 'list', 'edit', 'delete', 'create');
+        $rights['admin']['athletes']        = array('view', 'list', 'edit', 'delete', 'create');
 
         if (! isset($rights[$role])) {
             throw new Zend_Exception(sprintf(
@@ -115,12 +117,24 @@ class App_Model_Assertion_Event
             ));
         }
 
-        if (in_array($privilege, $rights[$role])) {
+        if (in_array($privilege, $rights[$role][$resource])) {
             return true;
         }
 
         return false;
 
+    }
+
+    /**
+     * _getRegistry()
+     *
+     * Gets the registry
+     *
+     * @return Zend_Registry
+     */
+    protected function _getRegistry()
+    {
+        return Zend_Registry::getInstance();
     }
 
 

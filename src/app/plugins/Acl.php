@@ -43,20 +43,22 @@ class App_Plugin_Acl
 
         $guest  = $acl->addRole(new Zend_Acl_Role('guest'));
         $user   = $acl->addRole(new Zend_Acl_Role('user'), array('guest'));
-        $admin  = $acl->addRole(new Zend_Acl_Role('admin'), array('user'));
+        $user   = $acl->addRole(new Zend_Acl_Role('judge'), array('user'));
+        $admin  = $acl->addRole(new Zend_Acl_Role('admin'), array('judge'));
 
         $acl->addResource(new Zend_Acl_Resource('admin'));
         $acl->addResource(new Zend_Acl_Resource('index'));
         $acl->addResource(new Zend_Acl_Resource('error'));
-        $acl->addResource(new Zend_Acl_Resource('users'));
-        $acl->addResource(new Zend_Acl_Resource('scores'));
-        $acl->addResource(new Zend_Acl_Resource('events'));
-        $acl->addResource(new Zend_Acl_Resource('scales'));
-        $acl->addResource(new Zend_Acl_Resource('athletes'));
-        $acl->addResource(new Zend_Acl_Resource('competitions'));
         $acl->addResource(new Zend_Acl_Resource('leaderboards'));
-        $acl->addResource(new Zend_Acl_Resource('registrations'));
-        $acl->addResource(new Zend_Acl_Resource('event-options'));
+
+        $acl->addResource(new App_Model_User);
+        $acl->addResource(new App_Model_Score);
+        $acl->addResource(new App_Model_Event);
+        $acl->addResource(new App_Model_Scale);
+        $acl->addResource(new App_Model_Athlete);
+        $acl->addResource(new App_Model_Competition);
+        $acl->addResource(new App_Model_Registration);
+        $acl->addResource(new App_Model_EventOption);
 
         $acl->allow('guest', array('index', 'error', 'leaderboards'));
 
@@ -76,7 +78,8 @@ class App_Plugin_Acl
 
         $acl->allow('guest', 'registrations', 'create');
 
-        $acl->allow('user', null, null, new App_Model_Assertion_Event);
+        $acl->allow(new App_Model_User, null, null, new App_Model_Assertion_Event);
+        $acl->allow('judge', null, null, new App_Model_Assertion_Event);
         $acl->allow('admin', null, null, new App_Model_Assertion_Event);
 
         $acl->allow('user', 'scores', null, new App_Model_Assertion_IsOwnScore);
