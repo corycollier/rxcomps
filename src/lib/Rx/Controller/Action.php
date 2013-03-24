@@ -91,6 +91,25 @@ class Rx_Controller_Action
     } // END function getLog
 
     /**
+     * flashAndRedirect()
+     *
+     * Adds a message to the FlashMessenger helper, and redirects
+     *
+     * @param  string $message
+     * @param  string $namespace
+     * @param  array $urlParams
+     */
+    public function flashAndRedirect ($message, $namespace, $urlParams)
+    {
+        $flash      = $this->getHelper('FlashMessenger');
+        $redirector = $this->getHelper('Redirector');
+
+        $flash->addMessage($message, $namespace);
+        $redirector->gotoRoute($urlParams);
+
+    } // END function flashAndRedirect
+
+    /**
      * postDispatch()
      *
      * Local implementation of the postDispatch hook

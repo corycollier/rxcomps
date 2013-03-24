@@ -125,23 +125,22 @@ class Rx_Controller_Model
      */
     protected function _create ($model, $request)
     {
-        $flash      = $this->getHelper('FlashMessenger');
-        $redirector = $this->getHelper('Redirector');
+        $message = sprintf(self::MSG_CREATE_SUCCESS, $this->_modelName);
 
         try {
             $params = array_merge($request->getParams(), $request->getPost());
             $model->create($params);
-            $flash->addMessage(sprintf(
-                self::MSG_CREATE_SUCCESS, $this->_modelName
-            ), 'success');
-            $redirector->gotoRoute(array(
-                'action'    => 'view',
-                'id'        => $model->id
+            $this->flashAndRedirect($message, 'success', array(
+                'module'        => $request->getModuleName(),
+                'controller'    => $request->getControllerName(),
+                'action'        => 'view',
+                'id'            => $model->id,
             ));
+
         } catch (Zend_Exception $exception) {
-            $flash->addMessage($exception->getMessage(), 'error');
+            $this->getHelper('FlashMessenger')->addMessage($exception->getMessage(), 'error');
         }
-    }
+    } // END function _create
 
 
     /**
@@ -162,25 +161,22 @@ class Rx_Controller_Model
         $form->populate($model->filterValues($request->getParams()));
 
         if (! $model->id) {
-            $flash->addMessage(sprintf(
-                self::MSG_LOAD_FAILURE, $this->_modelName
-            ), 'error');
-            $redirector->gotoRoute(array(
+            $message = sprintf(self::MSG_LOAD_FAILURE, $this->_modelName);
+            $this->flashAndRedirect($message, 'error', array(
                 'module'        => $request->getModuleName(),
                 'controller'    => $request->getControllerName(),
                 'action'        => 'index',
-            ), 'default', true);
+            ));
         }
 
         if ($request->isPost()) {
             try {
+                $message = sprintf(self::MSG_EDIT_SUCCESS, $this->_modelName);
                 $params = array_merge($request->getParams(), $request->getPost());
                 $model->edit($params);
-                $flash->addMessage(sprintf(
-                    self::MSG_EDIT_SUCCESS, $this->_modelName
-                ), 'success');
+                $this->flashAndRedirect($message, 'success', $request->getParams());
             } catch (Zend_Exception $exception) {
-                $flash->addMessage($exception->getMessage(), 'error');
+                $this->flashAndRedirect($exception->getMessage(), 'error', $request->getParams());
             }
         }
 

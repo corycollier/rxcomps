@@ -56,6 +56,10 @@ class App_Model_Assertion_Event
         $privilege = null)
     {
 
+        if (! $role->row) {
+            return false;
+        }
+
         $results = $role->row->findDependentRowset('App_Model_DbTable_EventsUsers')->toArray();
 
         // var_dump($results);
