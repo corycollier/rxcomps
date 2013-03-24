@@ -45,7 +45,7 @@ class App_View_Helper_RegistrationItem
 
         $actions = $this->view->model($registration, 'App_Model_Registration')->links($user, $params);
 
-        return sprintf('<div class="registration-item">%s%s</div>', $title, $actions);
+        return sprintf('<div class="list-item registration-item">%s%s</div>', $title, $actions);
 
     } // END function RegistrationItem
 

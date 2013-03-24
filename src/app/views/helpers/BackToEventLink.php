@@ -61,12 +61,16 @@ class App_View_Helper_BackToEventLink
 
         $event = $event->load($eventId);
 
-        return $this->htmlAnchor(sprintf('Back to %s', $event->getValue('name')), array(
+        $html = '<div class="small default btn icon-right icon-back">%s</div>';
+
+        $link = $this->htmlAnchor(sprintf('Back to %s', $event->getValue('name')), array(
             'controller'    => 'events',
             'action'        => 'view',
             'id'            => $event->id,
             'reset-url'     => true,
         ));
+
+        return sprintf($html, $link);
 
     } // END function backToEventLink
 

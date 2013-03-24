@@ -45,7 +45,7 @@ class App_View_Helper_CompetitionItem
 
         $actions = $this->view->model($competition, 'App_Model_Competition')->links($user, $params);
 
-        return sprintf('<div class="competition-item">%s%s</div>', $title, $actions);
+        return sprintf('<div class="list-item competition-item">%s%s</div>', $title, $actions);
 
     } // END function CompetitionItem
 

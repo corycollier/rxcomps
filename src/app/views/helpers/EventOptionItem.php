@@ -45,7 +45,7 @@ class App_View_Helper_EventOptionItem
 
         $actions = $this->view->model($eventOption, 'App_Model_EventOption')->links($user, $params);
 
-        return sprintf('<div class="event-option-item">%s%s</div>', $title, $actions);
+        return sprintf('<div class="list-item event-option-item">%s%s</div>', $title, $actions);
 
     } // END function athleteItem
 

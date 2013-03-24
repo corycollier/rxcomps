@@ -143,11 +143,10 @@ class App_View_Helper_LeaderboardItem
         }
 
         $action = 'edit';
+        $label = '<i class="icon-pencil"></i>';
         if ($data['competitions'][$competitionId]['placeholder_score']) {
             $action = 'create';
         }
-
-        $label = '(' . $action . ')';
 
         return $this->view->htmlAnchor($label, array(
             'module'        => 'default',

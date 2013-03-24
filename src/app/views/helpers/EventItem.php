@@ -45,7 +45,7 @@ class App_View_Helper_EventItem
 
         $actions = $this->view->model($event, 'App_Model_Event')->links($user, $params);
 
-        return sprintf('<div class="event-item">%s%s</div>', $title, $actions);
+        return sprintf('<div class="list-item event-item">%s%s</div>', $title, $actions);
 
     } // END function eventItem
 

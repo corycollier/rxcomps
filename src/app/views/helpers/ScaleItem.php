@@ -45,7 +45,7 @@ class App_View_Helper_ScaleItem
 
         $actions = $this->view->model($scale, 'App_Model_Scale')->links($user, $params);
 
-        return sprintf('<div class="scale-item">%s%s</div>', $title, $actions);
+        return sprintf('<div class="list-item scale-item">%s%s</div>', $title, $actions);
 
     } // END function scaleItem
 

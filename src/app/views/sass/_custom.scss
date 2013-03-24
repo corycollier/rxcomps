@@ -42,9 +42,24 @@ th {
 
 .action-links {
 
-
     a i {
             color: rgba(0,0,0,0.7);
+    }
+
+}
+
+.list-item {
+    background: rgba(0,0,0,0.02);
+    margin: 1em 0;
+    padding: 0.5em;
+
+    h3 {
+        @include inline-block;
+    }
+    .action-links {
+        float: right;
+        line-height: 3em;
+        @include inline-block;
     }
 }
 

@@ -45,7 +45,7 @@ class App_View_Helper_ScoreItem
 
         $actions = $this->view->model($score, 'App_Model_Score')->links($user, $params);
 
-        return sprintf('<div class="score-item">%s%s</div>', $title, $actions);
+        return sprintf('<div class="list-item score-item">%s%s</div>', $title, $actions);
 
     } // END function scoreItem
 

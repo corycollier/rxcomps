@@ -133,10 +133,14 @@ class Rx_View_Helper_Model
             return;
         }
 
-        return $this->view->htmlAnchor($title, array_merge($params, array(
+        $html = '<div class="small default btn icon-right icon-list-add">%s</div>';
+
+        $link = $this->view->htmlAnchor($title, array_merge($params, array(
             'controller'    => $resourceId,
             'action'        => $privilege,
         )));
+
+        return sprintf($html, $link);
 
     } // END function create
 

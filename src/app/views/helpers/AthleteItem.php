@@ -48,7 +48,7 @@ class App_View_Helper_AthleteItem
                 'event_id'  => $athlete->event_id,
             )));
 
-        return sprintf('<div class="athlete-item">%s%s</div>', $title, $actions);
+        return sprintf('<div class="list-item athlete-item">%s%s</div>', $title, $actions);
 
     } // END function athleteItem
 
