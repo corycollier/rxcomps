@@ -143,12 +143,12 @@ class App_View_Helper_LeaderboardItem
         }
 
         $action = 'edit';
-        $label = '<i class="icon-pencil"></i>';
+        $html = '<div class="small default btn icon-right icon-pencil">%s</div>';
         if ($data['competitions'][$competitionId]['placeholder_score']) {
             $action = 'create';
         }
 
-        return $this->view->htmlAnchor($label, array(
+        $link = $this->view->htmlAnchor($action, array(
             'module'        => 'default',
             'controller'    => 'scores',
             'action'        => $action,
@@ -157,6 +157,8 @@ class App_View_Helper_LeaderboardItem
             'athlete_id'    => $data['athlete_id'],
 
         ));
+
+        return sprintf($html, $link);
     }
 
     public function isFiltered ($competitionId)
