@@ -119,4 +119,65 @@ class Rx_Controller_Action
         $this->view->flashMessenger = $this->getHelper('FlashMessenger');
     }
 
+    /**
+     * _mail()
+     *
+     * Mails a user
+     *
+     * @param App_Model_User $user
+     * @return App_Model_Registration $this for object-chaining
+     */
+    protected function _mail ($user, $subject, $viewScript, $params = array())
+    {
+        $mail = $this->_getMailObject();
+        $view = $this->_getViewObject();
+
+        foreach ($params as $key => $value) {
+            $view->$key = $value;
+        }
+
+        $html = $view->render($viewScript);
+        $text = strip_tags($html);
+
+        $mail->setBodyHtml($html);
+        $mail->setBodyText($text);
+        $mail->setFrom('no-reply@rxcomps.com', 'No-Reply');
+        $mail->addTo($user->getValue('email'));
+        $mail->addBcc('corycollier@corycollier.com', 'Cory Collier');
+        $mail->setSubject($subject);
+
+        $mail->send();
+
+        return $this;
+
+    } // END function _mail
+
+    /**
+     * _getMailObject()
+     *
+     * Gets a new mail object
+     *
+     * @return Zend_Mail
+     */
+    protected function _getMailObject ( )
+    {
+        return new Zend_Mail;
+
+    } // END function _getMailObject
+
+    /**
+     * _getViewObject()
+     *
+     * Gets a new view object
+     *
+     * @return Zend_View
+     */
+    protected function _getViewObject ( )
+    {
+        $view = clone $this->view;
+        $view->setScriptPath(APPLICATION_PATH . '/views/emails/');
+        return $view;
+
+    } // END function _getViewObject
+
 } // END class Rx_Controller_Action

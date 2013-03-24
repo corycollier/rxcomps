@@ -94,58 +94,10 @@ class App_Model_Registration
         $form->removeSubForm('athlete');
         $form->removeSubForm('user');
 
-        $result = parent::create($values);
-
-        $eventName = $event->getValue('name');
-        $subject = sprintf(self::EMAIL_REGISTRATION_SUBJECT, $eventName);
-        $message = implode(PHP_EOL, array(
-            'Succcess!',
-            'Congratulations on successfully registering for '. $eventName,
-
-        ));
-
-        $this->_mail($user, $subject, $message);
-
-        return $result;
+        return parent::create($values);
 
     } // END function create
 
-    /**
-     * _mail()
-     *
-     * Mails a user
-     *
-     * @param App_Model_User $user
-     * @return App_Model_Registration $this for object-chaining
-     */
-    protected function _mail ($user, $subject, $message = null)
-    {
-        $mail = $this->_getMailObject();
-
-        $mail->setBodyText($message);
-        $mail->setFrom('no-reply@rxcomps.com', 'No-Reply');
-        $mail->addTo($user->getValue('email'));
-        $mail->addBcc('corycollier@corycollier.com', 'Cory Collier');
-        $mail->setSubject($subject);
-
-        $mail->send();
-
-        return $this;
-
-    } // END function _mail
-
-    /**
-     * _getMailObject()
-     *
-     * Gets a new mail object
-     *
-     * @return Zend_Mail
-     */
-    protected function _getMailObject ()
-    {
-        return new Zend_Mail;
-
-    } // END function _getMailObject
 
 }// END class App_Model_Registration
 

@@ -61,11 +61,20 @@ class RegistrationsController
     protected function _create ($model, $request)
     {
         $message = sprintf(self::MSG_CREATE_SUCCESS, $this->_modelName);
+        $user = $this->getModel('User');
 
         try {
             $params = array_merge($request->getParams(), $request->getPost());
             $model->create($params);
-            $this->getModel('User')->login($request->getParam('user'));
+            $user->login($request->getParam('user'));
+
+            $this->_mail($user, 'Registration Confirmation', 'registration-confirmation.phtml', array(
+                'athlete'   => $model->getParent('Athlete'),
+                'event'     => $model->getParent('Event'),
+                'model'     => $model,
+                'user'      => $user,
+            ));
+
             $this->flashAndRedirect($message, 'success', array(
                 'module'        => $request->getModuleName(),
                 'controller'    => $request->getControllerName(),

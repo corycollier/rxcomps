@@ -313,6 +313,8 @@ class Rx_Model_Abstract
 
         $this->id = $dbTable->insert($values);
 
+        $this->load($this->id);
+
         return $this;
 
     } // END function _create

@@ -64,6 +64,7 @@ class App_View_Helper_EventItem
             'controller'=> 'events',
             'action'    => 'view',
             'id'        => $event->id,
+            'event_id'  => $event->id,
         )));
 
         return $title;
