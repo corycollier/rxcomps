@@ -39,11 +39,11 @@ class App_View_Helper_EventOptionItem
      * @param array $Athlete
      * @return string
      */
-    public function eventOptionItem ($eventOption)
+    public function eventOptionItem ($eventOption, $user, $params = array())
     {
         $title = $this->_getTitle($eventOption);
 
-        $actions = $this->_getActions($eventOption);
+        $actions = $this->view->model($eventOption, 'App_Model_EventOption')->links($user, $params);
 
         return sprintf('<div class="event-option-item">%s%s</div>', $title, $actions);
 
@@ -75,43 +75,5 @@ class App_View_Helper_EventOptionItem
         return $title;
 
     } // END function _getTitle
-
-    /**
-     * _getActions()
-     *
-     * gets markup displaying links to perform actions on an athlete
-     *
-     * @param App_Model_Athlete
-     * @return string
-     */
-    protected function _getActions ($eventOption)
-    {
-        $view = $this->view;
-        $auth = $view->auth();
-
-        $actions = '';
-
-        if ($auth->hasIdentity()) {
-            $actions = $view->htmlList(array(
-                $view->htmlAnchor('Edit', array(
-                    'controller'=> 'event-options',
-                    'action'    => 'edit',
-                    'id'        => $eventOption->id,
-                    'event_id'  => $eventOption->event_id,
-                )),
-                $view->htmlAnchor('Delete', array(
-                    'controller'=> 'event-options',
-                    'action'    => 'delete',
-                    'id'        => $eventOption->id,
-                    'event_id'  => $eventOption->event_id,
-                )),
-            ), false, array(
-                'class' => 'subnav',
-            ), false);
-        }
-
-        return $actions;
-
-    } // END function _getActions
 
 } // END class App_View_Helper_AthleteItem

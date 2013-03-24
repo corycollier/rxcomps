@@ -14,18 +14,19 @@
  */
 ?>
 
-<h2><?php echo $this->model->getValue('name'); ?>
+<div class="row">
+<h1 class="lead"><?php echo $this->model->getValue('name'); ?>
     <?php echo $this->event()->register($this->user); ?>
-</h2>
+</h1>
 
+<p><?php echo $this->model->getValue('description'); ?></p>
 <?php
 // echo editing links if the user has access to them
 echo $this->model($this->model)->links($this->user, array(
     'event_id' => $this->model->id,
 ));
 ?>
-
-<p><?php echo $this->model->getValue('description'); ?></p>
+</div>
 <?php
     // store request params for use later
     $params = $this->request()->getParams();

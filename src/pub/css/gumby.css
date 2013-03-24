@@ -1816,3 +1816,5 @@ td, th { padding: 1em; }
 
 .filtered { background: rgba(0, 0, 0, 0.25); color: rgba(0, 0, 0, 0.5); }
 .filtered a { color: rgba(0, 0, 0, 0.5); }
+
+.action-links a i { color: rgba(0, 0, 0, 0.7); }

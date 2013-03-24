@@ -82,6 +82,7 @@ class Rx_View_Helper_Model
         $resourceId = $this->_model->getResourceId();
         $roleId     = $user->getRoleId();
         $privileges = array('edit', 'delete');
+        $icons      = array('edit' => 'pencil', 'delete' => 'cancel-circled');
         $links      = array();
 
         foreach ($privileges as $privilege) {
@@ -89,18 +90,22 @@ class Rx_View_Helper_Model
                 continue;
             }
 
-            $links[] = $this->view->htmlAnchor($privilege, array_merge($params, array(
-                'controller' => $resourceId,
-                'action'     => $privilege,
-                'id'        => $this->_model->id
-            )));
+            $class = 'small default btn icon-right icon-' . $icons[$privilege];
+
+            $links[] = '<div class="' . $class . '">'
+                . $this->view->htmlAnchor($privilege, array_merge($params, array(
+                    'controller' => $resourceId,
+                    'action'     => $privilege,
+                    'id'        => $this->_model->id
+                )))
+                . '</div>';
         }
 
         if (empty($links)) {
             return;
         }
 
-        return $this->view->actionList($links);
+        return '<div class="action-links">' . implode(' ', $links) . '</div>';
 
     } // END function modelLinks
 

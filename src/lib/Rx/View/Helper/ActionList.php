@@ -6,12 +6,12 @@
  * displayed
  *
  * @category    RxCompetition
- * @package     App
+ * @package     Rx
  * @subpackage  View_Helper
  * @copyright   Copyright (c) 2012 RxCompetition.com, Inc (http://www.RxCompetition.com)
  * @license     All Rights Reserved
- * @version     Release: 1.1.0
- * @since       File available since release 1.1.0
+ * @version     Release: 2.0.0
+ * @since       File available since release 2.0.0
  * @filesource
  */
 
@@ -22,15 +22,15 @@
  * displayed
  *
  * @category    RxCompetition
- * @package     App
+ * @package     Rx
  * @subpackage  View_Helper
  * @copyright   Copyright (c) 2012 RxCompetition.com, Inc (http://www.RxCompetition.com)
  * @license     All Rights Reserved
- * @version     Release: 1.1.0
- * @since       Class available since release 1.1.0
+ * @version     Release: 2.0.0
+ * @since       Class available since release 2.0.0
  */
 
-class App_View_Helper_ActionList
+class Rx_View_Helper_ActionList
     extends Zend_View_Helper_HtmlList
 {
     /**
