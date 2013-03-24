@@ -39,7 +39,7 @@ class App_Model_DbTable_User
     protected $_name = 'users';
 
     protected $_dependentTables = array(
-        'App_Model_DbTable_EventsUsers',
+        'App_Model_DbTable_Registration',
     );
 
 } // END class App_Model_DbTable_Users

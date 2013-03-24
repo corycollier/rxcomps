@@ -30,7 +30,7 @@
 
 class App_Model_Registration
     extends Rx_Model_Abstract
-    implements Zend_Acl_Resource_Interface
+    implements Zend_Acl_Resource_Interface, App_Model_Interface_Eventable
 {
     /**
      * Message to indicate that the user provided already exists
@@ -97,6 +97,18 @@ class App_Model_Registration
         return parent::create($values);
 
     } // END function create
+
+    /**
+     * getEventId()
+     *
+     * This method gets the event id
+     *
+     * @return integer
+     */
+    public function getEvent ( )
+    {
+        return $this->row->findParentRow('App_Model_DbTable_Event')->id;
+    }
 
 
 }// END class App_Model_Registration

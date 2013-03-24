@@ -79,8 +79,6 @@ class App_Plugin_Acl
         $acl->allow('guest', 'registrations', 'create');
 
         $acl->allow(new App_Model_User, null, null, new App_Model_Assertion_Event);
-        $acl->allow('judge', null, null, new App_Model_Assertion_Event);
-        $acl->allow('admin', null, null, new App_Model_Assertion_Event);
 
         $acl->allow('user', 'scores', null, new App_Model_Assertion_IsOwnScore);
 

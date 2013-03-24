@@ -57,6 +57,17 @@ class App_Form_Registration
             'required'      => true,
         ));
 
+        $this->addElement('select', 'role', array(
+            'label'         => 'Role',
+            'placeholder'   => 'Select Role',
+            'required'      => true,
+            'filters'       => array('StringTrim', 'StringToLower'),
+            'multiOptions'  => array(
+                'user'      => 'Athlete',
+                'judge'     => 'Judge',
+            ),
+        ));
+
         // $form->setIsArray(true);
 
         // $this->addSubForm($form, 'registration');
@@ -105,7 +116,7 @@ class App_Form_Registration
         $form = new App_Form_Athlete;
         $form->removeDecorator('Form');
         $form->removeElement('save');
-        $form->getDecorator('Fieldset')->setLegend('Athlete Information');
+        $form->getDecorator('Fieldset')->setLegend('Profile Information');
         $form->setIsArray(true);
         return $form;
 

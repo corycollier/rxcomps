@@ -48,6 +48,7 @@ class App_Bootstrap
         ));
 
         $resourceLoader->addResourceType('assertions', 'models/assertions/', 'Model_Assertion_');
+        $resourceLoader->addResourceType('modelInterfaces', 'models/interfaces/', 'Model_Interface_');
 
         $loader->pushAutoloader($resourceLoader);
 

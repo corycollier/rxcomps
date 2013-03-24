@@ -51,7 +51,7 @@ class Rx_Controller_Action_Helper_Acl
     {
         $controller = $this->getActionController();
 
-        $controllerName = ucwords(trim($request->getControllerName(), 's'));
+        $controllerName = ucwords(rtrim($request->getControllerName(), 's'));
 
         $user   = $this->getModel('User');
         $model  = $this->getModel($controllerName);

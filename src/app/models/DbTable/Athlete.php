@@ -56,4 +56,8 @@ class App_Model_DbTable_Athlete
         ),
     );
 
+    protected $_dependentTables = array(
+        'App_Model_DbTable_Registration',
+    );
+
 } // END class App_Model_DbTable_Athletes

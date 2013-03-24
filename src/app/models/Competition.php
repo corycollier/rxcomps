@@ -30,7 +30,7 @@
 
 class App_Model_Competition
     extends Rx_Model_Abstract
-    implements Zend_Acl_Resource_Interface
+    implements Zend_Acl_Resource_Interface, App_Model_Interface_Eventable
 {
     /**
      * create()
@@ -388,6 +388,19 @@ class App_Model_Competition
     public function getResourceId ( )
     {
         return 'competitions';
+    }
+
+    /**
+     * getEventId()
+     *
+     * This method gets the event id
+     *
+     * @return integer
+     */
+    public function getEvent ( )
+    {
+        $event = $this->getParent('Event');
+        return $event;
     }
 
 }// END class App_Model_Competitions

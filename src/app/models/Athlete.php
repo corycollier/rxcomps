@@ -30,7 +30,7 @@
 
 class App_Model_Athlete
     extends Rx_Model_Abstract
-    implements Zend_Acl_Resource_Interface
+    implements Zend_Acl_Resource_Interface, App_Model_Interface_Eventable
 {
     /**
      * getResourceId()
@@ -42,6 +42,19 @@ class App_Model_Athlete
     public function getResourceId ( )
     {
         return 'athletes';
+    }
+
+    /**
+     * getEventId()
+     *
+     * This method gets the event id
+     *
+     * @return integer
+     */
+    public function getEvent ( )
+    {
+        $event = $this->getParent('Event');
+        return $event;
     }
 
 }// END class App_Model_Athletes

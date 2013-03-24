@@ -155,13 +155,7 @@ class App_Model_User
     {
         // create local variables for the needed entities
         $acl = $this->getAcl();
-        $auth = $this->getAuth();
-
-        $data = $auth->getStorage()->read();
-
-        if ($data) {
-            $this->load($data->id);
-        }
+        $this->fromSession();
 
         $resource = $model ? $model : $request->getControllerName();
 

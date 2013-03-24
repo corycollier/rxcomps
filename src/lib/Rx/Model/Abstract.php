@@ -416,15 +416,12 @@ class Rx_Model_Abstract
      */
     public function getChildren ($shortName)
     {
-        $result = new ArrayObject;
-
-        $fullTableName = sprintf('App_Model_DbTable_%s', $shortName);
-        $fullModelName = sprintf('App_Model_%s', $shortName);
-
-        $rowset = $this->row->findDependentRowset($fullTableName);
+        $result         = new ArrayObject;
+        $fullTableName  = sprintf('App_Model_DbTable_%s', $shortName);
+        $rowset         = $this->row->findDependentRowset($fullTableName);
 
         foreach ($rowset as $row) {
-            $model = new $fullModelName;
+            $model = $this->getModel($shortName);
             $model->fromRow($row);
             $result[] = $model;
         }
@@ -432,6 +429,22 @@ class Rx_Model_Abstract
         return $result;
 
     } // END function getChildren
+
+    /**
+     * getModel()
+     *
+     * Gets a new model instance
+     *
+     * @param  string $shorName
+     * @return Rx_Model_Abstract a new instance of the model
+     */
+    public function getModel ($shortName)
+    {
+        $fullModelName = sprintf('App_Model_%s', $shortName);
+        $model = new $fullModelName;
+        return $model;
+
+    } // END function getModel
 
     /**
      * fromRow()

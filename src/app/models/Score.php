@@ -30,7 +30,7 @@
 
 class App_Model_Score
     extends Rx_Model_Abstract
-    implements Zend_Acl_Resource_Interface
+    implements Zend_Acl_Resource_Interface, App_Model_Interface_Eventable
 {
     /**
      * getResourceId()
@@ -42,6 +42,20 @@ class App_Model_Score
     public function getResourceId ( )
     {
         return 'scores';
+    }
+
+    /**
+     * getEventId()
+     *
+     * This method gets the event id
+     *
+     * @return integer
+     */
+    public function getEvent ( )
+    {
+        $event = $this->getModel('Event');
+        $event->load($this->row->findParentRow('App_Model_DbTable_Competition')->event_id);
+        return $event;
     }
 
 }// END class App_Model_Score

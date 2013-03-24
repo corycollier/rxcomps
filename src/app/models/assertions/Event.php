@@ -55,14 +55,20 @@ class App_Model_Assertion_Event
         Zend_Acl_Resource_Interface $resource = null,
         $privilege = null)
     {
-
         // override the role. It should always be the current user
         $role = $this->_getRegistry()->get('user');
+        $roleId = $role->getRoleId();
+
+        // if the user is a global admin, just return true
+        if ($roleId == 'admin') {
+            return true;
+        }
 
         $results = array();
         if (@$role->row) {
-            $results = $role->row->findDependentRowset('App_Model_DbTable_EventsUsers')->toArray();
+            $results = $role->row->findDependentRowset('App_Model_DbTable_Registration')->toArray();
         }
+
 
         // if the model is loaded ...
         if ($resource->row) {
@@ -71,10 +77,13 @@ class App_Model_Assertion_Event
             $resourceId = $resource->getResourceId();
 
             if ($resourceId != 'events') {
-                $eventId = $resource->row->findParentRow('App_Model_DbTable_Event')->id;
+                if ($resoure instanceof App_Model_Interface_Eventable) {
+                    $eventId = $resource->getEvent()->id;
+                }
             }
 
             foreach ($results as $result) {
+
                 if ($eventId == $result['event_id']) {
                     return $this->hasAccess($result['role'], $resourceId, $privilege);
                 }
@@ -104,12 +113,21 @@ class App_Model_Assertion_Event
         $rights['user']['event-options']    = array();
         $rights['user']['competitions']     = array('view', 'list');
         $rights['user']['athletes']         = array('view', 'list');
+        $rights['user']['scores']           = array('view', 'list');
+
+        $rights['judge']['events']          = array('view', 'list');
+        $rights['judge']['registrations']   = array('view', 'list');
+        $rights['judge']['competitions']    = array('view', 'list');
+        $rights['judge']['event-options']   = array('view', 'list');
+        $rights['judge']['athletes']        = array('view', 'list');
+        $rights['judge']['scores']          = array('view', 'list', 'edit', 'delete', 'create');
 
         $rights['admin']['events']          = array('view', 'list', 'edit', 'delete', 'create');
         $rights['admin']['registrations']   = array('view', 'list', 'edit', 'delete', 'create');
         $rights['admin']['competitions']    = array('view', 'list', 'edit', 'delete', 'create');
         $rights['admin']['event-options']   = array('view', 'list', 'edit', 'delete', 'create');
         $rights['admin']['athletes']        = array('view', 'list', 'edit', 'delete', 'create');
+        $rights['admin']['scores']          = array('view', 'list', 'edit', 'delete', 'create');
 
         if (! isset($rights[$role])) {
             throw new Zend_Exception(sprintf(
