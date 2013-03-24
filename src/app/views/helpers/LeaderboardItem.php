@@ -80,7 +80,7 @@ class App_View_Helper_LeaderboardItem
 
         return implode(PHP_EOL, array(
             '<tr class="striped">',
-            sprintf('<td class="athlete-name">%s (%d) <span class="alt">%d</span></td>',
+            sprintf('<td class="athlete-name">%s %d <span class="alt">(%d)</span></td>',
                 $this->view->htmlAnchor(ucwords($athlete->name), array(
                     'controller'    => 'athletes',
                     'action'        => 'view',
