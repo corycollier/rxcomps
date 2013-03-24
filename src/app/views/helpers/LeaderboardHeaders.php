@@ -72,7 +72,7 @@ class App_View_Helper_LeaderboardHeaders
             $isFiltered =  $this->isFiltered($competition->id);
 
             if ($isFiltered) {
-                $results[] = sprintf('<th class="filtered"><p class="rotate">%s %s</p></th>',
+                $results[] = sprintf('<th class="filtered">%s %s</th>',
                     $competition->name,
                     $this->view->htmlAnchor('+', array(
                         'filters' => ltrim(implode(',', array_diff(explode(',', $filters), array($competition->id))), ','),
@@ -81,7 +81,7 @@ class App_View_Helper_LeaderboardHeaders
 
             } else {
 
-                $results[] = sprintf('<th class=""><p class="rotate">%s %s</p></th>',
+                $results[] = sprintf('<th class="">%s %s</th>',
                     $competition->name,
                     $this->view->htmlAnchor('x', array(
                         'filters' => ltrim($filters . ',' . $competition->id, ','),

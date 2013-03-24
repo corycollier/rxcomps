@@ -26,7 +26,7 @@ $points = 0;
 foreach ($this->items as $index => $athlete) :
     // update the points and rank values for the next item
     if ($athlete['points'] != $points) :
-        $rank = $index + 2;
+        $rank = $index + 1;
     endif;
 
     // render the leaderboard item

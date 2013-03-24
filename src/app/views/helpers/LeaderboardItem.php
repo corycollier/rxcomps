@@ -80,14 +80,14 @@ class App_View_Helper_LeaderboardItem
 
         return implode(PHP_EOL, array(
             '<tr class="striped">',
-            sprintf('<td class="athlete-name"><span class="alt">(%d)</span> %s %d</td>',
-                $data['points'],
+            sprintf('<td class="athlete-name">%s (%d) <span class="alt">%d</span></td>',
                 $this->view->htmlAnchor(ucwords($athlete->name), array(
                     'controller'    => 'athletes',
                     'action'        => 'view',
                     'id'            => $athlete->id,
                 )),
-                $rank
+                $rank,
+                $data['points']
             ),
             implode(PHP_EOL, $this->getCompetitionResults($data)),
             '</tr>',

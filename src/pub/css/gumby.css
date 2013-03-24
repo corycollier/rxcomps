@@ -1820,7 +1820,9 @@ body .alt { color: #666666; font-family: "Open Sans"; font-style: italic; font-w
 body p + p { text-indent: 0; margin-top: auto; }
 body .alt { color: rgba(0, 0, 0, 0.5); }
 
-td, th { padding: 1em; border: 1px solid #ccc; }
+td, th { padding: 0.5em; border: 1px solid #ddd; }
+
+th { font-weight: bold; }
 
 .data-table .details { font-size: 0.8em; }
 
@@ -1828,3 +1830,5 @@ td, th { padding: 1em; border: 1px solid #ccc; }
 .filtered a { color: rgba(0, 0, 0, 0.5); }
 
 .action-links a i { color: rgba(0, 0, 0, 0.7); }
+
+.athlete-name { text-align: right; }
