@@ -108,26 +108,12 @@ CREATE  TABLE IF NOT EXISTS `users` (
 )
 ENGINE = InnoDB;
 
-CREATE TABLE IF NOT EXISTS `events_users` (
-    event_id INT(11) NOT NULL,
-    user_id INT(11) NOT NULL,
-    role VARCHAR(40) NOT NULL default 'user',
-    PRIMARY KEY(`event_id`, `user_id`),
-    CONSTRAINT `fk_events_users_event_id` FOREIGN KEY (`event_id`)
-        REFERENCES `events` (`id`)
-        ON DELETE CASCADE ON UPDATE CASCADE,
-    CONSTRAINT `fk_events_users_user_id` FOREIGN KEY (`user_id`)
-        REFERENCES `users` (`id`)
-        ON DELETE CASCADE
-        ON UPDATE CASCADE
-)
-ENGINE = InnoDB;
-
 CREATE TABLE IF NOT EXISTS `registrations` (
-    id INT(11) NOT NULL AUTO_INCREMENT,
-    event_id INT(11) NOT NULL, -- what event the registration is for
-    user_id INT(11) NOT NULL, -- who created the registration
-    athlete_id INT(11) NOT NULL, -- the athlete record that will be used for scoring
+    `id` INT(11) NOT NULL AUTO_INCREMENT,
+    `event_id` INT(11) NOT NULL, -- what event the registration is for
+    `user_id` INT(11) NOT NULL, -- who created the registration
+    `athlete_id` INT(11) NOT NULL, -- the athlete record that will be used for scoring
+    `role` ENUM('user', 'judge', 'admin') NOT NULL DEFAULT 'user',
     PRIMARY KEY (`id`),
     UNIQUE KEY `uk_event_user_registration` (`event_id`,`user_id`),
     CONSTRAINT `fk_registrations_event_id` FOREIGN KEY (`event_id`)
