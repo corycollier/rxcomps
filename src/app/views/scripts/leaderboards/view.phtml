@@ -13,6 +13,14 @@
  * @since       File available since release 1.0.0
  */
 ?>
+
+<?php
+// echo a link back to the main event
+echo $this->actionList(array(
+    $this->backToEventLink($this->model, $this->request()->getParams()),
+));
+?>
+
 <table class="data-table leaderboards-table">
 <?php
 // render the leaderboard headers

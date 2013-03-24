@@ -74,6 +74,7 @@ class LeaderboardsController
     {
         $request = $this->getRequest();
         $leaderboards = $this->getModel('Leaderboard');
+        $scale = $this->getModel('Scale');
 
         $eventId = $request->getParam('event_id');
         $scaleId = $request->getParam('scale_id');
@@ -89,6 +90,7 @@ class LeaderboardsController
         }
 
         $this->view->items = $items;
+        $this->view->model = $scale->load($scaleId);
 
     } // END function viewAction
 
