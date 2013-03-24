@@ -1820,7 +1820,7 @@ body .alt { color: #666666; font-family: "Open Sans"; font-style: italic; font-w
 body p + p { text-indent: 0; margin-top: auto; }
 body .alt { color: rgba(0, 0, 0, 0.5); }
 
-td, th { padding: 1em; }
+td, th { padding: 1em; border: 1px solid #ccc; }
 
 .data-table .details { font-size: 0.8em; }
 

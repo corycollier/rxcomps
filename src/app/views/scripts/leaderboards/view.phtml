@@ -14,11 +14,29 @@
  */
 ?>
 <table class="data-table leaderboards-table">
-<?php echo $this->leaderboardHeaders(@$this->items[0]); ?>
-<?php foreach ($this->items as $index => $athlete) : ?>
+<?php
+// render the leaderboard headers
+echo $this->leaderboardHeaders(@$this->items[0]);
 
-    <?php echo $this->leaderboardItem($athlete, $index + 1); ?>
+// set some variables to default values
+$rank = 1;
+$points = 0;
 
-<?php endforeach; ?>
+// iterate through each athlete's competition results
+foreach ($this->items as $index => $athlete) :
+    // update the points and rank values for the next item
+    if ($athlete['points'] != $points) :
+        $rank = $index + 2;
+    endif;
+
+    // render the leaderboard item
+    echo $this->leaderboardItem($athlete, $rank);
+
+    $points = $athlete['points'];
+
+endforeach;
+die;
+
+?>
 
 </table>

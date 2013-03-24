@@ -79,7 +79,7 @@ class App_View_Helper_LeaderboardItem
         $competitions = $this->getCompetitionResults($data);
 
         return implode(PHP_EOL, array(
-            '<tr>',
+            '<tr class="striped">',
             sprintf('<td class="athlete-name"><span class="alt">(%d)</span> %s %d</td>',
                 $data['points'],
                 $this->view->htmlAnchor(ucwords($athlete->name), array(
