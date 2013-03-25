@@ -74,7 +74,14 @@
     <nav class=" navbar" id="basicnav" gumby-fixed="top">
         <div class="row">
             <a href="#" class="toggle" data-for="#basicnav > ul"><img src="/img/icon_nav_toggle.gif" /></a>
-            <?php echo $this->navigation()->menu()->setUlClass('container')->menu(); ?>
+            <?php
+                echo $this->navigation()
+                    ->menu()
+                    ->setUlClass('container')
+                    ->setMinDepth(0)
+                    ->setMaxDepth(0)
+                    ->render();
+            ?>
         </div>
     </nav>
 
@@ -82,6 +89,9 @@
         <?php echo $this->flashMessenger($this->flashMessenger); ?>
     </div>
 
+    <div class="container row">
+        <?php echo $this->navigation()->breadcrumbs(); ?>
+    </div>
     <div class="container row page-content">
         <?php echo $this->layout()->content; ?>
     </div>

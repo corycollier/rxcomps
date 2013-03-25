@@ -67,6 +67,7 @@ class App_View_Helper_BackToEventLink
             'controller'    => 'events',
             'action'        => 'view',
             'id'            => $event->id,
+            'event_id'      => $event->id,
             'reset-url'     => true,
         ));
 

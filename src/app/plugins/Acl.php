@@ -70,13 +70,17 @@ class App_Plugin_Acl
             'login',
             'logout',
             'success',
-            'list',
+            // 'list',
             'leaderboards',
             'all',
             'all-leaderboards',
         ));
 
         $acl->allow('guest', 'registrations', 'create');
+        $acl->allow('guest', 'events', 'list');
+        $acl->allow('guest', 'athletes', 'list');
+        $acl->allow('guest', 'competitions', 'list');
+        $acl->allow('guest', 'scores', 'list');
 
         $acl->allow(new App_Model_User, null, null, new App_Model_Assertion_Event);
 

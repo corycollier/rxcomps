@@ -2,6 +2,7 @@ CREATE  TABLE IF NOT EXISTS `events` (
   `id` INT NOT NULL AUTO_INCREMENT ,
   `name` VARCHAR(45) NOT NULL ,
   `description` TEXT NULL ,
+  `created` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
 )
 ENGINE = InnoDB;
@@ -28,6 +29,7 @@ CREATE  TABLE IF NOT EXISTS `athletes` (
   `event_id` INT NOT NULL ,
   `gender` ENUM('male', 'female', 'team') NOT NULL DEFAULT 'team',
   `gym` TEXT,
+  `created` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`) ,
   INDEX `fk_events_idx` (`event_id` ASC) ,
   CONSTRAINT `fk_athletes_events`
@@ -48,7 +50,7 @@ CREATE  TABLE IF NOT EXISTS `competitions` (
   `name` VARCHAR(255) NOT NULL ,
   `description` TEXT NULL ,
   `date` TIMESTAMP NOT NULL DEFAULT 0 ,
-  `created` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP() ,
+  `created` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated` TIMESTAMP NOT NULL DEFAULT 0 ,
   `event_id` INT NOT NULL ,
   `goal` ENUM('time', 'amrap', 'max') NOT NULL DEFAULT 'time' ,
@@ -81,6 +83,7 @@ CREATE  TABLE IF NOT EXISTS `scores` (
   `score` FLOAT(10,3) NOT NULL DEFAULT 0.000 ,
   `athlete_id` INT NOT NULL ,
   `competition_id` INT NOT NULL ,
+  `created` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`) ,
   UNIQUE KEY `uk_athlete_competition_score` (`athlete_id`,`competition_id`),
   INDEX `fk_athletes_idx` (`athlete_id` ASC) ,
@@ -103,6 +106,7 @@ CREATE  TABLE IF NOT EXISTS `users` (
   `email` VARCHAR(255) NOT NULL ,
   `passwd` VARCHAR(40) NOT NULL ,
   `role` VARCHAR(40) NOT NULL DEFAULT 'user' ,
+  `created` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`) ,
   UNIQUE INDEX `email_UNIQUE` (`email` ASC)
 )
@@ -114,6 +118,7 @@ CREATE TABLE IF NOT EXISTS `registrations` (
     `user_id` INT(11) NOT NULL, -- who created the registration
     `athlete_id` INT(11) NOT NULL, -- the athlete record that will be used for scoring
     `role` ENUM('user', 'judge', 'admin') NOT NULL DEFAULT 'user',
+    `created` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (`id`),
     UNIQUE KEY `uk_event_user_registration` (`event_id`,`user_id`),
     CONSTRAINT `fk_registrations_event_id` FOREIGN KEY (`event_id`)

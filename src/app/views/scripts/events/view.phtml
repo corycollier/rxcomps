@@ -15,18 +15,20 @@
 ?>
 
 <div class="row">
-<h1 class="lead"><?php echo $this->model->getValue('name'); ?>
-    <?php echo $this->event()->register($this->user); ?>
-</h1>
+    <h1 class="lead"><?php echo $this->model->getValue('name'); ?>
+        <?php echo $this->event()->register($this->user); ?>
+    </h1>
 
-<p><?php echo $this->model->getValue('description'); ?></p>
-<?php
-// echo editing links if the user has access to them
-echo $this->model($this->model)->links($this->user, array(
-    'event_id' => $this->model->id,
-));
-?>
+    <p class="row"><?php echo $this->model->getValue('description'); ?>
+    <?php
+        // echo editing links if the user has access to them
+        echo $this->model($this->model)->links($this->user, array(
+            'event_id' => $this->model->id,
+        ));
+    ?>
+    </p>
 </div>
+
 <?php
     // store request params for use later
     $params = $this->request()->getParams();
@@ -35,63 +37,41 @@ echo $this->model($this->model)->links($this->user, array(
 <div class="row">
     <div class="twelve columns">
         <section class="tabs">
-            <ul class="tab-nav">
-                <li><a href="#">Leaderboards</a></li>
-                <li><a href="#">Competitions</a></li>
-                <li><a href="#">Athletes</a></li>
-                <li><a href="#">Registrations</a></li>
-                <li><a href="#">Options</a></li>
-            </ul>
+            <?php
+
+            // var_dump($this->navigation()->getAcl()); die;
+
+                echo $this->navigation()
+                    ->menu()
+                    ->setMinDepth(1)
+                    ->setUlClass('tab-nav')
+                    ->render();
+
+                $pages  = $this->navigation()->getContainer()->findOneBy('Label', 'Events');
+                $acl    = $this->registry()->get('acl');
+                $user   = $this->registry()->get('user');
+                $role   = $user->getRoleId();
+
+            ?>
+
+            <?php foreach ($pages as $page) : ?>
 
             <div class="tab-content">
-                <!-- LEADERBOARDS -->
-                <h2>Leaderboards</h2>
+
+            <?php if ($acl->isAllowed($role, $page->controller, $page->action)) : ?>
+                <h2><?php echo $page->getLabel(); ?></h2>
+
                 <?php echo $this->action(
-                    'all', 'leaderboards', 'default', array_merge($params, array(
+                    $page->action, $page->controller, $page->module, array_merge($params, array(
                         'event_id'  => $this->model->id,
                     ))
                 ); ?>
+            <?php endif; ?>
+
             </div>
 
-            <div class="tab-content active">
-                <!-- COMPETITONS -->
-                <h2>Competitions</h2>
-                <?php echo $this->action(
-                    'list', 'competitions', 'default', array_merge($params, array(
-                        'event_id'  => $this->model->id,
-                    ))
-                ); ?>
-            </div>
+            <?php endforeach; ?>
 
-            <div class="tab-content">
-                <!-- ATHLETES -->
-                <h2>Athletes</h2>
-                <?php echo $this->action(
-                    'list', 'athletes', 'default', array_merge($params, array(
-                        'event_id'  => $this->model->id,
-                    ))
-                ); ?>
-            </div>
-
-            <div class="tab-content">
-                <!-- REGISTRATIONS -->
-                <h2>Registrations</h2>
-                <?php echo $this->action(
-                    'list', 'registrations', 'default', array_merge($params, array(
-                        'event_id'  => $this->model->id,
-                    ))
-                ); ?>
-            </div>
-
-            <div class="tab-content">
-                <!-- EVENT OPTIONS -->
-                <h2>Options</h2>
-                <?php echo $this->action(
-                    'list', 'event-options', 'default', array_merge($params, array(
-                        'event_id'  => $this->model->id,
-                    ))
-                ); ?>
-            </div>
         </section>
     </div>
 </div>
