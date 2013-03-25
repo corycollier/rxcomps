@@ -158,6 +158,19 @@ class Rx_View_Helper_Model
     } // END function id
 
     /**
+     * getValue()
+     *
+     * Passthrough method to get a model value
+     *
+     * @param  string $name the name of the property requested
+     * @return mixed the value
+     */
+    public function getValue ($name)
+    {
+        return $this->_model->getValue($name);
+    }
+
+    /**
      * getRegistry()
      *
      * Method to get the global registry object. This method helps in unit testing

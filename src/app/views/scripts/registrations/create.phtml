@@ -19,6 +19,11 @@
 echo $this->actionList(array(
     $this->backToEventLink($this->model, $this->request()->getParams()),
 ));
+?>
+
+<h1>Register for <?php echo $this->event()->getValue('name'); ?></h2>
+
+<?php
 
 // render the creation form
 echo $this->form;
