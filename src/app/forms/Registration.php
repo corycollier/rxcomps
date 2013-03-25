@@ -40,6 +40,10 @@ class App_Form_Registration
      */
     public function init ( )
     {
+        // $this->addSubForm($form, 'registration');
+        $this->addSubForm($this->getUserForm(), 'user');
+        $this->addSubForm($this->getAthleteForm(), 'athlete');
+
         // $form = new Zend_Form_SubForm;
         $this->addElement('hidden', 'id', array(
             'ignore'        => true,
@@ -68,12 +72,6 @@ class App_Form_Registration
             ),
         ));
 
-        // $form->setIsArray(true);
-
-        // $this->addSubForm($form, 'registration');
-        $this->addSubForm($this->getUserForm(), 'user');
-        $this->addSubForm($this->getAthleteForm(), 'athlete');
-
         $this->addElement('submit', 'save', array(
             'label'         => 'Save',
             'ignore'        => true,
@@ -98,7 +96,7 @@ class App_Form_Registration
         $form = new App_Form_User;
         $form->removeDecorator('Form');
         $form->removeElement('login');
-        $form->getDecorator('Fieldset')->setLegend('User Information');
+        $form->removeDecorator('Fieldset');
         $form->setIsArray(true);
         return $form;
 
@@ -116,7 +114,7 @@ class App_Form_Registration
         $form = new App_Form_Athlete;
         $form->removeDecorator('Form');
         $form->removeElement('save');
-        $form->getDecorator('Fieldset')->setLegend('Profile Information');
+        $form->getDecorator('Fieldset')->setLegend('Registration Information');
         $form->setIsArray(true);
         return $form;
 

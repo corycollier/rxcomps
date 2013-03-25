@@ -37,6 +37,7 @@ class Rx_Form_Abstract
     public function __construct ( )
     {
         $this->addPrefixPath('Rx_Form_Element_', 'Rx/Form/Element/', 'element');
+        $this->addPrefixPath('Rx_Form_Decorator_', 'Rx/Form/Decorator/', 'decorator');
         parent::__construct();
         // $this->addElementPrefixPath('Rx_Form_Element_', 'Rx/Form/Element/');
         $this->setStandardDecorators();

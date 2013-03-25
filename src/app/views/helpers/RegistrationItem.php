@@ -64,7 +64,7 @@ class App_View_Helper_RegistrationItem
         $athlete = $registration->findParentRow('App_Model_DbTable_Athlete');
 
         $title = sprintf('<h3>%s</h3>', $view->htmlAnchor($athlete->name, array(
-            'controller'=> 'Registrations',
+            'controller'=> 'registrations',
             'action'    => 'view',
             'id'        => $registration->id,
         )));

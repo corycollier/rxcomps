@@ -107,7 +107,7 @@ class App_Model_Registration
      */
     public function getEvent ( )
     {
-        return $this->row->findParentRow('App_Model_DbTable_Event')->id;
+        return $this->getParent('Event');
     }
 
 

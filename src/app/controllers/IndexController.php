@@ -41,4 +41,14 @@
 
     } // END function indexController
 
+    /**
+     * termsOfUseAction()
+     *
+     * The terms-of-use page
+     */
+    public function termsOfUseAction ( )
+    {
+
+    } // END function termsOfUseAction
+
 } // END function indexController

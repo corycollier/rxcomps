@@ -106,7 +106,17 @@ CREATE  TABLE IF NOT EXISTS `users` (
   `email` VARCHAR(255) NOT NULL ,
   `passwd` VARCHAR(40) NOT NULL ,
   `role` VARCHAR(40) NOT NULL DEFAULT 'user' ,
-  `created` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  `gender` ENUM('male', 'female') NOT NULL DEFAULT 'male',
+  `first_name` VARCHAR(40) NOT NULL ,
+  `last_name` VARCHAR(40) NOT NULL ,
+  `address1` VARCHAR(40) NULL ,
+  `address2` VARCHAR(40) NULL ,
+  `city` VARCHAR(40) NULL ,
+  `state` VARCHAR(2) NULL ,
+  `postal` VARCHAR(10) NULL ,
+  `country` VARCHAR(255) NULL ,
+  `birthday` DATETIME NOT NULL ,
+  `created` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ,
   PRIMARY KEY (`id`) ,
   UNIQUE INDEX `email_UNIQUE` (`email` ASC)
 )

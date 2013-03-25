@@ -68,8 +68,10 @@
 </head>
 
 <body>
-    <div class="container row main-navigation">
-        <h2 class="logo"><a href="/"><?php echo $this->sitename; ?></a></h2>
+    <div class="header">
+        <div class="container row">
+            <h2 class="logo"><a href="/">Rx Competition</a></h2>
+        </div>
     </div>
     <nav class=" navbar" id="basicnav" gumby-fixed="top">
         <div class="row">
@@ -85,19 +87,32 @@
         </div>
     </nav>
 
-    <div class="container row">
-        <?php echo $this->flashMessenger($this->flashMessenger); ?>
-    </div>
-
-    <div class="container row">
-        <?php echo $this->navigation()->breadcrumbs(); ?>
-    </div>
     <div class="container row page-content">
+        <?php echo $this->flashMessenger($this->flashMessenger); ?>
+        <?php echo $this->navigation()->breadcrumbs(); ?>
         <?php echo $this->layout()->content; ?>
     </div>
 
     <div class="footer">
-        <div class="container">
+        <div class="container row">
+        <p>&copy; RxCompetition. All rights reserved. RxCompetition and RxCompetition.com are trademarks
+        and/or service marks of RxCompetition.com, Inc. Use of this website constitutes
+        acceptance of the Subscriber Agreement and Privacy Policy. All programs,
+        processes, and source code contained on this website, RxCompetition.com
+        are protected by license and are patent pending. Other information, logos,
+        company names, website names, and/or trademarks that appear on this
+        website are the copyrighted property of their respective companies.
+        this site and it's content may not be copied, modified, reproduced, republished,
+        transmitted, or distributed without the authorization of RxCompetition.com
+        </p>
+        <p>
+        For more information, please visit the RxCompetition.com
+        <?php echo $this->htmlAnchor('Terms of Use', array(
+            'module' => 'default',
+            'controller' => 'index',
+            'action'    => 'terms-of-use',
+        )); ?>
+        </p>
         </div>
     </div>
 

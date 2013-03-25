@@ -77,7 +77,7 @@ class App_Model_Assertion_Event
             $resourceId = $resource->getResourceId();
 
             if ($resourceId != 'events') {
-                if ($resoure instanceof App_Model_Interface_Eventable) {
+                if ($resource instanceof App_Model_Interface_Eventable) {
                     $eventId = $resource->getEvent()->id;
                 }
             }
