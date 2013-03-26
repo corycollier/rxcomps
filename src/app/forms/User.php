@@ -117,7 +117,7 @@ class App_Form_User
             'required'      => true,
             'filters'       => array('StringTrim'),
             'validators'    => array(
-                'PostCode',
+                // 'PostCode',
             ),
         ));
 
@@ -165,10 +165,9 @@ class App_Form_User
             )
         );
 
-        $this->setStandardDecorators();
-
         $this->setDisplayGroupDecorators(array(
             'FormElements',
+            'FormErrors',
             'Fieldset'
         ));
 

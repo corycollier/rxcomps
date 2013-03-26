@@ -248,6 +248,7 @@ class Rx_Model_Abstract
      */
     public function edit ($values = array())
     {
+        $values = $this->_validate($values);
         return $this->_edit($values);
 
     } // END function edit
@@ -262,8 +263,6 @@ class Rx_Model_Abstract
      */
     protected function _edit ($values = array())
     {
-        $values = $this->_validate($values);
-
         $dbTable = $this->getTable();
 
         $dbTable->update($values, sprintf('id = %d', $this->id));
@@ -282,6 +281,7 @@ class Rx_Model_Abstract
      */
     public function create ($values = array())
     {
+        $values = $this->_validate($values);
         return $this->_create($values);
 
     } // END function create
@@ -296,10 +296,6 @@ class Rx_Model_Abstract
      */
     protected function _create ($values = array())
     {
-        $values = $this->_validate($values);
-
-        var_dump($values); die;
-
         $dbTable = $this->getTable();
 
         $this->id = $dbTable->insert($values);
@@ -351,6 +347,7 @@ class Rx_Model_Abstract
     protected function _validate ($values)
     {
         $form = $this->getForm();
+
         $form->injectDependencies($this, $values);
 
         if (! $form->isValid($values)) {

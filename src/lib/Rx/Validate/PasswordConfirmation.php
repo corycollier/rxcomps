@@ -58,8 +58,6 @@ class Rx_Validate_PasswordConfirmation
         $value = (string)$value;
         $this->_setValue($value);
 
-        var_dump($context); die;
-
         if (! is_array($context)) {
             return true;
         }

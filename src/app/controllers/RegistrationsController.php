@@ -65,7 +65,13 @@ class RegistrationsController
 
         try {
             $params = array_merge($request->getParams(), $request->getPost());
-            $model->create($params);
+
+            $result = $model->create($params);
+
+            if (! $result) {
+                return false;
+            }
+
             $user->login($request->getParam('user'));
 
             $this->_mail($user, 'Registration Confirmation', 'registration-confirmation.phtml', array(
@@ -83,17 +89,17 @@ class RegistrationsController
             ));
 
         } catch (Zend_Exception $exception) {
+            // var_dump($exception);
+            // var_dump($request->getParams());
+            // var_dump()
+            // foreach ($model->getForm()->getSubforms() as $subForm) {
+            //     var_dump($subForm->getMessages());
+            // }
+            // die;
+            // var_dump($exception); die;
             $this->getHelper('FlashMessenger')->addMessage($exception->getMessage(), 'error');
-
             $flash = $this->getHelper('FlashMessenger');
-
-            var_dump($_SESSION);
-            var_dump($this->getHelper('FlashMessenger')->getCurrentMessages('success'));
-            var_dump($this->getHelper('FlashMessenger')->hasMessages("success")); die;
         }
-        // parent::_create($model, $request);
-
-        // var_dump($request->getParams()); die;
 
     }
 

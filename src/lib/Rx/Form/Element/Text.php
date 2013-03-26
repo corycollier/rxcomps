@@ -55,12 +55,13 @@ class Rx_Form_Element_Text
                 ));
         }
 
+
         $this->addDecorators(array(
-            array(array('elementDiv' => 'HtmlTag'), array(
+            array(array('textDiv' => 'HtmlTag'), array(
                 'tag' => 'div',
                 'class' => 'text',
             )),
-            array(array('td' => 'HtmlTag'), array(
+            array(array('fieldDiv' => 'HtmlTag'), array(
                 'tag' => 'div',
                 'class' => 'field',
             )),

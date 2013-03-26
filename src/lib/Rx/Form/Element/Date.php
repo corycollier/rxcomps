@@ -164,7 +164,10 @@ class Rx_Form_Element_Date
                  ->setMonth($value['month'])
                  ->setYear($value['year']);
         } else {
-            throw new Rx_Form_Exception('Invalid date value provided');
+            $value = (int)$value;
+            $this->setDay(date('d', $value))
+                 ->setMonth(date('m', $value))
+                 ->setYear(date('Y', $value));
         }
 
         return $this;

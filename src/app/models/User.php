@@ -247,6 +247,8 @@ class App_Model_User
     {
         $values['passwd'] = hash('sha1', @$values['passwd']);
 
+        $values = $this->_validate($values);
+
         return $this->_create($values);
 
     } // END function create

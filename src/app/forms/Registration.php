@@ -93,6 +93,7 @@ class App_Form_Registration
         $form->removeElement('login');
         $form->removeDecorator('Fieldset');
         $form->setIsArray(true);
+        $form->setElementsBelongTo('user');
         return $form;
 
     } // END function getUserForm
@@ -111,6 +112,7 @@ class App_Form_Registration
         $form->removeElement('save');
         $form->getDecorator('Fieldset')->setLegend('Registration Information');
         $form->setIsArray(true);
+        $form->setElementsBelongTo('athlete');
         return $form;
 
     } // END function getAthleteForm

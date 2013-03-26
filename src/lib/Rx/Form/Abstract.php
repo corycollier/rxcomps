@@ -51,18 +51,9 @@ class Rx_Form_Abstract
      */
     public function setStandardDecorators ( )
     {
-        $this->setElementDecorators(array(
-            'ViewHelper',
-            'Label',
-            'Errors',
-            array('HtmlTag', array(
-                'tag'   => 'div',
-                'class' => 'field'
-            )),
-        ));
-
         $this->setDecorators(array(
             'FormElements',
+            'FormErrors',
             'Fieldset',
             'Form',
         ));
