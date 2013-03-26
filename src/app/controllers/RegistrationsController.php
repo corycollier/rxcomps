@@ -84,6 +84,12 @@ class RegistrationsController
 
         } catch (Zend_Exception $exception) {
             $this->getHelper('FlashMessenger')->addMessage($exception->getMessage(), 'error');
+
+            $flash = $this->getHelper('FlashMessenger');
+
+            var_dump($_SESSION);
+            var_dump($this->getHelper('FlashMessenger')->getCurrentMessages('success'));
+            var_dump($this->getHelper('FlashMessenger')->hasMessages("success")); die;
         }
         // parent::_create($model, $request);
 

@@ -2,7 +2,7 @@
 /**
  * User Form
  *
- * The form for editing a single User for the 2012 Infidel Throwdown
+ * The form for editing a single User
  *
  * @category    RxCompetition
  * @package     App
@@ -17,7 +17,7 @@
 /**
  * User Form
  *
- * The form for editing a single User for the 2012 Infidel Throwdown
+ * The form for editing a single User
  *
  * @category    RxCompetition
  * @package     App
@@ -47,60 +47,85 @@ class App_Form_User
     		'placeholder'	=> 'Enter email',
     		'required'		=> true,
             'filters'    	=> array('StringTrim', 'StringToLower'),
+            'validators'    => array(
+                'EmailAddress',
+            )
 		));
 
         $this->addElement('password', 'passwd', array(
             // 'label'      => 'Password',
             'placeholder'   => 'Enter password',
             'required'      => true,
+            'filters'       => array('StringTrim'),
+        ));
+
+        $this->addElement('password', 'confirm_password', array(
+            // 'label'      => 'Password',
+            'placeholder'   => 'Confirm password',
+            'required'      => true,
+            'filters'       => array('StringTrim'),
+            'validators'    => array(
+                'PasswordConfirmation',
+            ),
         ));
 
         $this->addElement('text', 'first_name', array(
             // 'label'      => 'Password',
             'placeholder'   => 'Enter First Name',
             'required'      => true,
+            'filters'       => array('StringTrim'),
         ));
 
         $this->addElement('text', 'last_name', array(
             // 'label'      => 'Password',
             'placeholder'   => 'Enter Last Name',
             'required'      => true,
+            'filters'       => array('StringTrim'),
         ));
 
         $this->addElement('text', 'address1', array(
             // 'label'      => 'Password',
             'placeholder'   => 'Enter Address (line 1)',
             'required'      => true,
+            'filters'       => array('StringTrim'),
         ));
 
         $this->addElement('text', 'address2', array(
             // 'label'      => 'Password',
             'placeholder'   => 'Enter Address (line 2)',
             'required'      => false,
+            'filters'       => array('StringTrim'),
         ));
 
         $this->addElement('text', 'city', array(
             // 'label'      => 'Password',
             'placeholder'   => 'Enter City',
             'required'      => true,
+            'filters'       => array('StringTrim'),
         ));
 
         $this->addElement('text', 'state', array(
             // 'label'      => 'Password',
             'placeholder'   => 'Enter State (2 letter)',
             'required'      => true,
+            'filters'       => array('StringTrim', 'StringToUpper'),
         ));
 
         $this->addElement('text', 'postal', array(
             // 'label'      => 'Password',
             'placeholder'   => 'Enter Postal Code',
             'required'      => true,
+            'filters'       => array('StringTrim'),
+            'validators'    => array(
+                'PostCode',
+            ),
         ));
 
         $this->addElement('text', 'country', array(
             // 'label'      => 'Password',
             'placeholder'   => 'Enter Country',
             'required'      => true,
+            'filters'       => array('StringTrim'),
         ));
 
         $this->addElement('date', 'birthday', array(
@@ -116,7 +141,7 @@ class App_Form_User
 
         // set the address display group
         $this->addDisplayGroup(array(
-            'email', 'passwd',
+            'email', 'passwd', 'confirm_password'
             ), 'credentials', array(
             'legend' => 'Credentials'
             )

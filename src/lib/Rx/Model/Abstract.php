@@ -262,14 +262,9 @@ class Rx_Model_Abstract
      */
     protected function _edit ($values = array())
     {
+        $values = $this->_validate($values);
+
         $dbTable = $this->getTable();
-        $form = $this->getForm();
-
-        if (! $form->isValid($values)) {
-            throw new Rx_Model_Exception(self::EXCEPTION_INVALID_DATA);
-        }
-
-        $values = $form->getValues();
 
         $dbTable->update($values, sprintf('id = %d', $this->id));
 
@@ -301,15 +296,11 @@ class Rx_Model_Abstract
      */
     protected function _create ($values = array())
     {
+        $values = $this->_validate($values);
+
+        var_dump($values); die;
+
         $dbTable = $this->getTable();
-        $form = $this->getForm();
-        $form->injectDependencies($this, $values);
-
-        if (! $form->isValid($values)) {
-            throw new Rx_Model_Exception(self::EXCEPTION_INVALID_DATA);
-        }
-
-        $values = $form->getValues();
 
         $this->id = $dbTable->insert($values);
 
@@ -347,6 +338,28 @@ class Rx_Model_Abstract
         $dbTable->delete(sprintf('id = %d', $this->id));
 
     } // END function _delete
+
+    /**
+     * _validate()
+     *
+     * Validates the values given to it, using the associated form
+     *
+     * @param  array $values the values for the form
+     * @return array
+     * @throws Rx_Model_Exception
+     */
+    protected function _validate ($values)
+    {
+        $form = $this->getForm();
+        $form->injectDependencies($this, $values);
+
+        if (! $form->isValid($values)) {
+            throw new Rx_Model_Exception(self::EXCEPTION_INVALID_DATA);
+        }
+
+        return $form->getValues();
+
+    } // END function _validate
 
     /**
      * filterValues()

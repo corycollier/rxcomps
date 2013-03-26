@@ -42,6 +42,11 @@ class UsersController
     const MSG_LOGOUT_SUCCESS = 'Logout Successful';
 
     /**
+     * Indicates the data given to login with is not valid
+     */
+    const MSG_LOGIN_INVALID = 'Login data is invalid';
+
+    /**
      * Specify the model associated with this controller
      *
      * @var string
@@ -69,21 +74,17 @@ class UsersController
         // specify the needed classes
         $user = $this->getModel('User');
         $request = $this->getRequest();
-        $redirector = $this->getHelper('Redirector');
-        $flash = $this->getHelper('FlashMessenger');
 
         if ($request->isPost()) {
             try {
                 $user->login($request->getParams());
-                $flash->addMessage(self::MSG_LOGIN_SUCCESS, 'success');
-                $redirector->gotoRoute(array(
+                $this->flashAndRedirect(self::MSG_LOGIN_SUCCESS, 'success', array(
                     'module'        => 'default',
                     'controller'    => 'index',
                     'action'        => 'index',
                 ));
             } catch (Zend_Exception $exception) {
-                $flash->addMessage($exception->getMessage(), 'error');
-                $redirector->gotoRoute(array(
+                $this->flashAndRedirect($exception->getMessage(), 'error', array(
                     'module'        => 'default',
                     'controller'    => 'users',
                     'action'        => 'login',
@@ -91,7 +92,7 @@ class UsersController
             }
         }
 
-        $this->view->form = $user->getForm();
+        $this->view->form = $user->getLoginForm();
 
     } // END fucntion loginAction
 
@@ -104,12 +105,10 @@ class UsersController
     {
         // specify the needed classes
         $user = $this->getModel('User');
-        $redirector = $this->getHelper('Redirector');
-        $flash = $this->getHelper('FlashMessenger');
 
         $user->logout();
-        $flash->addMessage(self::MSG_LOGOUT_SUCCESS, 'success');
-        $redirector->gotoRoute(array(
+
+        $this->flashAndRedirect(self::MSG_LOGOUT_SUCCESS, 'success', array(
             'module'        => 'default',
             'controller'    => 'index',
             'action'        => 'index',

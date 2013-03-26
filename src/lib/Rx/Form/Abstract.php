@@ -38,9 +38,10 @@ class Rx_Form_Abstract
     {
         $this->addPrefixPath('Rx_Form_Element_', 'Rx/Form/Element/', 'element');
         $this->addPrefixPath('Rx_Form_Decorator_', 'Rx/Form/Decorator/', 'decorator');
+        $this->addElementPrefixPath('Rx_Validate_', 'Rx/Validate/', 'validate');
         parent::__construct();
-        // $this->addElementPrefixPath('Rx_Form_Element_', 'Rx/Form/Element/');
         $this->setStandardDecorators();
+        // $this->addElementPrefixPath('Rx_Form_Element_', 'Rx/Form/Element/');
 
     }
     /**
@@ -50,15 +51,15 @@ class Rx_Form_Abstract
      */
     public function setStandardDecorators ( )
     {
-        // $this->setElementDecorators(array(
-        //     'ViewHelper',
-        //     'Label',
-        //     'Errors',
-        //     array('HtmlTag', array(
-        //         'tag'   => 'div',
-        //         'class' => 'field'
-        //     )),
-        // ));
+        $this->setElementDecorators(array(
+            'ViewHelper',
+            'Label',
+            'Errors',
+            array('HtmlTag', array(
+                'tag'   => 'div',
+                'class' => 'field'
+            )),
+        ));
 
         $this->setDecorators(array(
             'FormElements',

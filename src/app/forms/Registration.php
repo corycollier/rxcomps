@@ -77,11 +77,6 @@ class App_Form_Registration
             'ignore'        => true,
         ));
 
-        $this->setStandardDecorators();
-
-        // $this->getSubForm('registration')
-        //     ->setDecorators(array('FormElements'))
-        //     ->setElementDecorators(array('ViewHelper'));
     } // END function init
 
     /**

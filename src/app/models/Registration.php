@@ -69,16 +69,16 @@ class App_Model_Registration
         $event = $this->getParent('Event')->load($values['event_id']);
 
         if (array_key_exists('user', $values)) {
-            $userTable = $user->getTable();
-            $existingUser = $userTable->fetchRow(
-                $userTable->select()->where('email = ?', $values['user']['email'])
-            );
+            // $userTable = $user->getTable();
+            // $existingUser = $userTable->fetchRow(
+            //     $userTable->select()->where('email = ?', $values['user']['email'])
+            // );
 
-            if ($existingUser) {
-                throw new Rx_Model_Exception(sprintf(
-                    self::EXCEPTION_USER_ALREADY_EXISTS, $values['user']['email']
-                ));
-            }
+            // if ($existingUser) {
+            //     throw new Rx_Model_Exception(sprintf(
+            //         self::EXCEPTION_USER_ALREADY_EXISTS, $values['user']['email']
+            //     ));
+            // }
 
             $user->create($values['user']);
             $user->load($user->id);
@@ -91,10 +91,10 @@ class App_Model_Registration
         $values['athlete_id'] = $athlete->id;
 
         $form = $this->getForm();
-        $form->removeSubForm('athlete');
-        $form->removeSubForm('user');
+        // $form->removeSubForm('athlete');
+        // $form->removeSubForm('user');
 
-        return parent::create($values);
+        return $this->_create($values);
 
     } // END function create
 

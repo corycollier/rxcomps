@@ -105,6 +105,7 @@ class Rx_Controller_Action
         $redirector = $this->getHelper('Redirector');
 
         $flash->addMessage($message, $namespace);
+
         $redirector->gotoRoute($urlParams);
 
     } // END function flashAndRedirect

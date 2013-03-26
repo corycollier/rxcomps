@@ -49,7 +49,10 @@ class Rx_Form_Element_Text
         if (empty($decorators)) {
             $this->addDecorator('ViewHelper')
                  ->addDecorator('Errors')
-                 ->addDecorator('Description', array('tag' => 'p', 'class' => 'description'));
+                 ->addDecorator('Description', array(
+                    'tag' => 'p',
+                    'class' => 'description'
+                ));
         }
 
         $this->addDecorators(array(

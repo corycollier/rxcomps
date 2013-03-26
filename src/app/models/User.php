@@ -51,6 +51,13 @@ class App_Model_User
     protected $_authAdapter;
 
     /**
+     * holds a login form instance
+     *
+     * @var App_Form_Login
+     */
+    protected $_loginForm;
+
+    /**
      * login()
      *
      * Method to login a user
@@ -59,7 +66,7 @@ class App_Model_User
      */
     public function login ($params = array())
     {
-        $form           = $this->getForm();
+        $form           = $this->getLoginForm();
         $authAdapter    = $this->getAuthAdapter();
         $auth           = $this->getAuth();
 
@@ -80,6 +87,23 @@ class App_Model_User
         }
 
     } // END function login
+
+    /**
+     * getLoginForm()
+     *
+     * Gets the login form for this model
+     *
+     * @return App_Form_Login the single login form instance for this model
+     */
+    public function getLoginForm ( )
+    {
+        if (! $this->_loginForm) {
+            $this->_loginForm = new App_Form_Login;
+        }
+
+        return $this->_loginForm;
+
+    } // END function getLoginForm
 
     /**
      * logout()
@@ -168,7 +192,7 @@ class App_Model_User
     /**
      * getRoleId()
      *
-     * Returns the role of the user
+     * Returns the global role of the user
      *
      * @return string
      */
