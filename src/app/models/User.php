@@ -231,7 +231,6 @@ class App_Model_User
     public function edit ($values)
     {
         $values['passwd'] = hash('sha1', @$values['passwd']);
-
         return $this->_edit($values);
 
     } // END function edit
@@ -246,11 +245,7 @@ class App_Model_User
     public function create ($values)
     {
         $values['passwd'] = hash('sha1', @$values['passwd']);
-        $values = $this->_isValid($values);
-        if (is_array($values)) {
-            return $this->_create($values);
-        }
-        return false;
+        return $this->_create($values);
 
     } // END function create
 
@@ -274,7 +269,7 @@ class App_Model_User
         $registrations = $this->getChildren('Registration');
 
         foreach ($registrations as $registration) {
-            if ($registration->getValue('user_id') == $this->id) {
+            if ($registration->getValue('event_id') == $event->id) {
                 return true;
             }
         }

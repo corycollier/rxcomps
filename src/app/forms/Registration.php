@@ -61,7 +61,7 @@ class App_Form_Registration
         ));
 
         $this->addElement('hidden', 'user_id', array(
-            'required'      => true,
+            'required'      => false,
         ));
 
         $this->addElement('hidden', 'event_id', array(
@@ -69,7 +69,7 @@ class App_Form_Registration
         ));
 
         $this->addElement('hidden', 'athlete_id', array(
-            'required'      => true,
+            'required'      => false,
         ));
 
         $this->addElement('submit', 'save', array(
@@ -127,15 +127,15 @@ class App_Form_Registration
      */
     public function injectDependencies ($model, $params = array())
     {
+        // if the user is logged in, remove the add user form
         $authInfo = $this->getAuth()->getStorage()->read();
-
         if ($authInfo) {
             $this->getElement('user_id')->setValue($authInfo->id);
             $this->removeSubForm('user');
         }
 
+        // inject the athlete model dependencies
         $athleteSubForm = $this->getSubForm('athlete');
-
         if ($athleteSubForm) {
             $this->getSubForm('athlete')
                 ->injectDependencies($model->getParent('Athlete'), $params);

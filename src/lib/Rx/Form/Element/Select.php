@@ -47,6 +47,14 @@ class Rx_Form_Element_Select
         }
 
         parent::loadDefaultDecorators();
+        if (empty($decorators)) {
+            $this->addDecorator('ViewHelper')
+                 ->addDecorator('Errors', array('class' => 'danger label'))
+                 ->addDecorator('Description', array(
+                    'tag' => 'p',
+                    'class' => 'description'
+                ));
+        }
 
         $this->addDecorators(array(
             array(array('elementDiv' => 'HtmlTag'), array(

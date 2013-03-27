@@ -66,13 +66,15 @@ class RegistrationsController
 
         $params = array_merge($request->getParams(), $request->getPost());
 
-        $result = $model->create($params);
-
-        if (! $result) {
-            return false;
+        if (!$model->getForm()->isValid($params)) {
+            throw new Rx_Controller_Exception(self::MSG_FORM_INVALID);
         }
 
-        $user->login($request->getParam('user'));
+        $model->create($params);
+
+        if (isset($params['user'])) {
+            $user->login($request->getParam('user'));
+        }
 
         $this->_mail($user, 'Registration Confirmation', 'registration-confirmation.phtml', array(
             'athlete'   => $model->getParent('Athlete'),
@@ -88,6 +90,6 @@ class RegistrationsController
             'id'            => $model->id,
         ));
 
-    }
+    } // END function _create
 
 } // END class App_Controller_className

@@ -204,13 +204,12 @@ class Rx_Form_Element_Date
         $decorators = $this->getDecorators();
         if (empty($decorators)) {
             $this->addDecorator('Date')
-                ->addDecorator('Errors')
+                ->addDecorator('Errors', array('class' => 'danger label'))
                 ->addDecorator('Label')
                 ->addDecorator('Description', array(
                     'tag' => 'p', 'class' => 'description'
                 ));
         }
-
 
         $this->addDecorators(array(
             array(array('elementDiv' => 'HtmlTag'), array(

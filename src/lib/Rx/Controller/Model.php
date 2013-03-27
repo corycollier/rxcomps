@@ -70,6 +70,11 @@ class Rx_Controller_Model
     const MSG_DELETE_SUCCESS = 'Sucessfully deleted a %s';
 
     /**
+     * Message to indicate that given form data is invalid
+     */
+    const MSG_FORM_INVALID = 'Form data is invalid. Please review errors below';
+
+    /**
      * Short-hand name of the model to associate with this controller
      *
      * @var string
@@ -108,10 +113,11 @@ class Rx_Controller_Model
 
         if ($request->isPost()) {
             try {
-                if ($model->getForm()->isValid($params)) {
-                    $this->_create($model, $request);
-                }
+                $this->_create($model, $request);
             } catch (Zend_Exception $exception) {
+                var_dump($model->getForm()->getValues());
+                var_dump($exception);
+                die;
                 $this->getHelper('FlashMessenger')->addMessage($exception->getMessage(), 'error');
             }
         }
@@ -133,16 +139,19 @@ class Rx_Controller_Model
     {
         $message = sprintf(self::MSG_CREATE_SUCCESS, $this->_modelName);
         $params = array_merge($request->getParams(), $request->getPost());
-        $result = $model->create($params);
 
-        if ($result) {
-            $this->flashAndRedirect($message, 'success', array(
-                'module'        => $request->getModuleName(),
-                'controller'    => $request->getControllerName(),
-                'action'        => 'view',
-                'id'            => $model->id,
-            ));
+        if (!$model->getForm()->isValid($params)) {
+            throw new Rx_Controller_Exception(self::MSG_FORM_INVALID);
         }
+
+        $model->create($params);
+
+        $this->flashAndRedirect($message, 'success', array(
+            'module'        => $request->getModuleName(),
+            'controller'    => $request->getControllerName(),
+            'action'        => 'view',
+            'id'            => $model->id,
+        ));
 
     } // END function _create
 
@@ -154,14 +163,9 @@ class Rx_Controller_Model
     public function editAction ( )
     {
         $model = $this->getModel($this->_modelName);
-        $form = $model->getForm();
         $request = $this->getRequest();
-        $flash = $this->getHelper('FlashMessenger');
-        $redirector = $this->getHelper('Redirector');
 
         $model->load($request->getParam('id'));
-        $form->injectDependencies($model, $request->getParams());
-        $form->populate($model->filterValues($request->getParams()));
 
         if (! $model->id) {
             $message = sprintf(self::MSG_LOAD_FAILURE, $this->_modelName);
@@ -174,12 +178,7 @@ class Rx_Controller_Model
 
         if ($request->isPost()) {
             try {
-                $message = sprintf(self::MSG_EDIT_SUCCESS, $this->_modelName);
-                $params = array_merge($request->getParams(), $request->getPost());
-                $result = $model->edit($params);
-                if ($result) {
-                    $this->flashAndRedirect($message, 'success', $request->getParams());
-                }
+                $this->_edit($model, $request);
             } catch (Zend_Exception $exception) {
                 $this->flashAndRedirect($exception->getMessage(), 'error', $request->getParams());
             }
@@ -191,25 +190,47 @@ class Rx_Controller_Model
     } // END function editAction
 
     /**
+     * _edit()
+     *
+     * The actual editing functionality
+     *
+     * @param Rx_Model_Abstract $model
+     * @param Zend_Controller_Request_Http $request
+     * @throws Rx_Controller_Exception
+     */
+    protected function _edit ($model, $request)
+    {
+        $form = $model->getForm();
+        $form->injectDependencies($model, $request->getParams());
+        $form->populate($model->filterValues($request->getParams()));
+
+        $message = sprintf(self::MSG_EDIT_SUCCESS, $this->_modelName);
+        $params = array_merge($request->getParams(), $request->getPost());
+
+        if (! $form->isValid($params)) {
+            throw new Rx_Controller_Exception(self::MSG_FORM_INVALID);
+        }
+
+        $model->edit($params);
+        $this->flashAndRedirect($message, 'success', $request->getParams());
+
+    } // END function _edit
+
+    /**
      * viewAction()
      *
      * Action to view a single model record
-     *
      */
     public function viewAction ( )
     {
         $model = $this->getModel($this->_modelName);
         $request = $this->getRequest();
-        $flash = $this->getHelper('FlashMessenger');
-        $redirector = $this->getHelper('Redirector');
 
         $model->load($request->getParam('id'));
 
         if (! $model->id) {
-            $flash->addMessage(sprintf(
-                self::MSG_LOAD_FAILURE, $this->_modelName
-            ), 'error');
-            $redirector->gotoRoute(array(
+            $message = sprintf(self::MSG_LOAD_FAILURE, $this->_modelName);
+            $this->flashAndRedirect($message, 'error', array(
                 'module'        => $request->getModuleName(),
                 'controller'    => $request->getControllerName(),
                 'action'        => 'index',
@@ -229,24 +250,14 @@ class Rx_Controller_Model
     {
         $model = $this->getModel($this->_modelName);
         $request = $this->getRequest();
-        $flash = $this->getHelper('FlashMessenger');
-        $redirector = $this->getHelper('Redirector');
 
         $model->load($request->getParam('id'));
 
         if ($request->isPost()) {
             try {
-                $model->delete();
-                $flash->addMessage(sprintf(
-                    self::MSG_DELETE_SUCCESS, $this->_modelName
-                ), 'success');
-                $redirector->gotoRoute(array(
-                    'module'        => $request->getModuleName(),
-                    'controller'    => $request->getControllerName(),
-                    'action'        => 'index',
-                ), 'default', true);
+                $this->_delete($model, $request);
             } catch (Zend_Exception $exception) {
-                $flash->addMessage($exception->getMessage(), 'error');
+                $this->getHelper('FlashMessenger')->addMessage($exception->getMessage(), 'error');
             }
         }
 
@@ -254,6 +265,27 @@ class Rx_Controller_Model
         $this->view->form = new Rx_Form_Confirmation;
 
     } // END function deleteAction
+
+    /**
+     * _delete()
+     *
+     * The actual deleting functionality
+     *
+     * @param Rx_Model_Abstract $model
+     * @param Zend_Controller_Request_Http $request
+     * @throws Rx_Controller_Exception
+     */
+    public function _delete ($model, $request)
+    {
+        $message = sprintf(self::MSG_DELETE_SUCCESS, $this->_modelName);
+        $model->delete();
+        $this->flashAndRedirect($message, 'success', array(
+            'module'        => $request->getModuleName(),
+            'controller'    => $request->getControllerName(),
+            'action'        => 'index',
+        ), 'default', true);
+
+    }
 
     /**
      * listAction()
@@ -269,6 +301,11 @@ class Rx_Controller_Model
 
     } // END function listAction
 
+    /**
+     * postDispatch()
+     *
+     * Post dispatch implementation
+     */
     public function postDispatch ( )
     {
         parent::postDispatch();

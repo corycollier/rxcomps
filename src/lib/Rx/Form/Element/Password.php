@@ -49,8 +49,11 @@ class Rx_Form_Element_Password
         $decorators = $this->getDecorators();
         if (empty($decorators)) {
             $this->addDecorator('ViewHelper')
-                 ->addDecorator('Errors')
-                 ->addDecorator('Description', array('tag' => 'p', 'class' => 'description'));
+                 ->addDecorator('Errors', array('class' => 'danger label'))
+                 ->addDecorator('Description', array(
+                    'tag' => 'p',
+                    'class' => 'description'
+                ));
         }
 
         $this->addDecorators(array(
