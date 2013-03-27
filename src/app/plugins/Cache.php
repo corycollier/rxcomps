@@ -56,50 +56,15 @@ class App_Plugin_Cache
      * @param  Zend_Controller_Request_Abstract $request
      * @return void
      */
-    public function dispatchLoopStartup(Zend_Controller_Request_Abstract $request)
+    public function dispatchLoopStartup (Zend_Controller_Request_Abstract $request)
     {
         $path = $request->getPathInfo();
 
         $cache = $this->getCache();
 
-        $cacheablePaths = $cache->getOption('regexps');
+        $result = $cache->start();
 
-        foreach ($cacheablePaths as $cacheablePath => $options) {
-            $match = preg_match($cacheablePath, $path);
-            if ($match) {
-                if (!$options['cache']) {
-                    continue;
-                }
-                $this->doNotCache = false;
-            }
-        }
-
-        $this->key = 'page__' . md5($path);
-        if (false !== ($response = $this->getCache()->load($this->key))) {
-            $response->sendResponse();
-            if (strtolower(PHP_SAPI) != 'cli') {
-                exit;
-            }
-        }
-    }
-
-    /**
-     * Store cache
-     *
-     * @return void
-     */
-    public function dispatchLoopShutdown()
-    {
-        return;
-        if ($this->doNotCache
-            || $this->getResponse()->isRedirect()
-            || (null === $this->key)
-        ) {
-            return;
-        }
-
-        $this->getCache()->save($this->getResponse(), $this->key);
-    }
+    } // END function dispatchLoopStartup
 
     /**
      * getCache()
