@@ -246,10 +246,11 @@ class App_Model_User
     public function create ($values)
     {
         $values['passwd'] = hash('sha1', @$values['passwd']);
-
-        $values = $this->_validate($values);
-
-        return $this->_create($values);
+        $values = $this->_isValid($values);
+        if (is_array($values)) {
+            return $this->_create($values);
+        }
+        return false;
 
     } // END function create
 

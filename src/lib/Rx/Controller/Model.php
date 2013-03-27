@@ -104,10 +104,16 @@ class Rx_Controller_Model
         $params     = $request->getParams();
 
         $form->injectDependencies($model, $params);
-        $form->populate($model->filterValues($params));
+        $form->populate($params);
 
         if ($request->isPost()) {
-            $this->_create($model, $request);
+            try {
+                if ($model->getForm()->isValid($params)) {
+                    $this->_create($model, $request);
+                }
+            } catch (Zend_Exception $exception) {
+                $this->getHelper('FlashMessenger')->addMessage($exception->getMessage(), 'error');
+            }
         }
 
         $this->view->form = $form;
@@ -126,22 +132,19 @@ class Rx_Controller_Model
     protected function _create ($model, $request)
     {
         $message = sprintf(self::MSG_CREATE_SUCCESS, $this->_modelName);
+        $params = array_merge($request->getParams(), $request->getPost());
+        $result = $model->create($params);
 
-        try {
-            $params = array_merge($request->getParams(), $request->getPost());
-            $model->create($params);
+        if ($result) {
             $this->flashAndRedirect($message, 'success', array(
                 'module'        => $request->getModuleName(),
                 'controller'    => $request->getControllerName(),
                 'action'        => 'view',
                 'id'            => $model->id,
             ));
-
-        } catch (Zend_Exception $exception) {
-            $this->getHelper('FlashMessenger')->addMessage($exception->getMessage(), 'error');
         }
-    } // END function _create
 
+    } // END function _create
 
     /**
      * editAction()
@@ -173,8 +176,10 @@ class Rx_Controller_Model
             try {
                 $message = sprintf(self::MSG_EDIT_SUCCESS, $this->_modelName);
                 $params = array_merge($request->getParams(), $request->getPost());
-                $model->edit($params);
-                $this->flashAndRedirect($message, 'success', $request->getParams());
+                $result = $model->edit($params);
+                if ($result) {
+                    $this->flashAndRedirect($message, 'success', $request->getParams());
+                }
             } catch (Zend_Exception $exception) {
                 $this->flashAndRedirect($exception->getMessage(), 'error', $request->getParams());
             }

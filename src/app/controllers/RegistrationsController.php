@@ -61,45 +61,32 @@ class RegistrationsController
     protected function _create ($model, $request)
     {
         $message = sprintf(self::MSG_CREATE_SUCCESS, $this->_modelName);
+
         $user = $this->getModel('User');
 
-        try {
-            $params = array_merge($request->getParams(), $request->getPost());
+        $params = array_merge($request->getParams(), $request->getPost());
 
-            $result = $model->create($params);
+        $result = $model->create($params);
 
-            if (! $result) {
-                return false;
-            }
-
-            $user->login($request->getParam('user'));
-
-            $this->_mail($user, 'Registration Confirmation', 'registration-confirmation.phtml', array(
-                'athlete'   => $model->getParent('Athlete'),
-                'event'     => $model->getParent('Event'),
-                'model'     => $model,
-                'user'      => $user,
-            ));
-
-            $this->flashAndRedirect($message, 'success', array(
-                'module'        => $request->getModuleName(),
-                'controller'    => $request->getControllerName(),
-                'action'        => 'view',
-                'id'            => $model->id,
-            ));
-
-        } catch (Zend_Exception $exception) {
-            // var_dump($exception);
-            // var_dump($request->getParams());
-            // var_dump()
-            // foreach ($model->getForm()->getSubforms() as $subForm) {
-            //     var_dump($subForm->getMessages());
-            // }
-            // die;
-            // var_dump($exception); die;
-            $this->getHelper('FlashMessenger')->addMessage($exception->getMessage(), 'error');
-            $flash = $this->getHelper('FlashMessenger');
+        if (! $result) {
+            return false;
         }
+
+        $user->login($request->getParam('user'));
+
+        $this->_mail($user, 'Registration Confirmation', 'registration-confirmation.phtml', array(
+            'athlete'   => $model->getParent('Athlete'),
+            'event'     => $model->getParent('Event'),
+            'model'     => $model,
+            'user'      => $user,
+        ));
+
+        $this->flashAndRedirect($message, 'success', array(
+            'module'        => $request->getModuleName(),
+            'controller'    => $request->getControllerName(),
+            'action'        => 'view',
+            'id'            => $model->id,
+        ));
 
     }
 

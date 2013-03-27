@@ -244,11 +244,10 @@ class Rx_Model_Abstract
      * Updates the existing item
      *
      * @param array $values
-     * @return Rx_Model_Abstract $this for a fluent interface
+     * @return Rx_Model_Abstract|boolean $this for a fluent interface
      */
     public function edit ($values = array())
     {
-        $values = $this->_validate($values);
         return $this->_edit($values);
 
     } // END function edit
@@ -277,11 +276,10 @@ class Rx_Model_Abstract
      * Creates a record of the model
      *
      * @param array $values
-     * @return Rx_Model_Abstract $this for a fluent interface
+     * @return Rx_Model_Abstract|boolean $this for a fluent interface
      */
     public function create ($values = array())
     {
-        $values = $this->_validate($values);
         return $this->_create($values);
 
     } // END function create
@@ -334,29 +332,6 @@ class Rx_Model_Abstract
         $dbTable->delete(sprintf('id = %d', $this->id));
 
     } // END function _delete
-
-    /**
-     * _validate()
-     *
-     * Validates the values given to it, using the associated form
-     *
-     * @param  array $values the values for the form
-     * @return array
-     * @throws Rx_Model_Exception
-     */
-    protected function _validate ($values)
-    {
-        $form = $this->getForm();
-
-        $form->injectDependencies($this, $values);
-
-        if (! $form->isValid($values)) {
-            throw new Rx_Model_Exception(self::EXCEPTION_INVALID_DATA);
-        }
-
-        return $form->getValues();
-
-    } // END function _validate
 
     /**
      * filterValues()

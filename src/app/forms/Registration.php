@@ -40,6 +40,17 @@ class App_Form_Registration
      */
     public function init ( )
     {
+        $this->addElement('select', 'role', array(
+            'label'         => 'Role',
+            'placeholder'   => 'Select Role',
+            'required'      => true,
+            'filters'       => array('StringTrim', 'StringToLower'),
+            'multiOptions'  => array(
+                'user'      => 'Athlete',
+                'judge'     => 'Judge',
+            ),
+        ));
+
         // $this->addSubForm($form, 'registration');
         $this->addSubForm($this->getUserForm(), 'user');
         $this->addSubForm($this->getAthleteForm(), 'athlete');
@@ -59,17 +70,6 @@ class App_Form_Registration
 
         $this->addElement('hidden', 'athlete_id', array(
             'required'      => true,
-        ));
-
-        $this->addElement('select', 'role', array(
-            'label'         => 'Role',
-            'placeholder'   => 'Select Role',
-            'required'      => true,
-            'filters'       => array('StringTrim', 'StringToLower'),
-            'multiOptions'  => array(
-                'user'      => 'Athlete',
-                'judge'     => 'Judge',
-            ),
         ));
 
         $this->addElement('submit', 'save', array(

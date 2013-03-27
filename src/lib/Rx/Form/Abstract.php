@@ -53,7 +53,9 @@ class Rx_Form_Abstract
     {
         $this->setDecorators(array(
             'FormElements',
-            'FormErrors',
+            // array('FormErrors', array(
+            //     'ignoreSubForms' => false,
+            // )),
             'Fieldset',
             'Form',
         ));

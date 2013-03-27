@@ -69,22 +69,30 @@ class App_Model_Registration
         $event = $this->getParent('Event')->load($values['event_id']);
 
         if (array_key_exists('user', $values)) {
-            $user->create($values);
+            $result = $user->create($values);
+            var_dump($user->getForm()->getErrors()); die;
+            if (! $result) {
+                return false;
+            }
+
             $user->load($user->id);
             $values['user_id'] = $user->id;
         }
 
         $athlete = $this->getParent('Athlete');
-        $athlete->create($values);
+        $result = $athlete->create($values);
+
+        if (! $result) {
+            return false;
+        }
 
         $values['athlete_id'] = $athlete->id;
+        $values = $this->_isValid($values);
+        if (is_array($values)) {
+            return $this->_create($values);
+        }
 
-        // $form = $this->getForm();
-        // $form->removeSubForm('athlete');
-        // $form->removeSubForm('user');
-
-        $values = $this->_validate($values);
-        return $this->_create($values);
+        return false;
 
     } // END function create
 
