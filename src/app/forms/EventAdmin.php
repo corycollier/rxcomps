@@ -1,0 +1,90 @@
+<?php
+/**
+ * Admin Form
+ *
+ * Form for administering many event options at one time
+ *
+ * @category    RxCompetition
+ * @package     App
+ * @subpackage  Form
+ * @copyright   Copyright (c) 2013 RxCompetition.com, Inc (http://www.RxCompetition.com)
+ * @license     All Rights Reserved
+ * @version     Release: 2.0.0
+ * @since       File available since release 2.0.0
+ * @filesource
+ */
+
+/**
+ * Athlete Form
+ *
+ * Form for administering many event options at one time
+ *
+ * @category    RxCompetition
+ * @package     App
+ * @subpackage  Form
+ * @copyright   Copyright (c) 2013 RxCompetition.com, Inc (http://www.RxCompetition.com)
+ * @license     All Rights Reserved
+ * @version     Release: 2.0.0
+ * @since       Class available since release 2.0.0
+ */
+
+class App_Form_EventAdmin
+    extends Rx_Form_Abstract
+{
+    /**
+     * init()
+     *
+     * Local implementation of the init hook
+     */
+    public function init ( )
+    {
+
+    } // END function init
+
+    public function injectDependencies ($model, $params = array())
+    {
+        foreach ($params as $eventOption) {
+            // var_dump(
+
+            //     $eventOption->getValue('event_id'),
+            //     $eventOption->getValue('name'),
+            //     $eventOption->getValue('value')
+            // );
+            // die;
+
+            $eventId = $eventOption->getValue('event_id');
+            $name = $eventOption->getValue('name');
+            $value = $eventOption->getValue('value');
+
+            if (! $eventId || ! $name || !$value) {
+                continue;
+            }
+
+            $form = $this->getEventOptionForm($eventId, $name, $value);
+            $this->addSubform($form, $name);
+        }
+    }
+
+    /**
+     * getEventOptionForm()
+     *
+     * Gets a new instance of an event-option form
+     *
+     * @return App_Form_EventOption
+     */
+    public function getEventOptionForm ($eventId, $belongsTo, $value = null)
+    {
+        $form = new App_Form_EventOption;
+        $form->getElement('event_id')->setValue($eventId);
+        $form->getElement('name')->setValue($belongsTo);
+        $form->getElement('value')->setValue($value);
+        $form->removeElement('save');
+        $form->setDecorators(array('FormElements'));
+        $form->setIsArray(true);
+        $form->setElementsBelongTo($belongsTo);
+        return $form;
+
+    }
+
+
+} // END class App_Form_Athlete

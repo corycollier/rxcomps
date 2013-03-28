@@ -47,6 +47,7 @@ class App_Plugin_Acl
         $admin  = $acl->addRole(new Zend_Acl_Role('admin'), array('judge'));
 
         $acl->addResource(new Zend_Acl_Resource('admin'));
+        $acl->addResource(new Zend_Acl_Resource('event-admin'));
         $acl->addResource(new Zend_Acl_Resource('index'));
         $acl->addResource(new Zend_Acl_Resource('error'));
         $acl->addResource(new Zend_Acl_Resource('leaderboards'));

@@ -129,8 +129,8 @@ class App_Plugin_Navigation
             ),
             array(
                 'label'         => 'Admin',
-                'controller'    => 'admin',
-                'resource'      => 'admin',
+                'controller'    => 'event-admin',
+                'resource'      => 'event-admin',
                 'privilege'     => 'edit',
                 'action'        => 'index',
                 'params' => array(
