@@ -49,7 +49,6 @@ class App_Model_Competition
         $values['created'] = $created;
         $values['updated'] = $created;
 
-        $values = $this->_validate($values);
         $this->_create($values);
 
         if (@$values['scoring_type'] == 'points') {
