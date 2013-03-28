@@ -84,41 +84,6 @@ class App_Bootstrap
         $front->registerPlugin(new App_Plugin_User);
     }
 
-    // protected function _initPageCache ( )
-    // {
-    //     /*
-    //     resources.cachemanager.page.frontend.options.regexps./leaderboards/.cache = true
-    //     resources.cachemanager.page.frontend.options.regexps./events\/view/.cache = true
-    //     */
-    //     $this->bootstrap('cachemanager');
-
-    //     $front = $this->getResource('frontController');
-    //     $front->setParam('disableOutputBuffering', true);
-    //     $manager = $this->getResource('cachemanager');
-
-    //     $options = $manager->getCacheTemplate('page');
-    //     $options['frontend']['options']['regexps'] = array(
-    //         '/leaderboards/' => array('cache' => true),
-    //         '^/events\/view/' => array(
-    //             'cache' => true,
-    //             'cache_with_get_variables'      => true,
-    //             'cache_with_post_variables'     => true,
-    //             'cache_with_session_variables'  => true,
-    //             'cache_with_files_variables'    => true,
-    //             'cache_with_cookie_variables'   => true,
-    //             'make_id_with_get_variables'    => true,
-    //             'make_id_with_post_variables'   => true,
-    //             'make_id_with_session_variables'=> true,
-    //             'make_id_with_files_variables'  => true,
-    //             'make_id_with_cookie_variables' => true,
-    //         ),
-    //     );
-
-    //     // var_dump($options); die;
-
-    //     $manager->setTemplateOptions('page', $options);
-    // }
-
     /**
      * _initAcl()
      *
