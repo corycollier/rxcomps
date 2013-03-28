@@ -33,4 +33,38 @@ $(function() {
         }
     });
 
+    $("#user-first_name, #user-last_name").on('change', function(event){
+        $("#credit_card-name").val(
+            $("#user-first_name").val() + ' ' + $("#user-last_name").val()
+        );
+
+        $("#athlete-name").val(
+            $("#user-first_name").val() + ' ' + $("#user-last_name").val()
+        );
+    });
+
+    $("#user-address1").on('change', function(event){
+        $("#credit_card-address1").val($("#user-address1").val());
+    });
+
+    $("#user-address2").on('change', function(event){
+        $("#credit_card-address2").val($("#user-address2").val());
+    });
+
+    $("#user-city").on('change', function(event){
+        $("#credit_card-city").val($("#user-city").val());
+    });
+
+    $("#user-state").on('change', function(event){
+        $("#credit_card-state").val($("#user-state").val());
+    });
+
+    $("#user-postal").on('change', function(event){
+        $("#credit_card-postal").val($("#user-postal").val());
+    });
+
+    $("#user-country").on('change', function(event){
+        $("#credit_card-country").val($("#user-country").val());
+    });
+
 });

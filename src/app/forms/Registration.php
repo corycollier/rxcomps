@@ -54,6 +54,7 @@ class App_Form_Registration
         // $this->addSubForm($form, 'registration');
         $this->addSubForm($this->getUserForm(), 'user');
         $this->addSubForm($this->getAthleteForm(), 'athlete');
+        $this->addSubForm($this->getCreditCardForm(), 'credit_card');
 
         // $form = new Zend_Form_SubForm;
         $this->addElement('hidden', 'id', array(
@@ -116,6 +117,25 @@ class App_Form_Registration
         return $form;
 
     } // END function getAthleteForm
+
+    /**
+     * getCreditCardForm()
+     *
+     * Gets a Credit Card form instance
+     *
+     * @return App_Form_CreditCard
+     */
+    public function getCreditCardForm ( )
+    {
+        $form = new App_Form_CreditCard;
+        $form->removeDecorator('Form');
+        $form->removeElement('save');
+        $form->getDecorator('Fieldset')->setLegend('Billing Information');
+        $form->setIsArray(true);
+        $form->setElementsBelongTo('credit_card');
+        return $form;
+
+    }
 
     /**
      * injectDependencies()

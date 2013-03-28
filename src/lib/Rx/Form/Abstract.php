@@ -33,7 +33,11 @@
 class Rx_Form_Abstract
     extends Zend_Form
 {
-
+    /**
+     * __construct()
+     *
+     * Overriding the default constructor, so that elements can be loaded
+     */
     public function __construct ( )
     {
         $this->addPrefixPath('Rx_Form_Element_', 'Rx/Form/Element/', 'element');
@@ -41,9 +45,9 @@ class Rx_Form_Abstract
         $this->addElementPrefixPath('Rx_Validate_', 'Rx/Validate/', 'validate');
         parent::__construct();
         $this->setStandardDecorators();
-        // $this->addElementPrefixPath('Rx_Form_Element_', 'Rx/Form/Element/');
 
     }
+
     /**
      * setStandardDecorators()
      *
@@ -53,7 +57,6 @@ class Rx_Form_Abstract
     {
         $this->setDecorators(array(
             'FormElements',
-            'FormErrors',
             'Fieldset',
             'Form',
         ));

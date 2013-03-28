@@ -167,7 +167,6 @@ class App_Form_User
 
         $this->setDisplayGroupDecorators(array(
             'FormElements',
-            'FormErrors',
             'Fieldset'
         ));
 

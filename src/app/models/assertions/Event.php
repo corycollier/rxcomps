@@ -65,13 +65,13 @@ class App_Model_Assertion_Event
         }
 
         $results = array();
-        if (@$role->row) {
+        if (isset($role->row) && $role->row instanceof Zend_Db_Table_Row) {
             $results = $role->row->findDependentRowset('App_Model_DbTable_Registration')->toArray();
         }
 
 
         // if the model is loaded ...
-        if ($resource->row) {
+        if (isset($resource->row)) {
 
             $eventId    = $resource->id;
             $resourceId = $resource->getResourceId();

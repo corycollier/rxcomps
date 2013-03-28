@@ -115,9 +115,6 @@ class Rx_Controller_Model
             try {
                 $this->_create($model, $request);
             } catch (Zend_Exception $exception) {
-                var_dump($model->getForm()->getValues());
-                var_dump($exception);
-                die;
                 $this->getHelper('FlashMessenger')->addMessage($exception->getMessage(), 'error');
             }
         }

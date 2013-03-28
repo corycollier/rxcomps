@@ -127,6 +127,16 @@ class App_Plugin_Navigation
                     'event_id'      => $eventId,
                 ),
             ),
+            array(
+                'label'         => 'Admin',
+                'controller'    => 'admin',
+                'resource'      => 'admin',
+                'privilege'     => 'edit',
+                'action'        => 'index',
+                'params' => array(
+                    'event_id'      => $eventId,
+                ),
+            ),
         );
 
     }
