@@ -280,6 +280,7 @@ class Rx_Model_Abstract
      */
     public function create ($values = array())
     {
+        unset($values['id']);
         return $this->_create($values);
 
     } // END function create

@@ -41,17 +41,17 @@ class App_Form_EventAdmin
 
     } // END function init
 
+    /**
+     * injectDependencies()
+     *
+     * Implementation of the injectDependencies hook to add event options subforms
+     *
+     * @param App_Model_Event $model
+     * @param ArrayObject $params
+     */
     public function injectDependencies ($model, $params = array())
     {
         foreach ($params as $eventOption) {
-            // var_dump(
-
-            //     $eventOption->getValue('event_id'),
-            //     $eventOption->getValue('name'),
-            //     $eventOption->getValue('value')
-            // );
-            // die;
-
             $eventId = $eventOption->getValue('event_id');
             $name = $eventOption->getValue('name');
             $value = $eventOption->getValue('value');
@@ -63,6 +63,10 @@ class App_Form_EventAdmin
             $form = $this->getEventOptionForm($eventId, $name, $value);
             $this->addSubform($form, $name);
         }
+
+        $this->addElement('submit', 'save', array(
+            'ignore' => true,
+        ));
     }
 
     /**
