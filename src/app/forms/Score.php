@@ -114,6 +114,7 @@ class App_Form_Score
             ));
         }
 
+
         return $this;
 
     } // END function _insertAthletes

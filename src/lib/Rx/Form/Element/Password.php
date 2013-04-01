@@ -66,7 +66,7 @@ class Rx_Form_Element_Password
             )),
             array(array('td' => 'HtmlTag'), array(
                 'tag' => 'div',
-                'class' => 'field',
+                'class' => 'prepend field',
             )),
         ));
 

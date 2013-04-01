@@ -46,9 +46,10 @@ class Rx_Form_Element_Select
             return $this;
         }
 
-        parent::loadDefaultDecorators();
+        $decorators = $this->getDecorators();
         if (empty($decorators)) {
             $this->addDecorator('ViewHelper')
+                ->addDecorator('Label', array( 'class' => 'adjoined' ))
                  ->addDecorator('Errors', array('class' => 'danger label'))
                  ->addDecorator('Description', array(
                     'tag' => 'p',
@@ -63,7 +64,7 @@ class Rx_Form_Element_Select
             )),
             array(array('td' => 'HtmlTag'), array(
                 'tag' => 'div',
-                'class' => 'field',
+                'class' => 'prepend field',
             )),
         ));
 

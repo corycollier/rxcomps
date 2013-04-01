@@ -1,7 +1,4 @@
-
-                ->addDecorator('Label', array(
-                    'class' => 'adjoined'
-                ))<?php
+<?php
 /**
  * Zend Framework
  *
@@ -65,7 +62,7 @@ class Rx_Form_Element_Textarea
             )),
             array(array('td' => 'HtmlTag'), array(
                 'tag' => 'div',
-                'class' => 'field',
+                'class' => 'prepend field',
             )),
         ));
 

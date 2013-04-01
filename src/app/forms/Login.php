@@ -39,7 +39,7 @@ class App_Form_Login
     public function init ( )
     {
         $this->addElement('text', 'email', array(
-            // 'label'      => 'Email',
+            'label'      => 'Email',
             'placeholder'   => 'Enter email',
             'required'      => true,
             'filters'       => array('StringTrim', 'StringToLower'),
@@ -49,7 +49,7 @@ class App_Form_Login
         ));
 
         $this->addElement('password', 'passwd', array(
-            // 'label'      => 'Password',
+            'label'      => 'Password',
             'placeholder'   => 'Enter password',
             'required'      => true,
         ));

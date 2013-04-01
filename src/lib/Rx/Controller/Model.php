@@ -96,7 +96,7 @@ class Rx_Controller_Model
 
         $helper = $this->_helper->getHelper('contextSwitch');
 
-        if (! $helper->hasContext('remote')) {
+        if (! $helper->hasContext('csv')) {
             $helper->addContexts(array(
                 'csv'  => array(
                     'suffix'    => 'csv',
@@ -178,6 +178,8 @@ class Rx_Controller_Model
         $form = $model->getForm();
 
         $model->load($request->getParam('id'));
+
+        $form->injectDependencies($model, $params);
 
         if (! $model->id) {
             $message = sprintf(self::MSG_LOAD_FAILURE, $this->_modelName);

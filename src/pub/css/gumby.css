@@ -1841,6 +1841,8 @@ h1 .btn { vertical-align: middle; }
 .list-item h3 { display: -moz-inline-stack; display: inline-block; vertical-align: middle; *vertical-align: auto; zoom: 1; *display: inline; }
 .list-item .action-links { float: right; line-height: 3em; display: -moz-inline-stack; display: inline-block; vertical-align: middle; *vertical-align: auto; zoom: 1; *display: inline; }
 
+span.adjoined { width: 25%; text-align: right; vertical-align: top; overflow: hidden; }
+
 .athlete-name { text-align: right; }
 
 .header { background: rgba(0, 0, 0, 0.5); }
