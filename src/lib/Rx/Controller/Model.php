@@ -176,6 +176,7 @@ class Rx_Controller_Model
         $model = $this->getModel($this->_modelName);
         $request = $this->getRequest();
         $form = $model->getForm();
+        $params = $request->getParams();
 
         $model->load($request->getParam('id'));
 

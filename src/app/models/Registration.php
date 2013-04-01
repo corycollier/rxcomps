@@ -130,6 +130,7 @@ class App_Model_Registration
         $remoteUser = $mindBodyOnlineApi->updateClient(array_merge($values['user'], array(
             'credit_card_number' => $creditCard,
             'birthday' => $birthday,
+            'passwd' => hash('sha1', microtime()),
         )));
 
         $logger->info(sprintf('User entered in Mindbody with new ID %s', $remoteUser['id']));

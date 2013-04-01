@@ -22,13 +22,9 @@
 <p>Thank you for registering for the <?php echo $this->escape($this->event->getValue('name')); ?> event. Please
     take the opportunity to review your registration information below. </p>
 
-<p>If you find anything incorrect about this information, you can login and edit
-    it <?php echo $this->htmlAnchor('here', array(
-        'controller' => 'registrations',
-        'action'    => 'edit',
-        'id'        => $this->model->id,
-        'event_id'  => $this->event->id,
-    )); ?>
+<p>If you find anything incorrect about this information, Please send us an email so we can correct it
+
+<a href="mailto:lee@baconbeatdown.com">lee@baconbeatdown.com</a>
 </p>
 
 <table width="100%">
@@ -46,7 +42,7 @@
     </tr>
     <tr>
         <td><strong>Division</strong></td>
-        <td><?php echo $this->escape($this->athlete->getValue('scale_id')); ?></td>
+        <td><?php echo $this->escape($this->athlete->findParentRow('App_Model_DbTable_Scale')->name); ?></td>
     </tr>
     <tr>
         <td><strong>Gender</strong></td>

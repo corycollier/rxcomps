@@ -72,6 +72,14 @@ class App_Form_Scale
             'class'         => 'numeric input',
         ));
 
+        $this->addElement('numeric', 'price', array(
+            'label'         => 'Price',
+            'placeholder'   => 'Price of registration',
+            'required'      => true,
+            'filters'       => array('StringTrim'),
+            'class'         => 'numeric input',
+        ));
+
         $this->addElement('submit', 'save', array(
             'label'         => 'Save',
             'ignore'        => true,
