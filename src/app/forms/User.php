@@ -55,14 +55,14 @@ class App_Form_User
         $this->addElement('password', 'passwd', array(
             'label'         => 'Password',
             'placeholder'   => 'Enter password',
-            'required'      => true,
+            // 'required'      => true,
             'filters'       => array('StringTrim'),
         ));
 
         $this->addElement('password', 'confirm_password', array(
             'label'         => 'Confirm Password',
             'placeholder'   => 'Confirm password',
-            'required'      => true,
+            // 'required'      => true,
             'filters'       => array('StringTrim'),
             'validators'    => array(
                 'PasswordConfirmation',
