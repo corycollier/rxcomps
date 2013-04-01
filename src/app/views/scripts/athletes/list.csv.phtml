@@ -1,0 +1,23 @@
+<?php
+
+$headers = array(
+    'Name', 'Gym', 'scale', 'gender', 'sign-up-date',
+);
+
+echo '"' . implode('","', $headers) . '"' . PHP_EOL;
+
+foreach ($this->items as $athlete) :
+
+    $scale = $athlete->findParentRow('App_Model_DbTable_Scale');
+
+    $data = array(
+        $athlete->name,
+        $athlete->gym,
+        $scale->name,
+        $athlete->gender,
+        $athlete->created,
+    );
+
+    echo '"' . implode('","', $data) . '"' . PHP_EOL;
+
+endforeach;
