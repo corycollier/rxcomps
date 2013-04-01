@@ -105,6 +105,7 @@ class App_View_Helper_UserProfile
             '</tr>',
 
             '</table>',
+            '<!-- !debug -->',
         ));
 
         return strtr($template, array(
@@ -119,6 +120,7 @@ class App_View_Helper_UserProfile
             '!postal'       => $userProfile->postal,
             '!country'      => $userProfile->country,
             '!birthday'     => $userProfile->birthday,
+            '!debug'        => print_r($userProfile, true),
         ));
 
     } // END function userProfile
