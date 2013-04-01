@@ -134,8 +134,8 @@ class App_Form_User
             'required'      => true,
         ));
 
-    	$this->addElement('submit', 'login', array(
-    		'label' 		=> 'Login',
+    	$this->addElement('submit', 'save', array(
+    		'label' 		=> 'Save',
     		'ignore'		=> true,
 		));
 
@@ -164,6 +164,10 @@ class App_Form_User
                 'legend' => 'Address Information (not shared)',
             )
         );
+
+        $this->addDisplayGroup(array(
+            'save',
+        ), 'buttons');
 
         $this->setDisplayGroupDecorators(array(
             'FormElements',
