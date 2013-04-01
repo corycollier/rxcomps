@@ -98,6 +98,7 @@ class App_Model_Registration
         $mindBodyOnlineApi = $this->getModel('MindBodyOnlineApi');
         $user = $this->getParent('User');
         $event = $this->getParent('Event')->load($values['event_id']);
+        $scale = $this->getParent('Scale')->load($values['athlete']['scale_id']);
         $price = $this->getScalePrice($values['athlete']['scale_id']);
 
         if (! $event) {
@@ -138,7 +139,7 @@ class App_Model_Registration
         // bill the user
         // 44, 3072
         $result = $mindBodyOnlineApi->purchaseEvent(
-            $remoteUser['id'], self::MB_CLASS_ID, self::MB_SERVICE_ID, $price, $creditCard
+            $remoteUser['id'], self::MB_CLASS_ID, $scale->getValue('remote_id'), $price, $creditCard
         );
 
         $logger->info(sprintf(

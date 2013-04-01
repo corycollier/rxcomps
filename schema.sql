@@ -14,6 +14,7 @@ CREATE TABLE IF NOT EXISTS `scales` (
   `event_id` INT NOT NULL ,
   `max_count` INT NOT NULL DEFAULT 1,
   `price` FLOAT(10,2) NOT NULL DEFAULT 0.00,
+  `remote_id` INT NOT NULL DEFAULT 3074,
   PRIMARY KEY (`id`) ,
   INDEX `fk_events_idx` (`event_id` ASC) ,
   CONSTRAINT `fk_scales_events`

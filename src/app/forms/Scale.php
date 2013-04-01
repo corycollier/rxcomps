@@ -80,6 +80,13 @@ class App_Form_Scale
             'class'         => 'numeric input',
         ));
 
+        $this->addElement('text', 'remote_id', array(
+            'label'         => 'Remote ID',
+            'placeholder'   => 'Enter remote ide',
+            'required'      => true,
+            'filters'       => array('StringTrim'),
+        ));
+
         $this->addElement('submit', 'save', array(
             'label'         => 'Save',
             'ignore'        => true,
