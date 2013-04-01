@@ -1,7 +1,7 @@
 <?php
 
 $headers = array(
-    'Id', 'Name', 'Gym', 'scale', 'gender', 'sign-up-date',
+    'Id', 'Fisrt Name', 'Last Name' 'Gym', 'scale', 'gender', 'sign-up-date',
 );
 
 echo '"' . implode('","', $headers) . '"' . PHP_EOL;
@@ -10,9 +10,12 @@ foreach ($this->items as $athlete) :
 
     $scale = $athlete->findParentRow('App_Model_DbTable_Scale');
 
+    $name = explode(' ', $athlete->name);
+
     $data = array(
         $athlete->id,
-        $athlete->name,
+        $name[0],
+        $name[1],
         $athlete->gym,
         $scale->name,
         $athlete->gender,
