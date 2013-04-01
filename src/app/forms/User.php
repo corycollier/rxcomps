@@ -42,7 +42,7 @@ class App_Form_User
             'ignore'        => true,
         ));
 
-    	$this->addElement('text', 'email', array(
+    	$this->addElement('email', 'email', array(
     		'label' 		=> 'Email',
     		'placeholder'	=> 'Enter email',
     		'required'		=> true,

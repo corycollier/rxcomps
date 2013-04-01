@@ -91,6 +91,13 @@ span.adjoined {
     overflow: hidden;
 }
 
+.field {
+    input, input[type="*"], textarea {
+        width: 70%;
+        max-width: 70%;
+    }
+}
+
 .competition-item {
 
 }

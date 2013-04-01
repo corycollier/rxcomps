@@ -127,9 +127,31 @@ class App_Form_Athlete
 
         $element = $this->getElement('scale_id');
 
+        $table = $model->getTable('Athlete');
+
+        $disable = array();
+
         foreach ($scales as $scale) {
-            $element->addMultiOption($scale->id, $scale->name);
+            $athleteCount = $table->fetchRow(
+                $table->select()
+                    ->from($table, array('count(1) as count'))
+
+            )->count;
+
+            $spotsLeft = (int)$scale->max_count - (int)$athleteCount;
+            $element->addMultiOption($scale->id, sprintf(
+                '%s (%d %s left)',
+                $scale->name,
+                $spotsLeft,
+                $spotsLeft == 1 ? 'spot' : 'spots'
+            ));
+
+            if ($spotsLeft < 1) {
+                $disable[] = $scale->id;
+            }
         }
+
+        $element->setAttrib('disable', $disable);
 
         return $this;
 

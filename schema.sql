@@ -12,6 +12,7 @@ CREATE TABLE IF NOT EXISTS `scales` (
   `name` VARCHAR(45) NOT NULL ,
   `code` VARCHAR(2) NOT NULL,
   `event_id` INT NOT NULL ,
+  `max_count` INT NOT NULL DEFAULT 1,
   PRIMARY KEY (`id`) ,
   INDEX `fk_events_idx` (`event_id` ASC) ,
   CONSTRAINT `fk_scales_events`

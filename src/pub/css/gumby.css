@@ -1843,6 +1843,8 @@ h1 .btn { vertical-align: middle; }
 
 span.adjoined { width: 25%; text-align: right; vertical-align: top; overflow: hidden; }
 
+.field input, .field input[type="*"], .field textarea { width: 70%; max-width: 70%; }
+
 .athlete-name { text-align: right; }
 
 .header { background: rgba(0, 0, 0, 0.5); }

@@ -17,11 +17,11 @@
  * @subpackage Helper
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: FormSelect.php 24158 2011-06-27 15:31:54Z ezimuel $
+ * @version    $Id: FormText.php 23775 2011-03-01 17:25:24Z ralph $
  */
 
 /**
- * Helper to generate "select" list of options
+ * Helper to generate a "text" element
  *
  * @category   Zend
  * @package    Zend_View
@@ -29,18 +29,17 @@
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Rx_View_Helper_FormPassword
-    extends Zend_View_Helper_FormPassword
+class Rx_View_Helper_FormNumber
+    extends Zend_View_Helper_FormElement
 {
-
     /**
-     * Generates a 'password' element.
+     * Generates a 'number' element.
      *
      * @access public
      *
      * @param string|array $name If a string, the element name.  If an
      * array, all other parameters are ignored, and the array elements
-     * are extracted in place of added parameters.
+     * are used in place of added parameters.
      *
      * @param mixed $value The element value.
      *
@@ -48,12 +47,32 @@ class Rx_View_Helper_FormPassword
      *
      * @return string The element XHTML.
      */
-    public function formPassword($name, $value = null, $attribs = null)
+    public function formNumber($name, $value = null, $attribs = null)
     {
-        // return parent::formSubmit($name, $value, $attribs);
-        $attribs['class'] = @$attribs['class'] . ' password input';
+        $info = $this->_getInfo($name, $value, $attribs);
+        extract($info); // name, value, attribs, options, listsep, disable
 
-        return parent::formPassword($name, $value, $attribs);
+        // build the element
+        $disabled = '';
+        if ($disable) {
+            // disabled
+            $disabled = ' disabled="disabled"';
+        }
+
+        // XHTML or HTML end tag?
+        $endTag = ' />';
+        if (($this->view instanceof Zend_View_Abstract) && !$this->view->doctype()->isXhtml()) {
+            $endTag= '>';
+        }
+
+        $xhtml = '<input type="number"'
+                . ' name="' . $this->view->escape($name) . '"'
+                . ' id="' . $this->view->escape($id) . '"'
+                . ' value="' . $this->view->escape($value) . '"'
+                . $disabled
+                . $this->_htmlAttribs($attribs)
+                . $endTag;
+
+        return $xhtml;
     }
-
 }

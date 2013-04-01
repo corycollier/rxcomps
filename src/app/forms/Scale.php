@@ -64,6 +64,14 @@ class App_Form_Scale
             'required'      => true,
         ));
 
+        $this->addElement('numeric', 'max_count', array(
+            'label'         => 'Slots Available',
+            'placeholder'   => 'Max Participants',
+            'required'      => true,
+            'filters'       => array('StringTrim'),
+            'class'         => 'numeric input',
+        ));
+
         $this->addElement('submit', 'save', array(
             'label'         => 'Save',
             'ignore'        => true,
