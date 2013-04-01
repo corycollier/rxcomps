@@ -24,12 +24,16 @@ echo $this->actionList(array(
 ));
 ?>
 
-
 <h1>Registration Details</h1>
 
-
 <?php
-echo $this->userProfile($this->model->getParent('User'), $this->user, array(
+$user = $this->model->getParent('User');
+$athlete = $this->model->getParent('Athlete');
+$event = $this->model->getParent('Event');
+
+$user->row->gender = $athlete->row->gender;
+
+echo $this->userProfile($user, $this->user, array(
     'event_id'  => $this->event()->id(),
 ));
 
@@ -37,11 +41,11 @@ echo $this->registrationItem($this->model->row, $this->user, array(
     'event_id'  => $this->event()->id(),
 ));
 
-echo $this->athleteItem($this->model->getParent('Athlete')->row, $this->user, array(
+echo $this->athleteItem($athlete->row, $this->user, array(
     'event_id'  => $this->event()->id(),
 ));
 
-echo $this->eventItem($this->model->getParent('Event')->row, $this->user, array(
+echo $this->eventItem($event->row, $this->user, array(
     'event_id'  => $this->event()->id(),
 ))
 
