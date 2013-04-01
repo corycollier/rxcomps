@@ -66,7 +66,7 @@ class App_Form_Athlete
             'multiOptions'  => array(
                 'male'      => 'Male',
                 'female'    => 'Female',
-                'team'      => 'Team',
+                // 'team'      => 'Team',
             ),
         ));
 
