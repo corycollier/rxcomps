@@ -142,6 +142,7 @@ class App_Model_Registration
             $remoteUser['id'], self::MB_CLASS_ID, $scale->getValue('remote_id'), $price, $creditCard
         );
 
+
         $logger->info(sprintf(
             'User %s successfully charged %s, for event %s [%s], scale %s, auth# %s',
             $remoteUser['id'],
@@ -152,16 +153,20 @@ class App_Model_Registration
             $result['id']
         ));
 
-        if (array_key_exists('user', $values)) {
-            $user->create($values['user']);
-            $values['user_id'] = $user->id;
+        try {
+            if (array_key_exists('user', $values)) {
+                $user->create($values['user']);
+                $values['user_id'] = $user->id;
+            }
+
+            $athlete = $this->getParent('Athlete');
+            $athlete->create($values['athlete']);
+
+            $values['athlete_id'] = $athlete->id;
+            $result = $this->_create($values);
+        } catch (Zend_Exception $exception) {
+            $logger->err($exception->getMessage());
         }
-
-        $athlete = $this->getParent('Athlete');
-        $athlete->create($values['athlete']);
-
-        $values['athlete_id'] = $athlete->id;
-        $result = $this->_create($values);
 
         // $logger->log()
         //
