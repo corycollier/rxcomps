@@ -363,7 +363,7 @@ class Rx_Model_Abstract
         $paginator  = $dbTable->getPaginationAdapter($params);
 
         $page = @$params['page'] ? $params['page'] : 1;
-        $count = @$params['count'] ? $params['count'] : 20;
+        $count = @$params['count'] ? $params['count'] : 1000;
 
         $offset = ($page - 1) * $count;
 
