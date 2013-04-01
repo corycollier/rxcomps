@@ -155,7 +155,7 @@ class App_Model_Registration
 
         try {
             if (array_key_exists('user', $values)) {
-                $user->load($values['user']['email']);
+                // $user->load($values['user']['email']);
 
                 try {
                     $user->create($values['user']);
