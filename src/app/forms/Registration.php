@@ -96,7 +96,7 @@ class App_Form_Registration
     {
         $form = new App_Form_User;
         $form->removeDecorator('Form');
-        $form->removeElement('login');
+        $form->removeElement('save');
         $form->removeDecorator('Fieldset');
         $form->setIsArray(true);
         $form->setElementsBelongTo('user');
