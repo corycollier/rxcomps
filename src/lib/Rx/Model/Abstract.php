@@ -295,6 +295,7 @@ class Rx_Model_Abstract
      */
     protected function _create ($values = array())
     {
+        unset($values['id']);
         $dbTable = $this->getTable();
 
         $this->id = $dbTable->insert($values);
