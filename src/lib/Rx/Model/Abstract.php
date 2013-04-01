@@ -443,6 +443,9 @@ class Rx_Model_Abstract
      */
     public function fromRow ($row)
     {
+        if (! $row) {
+            return;
+        }
         $this->row = $row;
         $this->getForm()->populate($row->toArray());
         $this->id = $row->id;
