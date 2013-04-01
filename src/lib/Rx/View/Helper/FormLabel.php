@@ -58,7 +58,6 @@ class Rx_View_Helper_FormLabel
 
         // enabled; display label
         $xhtml = '<span'
-                . $for
                 . $this->_htmlAttribs($attribs)
                 . '>' . $value . '</span>';
 

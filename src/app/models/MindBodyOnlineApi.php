@@ -192,14 +192,19 @@ class App_Model_MindBodyOnlineApi
             return array_change_key_case($result);
 
         } catch (SoapFault $fault) {
-            var_dump($params);
-            var_dump(array('fault' => $fault->faultstring));
-            var_dump($this->getSoapClient('client')->getLastRequest());
-            die;
+            throw new Rx_Model_Exception($fault->faultstring);
         }
 
     } // END function update
 
+    /**
+     * makeCreditCardInfo()
+     *
+     * Creates a new CreditCardInfo object
+     *
+     * @param array $params
+     * @return CreditCardInfo
+     */
     public function makeCreditCardInfo ($params = array())
     {
         $creditCardInfo = new CreditCardInfo;

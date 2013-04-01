@@ -75,18 +75,11 @@ class App_Model_Registration
      */
     public function getScalePrice ($scale)
     {
-        $map = array(
-            1 => 50,  // piglets 8-11
-            2 => 50,  // piglets 12-15
-            3 => 75,  // porkers (beginners)
-            4 => 100, // hogs (Scaled)
-            5 => 125, // boars (Rx)
-            6 => 100, // bacon (masters)
-            7 => 300, // swine (team)
-        );
+        $table = $this->getTable('Scale');
 
-        return $map[$scale];
+        $result = $table->fetchRow($table->select()->where('id = ?', $scale));
 
+        return $result->price;
     }
 
     /**
@@ -117,8 +110,6 @@ class App_Model_Registration
 
         $birthday = $this->getForm()->getSubForm('user')->getValue('birthday');
 
-        // var_dump($values); die;
-
         $creditCard = array(
             'CreditCardNumber'   => $values['credit_card']['credit_card_number'],
             'BillingName'        => $values['credit_card']['name'],
@@ -142,9 +133,6 @@ class App_Model_Registration
         )));
 
         $logger->info(sprintf('User entered in Mindbody with new ID %s', $remoteUser['id']));
-
-        $price = 1;
-        // var_dump($price); die;
 
         // bill the user
         // 44, 3072

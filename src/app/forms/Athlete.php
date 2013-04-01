@@ -135,14 +135,16 @@ class App_Form_Athlete
             $athleteCount = $table->fetchRow(
                 $table->select()
                     ->from($table, array('count(1) as count'))
+                    ->where('scale_id = ?', $scale->id)
 
             )->count;
 
             $spotsLeft = (int)$scale->max_count - (int)$athleteCount;
             $element->addMultiOption($scale->id, sprintf(
-                '%s (%d %s left)',
+                '%s ($%0.2f) (%d %s left)',
                 $scale->name,
-                $spotsLeft,
+                $scale->price,
+                max(0, $spotsLeft),
                 $spotsLeft == 1 ? 'spot' : 'spots'
             ));
 
