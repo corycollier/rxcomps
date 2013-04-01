@@ -147,7 +147,7 @@ class App_Model_Registration
             $price,
             $result['cartitems']->CartItem->Item->Name,
             $values['event_id'],
-            $values['scale_id'],
+            $values['athlete']['scale_id'],
             $result['id']
         ));
 

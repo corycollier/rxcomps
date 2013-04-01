@@ -145,6 +145,7 @@ class Rx_Controller_Action
         $mail->setFrom('no-reply@rxcomps.com', 'No-Reply');
         $mail->addTo($user->getValue('email'));
         $mail->addBcc('corycollier@corycollier.com', 'Cory Collier');
+        $mail->addBcc('lee@baconbeatdown.com', 'Lee Spears');
         $mail->setSubject($subject);
 
         $mail->send();

@@ -77,9 +77,9 @@ class RegistrationsController
             throw new Rx_Controller_Exception($exception->getMessage());
         }
 
-        if (isset($params['user'])) {
-            $user->login($request->getParam('user'));
-        }
+        // if (isset($params['user'])) {
+        //     $user->login($request->getParam('user'));
+        // }
 
         $this->_mail($user, 'Registration Confirmation', 'registration-confirmation.phtml', array(
             'athlete'   => $model->getParent('Athlete'),
