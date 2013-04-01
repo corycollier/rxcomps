@@ -146,6 +146,18 @@ CREATE TABLE IF NOT EXISTS `registrations` (
 )
 ENGINE = InnoDB;
 
+CREATE TABLE IF NOT EXISTS `registration_shirts` (
+    `id` INT(11) NOT NULL AUTO_INCREMENT,
+    `registration_id` INT(11) NOT NULL,
+    `size` ENUM('xx-small', 'x-small', 'small', 'medium', 'large', 'x-large', 'xx-large') DEFAULT 'medium',
+    PRIMARY KEY (`id`),
+    CONSTRAINT `fk_registration_shirts_registration_id` FOREIGN KEY (`registration_id`)
+        REFERENCES `registrations` (`id`)
+        ON DELETE CASCADE
+        ON UPDATE CASCADE
+)
+ENGINE = InnoDB;
+
 CREATE TABLE IF NOT EXISTS `event_options` (
     id INT(11) NOT NULL AUTO_INCREMENT,
     event_id INT(11) NOT NULL,
