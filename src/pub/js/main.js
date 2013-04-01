@@ -43,12 +43,10 @@ $(function() {
         );
     });
 
-    $("#user-address1").on('change', function(event){
-        $("#credit_card-address1").val($("#user-address1").val());
-    });
-
-    $("#user-address2").on('change', function(event){
-        $("#credit_card-address2").val($("#user-address2").val());
+    $("#user-address1, #user-address2").on('change', function(event){
+        $("#credit_card-address").val(
+            $("#user-address1").val() + ' ' + $("#user-address2").val()
+        );
     });
 
     $("#user-city").on('change', function(event){

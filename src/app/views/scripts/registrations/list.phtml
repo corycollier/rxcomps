@@ -20,6 +20,11 @@ echo $this->model(new App_Model_Registration)->create($this->user, 'Create Regis
     'event_id'  => $this->event()->id(),
 ));
 
+// echo a create new link, if appropriate
+echo $this->model(new App_Model_Registration)->csv($this->user, 'Export Registrations', array(
+    'event_id'  => $this->event()->id(),
+));
+
 // iterate through the registrations, outputing what's appropriate
 foreach ($this->items as $registration) :
 

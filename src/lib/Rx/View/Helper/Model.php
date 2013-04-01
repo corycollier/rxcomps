@@ -86,6 +86,7 @@ class Rx_View_Helper_Model
         $links      = array();
 
         foreach ($privileges as $privilege) {
+
             if (! $acl->isAllowed($roleId, $resourceId, $privilege)) {
                 continue;
             }
@@ -138,6 +139,43 @@ class Rx_View_Helper_Model
         $link = $this->view->htmlAnchor($title, array_merge($params, array(
             'controller'    => $resourceId,
             'action'        => $privilege,
+        )));
+
+        return sprintf($html, $link);
+
+    } // END function create
+
+    /**
+     * csv()
+     *
+     * Method to return a csv link for a given model
+     *
+     * @param string $title
+     * @param array $params
+     * @return string
+     */
+    public function csv ($user, $title, $params = array())
+    {
+        $acl = $this->_getAcl();
+        if (! $acl) {
+            return;
+        }
+
+        $resourceId = $this->_model->getResourceId();
+        $roleId     = $user->getRoleId();
+        $privilege  = 'list';
+
+        if (! $acl->isAllowed($roleId, $resourceId, $privilege)) {
+            return;
+        }
+
+        $html = '<div class="small default btn icon-right icon-list-add">%s</div>';
+
+        $link = $this->view->htmlAnchor($title, array_merge($params, array(
+            'controller'    => $resourceId,
+            'action'        => $privilege,
+            'format'        => 'csv',
+            'reset-url' => true,
         )));
 
         return sprintf($html, $link);

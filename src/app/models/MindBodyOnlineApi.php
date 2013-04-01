@@ -49,6 +49,10 @@ class App_Model_MindBodyOnlineApi
 
     const EXCEPTION_INVALID_SERVICE = 'The service requested does not exist';
 
+    const EXCEPTION_FAILED_API_REQUEST = 'The api request [%s] failed with message [%s]';
+
+    const EXCEPTION_PURCHASE_FAIL = 'The purchase failed with message [%s]';
+
 
     /**
      * The soap client instance for the model
@@ -72,23 +76,38 @@ class App_Model_MindBodyOnlineApi
     public function __construct ( )
     {
         $this->_soapClient['class'] = new Zend_Soap_Client(self::WSDL_URI_CLASS, array(
-            'soap_version' => SOAP_1_1,
+            'soap_version'  => SOAP_1_1,
+            'location'      => strtr(self::WSDL_URI_CLASS, array(
+                '?wsdl' => null,
+            )),
         ));
 
         $this->_soapClient['client'] = new Zend_Soap_Client(self::WSDL_URI_CLIENT, array(
             'soap_version' => SOAP_1_1,
+            'location'      => strtr(self::WSDL_URI_CLIENT, array(
+                '?wsdl' => null,
+            )),
         ));
 
         $this->_soapClient['appointment'] = new Zend_Soap_Client(self::WSDL_URI_APPOINTMENT, array(
             'soap_version' => SOAP_1_1,
+            'location'      => strtr(self::WSDL_URI_APPOINTMENT, array(
+                '?wsdl' => null,
+            )),
         ));
 
         $this->_soapClient['site'] = new Zend_Soap_Client(self::WSDL_URI_SITE, array(
             'soap_version' => SOAP_1_1,
+            'location'      => strtr(self::WSDL_URI_SITE, array(
+                '?wsdl' => null,
+            )),
         ));
 
         $this->_soapClient['sale'] = new Zend_Soap_Client(self::WSDL_URI_SALE, array(
             'soap_version' => SOAP_1_1,
+            'location'      => strtr(self::WSDL_URI_SALE, array(
+                '?wsdl' => null,
+            )),
         ));
 
     } // END function __construct
@@ -144,23 +163,111 @@ class App_Model_MindBodyOnlineApi
      * Updates information for a client in mind-body
      *
      */
-    public function updateClient ($params = array())
+    public function updateClient ($params = array(), $isTest = false)
     {
         $params = $this->mapParamsToUpdateClientDefaults($params);
+        $params['Notes'] = 'Machine generated user';
 
         try {
-            // $result = $this->getSoapClient()->GetClasses($this->prepareParams($params));
+            $result = $this->getSoapClient('client')
+                ->AddOrUpdateClients($this->prepareParams(array(
+                    'Test'          => $isTest,
+                    'Clients'       => array(
+                        'Client'    => $params,
+                    ),
+                )));
 
-            // print_r($result); die;
+            $result = $result->AddOrUpdateClientsResult;
 
-        } catch (Zend_Exception $exception) {
-            print_r(array('exception' => $exception)); die;
-        }
-        catch (SoapFault $fault) {
-            print_r(array('fault' => $fault->faultstring)); die;
+            if ($result->ErrorCode != 200) {
+                throw new Rx_Model_Exception(sprintf(
+                    self::EXCEPTION_FAILED_API_REQUEST,
+                    'AddOrUpdateClients',
+                    $result->Clients->Client->Messages->string
+                ));
+            }
+
+            $result = (array)$result->Clients->Client;
+
+            return array_change_key_case($result);
+
+        } catch (SoapFault $fault) {
+            var_dump($params);
+            var_dump(array('fault' => $fault->faultstring));
+            var_dump($this->getSoapClient('client')->getLastRequest());
+            die;
         }
 
     } // END function update
+
+    public function makeCreditCardInfo ($params = array())
+    {
+        $creditCardInfo = new CreditCardInfo;
+
+        foreach ($params as $key => $value) {
+            $creditCardInfo->$key = $value;
+        }
+
+        $creditCardInfo->SaveInfo = true;
+
+        return $creditCardInfo;
+    }
+
+    /**
+     * purchaseEvent()
+     *
+     *
+     * @param  array   $params
+     * @param  boolean $test
+     * @return boolean
+     */
+    public function purchaseEvent ($clientId, $classId, $serviceItemId, $price, $creditCardInfo, $test = false)
+    {
+        require_once('Sale_Service.php');
+        require_once('Mindbody_Class.php');
+
+        $item = new CartItem;
+
+        $item->DiscountAmount = 0.00;
+        $item->Quantity = 1;
+        $item->ClassIDs = array($classId);
+        $item->Item = new Service;
+        $item->Item->ID = $serviceItemId;
+        $item->Item->Price = $price;
+        $item->Item->ClassIDs = array($classId);
+        $item->Item->Quantity = 1;
+
+        $creditCardInfo['Amount'] = $price;
+
+        $params = $this->prepareParams(array(
+            'Test' => $test,
+            'ClientID' => $clientId,
+            'InStore'   => false,
+            'CartItems' => array($item),
+            'ClassIDs' => array($classId),
+            'Payments' => array($this->makeCreditCardInfo($creditCardInfo)),
+            'SendEmail' => true,
+            'LocationID' => 1,
+        ));
+
+        $cart = new CheckoutShoppingCart;
+        $cart->Request = $params['Request'];
+        $service = new Sale_x0020_Service(self::WSDL_URI_SALE, array(
+            'trace' => true,
+        ));
+
+        $result = $service->CheckoutShoppingCart($cart);
+
+        if ($result->CheckoutShoppingCartResult->ErrorCode != 200) {
+            throw new Rx_Model_Exception(sprintf(
+                self::EXCEPTION_PURCHASE_FAIL, trim($result->CheckoutShoppingCartResult->Message)
+            ));
+        }
+
+        $result = (array)$result->CheckoutShoppingCartResult->ShoppingCart;
+        return array_change_key_case($result);
+
+    } // END function purchaseEvent
 
     /**
      * getClients()
@@ -169,18 +276,93 @@ class App_Model_MindBodyOnlineApi
      *
      * @return array
      */
-    public function getClients ( )
+    public function getClients ($params = array())
     {
         try {
-            $this->getSoapClient('client')->GetClients();
-        } catch (Zend_Exception $exception) {
-            print_r(array('exception' => $exception)); die;
-        }
-        catch (SoapFault $fault) {
+            $results = $this->getSoapClient('client')->GetClients($this->prepareParams($params));
+        } catch (SoapFault $fault) {
             print_r(array('fault' => $fault->faultstring)); die;
         }
 
+        return $results;
+
     } // END function getClients
+
+    /**
+     * getClasses()
+     *
+     *
+     * @return array
+     */
+    public function getClasses ($params = array())
+    {
+        try {
+            $results = $this->getSoapClient('class')->GetClasses($this->prepareParams($params));
+        } catch (SoapFault $fault) {
+            print_r(array('fault' => $fault->faultstring)); die;
+        }
+
+        return $results;
+
+    } // END function getClasses
+
+    /**
+     * getProducts()
+     *
+     * Gets the products available
+     *
+     * @param  array  $params to filter the request
+     * @return array
+     */
+    public function getProducts ($params = array())
+    {
+        try {
+            $results = $this->getSoapClient('sale')->GetProducts($this->prepareParams($params));
+        } catch (SoapFault $fault) {
+            print_r(array('fault' => $fault->faultstring)); die;
+        }
+
+        return $results;
+    }
+
+    /**
+     * getServices()
+     *
+     * Gets the services available
+     *
+     * @param  array  $params to filter the request
+     * @return array
+     */
+    public function getServices ($params = array())
+    {
+        try {
+            $results = $this->getSoapClient('sale')->GetServices($this->prepareParams($params));
+        } catch (SoapFault $fault) {
+            print_r(array('fault' => $fault->faultstring)); die;
+        }
+
+        return $results;
+
+    }
+
+    /**
+     * getLocations()
+     *
+     *
+     * @param  array  $params Fitlering parameters
+     * @return array
+     */
+    public function getLocations ($params = array())
+    {
+        try {
+            $results = $this->getSoapClient('site')->GetLocations($this->prepareParams($params));
+        } catch (SoapFault $fault) {
+            print_r(array('fault' => $fault->faultstring)); die;
+        }
+
+        return $results;
+
+    } // END function getLocations
 
     /**
      * getUpdateClientDefaults()
@@ -244,7 +426,7 @@ class App_Model_MindBodyOnlineApi
     {
         $map = array(
             'Username'                      => 'username',
-            'Password'                      => 'password',
+            'Password'                      => 'passwd',
             'Gender'                        => 'gender',
             'FirstName'                     => 'first_name',
             'LastName'                      => 'last_name',
@@ -257,6 +439,7 @@ class App_Model_MindBodyOnlineApi
             'Country'                       => 'country',
             'BirthDate'                     => 'birthday',
             'HomeLocation'                  => 'gym',
+            'ClientCreditCard'              => 'credit_card_number',
         );
 
         $results = $this->getUpdateClientDefaults();

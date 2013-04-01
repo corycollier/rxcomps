@@ -94,6 +94,20 @@ class Rx_Controller_Model
             ));
         }
 
+        $helper = $this->_helper->getHelper('contextSwitch');
+
+        if (! $helper->hasContext('remote')) {
+            $helper->addContexts(array(
+                'csv'  => array(
+                    'suffix'    => 'csv',
+                    'headers'   => array('Content-Type' => 'text/csv'),
+                )
+            ));
+            $helper->addActionContext('list', 'json')
+                ->addActionContext('list', 'csv')
+                ->initContext();
+        }
+
     } // END function init
 
     /**
@@ -161,6 +175,7 @@ class Rx_Controller_Model
     {
         $model = $this->getModel($this->_modelName);
         $request = $this->getRequest();
+        $form = $model->getForm();
 
         $model->load($request->getParam('id'));
 

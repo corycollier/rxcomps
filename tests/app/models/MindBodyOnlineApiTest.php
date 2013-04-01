@@ -77,6 +77,10 @@ class Tests_App_Model_MindBodyOnlineApiTest
     {
         return array(
             array('client'),
+            array('class'),
+            array('site'),
+            array('sale'),
+            array('appointment'),
         );
 
     } // END function provide_getSoapClient
@@ -93,7 +97,7 @@ class Tests_App_Model_MindBodyOnlineApiTest
     {
         $subject = new App_Model_MindBodyOnlineApi;
 
-        $subject->updateClient($params);
+        // $result = $subject->updateClient($params);
 
     } // END function test_updateClient
 
@@ -107,11 +111,82 @@ class Tests_App_Model_MindBodyOnlineApiTest
      */
     public function provide_updateClient ( )
     {
+        $uniqueId = uniqid();
+
         return array(
-            array(),
+            array(array(
+                'username'      => 'testuser-' . $uniqueId,
+                'password'      => 'testpass123',
+                'gender'        => 'male',
+                'first_name'    => 'Test',
+                'last_name'     => 'User',
+                'email'         => 'corycollier@corycollier.com',
+                'address1'      => '123 Main Street',
+                'address2'      => null,
+                'city'          => 'Anywhere',
+                'state'         => 'FL',
+                'postal'        => 12345,
+                'country'       => 'United States',
+                'birthday'      => '1979-05-07',
+                'gym'           => 'CrossFit Test',
+                'credit_card_number' => array(
+                    'CardNumber'    => '1234123412341234',
+                    'CardHolder'    => 'Test User',
+                    'City'          => 'Anywhere',
+                    'Address'       => '123 Main Street',
+                    'State'         => 'FL',
+                    'PostalCode'    => 12345,
+                    'ExpMonth'      => 01,
+                    'ExpYear'       => 2014,
+                ),
+            )),
         );
 
     } // END function provide_updateClient
+
+    /**
+     * test_purchaseEvent()
+     *
+     * Tests the purchaseEvent of the App_Model_MindBodyOnlineApi
+     *
+     * @covers          App_Model_MindBodyOnlineApi::purchaseEvent
+     * @dataProvider    provide_purchaseEvent
+     */
+    public function test_purchaseEvent ($clientId, $classId, $serviceItemId, $price, $creditCardInfo, $test = false)
+    {
+        $subject = new App_Model_MindBodyOnlineApi;
+
+        $result = $subject->purchaseEvent($clientId, $classId, $serviceItemId, $price, $creditCardInfo, $test);
+
+        print_r($result); die;
+
+    } // END function test_purchaseEvent
+
+    /**
+     * provide_purchaseEvent()
+     *
+     * Provides data for the purchaseEvent method of the
+     * App_Model_MindBodyOnlineApi class
+     */
+    public function provide_purchaseEvent ( )
+    {
+        return array(
+            array(100000474, 44, 3072, 1.00, array(
+                    'CreditCardNumber'   => '5431111111111111',
+                    'BillingName'        => 'Cory Collier',
+                    'BillingCity'        => 'Maitland',
+                    'BillingAddress'     => '2200 Hunterfield Rd',
+                    'BillingState'       => 'FL',
+                    'BillingPostalCode'  => '32751',
+                    'ExpMonth'           => '07',
+                    'ExpYear'            => '2015',
+                    'SaveInfo'           => true,
+                ),
+                true
+            ),
+        );
+
+    } // END function provide_purchaseEvent
 
     /**
      * test_getClients()
@@ -121,11 +196,11 @@ class Tests_App_Model_MindBodyOnlineApiTest
      * @covers App_Model_MindBodyOnlineApi::getClients
      * @dataProvider provide_getClients
      */
-    public function test_getClients ( )
+    public function test_getClients ($params)
     {
         $subject = new App_Model_MindBodyOnlineApi;
 
-        $subject->getClients();
+        $subject->getClients($params);
 
     } // END function test_getClients
 
@@ -139,11 +214,160 @@ class Tests_App_Model_MindBodyOnlineApiTest
      */
     public function provide_getClients ( )
     {
+        $tomorrow = date('Y-m-d\TH:i:s', strtotime("next monday"));
+
+        return array(
+            array(array(
+                'HideCanceledClasses' => false,
+                'StartDateTime' => $tomorrow,
+            )),
+        );
+
+    } // END function provide_getClients
+
+    /**
+     * test_getClasses()
+     *
+     * Tests the getClasses of the App_Model_MindBodyOnlineApi
+     *
+     * @covers          App_Model_MindBodyOnlineApi::getClasses
+     * @dataProvider    provide_getClasses
+     */
+    public function test_getClasses ($params = array())
+    {
+        $subject = new App_Model_MindBodyOnlineApi;
+
+        $result = $subject->getClasses($params);
+
+        // print_r($result); die;
+
+    } // END function test_getClasses
+
+    /**
+     * provide_getClasses()
+     *
+     * Provides data for the getClasses method of the
+     * App_Model_MindBodyOnlineApi class
+     */
+    public function provide_getClasses ( )
+    {
+        $tomorrow = date('Y-m-d\TH:i:s', strtotime("next monday"));
+        return array(
+            array(array(
+                'HideCanceledClasses' => false,
+                'StartDateTime' => '2013-06-29',
+            )),
+            array(array(
+                'HideCanceledClasses' => false,
+                'StartDateTime' => $tomorrow,
+            )),
+        );
+
+    } // END function provide_getClasses
+
+    /**
+     * test_getProducts()
+     *
+     * Tests the getProducts of the App_Model_MindBodyOnlineApi
+     *
+     * @covers          App_Model_MindBodyOnlineApi::getProducts
+     * @dataProvider    provide_getProducts
+     */
+    public function test_getProducts ($params = array())
+    {
+        $subject = new App_Model_MindBodyOnlineApi;
+
+        $result = $subject->getProducts($params);
+
+        // print_r($result); die;
+
+    } // END function test_getProducts
+
+    /**
+     * provide_getProducts()
+     *
+     * Provides data for the getProducts method of the
+     * App_Model_MindBodyOnlineApi class
+     */
+    public function provide_getProducts ( )
+    {
+        return array(
+            array(array(
+                'SearchText' => 'Bacon',
+                'SellOnline' => false,
+            )),
+        );
+
+    } // END function provide_getProducts
+
+    /**
+     * test_getServices()
+     *
+     * Tests the getServices of the App_Model_MindBodyOnlineApi
+     *
+     * @covers          App_Model_MindBodyOnlineApi::getServices
+     * @dataProvider    provide_getServices
+     */
+    public function test_getServices ($params = array())
+    {
+        $subject = new App_Model_MindBodyOnlineApi;
+
+        $result = $subject->getServices($params);
+
+        print_r($result); die;
+
+    } // END function test_getServices
+
+    /**
+     * provide_getServices()
+     *
+     * Provides data for the getServices method of the
+     * App_Model_MindBodyOnlineApi class
+     */
+    public function provide_getServices ( )
+    {
+        return array(
+            array(array(
+                'LocationID' => 2,
+                'HideRelatedPrograms' => true,
+                // 'ClassID' => 44,
+            )),
+        );
+
+    } // END function provide_getServices
+
+    /**
+     * test_getLocations()
+     *
+     * Tests the getLocations of the App_Model_MindBodyOnlineApi
+     *
+     * @covers          App_Model_MindBodyOnlineApi::getLocations
+     * @dataProvider    provide_getLocations
+     */
+    public function test_getLocations ($params = array())
+    {
+        $subject = new App_Model_MindBodyOnlineApi;
+
+        $result = $subject->getLocations($params);
+
+        return $result;
+
+    } // END function test_getLocations
+
+    /**
+     * provide_getLocations()
+     *
+     * Provides data for the getLocations method of the
+     * App_Model_MindBodyOnlineApi class
+     */
+    public function provide_getLocations ( )
+    {
         return array(
             array(),
         );
 
-    } // END function provide_getClients
+    } // END function provide_getLocations
+
 
     /**
      * test_getUpdateClientDefaults()

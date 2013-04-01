@@ -60,34 +60,25 @@ class Rx_Form_Decorator_Date
         $year  = $element->getYear();
         $name  = $element->getFullyQualifiedName();
 
+        $years = array_combine(
+            range(1900, date('Y')),
+            range(1900, date('Y'))
+        );
+
+        $months = array_combine(
+            range(1, 12),
+            range(1, 12)
+        );
+
+        $days = array_combine(
+            range(1, 31),
+            range(1, 31)
+        );
+
         $markup = implode('-', array(
-            $view->formSelect($name . '[year]', $year,  array(),
-                array_merge(
-                    array('' =>  'select year'),
-                    array_combine(
-                        range(1900, date('Y')),
-                        range(1900, date('Y'))
-                    )
-                )
-            ),
-            $view->formSelect($name . '[month]', $month, array(),
-                array_merge(
-                    array('' => 'select month'),
-                    array_combine(
-                        range(1, 12),
-                        range(1, 12)
-                    )
-                )
-            ),
-            $view->formSelect($name . '[day]', $day, array(),
-                array_merge(
-                    array('' => 'select day'),
-                    array_combine(
-                        range(1, 31),
-                        range(1, 31)
-                    )
-                )
-            ),
+            $view->formSelect($name . '[year]', $year,  array(), $years),
+            $view->formSelect($name . '[month]', $month, array(), $months),
+            $view->formSelect($name . '[day]', $day, array(), $days),
         ));
 
         if ($this->getPlacement() == self::PREPEND) {

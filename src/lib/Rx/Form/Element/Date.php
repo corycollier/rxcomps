@@ -67,7 +67,7 @@ class Rx_Form_Element_Date
      */
     public function setDay ($value)
     {
-        $this->_day = (int) $value;
+        $this->_day = sprintf("%02d", (int)$value);
         return $this;
     }
 
@@ -93,7 +93,7 @@ class Rx_Form_Element_Date
      */
     public function setMonth ($value)
     {
-        $this->_month = (int) $value;
+        $this->_month = sprintf("%02d", (int)$value);
         return $this;
     }
 
@@ -119,7 +119,7 @@ class Rx_Form_Element_Date
      */
     public function setYear ($value)
     {
-        $this->_year = (int) $value;
+        $this->_year = $value;
         return $this;
     }
 
@@ -204,6 +204,9 @@ class Rx_Form_Element_Date
         $decorators = $this->getDecorators();
         if (empty($decorators)) {
             $this->addDecorator('Date')
+                ->addDecorator('Label', array(
+                    'class' => 'adjoined'
+                ))
                 ->addDecorator('Errors', array('class' => 'danger label'))
                 ->addDecorator('Label')
                 ->addDecorator('Description', array(

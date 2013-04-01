@@ -1,0 +1,36 @@
+<?php
+
+$headers = array(
+    'Name', 'Gym', 'e-mail', 'scale', 'gender', 'address', 'sign-up-date', 'event'
+);
+
+echo '"' . implode('","', $headers) . '"' . PHP_EOL;
+
+foreach ($this->items as $registration) :
+
+    $athlete = $registration->findParentRow('App_Model_DbTable_Athlete');
+    $user = $registration->findParentRow('App_Model_DbTable_User');
+    $event = $registration->findParentRow('App_Model_DbTable_Event');
+    $scale = $athlete->findParentRow('App_Model_DbTable_Scale');
+
+    $data = array(
+        $athlete->name,
+        $athlete->gym,
+        $user->email,
+        $scale->name,
+        $athlete->gender,
+        implode(' ', array(
+            $user->address1,
+            $user->address2,
+            $user->city,
+            $user->state,
+            $user->postal,
+            $user->country,
+        )),
+        $athlete->created,
+        $event->name,
+    );
+
+    echo '"' . implode('","', $data) . '"' . PHP_EOL;
+
+endforeach;

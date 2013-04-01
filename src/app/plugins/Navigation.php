@@ -108,6 +108,16 @@ class App_Plugin_Navigation
                 ),
             ),
             array(
+                'label'         => 'Divisions',
+                'controller'    => 'scales',
+                'resource'      => 'scales',
+                'privilege'     => 'list',
+                'action'        => 'list',
+                'params' => array(
+                    'event_id'      => $eventId,
+                ),
+            ),
+            array(
                 'label'         => 'Registrations',
                 'controller'    => 'registrations',
                 'resource'      => 'registrations',

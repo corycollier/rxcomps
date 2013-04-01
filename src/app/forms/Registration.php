@@ -40,15 +40,20 @@ class App_Form_Registration
      */
     public function init ( )
     {
-        $this->addElement('select', 'role', array(
-            'label'         => 'Role',
-            'placeholder'   => 'Select Role',
-            'required'      => true,
-            'filters'       => array('StringTrim', 'StringToLower'),
-            'multiOptions'  => array(
-                'user'      => 'Athlete',
-                'judge'     => 'Judge',
-            ),
+        // $this->addElement('select', 'role', array(
+        //     'label'         => 'Role',
+        //     'placeholder'   => 'Select Role',
+        //     'required'      => true,
+        //     'filters'       => array('StringTrim', 'StringToLower'),
+        //     'multiOptions'  => array(
+        //         'user'      => 'Athlete',
+        //         'judge'     => 'Judge',
+        //     ),
+        // ));
+
+        // $form = new Zend_Form_SubForm;
+        $this->addElement('hidden', 'role', array(
+            'value' => 'user',
         ));
 
         // $this->addSubForm($form, 'registration');

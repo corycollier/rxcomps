@@ -93,7 +93,33 @@ class App_Bootstrap
     protected function _initAcl ( )
     {
         $acl = new Zend_Acl;
-        Zend_Registry::set('acl', $acl);
+        $this->getRegistry()->set('acl', $acl);
     }
+
+    /**
+     * _initLogging()
+     *
+     * Sets up the logging in the application
+     */
+    protected function _initLogging ( )
+    {
+        $this->bootstrap('log');
+        $log = $this->getResource('log');
+        $this->getRegistry()->set('log', $log);
+
+    } // END function _initLog
+
+    /**
+     * getRegistry()
+     *
+     * Utility method to allow for easy mocking of the registry when testing
+     *
+     * @return Zend_Registry
+     */
+    public function getRegistry ( )
+    {
+        return Zend_Registry::getInstance();
+
+    } // END function getRegistry
 
 } // END class Bootstrap

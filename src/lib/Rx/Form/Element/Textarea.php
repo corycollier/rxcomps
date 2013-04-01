@@ -1,4 +1,7 @@
-<?php
+
+                ->addDecorator('Label', array(
+                    'class' => 'adjoined'
+                ))<?php
 /**
  * Zend Framework
  *
@@ -48,6 +51,9 @@ class Rx_Form_Element_Textarea
         $decorators = $this->getDecorators();
         if (empty($decorators)) {
             $this->addDecorator('ViewHelper')
+                ->addDecorator('Label', array(
+                    'class' => 'adjoined'
+                ))
                  ->addDecorator('Errors', array('class' => 'danger label'))
                  ->addDecorator('Description', array('tag' => 'p', 'class' => 'description'));
         }

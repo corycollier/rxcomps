@@ -39,7 +39,7 @@ class App_Form_CreditCard
     public function init ( )
     {
         $this->addElement('text', 'credit_card_number', array(
-            'label'         => 'Login',
+            'label'         => 'Credit Card Number',
             'placeholder'   => 'Enter Credit Card Number',
             'required'      => true,
             'filters'       => array('StringTrim'),
@@ -48,53 +48,60 @@ class App_Form_CreditCard
             )
         ));
 
+        $this->addElement('text', 'exp_month', array(
+            'label'         => 'Expiration Month',
+            'placeholder'   => 'Exp Month',
+            'required'      => true,
+            'filters'       => array('StringTrim'),
+        ));
+
+        $this->addElement('text', 'exp_year', array(
+            'label'         => 'Expiration Year',
+            'placeholder'   => 'Exp Year',
+            'required'      => true,
+            'filters'       => array('StringTrim'),
+        ));
+
         $this->addElement('text', 'name', array(
-            // 'label'      => 'Password',
+            'label'         => 'Billing Name',
             'placeholder'   => 'Enter First Name',
             'required'      => true,
             'filters'       => array('StringTrim'),
         ));
 
-        $this->addElement('text', 'address1', array(
-            // 'label'      => 'Password',
-            'placeholder'   => 'Enter Address (line 1)',
+        $this->addElement('text', 'address', array(
+            'label'         => 'Billing Address',
+            'placeholder'   => 'Enter Address',
             'required'      => true,
             'filters'       => array('StringTrim'),
         ));
 
-        $this->addElement('text', 'address2', array(
-            // 'label'      => 'Password',
-            'placeholder'   => 'Enter Address (line 2)',
-            'required'      => false,
-            'filters'       => array('StringTrim'),
-        ));
-
         $this->addElement('text', 'city', array(
-            // 'label'      => 'Password',
+            'label'         => 'Billing City',
             'placeholder'   => 'Enter City',
             'required'      => true,
             'filters'       => array('StringTrim'),
         ));
 
         $this->addElement('text', 'state', array(
-            // 'label'      => 'Password',
+            'label'         => 'Billing State',
             'placeholder'   => 'Enter State (2 letter)',
             'required'      => true,
             'filters'       => array('StringTrim', 'StringToUpper'),
         ));
 
         $this->addElement('text', 'postal', array(
-            // 'label'      => 'Password',
+            'label'         => 'Billing Zip',
             'placeholder'   => 'Enter Postal Code',
             'required'      => true,
             'filters'       => array('StringTrim'),
             'validators'    => array(
-                'PostCode',
+                // 'PostCode',
             ),
         ));
 
         $this->addElement('text', 'country', array(
-            // 'label'      => 'Password',
+            'label'         => 'Billing Country',
             'placeholder'   => 'Enter Country',
             'required'      => true,
             'filters'       => array('StringTrim'),

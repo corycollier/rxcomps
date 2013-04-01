@@ -70,7 +70,12 @@ class RegistrationsController
             throw new Rx_Controller_Exception(self::MSG_FORM_INVALID);
         }
 
-        $model->create($params);
+        try {
+            $model->create($params);
+        } catch (Zend_Exception $exception) {
+            $this->getLog()->err($exception->getMessage());
+            throw new Rx_Controller_Exception($exception->getMessage());
+        }
 
         if (isset($params['user'])) {
             $user->login($request->getParam('user'));

@@ -47,6 +47,9 @@ class App_Model_Registration
      */
     const EXCEPTION_INVALID_EVENT = 'The event being registered for does not exist';
 
+    const MB_CLASS_ID = 44;
+    const MB_SERVICE_ID = 3072;
+
     /**
      * getResourceId()
      *
@@ -57,6 +60,33 @@ class App_Model_Registration
     public function getResourceId ( )
     {
         return 'registrations';
+    }
+
+    public function getLog ( )
+    {
+        return Zend_Registry::getInstance()->get('log');
+    }
+
+    /**
+     * getScalePrices()
+     *
+     *
+     * @return [type] [description]
+     */
+    public function getScalePrice ($scale)
+    {
+        $map = array(
+            1 => 50,  // piglets 8-11
+            2 => 50,  // piglets 12-15
+            3 => 75,  // porkers (beginners)
+            4 => 100, // hogs (Scaled)
+            5 => 125, // boars (Rx)
+            6 => 100, // bacon (masters)
+            7 => 300, // swine (team)
+        );
+
+        return $map[$scale];
+
     }
 
     /**
@@ -70,8 +100,12 @@ class App_Model_Registration
      */
     public function create ($values = array())
     {
+        $logger = $this->getLog();
+
+        $mindBodyOnlineApi = $this->getModel('MindBodyOnlineApi');
         $user = $this->getParent('User');
         $event = $this->getParent('Event')->load($values['event_id']);
+        $price = $this->getScalePrice($values['athlete']['scale_id']);
 
         if (! $event) {
             throw new Rx_Model_Exception(self::EXCEPTION_INVALID_EVENT);
@@ -80,6 +114,53 @@ class App_Model_Registration
         if (! array_key_exists('athlete', $values)) {
             throw new Rx_Model_Exception(self::EXCEPTION_INVALID_DATA);
         }
+
+        $birthday = $this->getForm()->getSubForm('user')->getValue('birthday');
+
+        // var_dump($values); die;
+
+        $creditCard = array(
+            'CreditCardNumber'   => $values['credit_card']['credit_card_number'],
+            'BillingName'        => $values['credit_card']['name'],
+            'BillingCity'        => $values['credit_card']['city'],
+            'BillingAddress'     => $values['credit_card']['address'],
+            'BillingState'       => $values['credit_card']['state'],
+            'BillingPostalCode'  => $values['credit_card']['postal'],
+            'ExpMonth'           => $values['credit_card']['exp_month'],
+            'ExpYear'            => $values['credit_card']['exp_year'],
+            'Amount'             => $price,
+        );
+
+        $values['user']['username'] = strtolower(implode('-', array(
+            $values['user']['first_name'], $values['user']['last_name'], uniqid()
+        )));
+
+        // create the user in the mind-body system
+        $remoteUser = $mindBodyOnlineApi->updateClient(array_merge($values['user'], array(
+            'credit_card_number' => $creditCard,
+            'birthday' => $birthday,
+        )));
+
+        $logger->info(sprintf('User entered in Mindbody with new ID %s', $remoteUser['id']));
+
+        $price = 1;
+        // var_dump($price); die;
+
+        // bill the user
+        // 44, 3072
+        $result = $mindBodyOnlineApi->purchaseEvent(
+            $remoteUser['id'], self::MB_CLASS_ID, self::MB_SERVICE_ID, $price, $creditCard
+        );
+
+        $logger->info(sprintf(
+            'User %s successfully charged %s, for event %s [%s], scale %s, auth# %s',
+            $remoteUser['id'],
+            $price,
+            $result['cartitems']->CartItem->Item->Name,
+            $values['event_id'],
+            $values['scale_id'],
+            $result['id']
+        ));
 
         if (array_key_exists('user', $values)) {
             $user->create($values['user']);
@@ -90,7 +171,11 @@ class App_Model_Registration
         $athlete->create($values['athlete']);
 
         $values['athlete_id'] = $athlete->id;
-        return $this->_create($values);
+        $result = $this->_create($values);
+
+        // $logger->log()
+        //
+        return $result;
 
     } // END function create
 

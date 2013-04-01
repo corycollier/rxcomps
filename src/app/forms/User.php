@@ -43,7 +43,7 @@ class App_Form_User
         ));
 
     	$this->addElement('text', 'email', array(
-    		// 'label' 		=> 'Email',
+    		'label' 		=> 'Email',
     		'placeholder'	=> 'Enter email',
     		'required'		=> true,
             'filters'    	=> array('StringTrim', 'StringToLower'),
@@ -53,14 +53,14 @@ class App_Form_User
 		));
 
         $this->addElement('password', 'passwd', array(
-            // 'label'      => 'Password',
+            'label'         => 'Password',
             'placeholder'   => 'Enter password',
             'required'      => true,
             'filters'       => array('StringTrim'),
         ));
 
         $this->addElement('password', 'confirm_password', array(
-            // 'label'      => 'Password',
+            'label'         => 'Confirm Password',
             'placeholder'   => 'Confirm password',
             'required'      => true,
             'filters'       => array('StringTrim'),
@@ -70,49 +70,49 @@ class App_Form_User
         ));
 
         $this->addElement('text', 'first_name', array(
-            // 'label'      => 'Password',
+            'label'         => 'First Name',
             'placeholder'   => 'Enter First Name',
             'required'      => true,
             'filters'       => array('StringTrim'),
         ));
 
         $this->addElement('text', 'last_name', array(
-            // 'label'      => 'Password',
+            'label'         => 'Last Name',
             'placeholder'   => 'Enter Last Name',
             'required'      => true,
             'filters'       => array('StringTrim'),
         ));
 
         $this->addElement('text', 'address1', array(
-            // 'label'      => 'Password',
+            'label'         => 'Address 1',
             'placeholder'   => 'Enter Address (line 1)',
             'required'      => true,
             'filters'       => array('StringTrim'),
         ));
 
         $this->addElement('text', 'address2', array(
-            // 'label'      => 'Password',
+            'label'         => 'Address 2',
             'placeholder'   => 'Enter Address (line 2)',
             'required'      => false,
             'filters'       => array('StringTrim'),
         ));
 
         $this->addElement('text', 'city', array(
-            // 'label'      => 'Password',
+            'label'         => 'City',
             'placeholder'   => 'Enter City',
             'required'      => true,
             'filters'       => array('StringTrim'),
         ));
 
         $this->addElement('text', 'state', array(
-            // 'label'      => 'Password',
+            'label'         => 'State',
             'placeholder'   => 'Enter State (2 letter)',
             'required'      => true,
             'filters'       => array('StringTrim', 'StringToUpper'),
         ));
 
         $this->addElement('text', 'postal', array(
-            // 'label'      => 'Password',
+            'label'         => 'Postal Code',
             'placeholder'   => 'Enter Postal Code',
             'required'      => true,
             'filters'       => array('StringTrim'),
@@ -122,7 +122,7 @@ class App_Form_User
         ));
 
         $this->addElement('text', 'country', array(
-            // 'label'      => 'Password',
+            'label'         => 'Country',
             'placeholder'   => 'Enter Country',
             'required'      => true,
             'filters'       => array('StringTrim'),

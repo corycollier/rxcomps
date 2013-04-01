@@ -48,6 +48,9 @@ class Rx_Form_Element_Text
         $decorators = $this->getDecorators();
         if (empty($decorators)) {
             $this->addDecorator('ViewHelper')
+                ->addDecorator('Label', array(
+                    'class' => 'adjoined'
+                ))
                 ->addDecorator('Errors', array('class' => 'danger label'))
                 ->addDecorator('Description', array(
                     'tag' => 'p',
@@ -62,7 +65,7 @@ class Rx_Form_Element_Text
             )),
             array(array('fieldDiv' => 'HtmlTag'), array(
                 'tag' => 'div',
-                'class' => 'field',
+                'class' => 'prepend field',
             )),
         ));
 
