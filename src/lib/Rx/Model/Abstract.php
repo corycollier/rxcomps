@@ -41,6 +41,11 @@ class Rx_Model_Abstract
     const EXCEPTION_DELETE_CONSTRAINT = 'The id must be set on the model before deletion';
 
     /**
+     * Message to indicate that the requested autoloader is not valid
+     */
+    const INVALID_LOADER = '%s - This loader is not recognized';
+
+    /**
      * Property to hold an instance of the form associated with this model
      *
      * @var Rx_Form
@@ -55,18 +60,15 @@ class Rx_Model_Abstract
     protected $_tables = array();
 
     /**
-     * Property holds the autoloader to use for loading tables
+     * Property holds a collection of autoloaders
      *
-     * @var Zend_Loader_PluginLoader
+     * @var array
      */
-    protected $_tableAutoloader;
-
-    /**
-     * Property holds the autoloader to use for loading models
-     *
-     * @var Zend_Loader_PluginLoader
-     */
-    protected $_modelAutoloader;
+    protected $_loaders = array(
+        'table' => null,
+        'model' => null,
+        'form'  => null,
+    );
 
     /**
      * holds a row object, which contains the currently loaded record
@@ -89,18 +91,43 @@ class Rx_Model_Abstract
      */
     public function __construct()
     {
-        $this->_tableAutoloader = new Zend_Loader_PluginLoader;
-        $this->_modelAutoloader = new Zend_Loader_PluginLoader;
+        foreach ($this->_loaders as $type => $loader) {
+            $this->_loaders[$type] = new Zend_Loader_PluginLoader;
+        }
 
-        $this->_tableAutoloader
+        $this->getLoader('table')
             ->addPrefixPath('Rx_Model_DbTable', ROOT_PATH . '/lib/Rx/Model/DbTable')
             ->addPrefixPath('App_Model_DbTable', APPLICATION_PATH . '/models/DbTable/');
 
-        $this->_modelAutoloader
+        $this->getLoader('model')
             ->addPrefixPath('Rx_Model', ROOT_PATH . '/lib/Rx/Model/')
             ->addPrefixPath('App_Model', APPLICATION_PATH . '/models/');
 
+        $this->getLoader('form')
+            ->addPrefixPath('Rx_Form', ROOT_PATH . '/lib/Rx/Form/')
+            ->addPrefixPath('App_Form', APPLICATION_PATH . '/forms/');
+
     } // END function __construct
+
+    /**
+     * getLoader()
+     *
+     * Gets the autoloader for a given type
+     *
+     * @param string $type
+     * @return Zend_Loader_PluginLoader
+     * @throws Rx_Model_Exception if the type requested doesn't exist
+     */
+    public function getLoader ($type)
+    {
+        $type = strtolower($type);
+        if (! array_key_exists($type, $this->_loaders)) {
+            throw new Rx_Model_Exception(self::INVALID_LOADER);
+        }
+
+        return $this->_loaders[$type];
+
+    } // END function getLoader
 
     /**
      * getName()
@@ -111,9 +138,7 @@ class Rx_Model_Abstract
      */
     public function getName ( )
     {
-        $classNameParts = explode('_', get_class($this));
-
-        return end($classNameParts);
+        return $this->_getShortName(get_class($this));
 
     } // END function getName
 
@@ -143,10 +168,8 @@ class Rx_Model_Abstract
     public function getForm ($forceNew = false)
     {
         if (! $this->_form || $forceNew) {
-            $class = get_class($this);
-            $class = strtr($class, array(
-                '_Model_' => '_Form_',
-            ));
+            $shortName = $this->_getShortName(get_class($this));
+            $class = $this->getLoader('form')->load($shortName);
             $this->_form = new $class;
         }
 
@@ -154,36 +177,22 @@ class Rx_Model_Abstract
 
     } // END function getForm()
 
-    // /**
-    //  * getTable()
-    //  *
-    //  * Gets the table, which is loosely tied to this model
-    //  *
-    //  * @return Zend_Db_Table_Abstract
-    //  */
-    // public function getTable ($name = null, $forceNew = false)
-    // {
-    //     $class = get_class($this);
-    //     $class = strtr($class, array(
-    //         '_Model_' => '_Model_DbTable_',
-    //     ));
+    /**
+     * _getShortName()
+     *
+     * Method to get the short name of a given class
+     *
+     * @param string $class
+     * @return string
+     */
+    protected function _getShortName ($class)
+    {
+        $parts = explode('_', $class);
+        $shortName = end($parts);
 
-    //     if ($name) {
-    //         $parts = explode('_', $class);
-    //         $last = count($parts) - 1;
-    //         $parts[$last] = $name;
-    //         $class = implode('_', $parts);
-    //         return new $class;
-    //     }
+        return $shortName;
 
-    //     if (! $this->_table || $forceNew) {
-    //         $this->_table = new $class;
-    //     }
-
-    //     return $this->_table;
-
-    // } // END function getTable
-
+    } // END function _getShortName
 
     /**
      * getTable()
@@ -195,20 +204,11 @@ class Rx_Model_Abstract
      */
     public function getTable ($shortName = null, $forceNew = false)
     {
-        // if (! array_key_exists($shortName, $this->_tables) || $forceNew) {
-        //     $this->_tables[$shortName] = new $table;
-        // }
+        $shortName = $shortName
+            ? $shortName
+            : $this->_getShortName(get_class($this));
 
-        if (! $shortName) {
-            $class = get_class($this);
-            $class = strtr($class, array(
-                '_Model_' => '_Model_DbTable_',
-            ));
-            $parts = explode('_', $class);
-            $shortName = end($parts);
-        }
-
-        $table = $this->_tableAutoloader->load($shortName);
+        $table = $this->getLoader('table')->load($shortName);
 
         if (! array_key_exists($table, $this->_tables) || $forceNew) {
             $this->_tables[$table] = new $table;
@@ -329,7 +329,6 @@ class Rx_Model_Abstract
         }
 
         $dbTable = $this->getTable();
-        $select = $dbTable->select();
 
         $dbTable->delete(sprintf('id = %d', $this->id));
 
@@ -363,7 +362,7 @@ class Rx_Model_Abstract
         $paginator  = $dbTable->getPaginationAdapter($params);
 
         $page = @$params['page'] ? $params['page'] : 1;
-        $count = @$params['count'] ? $params['count'] : 1000;
+        $count = @$params['count'] ? $params['count'] : 20;
 
         $offset = ($page - 1) * $count;
 
@@ -381,8 +380,8 @@ class Rx_Model_Abstract
      */
     public function getParent ($shortName)
     {
-        $fullTableName = sprintf('App_Model_DbTable_%s', $shortName);
-        $fullModelName = sprintf('App_Model_%s', $shortName);
+        $fullTableName = $this->getLoader('table')->load($shortName);
+        $fullModelName = $this->getLoader('model')->load($shortName);
         $model = new $fullModelName;
 
         if ($this->row) {
@@ -403,9 +402,9 @@ class Rx_Model_Abstract
      */
     public function getChildren ($shortName)
     {
-        $result         = new ArrayObject;
-        $fullTableName  = sprintf('App_Model_DbTable_%s', $shortName);
-        $rowset         = $this->row->findDependentRowset($fullTableName);
+        $fullTableName = $this->getLoader('table')->load($shortName);
+        $rowset = $this->row->findDependentRowset($fullTableName);
+        $result = new ArrayObject;
 
         foreach ($rowset as $row) {
             $model = $this->getModel($shortName);
@@ -427,8 +426,8 @@ class Rx_Model_Abstract
      */
     public function getModel ($shortName)
     {
-        $fullModelName = sprintf('App_Model_%s', $shortName);
-        $model = new $fullModelName;
+        $class = $this->getLoader('model')->load($shortName);
+        $model = new $class;
         return $model;
 
     } // END function getModel

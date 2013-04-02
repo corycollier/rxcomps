@@ -42,23 +42,37 @@ class Tests_App_View_Helper_AtheleteItem
      * @covers          App_View_Helper_AthleteItem::athleteItem
      * @dataProvider    provide_athleteItem
      */
-    public function test_athleteItem ($expected, $athlete, $title, $actions = null)
+    public function test_athleteItem ($expected, $athlete, $user, $params = array(), $actions = null)
     {
         $subject = $this->getBuiltMock('App_View_Helper_AthleteItem', array(
             '_getTitle', '_getActions'
         ));
+        $view   = $this->getBuiltMock('Zend_View', array('model'));
+        $model  = $this->getBuiltMock('Rx_View_Helper_Model', array('links'));
+
+        $title = 'title';
+
+        $merged = array_merge($params, array(
+            'event_id' => $athlete->event_id,
+        ));
+
+        $model->expects($this->once())
+            ->method('links')
+            ->with($this->equalTo($user), $this->equalTo($merged))
+            ->will($this->returnValue($actions));
+
+        $view->expects($this->once())
+            ->method('model')
+            ->will($this->returnValue($model));
 
         $subject->expects($this->once())
             ->method('_getTitle')
             ->with($this->equalTo($athlete))
             ->will($this->returnValue($title));
 
-        $subject->expects($this->once())
-            ->method('_getActions')
-            ->with($this->equalTo($athlete))
-            ->will($this->returnValue($actions));
+        $subject->view = $view;
 
-        $result = $subject->athleteItem($athlete);
+        $result = $subject->athleteItem($athlete, $user, $params);
 
         $this->assertEquals($expected, $result);
 
@@ -74,10 +88,19 @@ class Tests_App_View_Helper_AtheleteItem
     {
         // $expected, $hasIdentity, $athlete, $title, $actions = null)
         return array(
-            array(
-                '<div class="athlete-item">title</div>',
-                (object)array('id' => 1, 'name' => 'value'),
-                'title',
+            'no params, no actions' => array(
+                'expected' => '<div class="list-item athlete-item">title</div>',
+                'athlete' => (object)array('id' => 1, 'name' => 'value', 'event_id' => 1),
+                'user' => (object)array('id' => 1, 'name' => 'value', 'event_id' => 1),
+            ),
+
+            'has params, no actions' => array(
+                'expected'  => '<div class="list-item athlete-item">title</div>',
+                'event'     => (object)array('id' => 1, 'name' => 'value', 'event_id' => 1),
+                'user'      => (object)array('id' => 1, 'name' => 'value'),
+                'params'    => array(
+                    'key' => 'value',
+                ),
             ),
         );
 
@@ -105,6 +128,7 @@ class Tests_App_View_Helper_AtheleteItem
                     'controller' => 'athletes',
                     'action'    => 'view',
                     'id'        => @$athlete->id,
+                    'event_id'  => @$athlete->event_id,
                 ))
             )
             ->will($this->returnValue($htmlAnchor));
@@ -132,96 +156,17 @@ class Tests_App_View_Helper_AtheleteItem
                 'id'    => 1,
                 'name'  => 'Athlete Name',
                 'gym'   => null,
+                'event_id' => 1,
             )),
 
             array('<h3>another html-anchor <span class="alt">(some gym)</span></h3>', 'another html-anchor', (object)array(
                 'id'    => 1,
                 'name'  => 'Athlete Name Does Not Matter Here',
                 'gym'   => 'some gym',
+                'event_id' => 1,
             )),
         );
 
     } // END function provide__getTitle
-
-    /**
-     * test__getActions()
-     *
-     * Tests the _getActions of the App_View_Helper_AthleteItem
-     *
-     * @covers          App_View_Helper_AthleteItem::_getActions
-     * @dataProvider    provide__getActions
-     */
-    public function test__getActions ($expected, $athlete, $hasIdentity,
-        $editLink = null, $deleteLink = null)
-    {
-        $subject = $this->getBuiltMock('App_View_Helper_AthleteItem');
-        $view   = $this->getBuiltMock('Zend_View', array('auth', 'htmlAnchor', 'htmlList'));
-        $auth   = $this->getBuiltMock('Zend_Auth', array('hasIdentity'));
-
-        $auth->expects($this->once())
-            ->method('hasIdentity')
-            ->will($this->returnValue($hasIdentity));
-
-        $view->expects($this->once())
-            ->method('auth')
-            ->will($this->returnValue($auth));
-
-        if ($hasIdentity) {
-            $view->expects($this->any())
-                ->method('htmlAnchor')
-                ->will($this->returnValueMap(array(
-                    array('Edit', array(
-                        'controller' => 'athletes',
-                        'action' => 'edit',
-                        'id' => @$athlete->id
-                    ), $editLink),
-                    array('Delete', array(
-                        'controller' => 'athletes',
-                        'action' => 'delete',
-                        'id' => @$athlete->id
-                    ), $deleteLink),
-                )));
-
-            $view->expects($this->once())
-                ->method('htmlList')
-                ->with(
-                    $this->equalTo(array($editLink, $deleteLink)),
-                    $this->equalTo(false),
-                    $this->equalTo(array('class' => 'subnav')),
-                    $this->equalTo(false)
-                )
-                ->will($this->returnValue($expected));
-        }
-
-        $subject->view = $view;
-
-        $result = $this->getMethod('App_View_Helper_AthleteItem', '_getActions')
-            ->invoke($subject, $athlete);
-
-        $this->assertEquals($expected, $result);
-
-    } // END function test__getActions
-
-    /**
-     * provide__getActions()
-     *
-     * Provides data for the _getActions method of the
-     * App_View_Helper_AthleteItem class
-     */
-    public function provide__getActions ( )
-    {
-        // $expected, $athlete, $hasIdentity, $editLink = null, $deleteLink = null
-        return array(
-            'no identity' => array(
-                '', (object)array('name' => 'name', 'id' => 1, 'gym' => ''), false
-            ),
-
-            'has identity' => array(
-                '', (object)array('name' => 'name', 'id' => 1, 'gym' => ''), true, 'edit link', 'delete link'
-            ),
-
-        );
-
-    } // END function provide__getActions
 
 } // END class Tests_App_View_Helper_AtheleteItem

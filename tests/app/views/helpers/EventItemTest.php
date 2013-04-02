@@ -42,21 +42,31 @@ class Tests_App_View_Helper_EventItem
      * @covers          App_View_Helper_EventItem::eventItem
      * @dataProvider    provide_eventItem
      */
-    public function test_eventItem ($expected, $event, $title, $actions = null)
+    public function test_eventItem ($expected, $event, $user, $params = array(), $actions = null)
     {
         $subject = $this->getBuiltMock('App_View_Helper_EventItem', array('_getTitle', '_getActions'));
+        $view   = $this->getBuiltMock('Zend_View', array('model'));
+        $model  = $this->getBuiltMock('Rx_View_Helper_Model', array('links'));
+
+        $title = 'title';
+
+        $model->expects($this->once())
+            ->method('links')
+            ->with($this->equalTo($user), $this->equalTo($params))
+            ->will($this->returnValue($actions));
+
+        $view->expects($this->once())
+            ->method('model')
+            ->will($this->returnValue($model));
 
         $subject->expects($this->once())
             ->method('_getTitle')
             ->with($this->equalTo($event))
             ->will($this->returnValue($title));
 
-        $subject->expects($this->once())
-            ->method('_getActions')
-            ->with($this->equalTo($event))
-            ->will($this->returnValue($actions));
+        $subject->view = $view;
 
-        $result = $subject->eventItem($event);
+        $result = $subject->eventItem($event, $user, $params);
 
         $this->assertEquals($expected, $result);
 
@@ -72,10 +82,19 @@ class Tests_App_View_Helper_EventItem
     {
         // $expected, $hasIdentity, $event, $title, $actions = null)
         return array(
-            array(
-                '<div class="event-item">title</div>',
-                (object)array('id' => 1, 'name' => 'value'),
-                'title',
+            'no params, no actions' => array(
+                'expected'  => '<div class="list-item event-item">title</div>',
+                'event'     => (object)array('id' => 1, 'name' => 'value'),
+                'user'      => (object)array('id' => 1, 'name' => 'value'),
+            ),
+
+            'has params, no actions' => array(
+                'expected'  => '<div class="list-item event-item">title</div>',
+                'event'     => (object)array('id' => 1, 'name' => 'value'),
+                'user'      => (object)array('id' => 1, 'name' => 'value'),
+                'params'    => array(
+                    'key' => 'value',
+                ),
             ),
         );
 
@@ -103,6 +122,7 @@ class Tests_App_View_Helper_EventItem
                     'controller' => 'events',
                     'action'    => 'view',
                     'id'        => @$event->id,
+                    'event_id'  => @$event->id,
                 ))
             )
             ->will($this->returnValue($htmlAnchor));
@@ -138,87 +158,5 @@ class Tests_App_View_Helper_EventItem
         );
 
     } // END function provide__getTitle
-
-    /**
-     * test__getActions()
-     *
-     * Tests the _getActions of the App_View_Helper_EventItem
-     *
-     * @covers          App_View_Helper_EventItem::_getActions
-     * @dataProvider    provide__getActions
-     */
-    public function test__getActions ($expected, $event, $hasIdentity,
-        $editLink = null, $deleteLink = null)
-    {
-        $subject = $this->getBuiltMock('App_View_Helper_EventItem');
-        $view = $this->getBuiltMock('Zend_View', array('auth', 'htmlAnchor', 'htmlList'));
-        $auth = $this->getBuiltMock('Zend_Auth', array('hasIdentity'));
-
-        $auth->expects($this->once())
-            ->method('hasIdentity')
-            ->will($this->returnValue($hasIdentity));
-
-        $view->expects($this->once())
-            ->method('auth')
-            ->will($this->returnValue($auth));
-
-        if ($hasIdentity) {
-            $view->expects($this->any())
-                ->method('htmlAnchor')
-                ->will($this->returnValueMap(array(
-                    array('Edit', array(
-                        'controller' => 'events',
-                        'action' => 'edit',
-                        'id' => @$event->id
-                    ), $editLink),
-                    array('Delete', array(
-                        'controller' => 'events',
-                        'action' => 'delete',
-                        'id' => @$event->id
-                    ), $deleteLink),
-                )));
-
-            $view->expects($this->once())
-                ->method('htmlList')
-                ->with(
-                    $this->equalTo(array($editLink, $deleteLink)),
-                    $this->equalTo(false),
-                    $this->equalTo(array('class' => 'subnav')),
-                    $this->equalTo(false)
-                )
-                ->will($this->returnValue($expected));
-        }
-
-        $subject->view = $view;
-
-        $method = new ReflectionMethod('App_View_Helper_EventItem', '_getActions');
-        $method->setAccessible(true);
-        $result = $method->invoke($subject, $event);
-
-        $this->assertEquals($expected, $result);
-
-    } // END function test__getActions
-
-    /**
-     * provide__getActions()
-     *
-     * Provides data for the _getActions method of the
-     * App_View_Helper_EventItem class
-     */
-    public function provide__getActions ( )
-    {
-        // $expected, $event, $hasIdentity, $editLink = null, $deleteLink = null
-        return array(
-            'no identity' => array(
-                '', (object)array('name' => 'name', 'id' => 1), false
-            ),
-
-            'has identity' => array(
-                '', (object)array('name' => 'name', 'id' => 1), true, 'edit link', 'delete link'
-            ),
-
-        );
-
-    } // END function provide__getActions
 
 } // END class Tests_App_View_Helper_AtheleteItem

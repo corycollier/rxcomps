@@ -39,8 +39,8 @@ class Tests_App_Bootstrap
      *
      * Tests the _initAutoloader of the App_Bootstrap
      *
-     * @covers          App_Bootstrap::_initAutoloader
-     * @dataProvider    provide__initAutoloader
+     * @covers App_Bootstrap::_initAutoloader
+     * @dataProvider provide__initAutoloader
      */
     public function test__initAutoloader ( )
     {
@@ -51,7 +51,6 @@ class Tests_App_Bootstrap
         $namespaces = Zend_Loader_Autoloader::getInstance()->getRegisteredNamespaces();
 
         $this->assertTrue(in_array('Rx_', $namespaces));
-
 
     } // END function test__initAutoloader
 
@@ -74,8 +73,8 @@ class Tests_App_Bootstrap
      *
      * Tests the _initControllers of the App_Bootstrap
      *
-     * @covers          App_Bootstrap::_initControllers
-     * @dataProvider    provide__initControllers
+     * @covers App_Bootstrap::_initControllers
+     * @dataProvider provide__initControllers
      */
     public function test__initControllers ( )
     {
@@ -109,20 +108,19 @@ class Tests_App_Bootstrap
      *
      * Tests the _initPlugins of the App_Bootstrap
      *
-     * @covers          App_Bootstrap::_initPlugins
-     * @dataProvider    provide__initPlugins
+     * @covers App_Bootstrap::_initPlugins
+     * @dataProvider provide__initPlugins
      */
     public function test__initPlugins ( )
     {
-        $this->markTestIncomplete("not ready yet");
-        $subject = $this->getBuiltMock('App_Bootstrap', array('bootstrap', 'getResource'));
+        $subject = $this->getBuiltMock('App_Bootstrap', array('_bootstrap', 'getResource'));
         $front = $this->getBuiltMock('Zend_Controller_Front', array('registerPlugin'));
 
-        $front->expects($this->exactly(3))
+        $front->expects($this->exactly(6))
             ->method('registerPlugin');
 
         $subject->expects($this->once())
-            ->method('bootstrap')
+            ->method('_bootstrap')
             ->with($this->equalTo('frontcontroller'));
 
         $subject->expects($this->once())
@@ -155,18 +153,78 @@ class Tests_App_Bootstrap
      *
      * Tests the _initAcl of the App_Bootstrap
      *
-     * @covers          App_Bootstrap::_initAcl
+     * @covers App_Bootstrap::_initAcl
      */
     public function test__initAcl ( )
     {
-        $subject = $this->getBuiltMock('App_Bootstrap');
+        $subject = $this->getBuiltMock('App_Bootstrap', array('getRegistry'));
+        $registry = $this->getBuiltMock('Zend_Registry', array('set'));
+        $acl = new Zend_Acl;
+
+        $registry::staticExpects($this->once())
+            ->method('set')
+            ->with($this->equalTo('acl'), $this->equalTo($acl));
+
+        $subject->expects($this->once())
+            ->method('getRegistry')
+            ->will($this->returnValue($registry));
 
         $method = new ReflectionMethod('App_Bootstrap', '_initAcl');
         $method->setAccessible(true);
         $method->invoke($subject);
 
-
     } // END function test__initAcl
 
+    /**
+     * test__initLogging()
+     *
+     * Tests the _initPlugins of the App_Bootstrap
+     *
+     * @covers App_Bootstrap::_initLogging
+     */
+    public function test__initLogging ( )
+    {
+        $subject = $this->getBuiltMock('App_Bootstrap', array('_bootstrap', 'getResource'));
+        $registry = $this->getBuiltMock('Zend_Registry', array('set'));
+        $log = new Zend_Log;
+
+        $registry::staticExpects($this->any())
+            ->method('set')
+            ->with($this->equalTo('log'), $this->equalTo($log));
+
+        $subject->expects($this->once())
+            ->method('_bootstrap')
+            ->with($this->equalTo('log'));
+
+        $subject->expects($this->once())
+            ->method('getResource')
+            ->with($this->equalTo('log'))
+            ->will($this->returnValue($log));
+
+        $method = new ReflectionMethod('App_Bootstrap', '_initLogging');
+        $method->setAccessible(true);
+        $method->invoke($subject);
+
+    } // END function test__initLogging
+
+    /**
+     * test_getRegistry()
+     *
+     * Tests the getRegistry of the App_Bootstrap
+     *
+     * @covers App_Bootstrap::getRegistry
+     */
+    public function test_getRegistry ( )
+    {
+        $application = $this->getBuiltMock("Zend_Application", array('getOptions'));
+        $application->expects($this->once())
+            ->method('getOptions')
+            ->will($this->returnValue(array()));
+
+        $subject = new App_Bootstrap($application);
+        $result = $subject->getRegistry();
+        $this->assertInstanceOf('Zend_Registry', $result);
+
+    } // END function test_getRegistry
 
 } // END class Tests_App_Bootstrap

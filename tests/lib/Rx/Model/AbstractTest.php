@@ -108,6 +108,8 @@ class Tests_Rx_Model_AbstractTest
 
         $firstResult = $model->getForm();
 
+        print_r(get_class($firstResult));
+
         $this->assertInstanceOf('Rx_Form_Abstract', $firstResult);
 
         $secondResult = $model->getForm(true);

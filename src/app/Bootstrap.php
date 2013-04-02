@@ -93,7 +93,8 @@ class App_Bootstrap
     protected function _initAcl ( )
     {
         $acl = new Zend_Acl;
-        $this->getRegistry()->set('acl', $acl);
+        $registry = $this->getRegistry();
+        $registry->set('acl', $acl);
     }
 
     /**

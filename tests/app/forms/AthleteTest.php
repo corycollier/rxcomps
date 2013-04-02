@@ -70,20 +70,35 @@ class Tests_App_Form_Athlete
      */
     public function test_injectDependencies ($params = array())
     {
-        $model = $this->getMockBuilder('Rx_Model_Abstract')
-            ->setMethods(array('getParent'))
-            ->disableOriginalConstructor()
-            ->getMock();
-
         $subject = $this->getMockBuilder('App_Form_Athlete')
             ->setMethods(array('_insertScales'))
             ->disableOriginalConstructor()
             ->getMock();
 
+        $model = $this->getMockBuilder('Rx_Model_Abstract')
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $element = $this->getMockBuilder('Zend_Form_Element_Hidden')
+            ->setMethods(array('setValue'))
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $eventId = @$params['event_id'];
+
+        $element->expects($this->once())
+            ->method('setValue')
+            ->with($this->equalTo($eventId));
+
         $subject->expects($this->once())
             ->method('_insertScales')
             ->with($this->equalTo($model), $this->equalTo($params))
             ->will($this->returnSelf());
+
+        $subject->expects($this->once())
+            ->method('getElement')
+            ->with($this->equalTo('event_id'))
+            ->will($this->returnValue($element));
 
         $result = $subject->injectDependencies($model, $params);
 
@@ -117,26 +132,13 @@ class Tests_App_Form_Athlete
      */
     public function test__insertScales ($params = array(), $scales = array())
     {
-
-        // $table = $model->getParent('Scale')->getTable();
-
-        // $scales = $table->fetchAll(
-        //     $table->select()->where(sprintf('event_id = %d', @$params['event_id']))
-        // );
-
-        // $element = $this->getElement('scale_id');
-
-        // foreach ($scales as $scale) {
-        //     $element->addMultiOption($scale->id, $scale->name);
-        // }
-
         $subject = $this->getMockBuilder('App_Form_Athlete')
             ->setMethods(array('getElement'))
             ->disableOriginalConstructor()
             ->getMock();
 
         $model = $this->getMockBuilder('App_Model_Athlete')
-            ->setMethods(array('getParent'))
+            ->setMethods(array('getParent', 'getTable'))
             ->disableOriginalConstructor()
             ->getMock();
 
@@ -185,6 +187,11 @@ class Tests_App_Form_Athlete
             ->method('getParent')
             ->with($this->equalTo('Scale'))
             ->will($this->returnValue($scaleModel));
+
+        $model->expects($this->once())
+            ->method('getTable')
+            ->with($this->equalTo('Athlete'))
+            ->will($this->returnValue($table));
 
         $subject->expects($this->once())
             ->method('getElement')

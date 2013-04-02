@@ -80,7 +80,7 @@ class Tests_App_Model_UserTest
             ->getMock();
 
         $user = $this->getMockBuilder('App_Model_User')
-            ->setMethods(array('getAuth', 'getForm', 'getAuthAdapter'))
+            ->setMethods(array('getAuth', 'getLoginForm', 'getAuthAdapter'))
             ->disableOriginalConstructor()
             ->getMock();
 
@@ -134,7 +134,7 @@ class Tests_App_Model_UserTest
             ->will($this->returnValue($isValid));
 
         $user->expects($this->once())
-            ->method('getForm')
+            ->method('getLoginForm')
             ->will($this->returnVAlue($form));
 
         $user->expects($this->once())

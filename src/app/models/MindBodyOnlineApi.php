@@ -163,7 +163,7 @@ class App_Model_MindBodyOnlineApi
      * Updates information for a client in mind-body
      *
      */
-    public function updateClient ($params = array(), $isTest = false)
+    public function updateClient ($params = array(), $isTest = true)
     {
         $params = $this->mapParamsToUpdateClientDefaults($params);
         $params['Notes'] = 'Machine generated user';
@@ -226,7 +226,7 @@ class App_Model_MindBodyOnlineApi
      * @param  boolean $test
      * @return boolean
      */
-    public function purchaseEvent ($clientId, $classId, $serviceItemId, $price, $creditCardInfo, $test = false)
+    public function purchaseEvent ($clientId, $classId, $serviceItemId, $price, $creditCardInfo, $test = true)
     {
         require_once('Sale_Service.php');
         require_once('Mindbody_Class.php');
@@ -304,7 +304,7 @@ class App_Model_MindBodyOnlineApi
         try {
             $results = $this->getSoapClient('class')->GetClasses($this->prepareParams($params));
         } catch (SoapFault $fault) {
-            print_r(array('fault' => $fault->faultstring)); die;
+            throw new Rx_Model_Exception($fault->faultstring);
         }
 
         return $results;
@@ -324,7 +324,7 @@ class App_Model_MindBodyOnlineApi
         try {
             $results = $this->getSoapClient('sale')->GetProducts($this->prepareParams($params));
         } catch (SoapFault $fault) {
-            print_r(array('fault' => $fault->faultstring)); die;
+            throw new Rx_Model_Exception($fault->faultstring);
         }
 
         return $results;
@@ -343,7 +343,7 @@ class App_Model_MindBodyOnlineApi
         try {
             $results = $this->getSoapClient('sale')->GetServices($this->prepareParams($params));
         } catch (SoapFault $fault) {
-            print_r(array('fault' => $fault->faultstring)); die;
+            throw new Rx_Model_Exception($fault->faultstring);
         }
 
         return $results;
@@ -362,7 +362,7 @@ class App_Model_MindBodyOnlineApi
         try {
             $results = $this->getSoapClient('site')->GetLocations($this->prepareParams($params));
         } catch (SoapFault $fault) {
-            print_r(array('fault' => $fault->faultstring)); die;
+            throw new Rx_Model_Exception($fault->faultstring);
         }
 
         return $results;

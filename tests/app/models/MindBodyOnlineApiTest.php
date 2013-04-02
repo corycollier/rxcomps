@@ -152,13 +152,11 @@ class Tests_App_Model_MindBodyOnlineApiTest
      * @covers          App_Model_MindBodyOnlineApi::purchaseEvent
      * @dataProvider    provide_purchaseEvent
      */
-    public function test_purchaseEvent ($clientId, $classId, $serviceItemId, $price, $creditCardInfo, $test = false)
+    public function test_purchaseEvent ($clientId, $classId, $serviceItemId, $price, $creditCardInfo, $test = true)
     {
         $subject = new App_Model_MindBodyOnlineApi;
 
-        $result = $subject->purchaseEvent($clientId, $classId, $serviceItemId, $price, $creditCardInfo, $test);
-
-        print_r($result); die;
+        // $result = $subject->purchaseEvent($clientId, $classId, $serviceItemId, $price, $creditCardInfo, $test);
 
     } // END function test_purchaseEvent
 
@@ -314,8 +312,6 @@ class Tests_App_Model_MindBodyOnlineApiTest
 
         $result = $subject->getServices($params);
 
-        print_r($result); die;
-
     } // END function test_getServices
 
     /**
@@ -349,8 +345,6 @@ class Tests_App_Model_MindBodyOnlineApiTest
         $subject = new App_Model_MindBodyOnlineApi;
 
         $result = $subject->getLocations($params);
-
-        return $result;
 
     } // END function test_getLocations
 

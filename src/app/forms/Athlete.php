@@ -101,7 +101,11 @@ class App_Form_Athlete
     {
         $this->_insertScales($model, $params);
 
-        $element = $this->getElement('event_id')->setValue(@$params['event_id']);
+        $element = $this->getElement('event_id');
+
+        if ($element) {
+            $element->setValue(@$params['event_id']);
+        }
 
         return $this;
 
