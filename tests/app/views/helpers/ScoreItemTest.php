@@ -41,23 +41,32 @@ class Tests_App_View_Helper_ScoreItem
      * @covers          App_View_Helper_ScoreItem::scoreItem
      * @dataProvider    provide_scoreItem
      */
-    public function test_scoreItem ($expected, $score, $title, $actions = null)
+    public function test_scoreItem ($expected, $score, $params = array(), $actions = null)
     {
-        $subject = $this->getBuiltMock('App_View_Helper_ScoreItem', array(
-            '_getTitle', '_getActions'
-        ));
+        $subject = $this->getBuiltMock('App_View_Helper_ScoreItem', array('_getTitle'));
+        $view   = $this->getBuiltMock('Zend_View', array('model'));
+        $user   = $this->getBuiltMock('App_Model_User');
+        $model  = $this->getBuiltMock('Rx_View_Helper_Model', array('links'));
+        $title  = 'title';
+
+        $model->expects($this->once())
+            ->method('links')
+            ->with($this->equalTo($user), $this->equalTo($params))
+            ->will($this->returnValue($actions));
+
+        $view->expects($this->once())
+            ->method('model')
+            ->with($this->equalTo($score), $this->equalTo('App_Model_Score'))
+            ->will($this->returnValue($model));
 
         $subject->expects($this->once())
             ->method('_getTitle')
             ->with($this->equalTo($score))
             ->will($this->returnValue($title));
 
-        $subject->expects($this->once())
-            ->method('_getActions')
-            ->with($this->equalTo($score))
-            ->will($this->returnValue($actions));
+        $subject->view = $view;
 
-        $result = $subject->scoreItem($score);
+        $result = $subject->scoreItem($score, $user, $params);
 
         $this->assertEquals($expected, $result);
 
@@ -73,10 +82,9 @@ class Tests_App_View_Helper_ScoreItem
     {
         // $expected, $hasIdentity, $score, $title, $actions = null)
         return array(
-            array(
-                '<div class="score-item">title</div>',
-                (object)array('id' => 1, 'name' => 'value', 'gaol' => 'time'),
-                'title',
+            'no params, no actions' => array(
+                '<div class="list-item score-item">title</div>',
+                (object)array('id' => 1, 'name' => 'value', 'goal' => 'time'),
             ),
         );
 
@@ -117,7 +125,6 @@ class Tests_App_View_Helper_ScoreItem
             'id'    => $competitionId,
             'goal' => null,
         );
-
 
         $score->id = $scoreId;
         $score->score = $scoreValue;
@@ -217,85 +224,5 @@ class Tests_App_View_Helper_ScoreItem
         );
 
     } // END function provide__getTitle
-
-    /**
-     * test__getActions()
-     *
-     * Tests the _getActions of the App_View_Helper_ScoreItem
-     *
-     * @covers          App_View_Helper_ScoreItem::_getActions
-     * @dataProvider    provide__getActions
-     */
-    public function test__getActions ($expected, $score, $hasIdentity,
-        $editLink = null, $deleteLink = null)
-    {
-        $subject = $this->getBuiltMock('App_View_Helper_ScoreItem');
-        $view = $this->getBuiltMock('Zend_View', array('auth', 'htmlAnchor', 'htmlList'));
-        $auth = $this->getBuiltMock('Zend_Auth', array('hasIdentity'));
-
-        $auth->expects($this->once())
-            ->method('hasIdentity')
-            ->will($this->returnValue($hasIdentity));
-
-        $view->expects($this->once())
-            ->method('auth')
-            ->will($this->returnValue($auth));
-
-
-        if ($hasIdentity) {
-            $view->expects($this->any())
-                ->method('htmlAnchor')
-                ->will($this->returnValueMap(array(
-                    array('Edit', array(
-                        'action' => 'edit',
-                        'id' => @$score->id
-                    ), $editLink),
-                    array('Delete', array(
-                        'action' => 'delete',
-                        'id' => @$score->id
-                    ), $deleteLink),
-                )));
-
-            $view->expects($this->once())
-                ->method('htmlList')
-                ->with(
-                    $this->equalTo(array($editLink, $deleteLink)),
-                    $this->equalTo(false),
-                    $this->equalTo(array('class' => 'subnav')),
-                    $this->equalTo(false)
-                )
-                ->will($this->returnValue($expected));
-        }
-
-        $subject->view = $view;
-
-        $result = $this->getMethod('App_View_Helper_ScoreItem', '_getActions')
-            ->invoke($subject, $score);
-
-        $this->assertEquals($expected, $result);
-
-    } // END function test__getActions
-
-    /**
-     * provide__getActions()
-     *
-     * Provides data for the _getActions method of the
-     * App_View_Helper_ScoreItem class
-     */
-    public function provide__getActions ( )
-    {
-        // $expected, $score, $hasIdentity, $editLink = null, $deleteLink = null
-        return array(
-            'no identity' => array(
-                '', (object)array('score' => 'name', 'id' => 1), false
-            ),
-
-            'has identity' => array(
-                '', (object)array('name' => 'name', 'id' => 1), true, 'edit link', 'delete link'
-            ),
-
-        );
-
-    } // END function provide__getActions
 
 } // END class Tests_App_View_Helper_AtheleteItem
