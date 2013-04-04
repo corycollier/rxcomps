@@ -31,18 +31,25 @@
 class App_View_Helper_Event
     extends Rx_View_Helper_Model
 {
+    /**
+     * Message to indicate that there is no event parameter in the request
+     */
+    const EXCEPTION_NO_EVENT_ID = 'No event parameter is available';
 
     /**
      * event()
      *
      * main entry point into the helper
      *
+     * @param App_View_Helper_Event|null $event Dependency injection
      * @return App_View_Helper_Event
+     * @throws Rx_View_Helper_Exception
      */
-    public function event ( )
+    public function event ($event = null)
     {
         if (! $this->_model) {
-            $event = new App_Model_Event;
+
+            $event = $event ? $event : new App_Model_Event;
 
             // make sure we have the event id
             $request =  $this->view->request();
@@ -51,6 +58,9 @@ class App_View_Helper_Event
                 ? $request->getParam('event_id')
                 : $request->getParam('id');
 
+            if (! $eventId) {
+                throw new Rx_View_Helper_Exception(self::EXCEPTION_NO_EVENT_ID);
+            }
 
             $event->load($eventId);
 

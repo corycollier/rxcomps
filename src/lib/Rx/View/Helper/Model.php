@@ -62,7 +62,6 @@ class Rx_View_Helper_Model
 
     } // END function model
 
-
     /**
      * links()
      *

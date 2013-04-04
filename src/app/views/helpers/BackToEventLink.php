@@ -71,6 +71,7 @@ class App_View_Helper_BackToEventLink
             'reset-url'     => true,
         ));
 
+
         return sprintf($html, $link);
 
     } // END function backToEventLink

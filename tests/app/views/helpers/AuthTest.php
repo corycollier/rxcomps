@@ -31,7 +31,7 @@
  */
 
 class Tests_App_View_Helper_Auth
-    extends PHPUnit_Framework_TestCase
+    extends Rx_PHPUnit_TestCase
 {
     /**
      * test_auth()

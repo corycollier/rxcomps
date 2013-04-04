@@ -42,21 +42,32 @@ class Tests_App_View_Helper_CompetitionItem
      * @covers          App_View_Helper_CompetitionItem::competitionItem
      * @dataProvider    provide_competitionItem
      */
-    public function test_competitionItem ($expected, $competition, $title, $actions = null)
+    public function test_competitionItem ($expected, $competition, $params = array(), $actions = null)
     {
-        $subject = $this->getBuiltMock('App_View_Helper_CompetitionItem', array('_getTitle', '_getActions'));
+        $subject = $this->getBuiltMock('App_View_Helper_CompetitionItem', array('_getTitle'));
+        $view   = $this->getBuiltMock('Zend_View', array('model'));
+        $user   = $this->getBuiltMock('App_Model_User');
+        $model  = $this->getBuiltMock('Rx_View_Helper_Model', array('links'));
+        $title  = 'title';
+
+        $model->expects($this->once())
+            ->method('links')
+            ->with($this->equalTo($user), $this->equalTo($params))
+            ->will($this->returnValue($actions));
+
+        $view->expects($this->once())
+            ->method('model')
+            ->with($this->equalTo($competition), $this->equalTo('App_Model_Competition'))
+            ->will($this->returnValue($model));
 
         $subject->expects($this->once())
             ->method('_getTitle')
             ->with($this->equalTo($competition))
             ->will($this->returnValue($title));
 
-        $subject->expects($this->once())
-            ->method('_getActions')
-            ->with($this->equalTo($competition))
-            ->will($this->returnValue($actions));
+        $subject->view = $view;
 
-        $result = $subject->CompetitionItem($competition);
+        $result = $subject->competitionItem($competition, $user, $params);
 
         $this->assertEquals($expected, $result);
 
@@ -72,10 +83,17 @@ class Tests_App_View_Helper_CompetitionItem
     {
         // $expected, $hasIdentity, $competition, $title, $actions = null)
         return array(
-            array(
-                '<div class="competition-item">title</div>',
+            'no params, no actions' => array(
+                '<div class="list-item competition-item">title</div>',
                 (object)array('id' => 1, 'name' => 'value'),
-                'title',
+            ),
+
+            'has params, no actions' => array(
+                '<div class="list-item competition-item">title</div>',
+                (object)array('id' => 1, 'name' => 'value', 'goal' => 'time'),
+                array(
+                    'key' => 'value',
+                )
             ),
         );
 
@@ -93,7 +111,17 @@ class Tests_App_View_Helper_CompetitionItem
     public function test__getTitle ($expected, $htmlAnchor, $competition)
     {
         $subject = $this->getBuiltMock('App_View_Helper_CompetitionItem');
-        $view   = $this->getBuiltMock('Zend_View', array('htmlAnchor'));
+        $view   = $this->getBuiltMock('Zend_View', array('htmlAnchor', 'event'));
+        $event  = $this->getBuiltMock('App_View_Helper_Event', array('id'));
+        $eventId = 1;
+
+        $event->expects($this->once())
+            ->method('id')
+            ->will($this->returnValue($eventId));
+
+        $view->expects($this->once())
+            ->method('event')
+            ->will($this->returnValue($event));
 
         $view->expects($this->once())
             ->method('htmlAnchor')
@@ -103,6 +131,7 @@ class Tests_App_View_Helper_CompetitionItem
                     'controller'=> 'competitions',
                     'action'    => 'view',
                     'id'        => @$competition->id,
+                    'event_id'  => $eventId,
                 ))
             )
             ->will($this->returnValue($htmlAnchor));
@@ -138,86 +167,5 @@ class Tests_App_View_Helper_CompetitionItem
         );
 
     } // END function provide__getTitle
-
-    /**
-     * test__getActions()
-     *
-     * Tests the _getActions of the App_View_Helper_CompetitionItem
-     *
-     * @covers          App_View_Helper_CompetitionItem::_getActions
-     * @dataProvider    provide__getActions
-     */
-    public function test__getActions ($expected, $competition, $hasIdentity,
-        $editLink = null, $deleteLink = null)
-    {
-        $subject = $this->getBuiltMock('App_View_Helper_CompetitionItem');
-        $view = $this->getBuiltMock('Zend_View', array('auth', 'htmlAnchor', 'htmlList'));
-        $auth = $this->getBuiltMock('Zend_Auth', array('hasIdentity'));
-
-        $auth->expects($this->once())
-            ->method('hasIdentity')
-            ->will($this->returnValue($hasIdentity));
-
-        $view->expects($this->once())
-            ->method('auth')
-            ->will($this->returnValue($auth));
-
-        if ($hasIdentity) {
-            $view->expects($this->any())
-                ->method('htmlAnchor')
-                ->will($this->returnValueMap(array(
-                    array('Edit', array(
-                        'controller'    => 'competitions',
-                        'action'        => 'edit',
-                        'id'            => @$competition->id
-                    ), $editLink),
-                    array('Delete', array(
-                        'controller'    => 'competitions',
-                        'action'        => 'delete',
-                        'id'            => @$competition->id
-                    ), $deleteLink),
-                )));
-
-            $view->expects($this->once())
-                ->method('htmlList')
-                ->with(
-                    $this->equalTo(array($editLink, $deleteLink)),
-                    $this->equalTo(false),
-                    $this->equalTo(array('class' => 'subnav')),
-                    $this->equalTo(false)
-                )
-                ->will($this->returnValue($expected));
-        }
-
-        $subject->view = $view;
-
-        $result = $this->getMethod('App_View_Helper_CompetitionItem', '_getActions')
-            ->invoke($subject, $competition);
-
-        $this->assertEquals($expected, $result);
-
-    } // END function test__getActions
-
-    /**
-     * provide__getActions()
-     *
-     * Provides data for the _getActions method of the
-     * App_View_Helper_CompetitionItem class
-     */
-    public function provide__getActions ( )
-    {
-        // $expected, $competition, $hasIdentity, $editLink = null, $deleteLink = null
-        return array(
-            'no identity' => array(
-                '', (object)array('name' => 'name', 'id' => 1), false
-            ),
-
-            'has identity' => array(
-                '', (object)array('name' => 'name', 'id' => 1), true, 'edit link', 'delete link'
-            ),
-
-        );
-
-    } // END function provide__getActions
 
 } // END class Tests_App_View_Helper_AtheleteItem

@@ -86,6 +86,14 @@ class Tests_App_View_Helper_ScoreItem
                 '<div class="list-item score-item">title</div>',
                 (object)array('id' => 1, 'name' => 'value', 'goal' => 'time'),
             ),
+
+            'has params, no actions' => array(
+                '<div class="list-item score-item">title</div>',
+                (object)array('id' => 1, 'name' => 'value', 'goal' => 'time'),
+                array(
+                    'key' => 'value',
+                )
+            ),
         );
 
     } // END function provide_scoreItem

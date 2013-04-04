@@ -44,9 +44,7 @@ class Tests_App_View_Helper_AtheleteItem
      */
     public function test_athleteItem ($expected, $athlete, $user, $params = array(), $actions = null)
     {
-        $subject = $this->getBuiltMock('App_View_Helper_AthleteItem', array(
-            '_getTitle', '_getActions'
-        ));
+        $subject = $this->getBuiltMock('App_View_Helper_AthleteItem', array('_getTitle'));
         $view   = $this->getBuiltMock('Zend_View', array('model'));
         $model  = $this->getBuiltMock('Rx_View_Helper_Model', array('links'));
 
