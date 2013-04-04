@@ -73,7 +73,7 @@ class App_View_Helper_LeaderboardItem
             return '';
         }
 
-        $table = $this->_getAthleteTable();
+        $table = $this->getTable('Athlete');
         $athlete = $table->fetchRow(sprintf('id = %d', $data['athlete_id']));
 
         $competitions = $this->getCompetitionResults($data);

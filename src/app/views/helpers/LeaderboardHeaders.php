@@ -29,20 +29,8 @@
  */
 
 class App_View_Helper_LeaderboardHeaders
-    extends Zend_View_Helper_HtmlElement
+    extends Rx_View_Helper_TableData
 {
-    /**
-     * _getCompetitionTable()
-     *
-     * Gets a new instance of an competition table
-     *
-     * @return App_Model_DbTable_Competition
-     */
-    protected function _getCompetitionTable ( )
-    {
-        return new App_Model_DbTable_Competition;
-
-    } // END function _getCompetitionTable
 
     /**
      * _getCompetitions()
@@ -59,7 +47,7 @@ class App_View_Helper_LeaderboardHeaders
         }
 
         $competitionIds = array_keys($data['competitions']);
-        $table = $this->_getCompetitionTable();
+        $table = $this->getTable('Competition');
         $competitions = $table->fetchAll(
             $table->select()->where('id in (?)', $competitionIds)
         );

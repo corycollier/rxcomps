@@ -19,31 +19,6 @@
 echo $this->actionList(array(
     $this->backToEventLink($this->model, $this->request()->getParams()),
 ));
+
+echo $this->leaderboard()->table($this->items);
 ?>
-
-<table class="data-table leaderboards-table">
-<?php
-// render the leaderboard headers
-echo $this->leaderboardHeaders(@$this->items[0]);
-
-// set some variables to default values
-$rank = 1;
-$points = 0;
-
-// iterate through each athlete's competition results
-foreach ($this->items as $index => $athlete) :
-    // update the points and rank values for the next item
-    if ($athlete['points'] != $points) :
-        $rank = $index + 1;
-    endif;
-
-    // render the leaderboard item
-    echo $this->leaderboardItem($athlete, $rank);
-
-    $points = $athlete['points'];
-
-endforeach;
-
-?>
-
-</table>
