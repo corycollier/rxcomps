@@ -30,92 +30,66 @@
  * @since       Class available since release 1.0.0
  */
 
-class Tests_App_View_Helper_AtheleteItem
+class Tests_App_View_Helper_AtheleteTest
     extends Rx_PHPUnit_TestCase
 {
 
     /**
-     * test_athleteItem()
+     * test_athlete()
      *
-     * Tests the athleteItem of the App_View_Helper_AthleteItem
+     * Tests the athlete of the App_View_Helper_athlete
      *
-     * @covers          App_View_Helper_AthleteItem::athleteItem
-     * @dataProvider    provide_athleteItem
+     * @covers App_View_Helper_athlete::athlete
+     * @dataProvider provide_athlete
      */
-    public function test_athleteItem ($expected, $athlete, $user, $params = array(), $actions = null)
+    public function test_athlete ($athlete)
     {
-        $subject = $this->getBuiltMock('App_View_Helper_AthleteItem', array('_getTitle'));
-        $view   = $this->getBuiltMock('Zend_View', array('model'));
-        $model  = $this->getBuiltMock('Rx_View_Helper_Model', array('links'));
-
-        $title = 'title';
-
-        $merged = array_merge($params, array(
-            'event_id' => $athlete->event_id,
-        ));
-
-        $model->expects($this->once())
-            ->method('links')
-            ->with($this->equalTo($user), $this->equalTo($merged))
-            ->will($this->returnValue($actions));
-
-        $view->expects($this->once())
-            ->method('model')
-            ->will($this->returnValue($model));
+        $subject = $this->getBuiltMock('App_View_Helper_Athlete', array('model'));
 
         $subject->expects($this->once())
-            ->method('_getTitle')
-            ->with($this->equalTo($athlete))
-            ->will($this->returnValue($title));
+            ->method('model')
+            ->with($this->equalTo($athlete), $this->equalTo('App_Model_Athlete'))
+            ->will($this->returnSelf());
 
-        $subject->view = $view;
+        $result = $subject->athlete($athlete);
 
-        $result = $subject->athleteItem($athlete, $user, $params);
+        $this->assertEquals($subject, $result);
 
-        $this->assertEquals($expected, $result);
-
-    } // END function test_athleteItem
+    } // END function test_athlete
 
     /**
-     * provide_athleteItem()
+     * provide_athlete()
      *
-     * Provides data for the athleteItem method of the
-     * App_View_Helper_AthleteItem class
+     * Provides data for the athlete method of the
+     * App_View_Helper_athlete class
      */
-    public function provide_athleteItem ( )
+    public function provide_athlete ( )
     {
         // $expected, $hasIdentity, $athlete, $title, $actions = null)
         return array(
             'no params, no actions' => array(
-                'expected' => '<div class="list-item athlete-item">title</div>',
                 'athlete' => (object)array('id' => 1, 'name' => 'value', 'event_id' => 1),
-                'user' => (object)array('id' => 1, 'name' => 'value', 'event_id' => 1),
             ),
 
             'has params, no actions' => array(
-                'expected'  => '<div class="list-item athlete-item">title</div>',
                 'event'     => (object)array('id' => 1, 'name' => 'value', 'event_id' => 1),
-                'user'      => (object)array('id' => 1, 'name' => 'value'),
-                'params'    => array(
-                    'key' => 'value',
-                ),
             ),
         );
 
-    } // END function provide_athleteItem
+    } // END function provide_athlete
 
 
     /**
      * test__getTitle()
      *
-     * Tests the _getTitle of the App_View_Helper_AthleteItem
+     * Tests the _getTitle of the App_View_Helper_athlete
      *
-     * @covers          App_View_Helper_AthleteItem::_getTitle
+     * @covers          App_View_Helper_athlete::_getTitle
      * @dataProvider    provide__getTitle
      */
     public function test__getTitle ($expected, $htmlAnchor, $athlete)
     {
-        $subject = $this->getBuiltMock('App_View_Helper_AthleteItem');
+        $subject = $this->getBuiltMock('App_View_Helper_athlete');
         $view = $this->getBuiltMock('Zend_View', array('htmlAnchor'));
 
         $view->expects($this->once())
@@ -134,7 +108,7 @@ class Tests_App_View_Helper_AtheleteItem
 
         $subject->view = $view;
 
-        $result = $this->getMethod('App_View_Helper_AthleteItem', '_getTitle')
+        $result = $this->getMethod('App_View_Helper_athlete', '_getTitle')
             ->invoke($subject, $athlete);
 
         $this->assertEquals($expected, $result);
@@ -145,16 +119,18 @@ class Tests_App_View_Helper_AtheleteItem
      * provide__getTitle()
      *
      * Provides data for the _getTitle method of the
-     * App_View_Helper_AthleteItem class
+     * App_View_Helper_athlete class
      */
     public function provide__getTitle ( )
     {
         return array(
             array('<h3>html-anchor <span class="alt">()</span></h3>', 'html-anchor', (object)array(
-                'id'    => 1,
-                'name'  => 'Athlete Name',
-                'gym'   => null,
-                'event_id' => 1,
+                'row' => (object)array(
+                    'id'    => 1,
+                    'name'  => 'Athlete Name',
+                    'gym'   => null,
+                    'event_id' => 1,
+                )
             )),
 
             array('<h3>another html-anchor <span class="alt">(some gym)</span></h3>', 'another html-anchor', (object)array(

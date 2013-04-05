@@ -38,8 +38,8 @@ class Tests_App_View_Helper_ScaleFilter
      *
      * Tests the scaleFilter of the App_View_Helper_ScaleFilter
      *
-     * @covers          App_View_Helper_ScaleFilter::scaleFilter
-     * @dataProvider    provide_scaleFilter
+     * @covers App_View_Helper_ScaleFilter::scaleFilter
+     * @dataProvider provide_scaleFilter
      */
     public function test_scaleFilter ($eventId)
     {

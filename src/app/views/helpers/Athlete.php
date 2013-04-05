@@ -46,16 +46,11 @@ class App_View_Helper_Athlete
      * @param array $Athlete
      * @return string
      */
-    public function athleteItem ($athlete, $user, $params = array())
+    public function athlete ($athlete)
     {
-        $title = $this->_getTitle($athlete);
+        $this->model($athlete, 'App_Model_Athlete');
 
-        $actions = $this->view->model($athlete, 'App_Model_Athlete')
-            ->links($user, array_merge($params, array(
-                'event_id'  => $athlete->event_id,
-            )));
-
-        return sprintf('<div class="list-item athlete-item">%s%s</div>', $title, $actions);
+        return $this;
 
     } // END function athleteItem
 
@@ -71,16 +66,14 @@ class App_View_Helper_Athlete
     {
         $view = $this->view;
 
-        $link = $view->htmlAnchor(ucwords($athlete->name), array(
+        $link = $view->htmlAnchor(ucwords($athlete->row->name), array(
             'controller'=> 'athletes',
             'action'    => 'view',
-            'id'        => $athlete->id,
-            'event_id'  => $athlete->event_id,
+            'id'        => $athlete->row->id,
+            'event_id'  => $athlete->row->event_id,
         ));
 
-        // var_dump($athlete); die;
-
-        $title = sprintf('<h3>%s <span class="alt">(%s)</span></h3>', $link, $athlete->gym);
+        $title = sprintf('<h3>%s <span class="alt">(%s)</span></h3>', $link, $athlete->row->gym);
 
         return $title;
 
