@@ -157,7 +157,7 @@ class App_Model_Registration
     protected function _payForRegistration ($values = array())
     {
         if (! isset($values['credit_card'])) {
-            throw new Rx_Model_Exception(self::)
+            throw new Rx_Model_Exception(self::EXCEPTION_INVALID_DATA);
         }
 
         $logger = $this->getLog();

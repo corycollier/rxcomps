@@ -67,8 +67,9 @@ class App_View_Helper_Leaderboard
      */
     public function table ($data = array())
     {
+        // var_dump($data);die;
         return '<table class="data-table leaderboards-table">'
-            . $this->headers($data[0])
+            . $this->headers(current($data))
             . $this->rows($data)
             . '</table>';
 
@@ -128,12 +129,11 @@ class App_View_Helper_Leaderboard
      */
     public function row ($data, $rank)
     {
-        if (! count($data)) {
+        if (! array_key_exists('athlete_id', $data)) {
             return '';
         }
 
         $athlete = $this->getAthlete($data['athlete_id']);
-        $competitions = $this->getCompetitionResults($data);
 
         $link = $this->_link(ucwords($athlete->name), array(
             'controller'    => 'athletes',
@@ -141,13 +141,11 @@ class App_View_Helper_Leaderboard
             'id'            => $athlete->id,
         ));
 
-        $title = '<td class="athlete-name">%s %d <span class="alt">(%d)</span>';
+        $title = '<td class="athlete-name">%s %d <span class="alt">(%d)</span></td>';
         $title = sprintf($title, $link, $rank, $data['points']);
+        $competitions = $this->getCompetitionResults($data);
 
-        return '<tr class="striped">'
-            . $title
-            . $this->getCompetitionResults($data)
-            . '</tr>';
+        return '<tr>' . $title . implode('', $competitions) . '</tr>';
 
     } // END function row
 
@@ -187,7 +185,7 @@ class App_View_Helper_Leaderboard
             $this->_competitions[$id] = $table->fetchRow(sprintf('id = %d', $id));
         }
 
-        return $this->_athletes[$id];
+        return $this->_competitions[$id];
 
     } // END function getCompetition
 
@@ -201,54 +199,68 @@ class App_View_Helper_Leaderboard
     public function getCompetitionResults ($data)
     {
         $results = array();
-
-        $filter = new Rx_Filter_SecondsToTime;
-
         $goal = $data['goal'];
 
+        foreach ($data['competitions'] as $id => $competition) {
+            $results[] = $this->getCompetitionResult($goal, $id, $competition);
+        }
+
+        return $results;
+
+    } // END function getCompetitionResults
+
+    /**
+     * getCompetitionResult()
+     *
+     * Gets the markup representing a single competition result
+     *
+     * @param  array $competition
+     * @return string
+     */
+    public function getCompetitionResult ($goal, $id, $competition = array())
+    {
+        $filter = new Rx_Filter_SecondsToTime;
         $template = '<td class="%s">
             <a href="#" class="expand-details">%d</a>
             <span class="alt">(%s) %s</span>
             </td>';
 
-        foreach ($data['competitions'] as $competitionId => $competitionResults) {
-
-            if ($goal == 'time') {
-                $competitionResults['score'] = $filter->filter($competitionResults['score']);
-            }
-
-            if (@$competitionResults['placeholder_score']) {
-                $competitionResults['score'] = '--';
-            }
-
-            $results[] = sprintf($template,
-                $this->isFiltered($competitionId) ? 'filtered' : '',
-                $competitionResults['rank'],
-                $competitionResults['score'],
-                $this->_getScoreEditLink($competitionId, $data)
-            );
+        if ($goal == 'time') {
+            $competition['score'] = $filter->filter($competition['score']);
         }
-        return $results;
 
-    } // END function getCompetitionResults
+        if (@$competition['placeholder_score']) {
+            $competition['score'] = '--';
+        }
+
+        return sprintf($template,
+            $this->isFiltered($id) ? 'filtered' : '',
+            $competition['rank'],
+            $competition['score'],
+            $this->_getScoreEditLink($id, $competition)
+        );
+
+    } // END function getCompetitionResult
 
     protected function _getScoreEditLink ($competitionId, $data)
     {
-        if (! $this->view->auth()->hasIdentity()) {
-            return '';
-        }
+        // if (! $this->view->auth()->hasIdentity()) {
+        //     return '';
+        // }
+        //
+        $html = '<div class="small default btn icon-right icon-pencil">%s</div>';
 
         $action = 'edit';
-        $html = '<div class="small default btn icon-right icon-pencil">%s</div>';
-        if ($data['competitions'][$competitionId]['placeholder_score']) {
+        if (isset($data['placeholder_score']) && $data['placeholder_score']) {
             $action = 'create';
         }
 
+        // var_dump($data); die;
         $link = $this->_link($action, array(
             'module'        => 'default',
             'controller'    => 'scores',
             'action'        => $action,
-            'id'            => @$data['competitions'][$competitionId]['score_id'],
+            'id'            => $data['score_id'],
             'competition_id'=> $competitionId,
             'athlete_id'    => $data['athlete_id'],
 
@@ -266,7 +278,7 @@ class App_View_Helper_Leaderboard
      */
     protected function _getCompetitions ($data = array())
     {
-        if (! array_key_exists('competitions', $data)) {
+        if (! is_array($data) || ! array_key_exists('competitions', $data)) {
             return array();
         }
 

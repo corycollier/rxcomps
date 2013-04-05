@@ -132,6 +132,8 @@ class App_Model_Leaderboard
             'rank'  => $data['rank'],
             'points' => $data['points'],
             'score_id' => @$data['id'],
+            'athlete_id'    => $data['athlete_id'],
+            'competition_id'    => $data['competition_id'],
             'placeholder_score' => @$data['placeholder_score'],
         );
 
