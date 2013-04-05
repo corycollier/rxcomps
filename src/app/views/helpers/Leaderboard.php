@@ -242,6 +242,16 @@ class App_View_Helper_Leaderboard
 
     } // END function getCompetitionResult
 
+    /**
+     * _getScoreEditLink
+     *
+     * Gets an edit/create link if the user has access, returns an empty string
+     * if the current user does not
+     *
+     * @param  integer|string $competitionId
+     * @param  array $data
+     * @return string
+     */
     protected function _getScoreEditLink ($competitionId, $data)
     {
         // if (! $this->view->auth()->hasIdentity()) {
