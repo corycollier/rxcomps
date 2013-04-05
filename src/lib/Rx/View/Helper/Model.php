@@ -77,15 +77,15 @@ class Rx_View_Helper_Model
      * @param Rx_Model_Abstract|Zend_Db_Table_Row $model
      * @return string
      */
-    public function item ($athlete, $user, $params = array(), $attribs = array())
+    public function item ($user, $params = array(), $attribs = array())
     {
         $attribs['class'] = @$attribs['class'] . ' list-item';
 
-        $title = $this->_getTitle($athlete);
+        $title = $this->_getTitle($this->_model);
 
         $this->_htmlAttribs($attribs);
 
-        $actions = $this->model($athlete, $this->_modelName)->links($user, $params);
+        $actions = $this->links($user, $params);
 
         return sprintf('<div %s>%s%s</div>', $attribs, $title, $actions);
 
