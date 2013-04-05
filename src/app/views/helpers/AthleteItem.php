@@ -28,9 +28,16 @@
  * @since       Class available since release 1.0.0
  */
 
-class App_View_Helper_AthleteItem
-    extends Rx_View_Helper_TableData
+class App_View_Helper_Athlete
+    extends Rx_View_Helper_Model
 {
+    /**
+     * Property to define the model type associated with this helper
+     *
+     * @var string
+     */
+    protected $_modelName = 'App_Model_Athlete';
+
     /**
      * athleteItem()
      *

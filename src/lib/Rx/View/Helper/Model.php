@@ -39,6 +39,13 @@ class Rx_View_Helper_Model
     protected $_model;
 
     /**
+     * Property to define the model type associated with this helper
+     *
+     * @var string
+     */
+    protected $_modelName;
+
+    /**
      * model()
      *
      * The main entry point to the helper. This method sets the model into the
@@ -61,6 +68,28 @@ class Rx_View_Helper_Model
         return $this;
 
     } // END function model
+
+    /**
+     * item()
+     *
+     * A way to display the model as an item
+     *
+     * @param Rx_Model_Abstract|Zend_Db_Table_Row $model
+     * @return string
+     */
+    public function item ($athlete, $user, $params = array(), $attribs = array())
+    {
+        $attribs['class'] = @$attribs['class'] . ' list-item';
+
+        $title = $this->_getTitle($athlete);
+
+        $this->_htmlAttribs($attribs);
+
+        $actions = $this->model($athlete, $this->_modelName)->links($user, $params);
+
+        return sprintf('<div %s>%s%s</div>', $attribs, $title, $actions);
+
+    } // END function athleteItem
 
     /**
      * links()
