@@ -23,7 +23,7 @@ echo $this->model(new App_Model_EventOption)->create($this->user, 'Add Option', 
 // iterate through the eventOptions, rendering information
 foreach ($this->items as $eventOption) :
 
-    echo $this->eventOptionItem($eventOption, $this->user, array(
+    echo $this->eventOption($eventOption)->item($this->user, array(
         'event_id'  => $this->event()->id(),
     ));
 

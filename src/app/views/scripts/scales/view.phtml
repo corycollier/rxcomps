@@ -23,7 +23,7 @@ echo $this->actionList(array(
     )),
 ));
 
-echo $this->scaleItem($this->model->row, $this->user, array(
+echo $this->scale($this->model)->item($this->user, array(
     'event_id'  => $this->event()->id(),
 ));
 

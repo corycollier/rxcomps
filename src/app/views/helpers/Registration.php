@@ -28,24 +28,29 @@
  * @since       Class available since release 1.0.0
  */
 
-class App_View_Helper_RegistrationItem
+class App_View_Helper_Registration
     extends Zend_View_Helper_HtmlElement
 {
+    /**
+     * Property to define the model type associated with this helper
+     *
+     * @var string
+     */
+    protected $_modelName = 'App_Model_Registration';
+
     /**
      * RegistrationItem()
      *
      * Main method of the view helper
      *
-     * @param array $Registration
+     * @param array $model
      * @return string
      */
-    public function registrationItem ($registration, $user, $params = array())
+    public function registration ($model)
     {
-        $title = $this->_getTitle($registration);
+        $this->model($model, $this->_modelName);
 
-        $actions = $this->view->model($registration, 'App_Model_Registration')->links($user, $params);
-
-        return sprintf('<div class="list-item registration-item">%s%s</div>', $title, $actions);
+        return $this;
 
     } // END function RegistrationItem
 

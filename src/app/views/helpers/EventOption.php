@@ -1,8 +1,8 @@
 <?php
 /**
- * Athlete List Item View Helper
+ * EventOption List Item View Helper
  *
- * This view helper displays information related to an Athlete in a list-item format
+ * This view helper displays information related to an EventOption in a list-item format
  *
  * @category    RxCompetition
  * @package     App
@@ -15,9 +15,9 @@
  */
 
 /**
- * Athlete List Item View Helper
+ * EventOption List Item View Helper
  *
- * This view helper displays information related to an Athlete in a list-item format
+ * This view helper displays information related to an EventOption in a list-item format
  *
  * @category    RxCompetition
  * @package     App
@@ -32,22 +32,27 @@ class App_View_Helper_EventOptionItem
     extends Zend_View_Helper_HtmlElement
 {
     /**
-     * athleteItem()
+     * Property to define the model type associated with this helper
+     *
+     * @var string
+     */
+    protected $_modelName = 'App_Model_EventOption';
+
+    /**
+     * eventOptionItem()
      *
      * Main method of the view helper
      *
-     * @param array $Athlete
+     * @param array $model
      * @return string
      */
-    public function eventOptionItem ($eventOption, $user, $params = array())
+    public function eventOption ($model)
     {
-        $title = $this->_getTitle($eventOption);
+        $this->model($model, $this->_modelName);
 
-        $actions = $this->view->model($eventOption, 'App_Model_EventOption')->links($user, $params);
+        return $this;
 
-        return sprintf('<div class="list-item event-option-item">%s%s</div>', $title, $actions);
-
-    } // END function athleteItem
+    } // END function eventOption
 
     /**
      * _getTitle()

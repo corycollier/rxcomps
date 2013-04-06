@@ -28,7 +28,7 @@ echo $this->model(new App_Model_Registration)->csv($this->user, 'Export Registra
 // iterate through the registrations, outputing what's appropriate
 foreach ($this->items as $registration) :
 
-    echo $this->registrationItem($registration, $this->user, array(
+    echo $this->registration($registration)->item($this->user, array(
         'event_id' => $this->event()->id(),
     ));
 

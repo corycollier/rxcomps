@@ -32,43 +32,50 @@ class App_View_Helper_Event
     extends Rx_View_Helper_Model
 {
     /**
-     * Message to indicate that there is no event parameter in the request
+     * Property to define the model type associated with this helper
+     *
+     * @var string
      */
-    const EXCEPTION_NO_EVENT_ID = 'No event parameter is available';
+    protected $_modelName = 'App_Model_Event';
 
     /**
      * event()
      *
      * main entry point into the helper
      *
-     * @param App_View_Helper_Event|null $event Dependency injection
+     * @param App_Model_Event|null $model Dependency injection
      * @return App_View_Helper_Event
-     * @throws Rx_View_Helper_Exception
      */
-    public function event ($event = null)
+    public function event ($model)
     {
-        if (! $this->_model) {
-
-            $event = $event ? $event : new App_Model_Event;
-
-            // make sure we have the event id
-            $request =  $this->view->request();
-
-            $eventId =  $request->getParam('event_id')
-                ? $request->getParam('event_id')
-                : $request->getParam('id');
-
-            if (! $eventId) {
-                throw new Rx_View_Helper_Exception(self::EXCEPTION_NO_EVENT_ID);
-            }
-
-            $event->load($eventId);
-
-            $this->model($event);
-        }
+        $this->model($model, $this->_modelName);
 
         return $this;
-    }
+
+    } // END function event
+
+    /**
+     * _getTitle()
+     *
+     * Gets the title value for an event
+     *
+     * @param App_Model_Event
+     * @return string
+     */
+    protected function _getTitle ($event)
+    {
+        $view = $this->view;
+        $title = sprintf('<h3>%s</h3>', $view->htmlAnchor($event->name, array(
+            'controller'=> 'events',
+            'action'    => 'view',
+            'id'        => $event->id,
+            'event_id'  => $event->id,
+        )));
+
+        return $title;
+
+    } // END function _getTitle
+
 
     /**
      * register()
