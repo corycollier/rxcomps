@@ -68,13 +68,13 @@ class Tests_Rx_Form_Element_TextTest
             $subject->expects($this->once())
                 ->method('addDecorators')
                 ->with($this->equalTo(array(
-                    array(array('elementDiv' => 'HtmlTag'), array(
+                    array(array('textDiv' => 'HtmlTag'), array(
                         'tag' => 'div',
                         'class' => 'text',
                     )),
-                    array(array('td' => 'HtmlTag'), array(
+                    array(array('fieldDiv' => 'HtmlTag'), array(
                         'tag' => 'div',
-                        'class' => 'field',
+                        'class' => 'prepend field',
                     )),
                 )));
         }

@@ -65,11 +65,11 @@ class Tests_Rx_View_Helper_FormSubmitTest
     {
         return array(
             'simple test' =>array(
-                '<p  class=" btn"><a href="#">value</a></p>', 'name', 'value',
+                '<p class="medium primary btn normarg"><input type="submit" name="name" id="name" value="value"></p>', 'name', 'value',
             ),
 
             'disable test' =>array(
-                '<p  class=" btn"><a href="#">value</a></p>', 'name', 'value', array(
+                '<p class="medium primary btn normarg"><input type="submit" name="name" id="name" value="value" disabled="disabled"></p>', 'name', 'value', array(
                     'disable' => true
                 )
             ),

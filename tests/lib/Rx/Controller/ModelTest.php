@@ -253,7 +253,7 @@ class Tests_Rx_Controller_ModelTest
 
         $form->expects($this->once())
             ->method('populate')
-            ->with($this->equalTo($filtered));
+            ->with($this->equalTo($params));
 
         $form->expects($this->once())
             ->method('injectDependencies')
@@ -323,19 +323,27 @@ class Tests_Rx_Controller_ModelTest
     public function test__create ($params, $post = array(), $exception = '')
     {
         // create objects to mock
-        $subject = $this->getBuiltMock('Rx_Controller_Model', array('getHelper'));
-        $flash = $this->getBuiltMock('Zend_Controller_Action_Helper_FlashMessenger', array(
-            'addMessage',
-        ));
-        $redirector = $this->getBuiltMock('Zend_Controller_Action_Helper_Redirector', array(
-            'gotoRoute',
-        ));
-        $model = $this->getBuiltMock('Rx_Model_Abstract', array('create'));
+        $subject = $this->getBuiltMock('Rx_Controller_Model', array('flashAndRedirect'));
+        $model = $this->getBuiltMock('Rx_Model_Abstract', array('create', 'getForm'));
+        $form = $this->getBuiltMock('Rx_Form_Abstract', array('isValid'));
         $request = new Zend_Controller_Request_HttpTestCase;
+        $merged = array_merge($params, $post);
 
         // set expectations
-        $request->setParams(array_merge($params, $post));
-        $flash->expects($this->once())->method('addMessage');
+        $request->setParams($merged);
+
+        $form->expects($this->once())
+            ->method('isValid')
+            ->with($this->equalTo($merged))
+            ->will($exception
+                ? $this->throwException()
+                : $this->returnValue(true)
+            );
+
+        $model->expects($this->once())
+            ->method('getForm')
+            ->will($this->returnValue($form));
+
         $model->expects($this->once())
             ->method('create')
             ->with($this->equalTo(array_merge($params, $post)))
@@ -345,15 +353,8 @@ class Tests_Rx_Controller_ModelTest
             );
 
         if (! $exception) {
-            $redirector->expects($this->once())->method('gotoRoute');
+            $subject->expects($this->once())->method('flashAndRedirect');
         }
-
-        $subject->expects($this->any())
-            ->method('getHelper')
-            ->will($this->returnValueMap(array(
-                array('FlashMessenger', $flash),
-                array('Redirector', $redirector)
-            )));
 
         $method = new ReflectionMethod('Rx_Controller_Model', '_create');
         $method->setAccessible(true);

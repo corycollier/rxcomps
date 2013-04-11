@@ -137,6 +137,11 @@ class Tests_App_Model_LeaderboardTest
      */
     public function provide__mergeAthleteResults ( )
     {
+            // 'points' => $data['points'],
+            // 'score_id' => @$data['id'],
+            // 'athlete_id'    => @$data['athlete_id'],
+            // 'competition_id'    => $data['competition_id'],
+            // 'placeholder_score' => @$data['placeholder_score'],
         return array(
             'no existing athletes' => array(
                 'expected'  => array(
@@ -149,6 +154,8 @@ class Tests_App_Model_LeaderboardTest
                                 'points'    => 80,
                                 'score_id'  => 1,
                                 'placeholder_score' => null,
+                                'athlete_id'    => 100,
+                                'competition_id'    => 2,
                             ),
                         ),
                     ),
@@ -162,6 +169,7 @@ class Tests_App_Model_LeaderboardTest
                     'rank'              => 3,
                     'points'            => 80,
                     'competition_id'    => 2,
+                    'athlete_id'        => 100,
                 ),
             ),
 
@@ -174,6 +182,8 @@ class Tests_App_Model_LeaderboardTest
                                 'score'     => 600,
                                 'rank'      => 2,
                                 'points'    => 90,
+                                'athlete_id'=> 200,
+                                'competition_id'=> 2,
                             ),
                         ),
                     ),
@@ -185,7 +195,9 @@ class Tests_App_Model_LeaderboardTest
                                 'rank'      => 3,
                                 'points'    => 80,
                                 'score_id'  => 1,
+                                'athlete_id'=> 100,
                                 'placeholder_score' => null,
+                                'competition_id'=> 2,
                             ),
                         ),
                     ),
@@ -198,6 +210,8 @@ class Tests_App_Model_LeaderboardTest
                                 'score'     => 600,
                                 'rank'      => 2,
                                 'points'    => 90,
+                                'athlete_id'=> 200,
+                                'competition_id'=> 2,
                             ),
                         ),
                     ),
@@ -210,6 +224,7 @@ class Tests_App_Model_LeaderboardTest
                     'rank'              => 3,
                     'points'            => 80,
                     'competition_id'    => 2,
+                    'athlete_id'        => 100,
                 ),
             ),
 
@@ -222,6 +237,8 @@ class Tests_App_Model_LeaderboardTest
                                 'score'     => 600,
                                 'rank'      => 2,
                                 'points'    => 90,
+                                'athlete_id'=> 200,
+                                'competition_id'=> 2,
                             ),
                         ),
                     ),
@@ -232,6 +249,8 @@ class Tests_App_Model_LeaderboardTest
                                 'score'     => 500,
                                 'rank'      => 3,
                                 'points'    => 80,
+                                'athlete_id'=> 100,
+                                'competition_id'=> 2,
                             ),
                             3 => array(
                                 'score'     => 200,
@@ -239,6 +258,8 @@ class Tests_App_Model_LeaderboardTest
                                 'points'    => 50,
                                 'score_id'  => 1,
                                 'placeholder_score' => null,
+                                'athlete_id'=> 100,
+                                'competition_id'=> 3,
                             ),
                         ),
                     ),
@@ -251,6 +272,8 @@ class Tests_App_Model_LeaderboardTest
                                 'score'     => 600,
                                 'rank'      => 2,
                                 'points'    => 90,
+                                'athlete_id'=> 200,
+                                'competition_id'=> 2,
                             ),
                         ),
                     ),
@@ -261,6 +284,8 @@ class Tests_App_Model_LeaderboardTest
                                 'score'     => 500,
                                 'rank'      => 3,
                                 'points'    => 80,
+                                'athlete_id'=> 100,
+                                'competition_id'=> 2,
                             ),
                         ),
                     ),
@@ -273,6 +298,7 @@ class Tests_App_Model_LeaderboardTest
                     'rank'              => 6,
                     'points'            => 50,
                     'competition_id'    => 3,
+                    'athlete_id'        => 100,
                 ),
             ),
         );

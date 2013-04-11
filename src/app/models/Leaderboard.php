@@ -60,8 +60,12 @@ class App_Model_Leaderboard
         $competitionFilters = explode(',', trim($competitionFilters));
 
         $competitions = $event->getChildren('Competition');
+        $competition = current($competitions);
 
-        $scoringType = current($competitions)->getScoringType();
+        $scoringType = 'time';
+        if ($competition) {
+            $scoringType = current($competitions)->getScoringType();
+        }
 
         $results = $this->getLeaderboardsFromCompetitions($competitions, $scaleId, $gender);
 
@@ -132,7 +136,7 @@ class App_Model_Leaderboard
             'rank'  => $data['rank'],
             'points' => $data['points'],
             'score_id' => @$data['id'],
-            'athlete_id'    => $data['athlete_id'],
+            'athlete_id'    => @$data['athlete_id'],
             'competition_id'    => $data['competition_id'],
             'placeholder_score' => @$data['placeholder_score'],
         );
@@ -141,6 +145,7 @@ class App_Model_Leaderboard
         unset($athletes[$id]['rank']);
         unset($athletes[$id]['score']);
         unset($athletes[$id]['id']);
+        unset($athletes[$id]['athlete_id']);
 
         return $athletes;
 

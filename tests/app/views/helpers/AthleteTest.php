@@ -134,10 +134,12 @@ class Tests_App_View_Helper_AtheleteTest
             )),
 
             array('<h3>another html-anchor <span class="alt">(some gym)</span></h3>', 'another html-anchor', (object)array(
-                'id'    => 1,
-                'name'  => 'Athlete Name Does Not Matter Here',
-                'gym'   => 'some gym',
-                'event_id' => 1,
+                'row' => (object)array(
+                    'id'    => 1,
+                    'name'  => 'Athlete Name Does Not Matter Here',
+                    'gym'   => 'some gym',
+                    'event_id' => 1,
+                ),
             )),
         );
 

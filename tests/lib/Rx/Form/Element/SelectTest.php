@@ -62,7 +62,7 @@ class Tests_Rx_Form_Element_SelectTest
                     )),
                     array(array('td' => 'HtmlTag'), array(
                         'tag' => 'div',
-                        'class' => 'field',
+                        'class' => 'prepend field',
                     )),
                 )));
         }

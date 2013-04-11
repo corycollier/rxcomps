@@ -74,7 +74,7 @@ class Tests_Rx_Form_Element_TextareaTest
                     )),
                     array(array('td' => 'HtmlTag'), array(
                         'tag' => 'div',
-                        'class' => 'field',
+                        'class' => 'prepend field',
                     )),
                 )));
         }
