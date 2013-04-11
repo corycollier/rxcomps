@@ -61,9 +61,6 @@ class Rx_View_Helper_FormNumber
 
         // XHTML or HTML end tag?
         $endTag = ' />';
-        if (($this->view instanceof Zend_View_Abstract) && !$this->view->doctype()->isXhtml()) {
-            $endTag= '>';
-        }
 
         $xhtml = '<input type="number"'
                 . ' name="' . $this->view->escape($name) . '"'
