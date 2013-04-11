@@ -28,24 +28,29 @@
  * @since       Class available since release 1.0.0
  */
 
-class App_View_Helper_CompetitionItem
+class App_View_Helper_Competition
     extends Zend_View_Helper_HtmlElement
 {
     /**
-     * competitionItem()
+     * Property to define the model type associated with this helper
+     *
+     * @var string
+     */
+    protected $_modelName = 'App_Model_Competition';
+
+    /**
+     * competition()
      *
      * Main method of the view helper
      *
-     * @param array $competition
+     * @param array $model
      * @return string
      */
-    public function competitionItem ($competition, $user, $params = array())
+    public function competition ($model)
     {
-        $title = $this->_getTitle($competition);
+        $this->model($model, $this->_modelName);
 
-        $actions = $this->view->model($competition, 'App_Model_Competition')->links($user, $params);
-
-        return sprintf('<div class="list-item competition-item">%s%s</div>', $title, $actions);
+        return $this;
 
     } // END function CompetitionItem
 

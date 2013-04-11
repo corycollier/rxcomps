@@ -70,10 +70,6 @@ class Tests_App_View_Helper_AtheleteTest
             'no params, no actions' => array(
                 'athlete' => (object)array('id' => 1, 'name' => 'value', 'event_id' => 1),
             ),
-
-            'has params, no actions' => array(
-                'event'     => (object)array('id' => 1, 'name' => 'value', 'event_id' => 1),
-            ),
         );
 
     } // END function provide_athlete

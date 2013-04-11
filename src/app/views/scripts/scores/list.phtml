@@ -23,13 +23,13 @@ echo $this->model(new App_Model_Score)->create($this->user, 'Add Score', array(
 // iterate through the scores, rendering information
 foreach ($this->items as $score) :
 
-    echo $this->scoreItem($score, $this->user, array(
+    echo $this->score($score)->item($this->user, array(
         'event_id'  => $this->event()->id(),
     ));
 
 endforeach;
 
 // output any pagination control necessary
-echo $this->paginationControl($this->paginator, 'Sliding', 'partials/pagination.phtml');
+// echo $this->paginationControl($this->paginator, 'Sliding', 'partials/pagination.phtml');
 
 ?>

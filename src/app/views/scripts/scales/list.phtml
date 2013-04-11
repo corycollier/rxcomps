@@ -23,7 +23,7 @@ echo $this->model(new App_Model_Scale)->create($this->user, 'Add Scale', array(
 // iterate through the registrations, outputing what's appropriate
 foreach ($this->items as $scale) :
 
-    echo $this->scaleItem($scale, $this->user, array(
+    echo $this->scale($scale)->item($this->user, array(
         'event_id'  => $this->event()->id(),
     ));
 

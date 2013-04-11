@@ -23,7 +23,7 @@ echo $this->actionList(array(
     )),
 ));
 
-echo $this->eventOptionItem($this->model->row, $this->user, array(
+echo $this->eventOption($this->model)->item($this->user, array(
     'event_id'  => $this->event()->id(),
 ));
 ?>

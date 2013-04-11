@@ -32,6 +32,13 @@ class App_View_Helper_ScaleItem
     extends Zend_View_Helper_HtmlElement
 {
     /**
+     * Property to define the model type associated with this helper
+     *
+     * @var string
+     */
+    protected $_modelName = 'App_Model_Scale';
+
+    /**
      * scaleItem()
      *
      * Main method of the view helper
@@ -39,13 +46,11 @@ class App_View_Helper_ScaleItem
      * @param array $scale
      * @return string
      */
-    public function scaleItem ($scale, $user, $params = array())
+    public function scale ($model)
     {
-        $title = $this->_getTitle($scale);
+        $this->model($model, $this->_modelName);
 
-        $actions = $this->view->model($scale, 'App_Model_Scale')->links($user, $params);
-
-        return sprintf('<div class="list-item scale-item">%s%s</div>', $title, $actions);
+        return $this;
 
     } // END function scaleItem
 

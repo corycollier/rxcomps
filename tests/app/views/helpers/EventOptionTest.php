@@ -34,71 +34,46 @@ class Tests_App_View_Helper_EventItemOptionTest
     extends Rx_PHPUnit_TestCase
 {
     /**
-     * test_eventOptionItem()
+     * test_eventOption()
      *
-     * Tests the eventOptionItem method of the App_View_Helper_EventOptionItem class
+     * Tests the eventOption method of the App_View_Helper_EventOptionItem class
      *
-     * @covers App_View_Helper_EventOptionItem::eventOptionItem
-     * @dataProvider provide_eventOptionItem
+     * @covers App_View_Helper_EventOptionItem::eventOption
+     * @dataProvider provide_eventOption
      */
-    public function test_eventOptionItem ($expected, $eventOption, $params = array(), $actions = null)
+    public function test_eventOption ($model)
     {
-        $subject = $this->getBuiltMock('App_View_Helper_EventOptionItem', array('_getTitle'));
-        $view   = $this->getBuiltMock('Zend_View', array('model'));
-        $user   = $this->getBuiltMock('App_Model_User');
-        $model  = $this->getBuiltMock('Rx_View_Helper_Model', array('links'));
-        $title  = 'title';
-
-        $model->expects($this->once())
-            ->method('links')
-            ->with($this->equalTo($user), $this->equalTo($params))
-            ->will($this->returnValue($actions));
-
-        $view->expects($this->once())
-            ->method('model')
-            ->with($this->equalTo($eventOption), $this->equalTo('App_Model_EventOption'))
-            ->will($this->returnValue($model));
+        $subject = $this->getBuiltMock('App_View_Helper_EventOptionItem', array('model'));
 
         $subject->expects($this->once())
-            ->method('_getTitle')
-            ->with($this->equalTo($eventOption))
-            ->will($this->returnValue($title));
+            ->method('model')
+            ->with($this->equalTo($model), $this->equalTo('App_Model_EventOptionItem'))
+            ->will($this->returnSelf());
 
-        $subject->view = $view;
+        $result = $subject->eventOption($model);
 
-        $result = $subject->eventOptionItem($eventOption, $user, $params);
+        $this->assertEquals($subject, $result);
 
-        $this->assertEquals($expected, $result);
-
-    } // END function test_eventOptionItem
+    } // END function test_eventOption
 
     /**
-     * provide_eventOptionItem()
+     * provide_eventOption()
      *
-     * Provides data to use for testing the eventOptionItem method of
+     * Provides data to use for testing the eventOption method of
      * the App_View_Helper_EventOptionItem class
      *
      * @return array
      */
-    public function provide_eventOptionItem ( )
+    public function provide_eventOption ( )
     {
         // ($expected, $eventOption, $params = array(), $actions = null
         return array(
             'no params, no actions' => array(
-                '<div class="list-item event-option-item">title</div>',
                 (object)array('id' => 1, 'name' => 'value'),
-            ),
-
-            'has params, no actions' => array(
-                '<div class="list-item event-option-item">title</div>',
-                (object)array('id' => 1, 'name' => 'value', 'goal' => 'time'),
-                array(
-                    'key' => 'value',
-                )
             ),
         );
 
-    } // END function provide_eventOptionItem
+    } // END function provide_eventOption
 
 
     /**

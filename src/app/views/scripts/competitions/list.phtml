@@ -23,7 +23,7 @@ echo $this->model(new App_Model_Competition)->create($this->user, 'Add Competiti
 // iterate through the competitions, rendering information
 foreach ($this->items as $competition) :
 
-    echo $this->competitionItem($competition, $this->user, array(
+    echo $this->competition($competition)->item($this->user, array(
         'event_id'  => $this->event()->id(),
     ));
 

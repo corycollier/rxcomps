@@ -21,7 +21,7 @@
 <?php
 // iterate through the event rows
 foreach ($this->items as $event) :
-    echo $this->eventItem($event, $this->user);
+    echo $this->event($event)->item($this->user);
 endforeach;
 
 // render a pagination control
