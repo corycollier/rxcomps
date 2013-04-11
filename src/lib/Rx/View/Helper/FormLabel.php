@@ -52,9 +52,6 @@ class Rx_View_Helper_FormLabel
         }
 
         $value = ($escape) ? $this->view->escape($value) : $value;
-        if (array_key_exists('disableFor', $attribs)) {
-            unset($attribs['disableFor']);
-        }
 
         // enabled; display label
         $xhtml = '<span'

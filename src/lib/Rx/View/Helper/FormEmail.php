@@ -64,9 +64,6 @@ class Rx_View_Helper_FormEmail
 
         // XHTML or HTML end tag?
         $endTag = ' />';
-        if (($this->view instanceof Zend_View_Abstract) && !$this->view->doctype()->isXhtml()) {
-            $endTag= '>';
-        }
 
         $xhtml = '<input type="email"'
                 . ' name="' . $this->view->escape($name) . '"'

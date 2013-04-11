@@ -47,11 +47,11 @@ class Tests_Rx_View_Helper_FlashMessengerTest
         $subject->view = new Zend_View;
 
         $flashMessenger = $this->getBuiltMock(
-            'Zend_Controller_Action_Helper_FlashMessenger', array('getMessages')
+            'Zend_Controller_Action_Helper_FlashMessenger', array('getCurrentMessages')
         );
 
         $flashMessenger->expects($this->any())
-            ->method('getMessages')
+            ->method('getCurrentMessages')
             ->will($this->returnValueMap(array(
                 array('error', $errors),
                 array('info', $info),
@@ -81,7 +81,7 @@ class Tests_Rx_View_Helper_FlashMessengerTest
 
             '1 error message' => array(
                 implode(PHP_EOL, array(
-                    '<div class="flash-messages"><ul class="error">',
+                    '<div class="flash-messages"><ul class="danger alert">',
                     '<li>test message</li>',
                     '</ul>',
                     '</div>',
