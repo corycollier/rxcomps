@@ -65,7 +65,7 @@ class Tests_Rx_View_Helper_FormTextareaTest
     {
         return array(
             'simple test' => array(
-                'expected'  => '<textarea name="name_value" id="name_value" value="" class=" input textarea" rows="5"></textarea>',
+                'expected'  => '<textarea name="name_value" id="name_value" class=" input textarea" rows="5" cols="80"></textarea>',
                 'name'      => 'name_value',
                 'value'     => null,
                 'attribs'   => null,
