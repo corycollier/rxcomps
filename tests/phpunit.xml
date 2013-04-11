@@ -16,6 +16,7 @@
         <directory suffix="php">../src/lib/Rx</directory>
         <exclude>
             <directory>../src/lib/Zend</directory>
+            <directory>../src/app/vendor</directory>
         </exclude>
     </whitelist>
 </filter>
