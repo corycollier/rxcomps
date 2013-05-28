@@ -104,7 +104,7 @@ class App_Model_Registration
         $event = $this->getParent('Event')->load($values['event_id']);
         $scale = $this->getParent('Scale')->load($values['athlete']['scale_id']);
         $price = $this->getScalePrice($values['athlete']['scale_id']);
-        $birthday = $this->getForm()->getSubForm('user')->getValue('birthday');
+        // $birthday = $this->getForm()->getSubForm('user')->getValue('birthday');
 
         if (! $event) {
             throw new Rx_Model_Exception(self::EXCEPTION_INVALID_EVENT);
@@ -115,7 +115,7 @@ class App_Model_Registration
         }
 
         if ($price) {
-            $this->_payForRegistration($values);
+            // $this->_payForRegistration($values);
         }
 
         try {
