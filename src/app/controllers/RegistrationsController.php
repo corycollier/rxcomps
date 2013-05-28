@@ -81,12 +81,12 @@ class RegistrationsController
         //     $user->login($request->getParam('user'));
         // }
 
-        $this->_mail($user, 'Registration Confirmation', 'registration-confirmation.phtml', array(
-            'athlete'   => $model->getParent('Athlete'),
-            'event'     => $model->getParent('Event'),
-            'model'     => $model,
-            'user'      => $user,
-        ));
+        // $this->_mail($user, 'Registration Confirmation', 'registration-confirmation.phtml', array(
+        //     'athlete'   => $model->getParent('Athlete'),
+        //     'event'     => $model->getParent('Event'),
+        //     'model'     => $model,
+        //     'user'      => $user,
+        // ));
 
         $this->flashAndRedirect($message, 'success', array(
             'module'        => $request->getModuleName(),

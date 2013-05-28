@@ -41,7 +41,7 @@ echo $this->registrationItem($this->model->row, $this->user, array(
     'event_id'  => $this->event()->id(),
 ));
 
-echo $this->athleteItem($athlete->row, $this->user, array(
+echo $this->athlete($athlete->row)->item($this->user, array(
     'event_id'  => $this->event()->id(),
 ));
 
