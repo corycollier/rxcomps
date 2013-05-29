@@ -15,16 +15,18 @@
 ?>
 
 <?php
+$eventId = $this->request()->getParam('event_id');
+
 // echo the appropriate link to create a new competition
 echo $this->model(new App_Model_Competition)->create($this->user, 'Add Competition', array(
-    'event_id'  => $this->event()->id(),
+    'event_id'  => $eventId,
 ));
 
 // iterate through the competitions, rendering information
 foreach ($this->items as $competition) :
 
     echo $this->competition($competition)->item($this->user, array(
-        'event_id'  => $this->event()->id(),
+        'event_id'  => $eventId,
     ));
 
 endforeach;
