@@ -18,12 +18,13 @@
 // echo a link back to the main event
 echo $this->actionList(array(
     $this->backToEventLink($this->model, $this->request()->getParams()),
-    $this->model(new App_Model_Athlete)->create($this->user, 'Add Score', array(
+    $this->model($this->model)->create($this->user, 'Add Score', array(
         'event_id'  => $this->event()->id(),
     )),
 ));
 
-echo $this->athleteItem($this->model->row, $this->user, array(
+
+echo $this->athlete($this->model)->item($this->user, array(
     'event_id'  => $this->event()->id(),
 ));
 

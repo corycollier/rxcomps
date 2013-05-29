@@ -33,19 +33,19 @@ $event = $this->model->getParent('Event');
 
 $user->row->gender = $athlete->row->gender;
 
-echo $this->userProfile($user, $this->user, array(
+echo $this->user($user)->profile($this->user, array(
     'event_id'  => $this->event()->id(),
 ));
 
-echo $this->registrationItem($this->model->row, $this->user, array(
+echo $this->registration($this->model)->item($this->user, array(
     'event_id'  => $this->event()->id(),
 ));
 
-echo $this->athlete($athlete->row)->item($this->user, array(
+echo $this->athlete($athlete)->item($this->user, array(
     'event_id'  => $this->event()->id(),
 ));
 
-echo $this->eventItem($event->row, $this->user, array(
+echo $this->event($event)->item($this->user, array(
     'event_id'  => $this->event()->id(),
 ))
 

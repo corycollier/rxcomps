@@ -24,7 +24,7 @@ echo $this->actionList(array(
     )),
 ));
 
-echo $this->competitionItem($this->model->row, $this->user, array(
+echo $this->competition($this->model)->item($this->user, array(
     'event_id'  => $this->event()->id(),
 ));
 

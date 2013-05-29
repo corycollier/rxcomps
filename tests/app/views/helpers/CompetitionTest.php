@@ -35,69 +35,44 @@ class Tests_App_View_Helper_CompetitionItem
 {
 
     /**
-     * test_competitionItem()
+     * test_competition()
      *
      * Tests the CompetitionItem of the App_View_Helper_CompetitionItem
      *
-     * @covers          App_View_Helper_CompetitionItem::competitionItem
-     * @dataProvider    provide_competitionItem
+     * @covers          App_View_Helper_CompetitionItem::competition
+     * @dataProvider    provide_competition
      */
-    public function test_competitionItem ($expected, $competition, $params = array(), $actions = null)
+    public function test_competition ($model)
     {
-        $subject = $this->getBuiltMock('App_View_Helper_CompetitionItem', array('_getTitle'));
-        $view   = $this->getBuiltMock('Zend_View', array('model'));
-        $user   = $this->getBuiltMock('App_Model_User');
-        $model  = $this->getBuiltMock('Rx_View_Helper_Model', array('links'));
-        $title  = 'title';
-
-        $model->expects($this->once())
-            ->method('links')
-            ->with($this->equalTo($user), $this->equalTo($params))
-            ->will($this->returnValue($actions));
-
-        $view->expects($this->once())
-            ->method('model')
-            ->with($this->equalTo($competition), $this->equalTo('App_Model_Competition'))
-            ->will($this->returnValue($model));
+        $subject = $this->getBuiltMock('App_View_Helper_CompetitionItem', array('model'));
 
         $subject->expects($this->once())
-            ->method('_getTitle')
-            ->with($this->equalTo($competition))
-            ->will($this->returnValue($title));
+            ->method('model')
+            ->with($this->equalTo($model), $this->equalTo('App_Model_Competition'))
+            ->will($this->returnSelf());
 
-        $subject->view = $view;
+        $result = $subject->competition($model);
 
-        $result = $subject->competitionItem($competition, $user, $params);
+        $this->assertEquals($subject, $result);
 
-        $this->assertEquals($expected, $result);
-
-    } // END function test_competitionItem
+    } // END function test_competition
 
     /**
-     * provide_competitionItem()
+     * provide_competition()
      *
      * Provides data for the CompetitionItem method of the
      * App_View_Helper_CompetitionItem class
      */
-    public function provide_competitionItem ( )
+    public function provide_competition ( )
     {
         // $expected, $hasIdentity, $competition, $title, $actions = null)
         return array(
             'no params, no actions' => array(
-                '<div class="list-item competition-item">title</div>',
                 (object)array('id' => 1, 'name' => 'value'),
-            ),
-
-            'has params, no actions' => array(
-                '<div class="list-item competition-item">title</div>',
-                (object)array('id' => 1, 'name' => 'value', 'goal' => 'time'),
-                array(
-                    'key' => 'value',
-                )
             ),
         );
 
-    } // END function provide_competitionItem
+    } // END function provide_competition
 
 
     /**

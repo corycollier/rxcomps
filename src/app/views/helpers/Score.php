@@ -28,24 +28,29 @@
  * @since       Class available since release 1.0.0
  */
 
-class App_View_Helper_ScoreItem
+class App_View_Helper_Score
     extends Zend_View_Helper_HtmlElement
 {
     /**
-     * scoreItem()
+     * Property to define the model type associated with this helper
+     *
+     * @var string
+     */
+    protected $_modelName = 'App_Model_Score';
+
+    /**
+     * score()
      *
      * Main method of the view helper
      *
      * @param array $score
      * @return string
      */
-    public function scoreItem ($score, $user, $params = array())
+    public function score ($model)
     {
-        $title = $this->_getTitle($score);
+        $this->model($model, $this->_modelName);
 
-        $actions = $this->view->model($score, 'App_Model_Score')->links($user, $params);
-
-        return sprintf('<div class="list-item score-item">%s%s</div>', $title, $actions);
+        return $this;
 
     } // END function scoreItem
 

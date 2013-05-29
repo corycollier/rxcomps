@@ -39,16 +39,16 @@ class App_View_Helper_Athlete
     protected $_modelName = 'App_Model_Athlete';
 
     /**
-     * athleteItem()
+     * athlete()
      *
      * Main method of the view helper
      *
-     * @param array $Athlete
+     * @param array $model
      * @return string
      */
-    public function athlete ($athlete)
+    public function athlete ($model)
     {
-        $this->model($athlete, 'App_Model_Athlete');
+        $this->model($model, $this->_modelName);
 
         return $this;
 
