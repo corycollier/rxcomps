@@ -15,17 +15,20 @@
 ?>
 
 <?php
+
+$eventId = $this->request()->getParam('event_id');
+
 // echo a link back to the main event
 echo $this->actionList(array(
     $this->backToEventLink($this->model, $this->request()->getParams()),
     $this->model(new App_Model_Competition)->create($this->user, 'Add Score', array(
-        'event_id'  => $this->event()->id(),
+        'event_id'  => $eventId,
         'competition_id'=> $this->model->id,
     )),
 ));
 
-echo $this->competition($this->model)->item($this->user, array(
-    'event_id'  => $this->event()->id(),
+echo $this->competition($this->model->row)->item($this->user, array(
+    'event_id'  => $eventId,
 ));
 
 ?>
@@ -41,7 +44,7 @@ echo $this->competition($this->model)->item($this->user, array(
 // render the all-leaderboards action
 echo $this->action('all-leaderboards', 'competitions', 'default', array_merge(
     $this->request()->getParams(),
-    array('event_id' => $this->event()->id())
+    array('event_id' => $eventId)
 ));
 
 ?>

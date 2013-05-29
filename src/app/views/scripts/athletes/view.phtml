@@ -15,17 +15,19 @@
 ?>
 
 <?php
+$eventId = $this->request()->getParam('event_id');
+
 // echo a link back to the main event
 echo $this->actionList(array(
     $this->backToEventLink($this->model, $this->request()->getParams()),
     $this->model($this->model)->create($this->user, 'Add Score', array(
-        'event_id'  => $this->event()->id(),
+        'event_id'  => $eventId,
     )),
 ));
 
 
 echo $this->athlete($this->model)->item($this->user, array(
-    'event_id'  => $this->event()->id(),
+    'event_id'  => $eventId,
 ));
 
 ?>
