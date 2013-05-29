@@ -15,16 +15,18 @@
 ?>
 
 <?php
+$eventId = $this->request()->getParam('event_id');
+
 // echo a link back to the main event
 echo $this->actionList(array(
     $this->backToEventLink($this->model, $this->request()->getParams()),
     $this->model(new App_Model_Scale)->create($this->user, 'Add Scale', array(
-        'event_id'  => $this->event()->id(),
+        'event_id'  => $eventId,
     )),
 ));
 
 echo $this->scale($this->model)->item($this->user, array(
-    'event_id'  => $this->event()->id(),
+    'event_id'  => $eventId,
 ));
 
 ?>

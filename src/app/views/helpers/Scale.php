@@ -28,8 +28,8 @@
  * @since       Class available since release 1.0.0
  */
 
-class App_View_Helper_ScaleItem
-    extends Zend_View_Helper_HtmlElement
+class App_View_Helper_Scale
+    extends Rx_View_Helper_Model
 {
     /**
      * Property to define the model type associated with this helper
