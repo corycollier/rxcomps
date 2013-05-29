@@ -29,7 +29,7 @@
  */
 
 class App_View_Helper_Registration
-    extends Zend_View_Helper_HtmlElement
+    extends Rx_View_Helper_Model
 {
     /**
      * Property to define the model type associated with this helper
@@ -66,7 +66,7 @@ class App_View_Helper_Registration
     {
         $view = $this->view;
 
-        $athlete = $registration->findParentRow('App_Model_DbTable_Athlete');
+        $athlete = $registration->row->findParentRow('App_Model_DbTable_Athlete');
 
         $title = sprintf('<h3>%s</h3>', $view->htmlAnchor($athlete->name, array(
             'controller'=> 'registrations',
