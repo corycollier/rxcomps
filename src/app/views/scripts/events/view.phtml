@@ -16,7 +16,7 @@
 
 <div class="row">
     <h1 class="lead"><?php echo $this->model->getValue('name'); ?>
-        <?php echo $this->event()->register($this->user); ?>
+        <?php echo $this->event($this->model->row)->register($this->user); ?>
     </h1>
 
     <p class="row"><?php echo $this->model->getValue('description'); ?>
