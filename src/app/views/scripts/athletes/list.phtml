@@ -15,21 +15,23 @@
 ?>
 
 <?php
+$eventId = $this->request()->getParam('event_id');
+
 // echo the appropriate link to create a new athlete
 echo $this->model(new App_Model_Event)->create($this->user, 'Add Athlete', array(
-    'event_id'  => $this->event()->id(),
+    'event_id'  => $eventId,
 ));
 
 // echo a create new link, if appropriate
 echo $this->model(new App_Model_Athlete)->csv($this->user, 'Export Athletes', array(
-    'event_id'  => $this->event()->id(),
+    'event_id'  => $eventId,
 ));
 
 // iterate through the athletes, rendering information
 foreach ($this->items as $athlete) :
 
     echo $this->athlete($athlete)->item($this->user, array(
-        'event_id'  => $this->event()->id(),
+        'event_id'  => $eventId,
     ));
 
 endforeach;
