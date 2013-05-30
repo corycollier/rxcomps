@@ -67,10 +67,10 @@ class App_View_Helper_User
     protected function _getTitle ($model)
     {
         $view = $this->view;
-        $title = sprintf('<h3>%s</h3>', $view->htmlAnchor($model->name, array(
+        $title = sprintf('<h3>%s</h3>', $view->htmlAnchor($model->row->name, array(
             'controller'=> 'users',
             'action'    => 'view',
-            'id'        => $model->id,
+            'id'        => $model->row->id,
         )));
 
         return $title;

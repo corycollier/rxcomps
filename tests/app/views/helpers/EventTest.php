@@ -96,11 +96,11 @@ class Tests_App_View_Helper_App_View_Helper_EventTest
 
         $view->expects($this->once())
             ->method('htmlAnchor')
-            ->with($this->equalTo($event->name), $this->equalTo(array(
+            ->with($this->equalTo($event->row->name), $this->equalTo(array(
                 'controller'=> 'events',
                 'action'    => 'view',
-                'id'        => $event->id,
-                'event_id'  => $event->id,
+                'id'        => $event->row->id,
+                'event_id'  => $event->row->id,
             )))
             ->will($this->returnValue($link));
 
@@ -126,8 +126,10 @@ class Tests_App_View_Helper_App_View_Helper_EventTest
                 'expected'  => '<h3>link value</h3>',
                 'link'      => 'link value',
                 'scale'     => (object)array(
-                    'id'    => 1,
-                    'name'  => 'name value',
+                    'row' => (object)array(
+                        'id'    => 1,
+                        'name'  => 'name value',
+                    ),
                 )
             ),
         );

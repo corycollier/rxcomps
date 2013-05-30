@@ -30,7 +30,7 @@
  * @since       Class available since release 2.0.0
  */
 
-class Tests_App_View_Helper_EventItemOptionTest
+class Tests_App_View_Helper_EventOptionTest
     extends Rx_PHPUnit_TestCase
 {
     /**
@@ -92,12 +92,12 @@ class Tests_App_View_Helper_EventItemOptionTest
         $view->expects($this->once())
             ->method('htmlAnchor')
             ->with(
-                $this->equalTo(@$eventOption->name),
+                $this->equalTo(@$eventOption->row->name),
                 $this->equalTo(array(
                     'controller' => 'event-options',
                     'action'    => 'view',
-                    'id'        => @$eventOption->id,
-                    'event_id'  => @$eventOption->event_id,
+                    'id'        => @$eventOption->row->id,
+                    'event_id'  => @$eventOption->row->event_id,
                 ))
             )
             ->will($this->returnValue($htmlAnchor));
@@ -125,9 +125,11 @@ class Tests_App_View_Helper_EventItemOptionTest
                 'expected'  => '<h3>html-anchor</h3>',
                 'anchor'    => 'html-anchor',
                 'eventOption' => (object)array(
-                    'id'    => 1,
-                    'name'  => 'EventOption Name',
-                    'event_id' => 1,
+                    'row' => (object)array(
+                        'id'    => 1,
+                        'name'  => 'EventOption Name',
+                        'event_id' => 1,
+                    ),
                 ),
             ),
         );

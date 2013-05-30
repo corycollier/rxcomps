@@ -85,27 +85,28 @@ class Tests_App_View_Helper_Competition
      */
     public function test__getTitle ($expected, $htmlAnchor, $competition)
     {
-        $subject = $this->getBuiltMock('App_View_Helper_Competition');
-        $view   = $this->getBuiltMock('Zend_View', array('htmlAnchor', 'event'));
-        $event  = $this->getBuiltMock('App_View_Helper_Event', array('id'));
+        $subject    = $this->getBuiltMock('App_View_Helper_Competition');
+        $view       = $this->getBuiltMock('Zend_View', array('htmlAnchor', 'request'));
+        $request    = $this->getBuiltMock('Zend_Controller_Request_Http', array('getParam'));
         $eventId = 1;
 
-        $event->expects($this->once())
-            ->method('id')
+        $request->expects($this->once())
+            ->method('getParam')
+            ->with($this->equalTo('event_id'))
             ->will($this->returnValue($eventId));
 
         $view->expects($this->once())
-            ->method('event')
-            ->will($this->returnValue($event));
+            ->method('request')
+            ->will($this->returnValue($request));
 
         $view->expects($this->once())
             ->method('htmlAnchor')
             ->with(
-                $this->equalTo(@$competition->name),
+                $this->equalTo(@$competition->row->name),
                 $this->equalTo(array(
                     'controller'=> 'competitions',
                     'action'    => 'view',
-                    'id'        => @$competition->id,
+                    'id'        => @$competition->row->id,
                     'event_id'  => $eventId,
                 ))
             )
@@ -131,13 +132,17 @@ class Tests_App_View_Helper_Competition
     {
         return array(
             array('<h3>html-anchor</h3>', 'html-anchor', (object)array(
-                'id'    => 1,
-                'name'  => 'Competition Name',
+                'row' => (object)array(
+                    'id'    => 1,
+                    'name'  => 'Competition Name',
+                ),
             )),
 
             array('<h3>another Html-anchor</h3>', 'another html-anchor', (object)array(
-                'id'    => 1,
-                'name'  => 'Competition Name Does Not Matter Here',
+                'row' => (object)array(
+                    'id'    => 1,
+                    'name'  => 'Competition Name Does Not Matter Here',
+                ),
             )),
         );
 

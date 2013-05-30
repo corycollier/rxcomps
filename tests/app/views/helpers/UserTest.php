@@ -98,10 +98,10 @@ class Tests_App_View_Helper_User
 
         $view->expects($this->once())
             ->method('htmlAnchor')
-            ->with($this->equalTo($scale->name), $this->equalTo(array(
+            ->with($this->equalTo($scale->row->name), $this->equalTo(array(
                 'controller'=> 'users',
                 'action'    => 'view',
-                'id'        => $scale->id,
+                'id'        => $scale->row->id,
             )))
             ->will($this->returnValue($link));
 
@@ -128,8 +128,10 @@ class Tests_App_View_Helper_User
                 'expected'  => '<h3>link value</h3>',
                 'link'      => 'link value',
                 'scale'     => (object)array(
-                    'id'    => 1,
-                    'name'  => 'name value',
+                    'row' => (object)array(
+                        'id'    => 1,
+                        'name'  => 'name value',
+                    ),
                 )
             ),
         );

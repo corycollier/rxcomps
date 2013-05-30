@@ -65,11 +65,11 @@ class App_View_Helper_Competition
     protected function _getTitle ($competition)
     {
         $view = $this->view;
-        $title = sprintf('<h3>%s</h3>', $view->htmlAnchor(ucwords($competition->name), array(
+        $title = sprintf('<h3>%s</h3>', $view->htmlAnchor(ucwords($competition->row->name), array(
             'controller'    => 'competitions',
             'action'    => 'view',
-            'id'        => $competition->id,
-            'event_id'  => $view->event()->id(),
+            'id'        => $competition->row->id,
+            'event_id'  => $view->request()->getParam('event_id'),
         )));
 
         return ucwords($title);
