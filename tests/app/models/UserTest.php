@@ -241,7 +241,6 @@ class Tests_App_Model_UserTest
      * Tests the getAuth of the App_Model_User
      *
      * @covers          App_Model_User::getAuth
-     * @dataProvider    provide_getAuth
      */
     public function test_getAuth ( )
     {
@@ -253,19 +252,6 @@ class Tests_App_Model_UserTest
 
     } // END function test_getAuth
 
-    /**
-     * provide_getAuth()
-     *
-     * Provides data for the getAuth method of the
-     * App_Model_User class
-     */
-    public function provide_getAuth ( )
-    {
-        return array(
-            array(),
-        );
-
-    } // END function provide_getAuth
 
     /**
      * test_getAuthAdapter()
@@ -578,5 +564,84 @@ class Tests_App_Model_UserTest
         );
 
     } // END function provide_create
+
+    /**
+     * test_getResourceId()
+     *
+     * Tests the getResourceId of the App_Model_User
+     *
+     * @covers App_Model_User::getResourceId
+     */
+    public function test_getResourceId ( )
+    {
+        $subject = new App_Model_User;
+        $result = $subject->getResourceId();
+        $this->assertSame('users', $result);
+
+    } // END function test_getResourceId
+
+    /**
+     * test_getLoginForm()
+     *
+     * Tests the getLoginForm of the App_Model_User
+     *
+     * @covers          App_Model_User::getLoginForm
+     */
+    public function test_getLoginForm ( )
+    {
+        $subject = new App_Model_User;
+        $result = $subject->getLoginForm();
+        $this->assertInstanceOf('App_Form_Login', $result);
+
+    } // END function test_getLoginForm
+
+    /**
+     * test_fromSession()
+     *
+     * Tests the fromSession of the App_Model_User
+     *
+     * @covers          App_Model_User::fromSession
+     */
+    public function test_fromSession ( )
+    {
+        $subject = $this->getMockBuilder('App_Model_User')
+            ->setMethods(array('getAuth', 'load'))
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $auth = $this->getMockBuilder('Zend_Auth')
+            ->setMethods(array('getStorage'))
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $storage = $this->getMockBuilder('Zend_Auth_Storage_Session')
+            ->setMethods(array('read'))
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $data = (object)array('id' => 1);
+
+        $storage->expects($this->once())
+            ->method('read')
+            ->will($this->returnValue($data));
+
+        $auth->expects($this->once())
+            ->method('getStorage')
+            ->will($this->returnValue($storage));
+
+        $subject->expects($this->once())
+            ->method('getAuth')
+            ->will($this->returnValue($auth));
+
+
+        $subject->expects($this->once())
+            ->method('load')
+            ->with($this->equalTo($data->id));
+
+        $result = $subject->fromSession();
+
+        $this->assertSame($subject, $result);
+
+    } // END function test_fromSession
 
 } // END class Tests_App_Model_UserTest
