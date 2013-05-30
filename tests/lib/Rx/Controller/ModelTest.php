@@ -149,13 +149,7 @@ class Tests_Rx_Controller_ModelTest
     {
         // create objects to mock
         $subject = $this->getBuiltMock('Rx_Controller_Model', array(
-            'getHelper', 'getModel', 'getRequest'
-        ));
-        $flash = $this->getBuiltMock('Zend_Controller_Action_Helper_FlashMessenger', array(
-            'addMessage',
-        ));
-        $redirector = $this->getBuiltMock('Zend_Controller_Action_Helper_Redirector', array(
-            'gotoRoute',
+            'flashAndRedirect', 'getModel', 'getRequest'
         ));
         $model = $this->getBuiltMock('Rx_Model_Abstract', array('load'));
         $request = new Zend_Controller_Request_HttpTestCase;
@@ -172,26 +166,20 @@ class Tests_Rx_Controller_ModelTest
             ->with($this->equalTo($id));
 
         if (! $id) {
-            $flash->expects($this->once())->method('addMessage');
-            $redirector->expects($this->once())
-                ->method('gotoRoute')
-                ->with(
+            $subject->expects($this->any())
+                ->method('flashAndRedirect')
+                ->will(
+                    $this->anything(),
+                    $this->equalTo('error'),
                     $this->equalTo(array(
-                        'module'    => $module,
-                        'controller'=> $controller,
-                        'action'    => 'index',
-                    )),
+                        'module'        => $request->getModuleName(),
+                        'controller'    => $request->getControllerName(),
+                        'action'        => 'index',
+                    ),
                     $this->equalTo('default'),
                     $this->equalTo(true)
-                );
+                ));
         }
-
-        $subject->expects($this->any())
-            ->method('getHelper')
-            ->will($this->returnValueMap(array(
-                array('FlashMessenger', $flash),
-                array('Redirector', $redirector),
-            )));
 
         $subject->expects($this->once())
             ->method('getRequest')
@@ -336,7 +324,7 @@ class Tests_Rx_Controller_ModelTest
             ->method('isValid')
             ->with($this->equalTo($merged))
             ->will($exception
-                ? $this->throwException()
+                ? $this->throwException(new Rx_Controller_Exception($exception))
                 : $this->returnValue(true)
             );
 
@@ -354,6 +342,8 @@ class Tests_Rx_Controller_ModelTest
 
         if (! $exception) {
             $subject->expects($this->once())->method('flashAndRedirect');
+        } else {
+            $this->setExpectedException('Rx_Controller_Exception');
         }
 
         $method = new ReflectionMethod('Rx_Controller_Model', '_create');
