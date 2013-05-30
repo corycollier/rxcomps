@@ -29,7 +29,7 @@
  */
 
 class App_View_Helper_Score
-    extends Zend_View_Helper_HtmlElement
+    extends Rx_View_Helper_Model
 {
     /**
      * Property to define the model type associated with this helper
@@ -66,8 +66,8 @@ class App_View_Helper_Score
     {
         $view = $this->view;
 
-        $athlete = $score->findParentRow('App_Model_DbTable_Athlete');
-        $competition = $score->findParentRow('App_Model_DbTable_Competition');
+        $athlete = $score->row->findParentRow('App_Model_DbTable_Athlete');
+        $competition = $score->row->findParentRow('App_Model_DbTable_Competition');
 
         if ($competition->goal == 'time') {
             $filter = new Rx_Filter_SecondsToTime;
