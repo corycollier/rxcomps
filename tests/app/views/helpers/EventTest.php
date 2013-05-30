@@ -32,7 +32,7 @@
  * @author      Cory Collier <corycollier@corycollier.com>
  */
 
-class Tests_App_View_Helper_App_View_Helper_EventTest
+class Tests_App_View_Helper_EventTest
     extends Rx_PHPUnit_TestCase
 {
     /**
@@ -69,8 +69,8 @@ class Tests_App_View_Helper_App_View_Helper_EventTest
     public function provide_event ( )
     {
         return array(
-            'no params, no actions' => array(
-                (object)array('id' => 1, 'name' => 'value'),
+            'has request id, no exception' => array(
+                'model' => (object)array('id' => 1),
             ),
         );
 
@@ -203,4 +203,4 @@ class Tests_App_View_Helper_App_View_Helper_EventTest
 
     } // END function provide_register
 
-} // END class Tests_App_View_Helper_App_View_Helper_EventTest
+} // END class Tests_App_View_Helper_EventTest

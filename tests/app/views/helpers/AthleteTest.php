@@ -80,8 +80,8 @@ class Tests_App_View_Helper_AtheleteTest
      *
      * Tests the _getTitle of the App_View_Helper_athlete
      *
-     * @covers          App_View_Helper_athlete::_getTitle
-     * @dataProvider    provide__getTitle
+     * @covers App_View_Helper_athlete::_getTitle
+     * @dataProvider provide__getTitle
      */
     public function test__getTitle ($expected, $htmlAnchor, $athlete)
     {
@@ -92,12 +92,12 @@ class Tests_App_View_Helper_AtheleteTest
         $view->expects($this->once())
             ->method('htmlAnchor')
             ->with(
-                $this->equalTo(@$athlete->name),
+                $this->equalTo(@$athlete->row->name),
                 $this->equalTo(array(
                     'controller' => 'athletes',
                     'action'    => 'view',
-                    'id'        => @$athlete->id,
-                    'event_id'  => @$athlete->event_id,
+                    'id'        => @$athlete->row->id,
+                    'event_id'  => @$athlete->row->event_id,
                 ))
             )
             ->will($this->returnValue($htmlAnchor));
