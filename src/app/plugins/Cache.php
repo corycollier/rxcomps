@@ -32,21 +32,6 @@
 class App_Plugin_Cache
     extends Rx_Controller_Plugin_Abstract
 {
-/**
-     *  @var bool Whether or not to disable caching
-     */
-    public $doNotCache = true;
-
-    /**
-     * @var Zend_Cache_Frontend
-     */
-    public $cache;
-
-    /**
-     * @var string Cache key
-     */
-    public $key;
-
     /**
      * Start caching
      *
@@ -58,8 +43,6 @@ class App_Plugin_Cache
      */
     public function dispatchLoopStartup (Zend_Controller_Request_Abstract $request)
     {
-        $path = $request->getPathInfo();
-
         $cache = $this->getCache();
 
         // $result = $cache->start();

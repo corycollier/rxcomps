@@ -67,8 +67,9 @@ class Tests_Rx_View_Helper_FormSelectTest
         return array(
             'simple test' =>array(
                 implode(PHP_EOL, array(
-                    '<ul class="picker"><li class="picker"><select name="name" id="name">',
-                    '</select><a href="#" class="toggle">Please Select<span class="caret"></span></a><ul></ul></li></ul>',
+                    '<ul class="picker"><li class="field"><div class="picker"><select name="name" id="name">',
+                    '    ',
+                    '</select></div></li></ul>',
                 )),
                 'name',
                 'value',
@@ -76,8 +77,9 @@ class Tests_Rx_View_Helper_FormSelectTest
 
             'multiple test' =>array(
                 implode(PHP_EOL, array(
-                    '<ul class="picker"><li class="picker"><select name="name[]" id="name" multiple="multiple">',
-                    '</select><a href="#" class="toggle">Please Select<span class="caret"></span></a><ul></ul></li></ul>',
+                    '<ul class="picker"><li class="field"><div class="picker"><select name="name[]" id="name" multiple="multiple">',
+                    '    ',
+                    '</select></div></li></ul>',
                 )),
                 'name[]',
                 'value',
@@ -85,8 +87,9 @@ class Tests_Rx_View_Helper_FormSelectTest
 
             'another multiple test' =>array(
                 implode(PHP_EOL, array(
-                    '<ul class="picker"><li class="picker"><select name="name[]" id="name" multiple="multiple">',
-                    '</select><a href="#" class="toggle">Please Select<span class="caret"></span></a><ul></ul></li></ul>',
+                    '<ul class="picker"><li class="field"><div class="picker"><select name="name[]" id="name" multiple="multiple">',
+                    '    ',
+                    '</select></div></li></ul>',
                 )),
                 'name',
                 'value',
@@ -96,8 +99,9 @@ class Tests_Rx_View_Helper_FormSelectTest
             ),
             'another multiple test, but false this time' =>array(
                 implode(PHP_EOL, array(
-                    '<ul class="picker"><li class="picker"><select name="name" id="name">',
-                    '</select><a href="#" class="toggle">Please Select<span class="caret"></span></a><ul></ul></li></ul>',
+                    '<ul class="picker"><li class="field"><div class="picker"><select name="name" id="name">',
+                    '    ',
+                    '</select></div></li></ul>',
                 )),
                 'name',
                 'value',
@@ -108,8 +112,9 @@ class Tests_Rx_View_Helper_FormSelectTest
 
             'disable test' =>array(
                 implode(PHP_EOL, array(
-                    '<ul class="picker"><li class="picker"><select name="name" id="name" disabled="disabled">',
-                    '</select><a href="#" class="toggle">Please Select<span class="caret"></span></a><ul></ul></li></ul>',
+                    '<ul class="picker"><li class="field"><div class="picker"><select name="name" id="name" disabled="disabled">',
+                    '    ',
+                    '</select></div></li></ul>',
                 )),
                 'name',
                 'value',
@@ -120,8 +125,9 @@ class Tests_Rx_View_Helper_FormSelectTest
 
             'simple options test' =>array(
                 implode(PHP_EOL, array(
-                    '<ul class="picker"><li class="picker"><select name="name" id="name">',
-                    '<option value="value1" label="label1">label1</option></select><a href="#" class="toggle">Please Select<span class="caret"></span></a><ul><li><a href="#">label1</a></li></ul></li></ul>',
+                    '<ul class="picker"><li class="field"><div class="picker"><select name="name" id="name">',
+                    '    <option value="value1" label="label1">label1</option>',
+                    '</select></div></li></ul>',
                 )),
                 'name',
                 'value',
@@ -133,13 +139,9 @@ class Tests_Rx_View_Helper_FormSelectTest
 
             'simple options test with current value' =>array(
                 implode(PHP_EOL, array(
-                    '<ul class="picker"><li class="picker"><select name="name" id="name">',
-                    implode('', array(
-                        '<option value="value1" label="label1" selected="selected">label1</option>',
-                        '</select>',
-                        '<a href="#" class="toggle">label1<span class="caret"></span></a>',
-                        '<ul><li><a href="#">label1</a></li></ul></li></ul>',
-                    )),
+                    '<ul class="picker"><li class="field"><div class="picker"><select name="name" id="name">',
+                    '    <option value="value1" label="label1" selected="selected">label1</option>',
+                    '</select></div></li></ul>',
                 )),
                 'name',
                 'value1',
@@ -151,10 +153,11 @@ class Tests_Rx_View_Helper_FormSelectTest
 
             'simple options with group test' =>array(
                 implode(PHP_EOL, array(
-                    '<ul class="picker"><li class="picker"><select name="name" id="name">',
-                    '<optgroup id="name-optgroup-group1" label="group1">',
-                    '<option value="value1" label="label1">label1</option>',
-                    '</optgroup></select><a href="#" class="toggle">Please Select<span class="caret"></span></a><ul></ul></li></ul>',
+                    '<ul class="picker"><li class="field"><div class="picker"><select name="name" id="name">',
+                    '    <optgroup id="name-optgroup-group1" label="group1">',
+                    '    <option value="value1" label="label1">label1</option>',
+                    '    </optgroup>',
+                    '</select></div></li></ul>',
 
                 )),
                 'name',
@@ -167,11 +170,11 @@ class Tests_Rx_View_Helper_FormSelectTest
 
             'simple options with group test and disabled option' =>array(
                 implode(PHP_EOL, array(
-                    '<ul class="picker"><li class="picker"><select name="name" id="name">',
-                    '<optgroup id="name-optgroup-group1" label="group1">',
-                    '<option value="value1" label="label1" disabled="disabled">label1</option>',
-                    '</optgroup></select><a href="#" class="toggle">Please Select<span class="caret"></span></a><ul></ul></li></ul>',
-
+                    '<ul class="picker"><li class="field"><div class="picker"><select name="name" id="name">',
+                    '    <optgroup id="name-optgroup-group1" label="group1">',
+                    '    <option value="value1" label="label1" disabled="disabled">label1</option>',
+                    '    </optgroup>',
+                    '</select></div></li></ul>',
                 )),
                 'name',
                 'value',
@@ -187,10 +190,11 @@ class Tests_Rx_View_Helper_FormSelectTest
 
             'simple options with group test and disabled group' =>array(
                 implode(PHP_EOL, array(
-                    '<ul class="picker"><li class="picker"><select name="name" id="name">',
-                    '<optgroup disabled="disabled" id="name-optgroup-group1" label="group1">',
-                    '<option value="value1" label="label1">label1</option>',
-                    '</optgroup></select><a href="#" class="toggle">Please Select<span class="caret"></span></a><ul></ul></li></ul>',
+                    '<ul class="picker"><li class="field"><div class="picker"><select name="name" id="name">',
+                    '    <optgroup disabled="disabled" id="name-optgroup-group1" label="group1">',
+                    '    <option value="value1" label="label1">label1</option>',
+                    '    </optgroup>',
+                    '</select></div></li></ul>',
 
                 )),
                 'name',
@@ -204,12 +208,6 @@ class Tests_Rx_View_Helper_FormSelectTest
                     'group1' => array('value1' => 'label1'),
                 ),
             ),
-
-            // 'disable test' =>array(
-            //     '<p  class=" btn"><a href="#">value</a></p>', 'name', 'value', array(
-            //         'disable' => true
-            //     )
-            // ),
         );
 
     } // END function provide_formSelect

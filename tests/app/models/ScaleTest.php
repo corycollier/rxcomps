@@ -50,4 +50,33 @@ class Tests_App_Model_ScaleTest
 
     } // END function test_getResourceId
 
+    /**
+     * test_getEvent()
+     *
+     * Tests the getEvent of the App_Model_Scale
+     *
+     * @covers          App_Model_Scale::getEvent
+     */
+    public function test_getEvent ( )
+    {
+        $subject = $this->getMockBuilder('App_Model_Scale')
+            ->setMethods(array('getParent'))
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $event = $this->getMockBuilder('App_Model_Event')
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $subject->expects($this->once())
+            ->method('getParent')
+            ->with($this->equalTo('Event'))
+            ->will($this->returnValue($event));
+
+        $result = $subject->getEvent();
+
+        $this->assertSame($event, $result);
+
+    } // END function test_getEvent
+
 }

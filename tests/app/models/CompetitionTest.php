@@ -255,6 +255,7 @@ class Tests_App_Model_CompetitionTest
     public function test_getPoints ($expected, $scoringType, $id, $scores = array(), $scoring = null)
     {
         $subject = $this->getBuiltMock('App_Model_Competition', array('getTable', 'getScoringType'));
+        $table  = $this->getBuiltMock('App_Model_DbTable_Competition', array('fetchRow'));
 
         $subject->id = $id;
 
@@ -263,7 +264,6 @@ class Tests_App_Model_CompetitionTest
             ->will($this->returnValue($scoringType));
 
         if ($scoringType == 'points') {
-            $table  = $this->getBuiltMock('Zend_Db_Table', array('fetchRow'));
             $table->expects($this->once())
                 ->method('fetchRow')
                 ->with($this->equalTo(sprintf('competition_id = %d', $id)))
@@ -295,7 +295,7 @@ class Tests_App_Model_CompetitionTest
                 range(0, 100, 10),
                 'points',
                 1,
-                range(1, 5),
+                range(0, 10),
                 (object)array('definition' => implode(PHP_EOL, range(0, 100, 10)))
             ),
 
