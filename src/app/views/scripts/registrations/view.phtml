@@ -15,11 +15,13 @@
 ?>
 
 <?php
+$eventId = $this->request()->getParam('event_id');
+
 // echo a link back to the main event
 echo $this->actionList(array(
     $this->backToEventLink($this->model, $this->request()->getParams()),
     $this->model(new App_Model_Score)->create($this->user, 'Add Score', array(
-        'event_id'  => $this->event()->id(),
+        'event_id'  => $eventId,
     )),
 ));
 ?>
@@ -33,20 +35,20 @@ $event = $this->model->getParent('Event');
 
 $user->row->gender = $athlete->row->gender;
 
-echo $this->user($user)->profile($this->user, array(
-    'event_id'  => $this->event()->id(),
+echo $this->user($user->row)->profile($this->user, array(
+    'event_id'  => $eventId,
 ));
 
-echo $this->registration($this->model)->item($this->user, array(
-    'event_id'  => $this->event()->id(),
+echo $this->registration($this->model->row)->item($this->user, array(
+    'event_id'  => $eventId,
 ));
 
-echo $this->athlete($athlete)->item($this->user, array(
-    'event_id'  => $this->event()->id(),
+echo $this->athlete($athlete->row)->item($this->user, array(
+    'event_id'  => $eventId,
 ));
 
-echo $this->event($event)->item($this->user, array(
-    'event_id'  => $this->event()->id(),
+echo $this->event($event->row)->item($this->user, array(
+    'event_id'  => $eventId,
 ))
 
 ?>

@@ -29,7 +29,7 @@
  */
 
 class App_View_Helper_EventOption
-    extends Zend_View_Helper_HtmlElement
+    extends Rx_View_Helper_Model
 {
     /**
      * Property to define the model type associated with this helper

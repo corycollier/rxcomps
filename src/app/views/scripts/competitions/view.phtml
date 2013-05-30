@@ -21,7 +21,7 @@ $eventId = $this->request()->getParam('event_id');
 // echo a link back to the main event
 echo $this->actionList(array(
     $this->backToEventLink($this->model, $this->request()->getParams()),
-    $this->model(new App_Model_Competition)->create($this->user, 'Add Score', array(
+    $this->model(new App_Model_Score)->create($this->user, 'Add Score', array(
         'event_id'  => $eventId,
         'competition_id'=> $this->model->id,
     )),
