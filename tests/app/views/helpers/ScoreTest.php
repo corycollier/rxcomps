@@ -36,7 +36,7 @@ class Tests_App_View_Helper_Score
     /**
      * test_score()
      *
-     * Tests the score of the App_View_Helper_Score
+     * Tests the score method of the App_View_Helper_Score class
      *
      * @covers          App_View_Helper_Score::score
      * @dataProvider    provide_score
@@ -66,7 +66,7 @@ class Tests_App_View_Helper_Score
     {
         return array(
             'no params, no actions' => array(
-                (object)array('id' => 1, 'name' => 'value'),
+                (object)array('id' => 1, 'name' => 'value', 'goal' => 'time'),
             ),
         );
 

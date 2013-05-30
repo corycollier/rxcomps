@@ -57,6 +57,8 @@ class Rx_View_Helper_Model
      */
     public function model ($model, $modelName = null)
     {
+        // var_dump(func_get_args()); die;
+
         if ($modelName) {
             $row = $model;
             $model = new $modelName;

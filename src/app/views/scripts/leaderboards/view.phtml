@@ -19,6 +19,6 @@
 echo $this->actionList(array(
     $this->backToEventLink($this->model, $this->request()->getParams()),
 ));
-
+var_dump($this->items);
 echo $this->leaderboard()->table($this->items);
 ?>

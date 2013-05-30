@@ -129,6 +129,7 @@ class App_View_Helper_Leaderboard
      */
     public function row ($data, $rank)
     {
+        var_dump($data); die;
         if (! array_key_exists('athlete_id', $data)) {
             return '';
         }
