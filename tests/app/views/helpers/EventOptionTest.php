@@ -36,18 +36,18 @@ class Tests_App_View_Helper_EventItemOptionTest
     /**
      * test_eventOption()
      *
-     * Tests the eventOption method of the App_View_Helper_EventOptionItem class
+     * Tests the eventOption method of the App_View_Helper_EventOption class
      *
-     * @covers App_View_Helper_EventOptionItem::eventOption
+     * @covers App_View_Helper_EventOption::eventOption
      * @dataProvider provide_eventOption
      */
     public function test_eventOption ($model)
     {
-        $subject = $this->getBuiltMock('App_View_Helper_EventOptionItem', array('model'));
+        $subject = $this->getBuiltMock('App_View_Helper_EventOption', array('model'));
 
         $subject->expects($this->once())
             ->method('model')
-            ->with($this->equalTo($model), $this->equalTo('App_Model_EventOptionItem'))
+            ->with($this->equalTo($model), $this->equalTo('App_Model_EventOption'))
             ->will($this->returnSelf());
 
         $result = $subject->eventOption($model);
@@ -60,7 +60,7 @@ class Tests_App_View_Helper_EventItemOptionTest
      * provide_eventOption()
      *
      * Provides data to use for testing the eventOption method of
-     * the App_View_Helper_EventOptionItem class
+     * the App_View_Helper_EventOption class
      *
      * @return array
      */
@@ -79,14 +79,14 @@ class Tests_App_View_Helper_EventItemOptionTest
     /**
      * test__getTitle()
      *
-     * Tests the _getTitle of the App_View_Helper_EventOptionItem
+     * Tests the _getTitle of the App_View_Helper_EventOption
      *
-     * @covers          App_View_Helper_EventOptionItem::_getTitle
+     * @covers          App_View_Helper_EventOption::_getTitle
      * @dataProvider    provide__getTitle
      */
     public function test__getTitle ($expected, $htmlAnchor, $eventOption)
     {
-        $subject = $this->getBuiltMock('App_View_Helper_EventOptionItem');
+        $subject = $this->getBuiltMock('App_View_Helper_EventOption');
         $view = $this->getBuiltMock('Zend_View', array('htmlAnchor'));
 
         $view->expects($this->once())
@@ -104,7 +104,7 @@ class Tests_App_View_Helper_EventItemOptionTest
 
         $subject->view = $view;
 
-        $result = $this->getMethod('App_View_Helper_EventOptionItem', '_getTitle')
+        $result = $this->getMethod('App_View_Helper_EventOption', '_getTitle')
             ->invoke($subject, $eventOption);
 
         $this->assertEquals($expected, $result);
@@ -115,7 +115,7 @@ class Tests_App_View_Helper_EventItemOptionTest
      * provide__getTitle()
      *
      * Provides data for the _getTitle method of the
-     * App_View_Helper_EventOptionItem class
+     * App_View_Helper_EventOption class
      */
     public function provide__getTitle ( )
     {

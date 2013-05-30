@@ -3,7 +3,7 @@
  * Unit Tests for AtheleteItem
  *
  * This unit test should test all of the custom functionality provided by the
- * App_View_Helper_CompetitionItem class
+ * App_View_Helper_Competition class
  *
  * @category    RxCompetition
  * @package     Tests
@@ -19,7 +19,7 @@
  * Unit Tests for AtheleteItem
  *
  * This unit test should test all of the custom functionality provided by the
- * App_View_Helper_CompetitionItem class
+ * App_View_Helper_Competition class
  *
  * @category    RxCompetition
  * @package     Tests
@@ -30,21 +30,21 @@
  * @since       Class available since release 1.0.0
  */
 
-class Tests_App_View_Helper_CompetitionItem
+class Tests_App_View_Helper_Competition
     extends Rx_PHPUnit_TestCase
 {
 
     /**
      * test_competition()
      *
-     * Tests the CompetitionItem of the App_View_Helper_CompetitionItem
+     * Tests the CompetitionItem of the App_View_Helper_Competition
      *
-     * @covers          App_View_Helper_CompetitionItem::competition
+     * @covers          App_View_Helper_Competition::competition
      * @dataProvider    provide_competition
      */
     public function test_competition ($model)
     {
-        $subject = $this->getBuiltMock('App_View_Helper_CompetitionItem', array('model'));
+        $subject = $this->getBuiltMock('App_View_Helper_Competition', array('model'));
 
         $subject->expects($this->once())
             ->method('model')
@@ -61,7 +61,7 @@ class Tests_App_View_Helper_CompetitionItem
      * provide_competition()
      *
      * Provides data for the CompetitionItem method of the
-     * App_View_Helper_CompetitionItem class
+     * App_View_Helper_Competition class
      */
     public function provide_competition ( )
     {
@@ -78,14 +78,14 @@ class Tests_App_View_Helper_CompetitionItem
     /**
      * test__getTitle()
      *
-     * Tests the _getTitle of the App_View_Helper_CompetitionItem
+     * Tests the _getTitle of the App_View_Helper_Competition
      *
-     * @covers          App_View_Helper_CompetitionItem::_getTitle
+     * @covers          App_View_Helper_Competition::_getTitle
      * @dataProvider    provide__getTitle
      */
     public function test__getTitle ($expected, $htmlAnchor, $competition)
     {
-        $subject = $this->getBuiltMock('App_View_Helper_CompetitionItem');
+        $subject = $this->getBuiltMock('App_View_Helper_Competition');
         $view   = $this->getBuiltMock('Zend_View', array('htmlAnchor', 'event'));
         $event  = $this->getBuiltMock('App_View_Helper_Event', array('id'));
         $eventId = 1;
@@ -114,7 +114,7 @@ class Tests_App_View_Helper_CompetitionItem
 
         $subject->view = $view;
 
-        $result = $this->getMethod('App_View_Helper_CompetitionItem', '_getTitle')
+        $result = $this->getMethod('App_View_Helper_Competition', '_getTitle')
             ->invoke($subject, $competition);
 
         $this->assertEquals($expected, $result);
@@ -125,7 +125,7 @@ class Tests_App_View_Helper_CompetitionItem
      * provide__getTitle()
      *
      * Provides data for the _getTitle method of the
-     * App_View_Helper_CompetitionItem class
+     * App_View_Helper_Competition class
      */
     public function provide__getTitle ( )
     {
