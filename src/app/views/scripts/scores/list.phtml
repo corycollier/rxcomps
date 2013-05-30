@@ -15,16 +15,18 @@
 ?>
 
 <?php
+$eventId = $this->request()->getParam('event_id');
+
 // echo the appropriate link to create a new score
 echo $this->model(new App_Model_Score)->create($this->user, 'Add Score', array(
-    'event_id'  => $this->event()->id(),
+    'event_id'  => $eventId,
 ));
 
 // iterate through the scores, rendering information
 foreach ($this->items as $score) :
 
     echo $this->score($score)->item($this->user, array(
-        'event_id'  => $this->event()->id(),
+        'event_id'  => $eventId,
     ));
 
 endforeach;

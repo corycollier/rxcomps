@@ -38,6 +38,7 @@ echo $this->athlete($this->model)->item($this->user, array(
 // render the score list for this athlete
 echo $this->action('list', 'scores', 'default', array(
     'athlete_id' => $this->model->id,
+    'event_id'  => $eventId,
 ));
 
 ?>

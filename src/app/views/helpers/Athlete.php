@@ -48,7 +48,7 @@ class App_View_Helper_Athlete
      */
     public function athlete ($model)
     {
-        $this->model($model, $this->_modelName);
+        $this->model($model->row, $this->_modelName);
 
         return $this;
 
