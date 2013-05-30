@@ -66,11 +66,11 @@ class App_View_Helper_EventOption
     {
         $view = $this->view;
 
-        $link = $view->htmlAnchor(ucwords($eventOption->name), array(
+        $link = $view->htmlAnchor(ucwords($eventOption->row->name), array(
             'controller'=> 'event-options',
             'action'    => 'view',
-            'id'        => $eventOption->id,
-            'event_id'  => $eventOption->event_id,
+            'id'        => $eventOption->row->id,
+            'event_id'  => $eventOption->row->event_id,
         ));
 
         // var_dump($athlete); die;

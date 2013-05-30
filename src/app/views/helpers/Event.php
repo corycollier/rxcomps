@@ -65,11 +65,11 @@ class App_View_Helper_Event
     protected function _getTitle ($event)
     {
         $view = $this->view;
-        $title = sprintf('<h3>%s</h3>', $view->htmlAnchor($event->name, array(
+        $title = sprintf('<h3>%s</h3>', $view->htmlAnchor($event->row->name, array(
             'controller'=> 'events',
             'action'    => 'view',
-            'id'        => $event->id,
-            'event_id'  => $event->id,
+            'id'        => $event->row->id,
+            'event_id'  => $event->row->id,
         )));
 
         return $title;

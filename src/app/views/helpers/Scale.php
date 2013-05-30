@@ -65,10 +65,10 @@ class App_View_Helper_Scale
     protected function _getTitle ($scale)
     {
         $view = $this->view;
-        $title = sprintf('<h3>%s</h3>', $view->htmlAnchor($scale->name, array(
+        $title = sprintf('<h3>%s</h3>', $view->htmlAnchor($scale->row->name, array(
             'controller'=> 'scales',
             'action'    => 'view',
-            'id'        => $scale->id,
+            'id'        => $scale->row->id,
         )));
 
         return $title;

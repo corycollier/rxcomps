@@ -71,10 +71,10 @@ class App_View_Helper_Score
 
         if ($competition->goal == 'time') {
             $filter = new Rx_Filter_SecondsToTime;
-            $score->score = $filter->filter($score->score);
+            $score->score = $filter->filter($score->row->score);
         }
 
-        $title = sprintf('<h3>%s</h3>', $view->htmlAnchor($score->score, array(
+        $title = sprintf('<h3>%s</h3>', $view->htmlAnchor($score->row->score, array(
             'controller'=> 'scores',
             'action'    => 'view',
             'id'        => $score->id,
