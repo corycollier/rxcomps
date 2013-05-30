@@ -28,7 +28,7 @@
  * @since       Class available since release 1.0.0
  */
 
-class App_View_Helper_EventOptionItem
+class App_View_Helper_EventOption
     extends Zend_View_Helper_HtmlElement
 {
     /**

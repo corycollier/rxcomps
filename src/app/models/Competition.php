@@ -42,7 +42,7 @@ class App_Model_Competition
      * @param array $values
      * @return App_Model_Competition $this for a fluent interface
      */
-    public function create ($values)
+    public function create ($values = array())
     {
         $created = new Zend_Date;
 
@@ -70,7 +70,7 @@ class App_Model_Competition
      * @param array $values
      * @return App_Model_Competition $this for a fluent interface
      */
-    public function edit ($values)
+    public function edit ($values = array())
     {
         $updated = new Zend_Date;
 

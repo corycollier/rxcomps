@@ -228,7 +228,7 @@ class App_Model_User
      * as it's sha1 converted hash
      *
      */
-    public function edit ($values)
+    public function edit ($values = array())
     {
         $values['passwd'] = hash('sha1', @$values['passwd']);
         return $this->_edit($values);
@@ -242,7 +242,7 @@ class App_Model_User
      * as it's sha1 converted hash
      *
      */
-    public function create ($values)
+    public function create ($values = array())
     {
         $values['passwd'] = hash('sha1', @$values['passwd']);
         return $this->_create($values);

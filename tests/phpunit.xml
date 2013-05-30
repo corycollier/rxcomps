@@ -17,6 +17,7 @@
         <exclude>
             <directory>../src/lib/Zend</directory>
             <directory>../src/app/vendor</directory>
+            <directory>../tests</directory>
         </exclude>
     </whitelist>
 </filter>

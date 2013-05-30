@@ -82,7 +82,8 @@ abstract class Rx_Controller_Plugin_Abstract
     public function getView ( )
     {
         $front = $this->getFrontController();
-        $view = $front->getParam('bootstrap')->getResource('view');
+        $bootstrap = $front->getParam('bootstrap');
+        $view = $bootstrap->getResource('view');
 
         return $view;
 

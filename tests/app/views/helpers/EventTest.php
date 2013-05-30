@@ -43,26 +43,18 @@ class Tests_App_View_Helper_App_View_Helper_EventTest
      * @covers App_View_Helper_Event::event
      * @dataProvider provide_event
      */
-    public function test_event ($params = array(), $exception = '')
+    public function test_event ($model)
     {
-        if ($exception) {
-            $this->setExpectedException($exception);
-        }
+        $subject = $this->getBuiltMock('App_View_Helper_Event', array('model'));
 
-        $subject = new App_View_Helper_Event;
-        $request = new Zend_Controller_Request_HttpTestCase;
-        $view = $this->getBuiltMock('Zend_View', array('request'));
+        $subject->expects($this->once())
+            ->method('model')
+            ->with($this->equalTo($model), $this->equalTo('App_Model_Event'))
+            ->will($this->returnSelf());
 
-        $request->setParams($params);
-        $view->expects($this->once())
-            ->method('request')
-            ->will($this->returnValue($request));
+        $result = $subject->event($model);
 
-        $subject->view = $view;
-
-        $result = $subject->event();
-
-        $this->assertSame($subject, $result);
+        $this->assertEquals($subject, $result);
 
     } // END function test_event
 
@@ -77,23 +69,70 @@ class Tests_App_View_Helper_App_View_Helper_EventTest
     public function provide_event ( )
     {
         return array(
-            'has request id, no exception' => array(
-                'params' => array(
-                    'id' => 1,
-                ),
-                'exception' => null,
+            'no params, no actions' => array(
+                (object)array('id' => 1, 'name' => 'value'),
             ),
-
-            'no request id, throws exception' => array(
-                'params' => array(
-                    // 'id' => 1,
-                ),
-                'exception' => 'Rx_View_Helper_Exception',
-            ),
-
         );
 
     } // END function provide_event
+
+    /**
+     * test__getTitle()
+     *
+     * Tests the _getTitle of the App_View_Helper_Event
+     *
+     * @covers          App_View_Helper_Event::_getTitle
+     * @dataProvider    provide__getTitle
+     */
+    public function test__getTitle ($expected, $link, $event)
+    {
+
+        $subject = new App_View_Helper_Event;
+
+        $view = $this->getMockBuilder('Zend_View')
+            ->setMethods(array('htmlAnchor'))
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $view->expects($this->once())
+            ->method('htmlAnchor')
+            ->with($this->equalTo($event->name), $this->equalTo(array(
+                'controller'=> 'events',
+                'action'    => 'view',
+                'id'        => $event->id,
+                'event_id'  => $event->id,
+            )))
+            ->will($this->returnValue($link));
+
+        $subject->view = $view;
+
+        $method = new ReflectionMethod('App_View_Helper_Event', '_getTitle');
+        $method->setAccessible(true);
+        $result = $method->invoke($subject, $event);
+
+        $this->assertEquals($expected, $result);
+    } // END function test__getTitle
+
+    /**
+     * provide__getTitle()
+     *
+     * Provides data for the _getTitle method of the
+     * App_View_Helper_Event class
+     */
+    public function provide__getTitle ( )
+    {
+        return array(
+            array(
+                'expected'  => '<h3>link value</h3>',
+                'link'      => 'link value',
+                'scale'     => (object)array(
+                    'id'    => 1,
+                    'name'  => 'name value',
+                )
+            ),
+        );
+
+    } // END function provide__getTitle
 
     /**
      * test_register()
