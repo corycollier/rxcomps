@@ -57,10 +57,12 @@ class Rx_View_Helper_Model
      */
     public function model ($model, $modelName = null)
     {
-        // var_dump(func_get_args()); die;
-
         if ($modelName) {
             $row = $model;
+            if ($row instanceof Rx_Model_Abstract) {
+                $row = $model->row;
+            }
+
             $model = new $modelName;
             $model->fromRow($row);
         }

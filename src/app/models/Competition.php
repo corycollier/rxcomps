@@ -281,14 +281,15 @@ class App_Model_Competition
     {
         $points = range(1, count($scores));
 
+
         if ($this->getScoringType() == 'points') {
             $scoringTable = $this->getTable('Scoring');
             $scoring = $scoringTable->fetchRow(sprintf('competition_id = %d', $this->id));
             $definition = explode(PHP_EOL, $scoring->definition);
 
-            if (count($definition) == count($points)) {
+            // if (count($definition) == count($points)) {
                 $points = $definition;
-            }
+            // }
         }
 
         return $points;
