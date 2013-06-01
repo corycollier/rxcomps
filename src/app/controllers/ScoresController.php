@@ -48,33 +48,4 @@ class ScoresController
 
     } // END function indexAction
 
-    /**
-     * _edit()
-     *
-     * The actual editing functionality
-     *
-     * @param Rx_Model_Abstract $model
-     * @param Zend_Controller_Request_Http $request
-     * @throws Rx_Controller_Exception
-     */
-    protected function _edit ($model, $request)
-    {
-        $form = $model->getForm();
-        $form->injectDependencies($model, $request->getParams());
-        $form->populate($model->filterValues($request->getParams()));
-
-        $message = sprintf(self::MSG_EDIT_SUCCESS, $this->_modelName);
-        $params = array_merge($request->getParams(), $request->getPost());
-
-        if (! $form->isValid($params)) {
-            throw new Rx_Controller_Exception(self::MSG_FORM_INVALID);
-        }
-
-        var_dump($form->getValues()); die;
-
-        $model->edit($params);
-        $this->flashAndRedirect($message, 'success', $request->getParams());
-
-    } // END function _edit
-
 } // END class App_Controller_ScoresController
