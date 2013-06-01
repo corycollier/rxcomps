@@ -45,17 +45,12 @@ class Tests_Rx_Form_AbstractTest
     public function test___construct ( )
     {
         $subject = $this->getBuiltMock('Rx_Form_Abstract', array(
-            'setStandardDecorators', 'addPrefixPath'
+            'setStandardDecorators', 'addPrefixPath', 'addElementPrefixPath'
         ));
 
         $subject->expects($this->once())->method('setStandardDecorators');
-        $subject->expects($this->once())
-            ->method('addPrefixPath')
-            ->with(
-                $this->equalTo('Rx_Form_Element_'),
-                $this->equalTo('Rx/Form/Element/'),
-                $this->equalTo('element')
-            );
+        $subject->expects($this->exactly(2))->method('addPrefixPath');
+        $subject->expects($this->once())->method('addElementPrefixPath');
 
         $subject->__construct();
 

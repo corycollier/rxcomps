@@ -106,7 +106,7 @@ class Rx_View_Helper_Model
      */
     public function links ($user, $params = array())
     {
-        $acl = $this->_getAcl();
+        $acl = $this->view->acl($user);
         if (! $acl) {
             return;
         }
@@ -119,7 +119,7 @@ class Rx_View_Helper_Model
 
         foreach ($privileges as $privilege) {
 
-            if (! $acl->isAllowed($roleId, $resourceId, $privilege)) {
+            if (! $acl->isAllowed($resourceId, $privilege)) {
                 continue;
             }
 
@@ -153,16 +153,10 @@ class Rx_View_Helper_Model
      */
     public function create ($user, $title, $params = array())
     {
-        $acl = $this->_getAcl();
-        if (! $acl) {
-            return;
-        }
-
         $resourceId = $this->_model->getResourceId();
-        $roleId     = $user->getRoleId();
         $privilege  = 'create';
 
-        if (! $acl->isAllowed($roleId, $resourceId, $privilege)) {
+        if (! $this->view->acl($user)->isAllowed($resourceId, $privilege)) {
             return;
         }
 
@@ -188,16 +182,10 @@ class Rx_View_Helper_Model
      */
     public function csv ($user, $title, $params = array())
     {
-        $acl = $this->_getAcl();
-        if (! $acl) {
-            return;
-        }
-
         $resourceId = $this->_model->getResourceId();
-        $roleId     = $user->getRoleId();
         $privilege  = 'list';
 
-        if (! $acl->isAllowed($roleId, $resourceId, $privilege)) {
+        if (! $this->view->acl($user)->isAllowed($resourceId, $privilege)) {
             return;
         }
 
@@ -238,32 +226,6 @@ class Rx_View_Helper_Model
     public function getValue ($name)
     {
         return $this->_model->getValue($name);
-    }
-
-    /**
-     * getRegistry()
-     *
-     * Method to get the global registry object. This method helps in unit testing
-     *
-     * @return Zend_Registry
-     */
-    protected function _getRegistry ( )
-    {
-        return Zend_Registry::getInstance();
-
-    } // END function getRegistry
-
-    /**
-     * _getAcl()
-     *
-     * Method to get the acl object from the registry
-     *
-     * @return Zend_Acl
-     */
-    protected function _getAcl ( )
-    {
-        return $this->_getRegistry()->get('acl');
-
     }
 
 } // END class Rx_View_Helper_ModelLinks

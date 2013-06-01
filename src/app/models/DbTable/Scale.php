@@ -56,4 +56,13 @@ class App_Model_DbTable_Scale
         ),
     );
 
+    public function getScalesByEventId ($eventId)
+    {
+        return $this->fetchAll(
+            $this->select()
+                ->where(sprintf('event_id = %d', $eventId))
+        );
+
+    }
+
 } // END class App_Model_DbTable_Scales

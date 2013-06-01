@@ -168,17 +168,17 @@ class Tests_Rx_Controller_ModelTest
         if (! $id) {
             $subject->expects($this->any())
                 ->method('flashAndRedirect')
-                ->will(
+                ->with(
                     $this->anything(),
                     $this->equalTo('error'),
                     $this->equalTo(array(
                         'module'        => $request->getModuleName(),
                         'controller'    => $request->getControllerName(),
                         'action'        => 'index',
-                    ),
+                    )),
                     $this->equalTo('default'),
                     $this->equalTo(true)
-                ));
+                );
         }
 
         $subject->expects($this->once())
@@ -228,7 +228,7 @@ class Tests_Rx_Controller_ModelTest
     {
         // create objects to mock
         $subject = $this->getBuiltMock('Rx_Controller_Model', array('getModel', 'getRequest', '_create'));
-        $model  = $this->getBuiltMock('Rx_Model_Abstract', array('filterValues', 'getForm'));
+        $model  = $this->getBuiltMock('Rx_Model_Abstract', array('getForm'));
         $form   = $this->getBuiltMock('Rx_Form_Abstract', array('injectDependencies', 'populate'));
         $request = new Zend_Controller_Request_HttpTestCase;
         $view = new Zend_View;
@@ -246,10 +246,6 @@ class Tests_Rx_Controller_ModelTest
         $form->expects($this->once())
             ->method('injectDependencies')
             ->with($this->equalTo($model), $this->equalTo($params));
-
-        $model->expects($this->once())
-            ->method('filterValues')
-            ->will($this->returnValue($filtered));
 
         $model->expects($this->once())
             ->method('getForm')

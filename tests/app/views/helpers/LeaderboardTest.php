@@ -1,4 +1,4 @@
-<?php
+ <?php
 /**
  * Unit Test Suite for the App_View_Helper_Leaderboard class
  *
@@ -591,6 +591,7 @@ class Tests_App_View_Helper_LeaderboardTest
      */
     public function test_table ($headers, $rows, $data = array())
     {
+        $user = (object)array('doesnt' => 'matter');
         $class = 'App_View_Helper_Leaderboard';
         $subject = $this->getBuiltMock($class, array('headers', 'rows'));
         $expected = '<table class="data-table leaderboards-table">'
@@ -608,7 +609,7 @@ class Tests_App_View_Helper_LeaderboardTest
             ->with($this->equalTo($data))
             ->will($this->returnValue($rows));
 
-        $result = $subject->table($data);
+        $result = $subject->table($data, $user);
 
         $this->assertEquals($expected, $result);
 
@@ -1020,29 +1021,44 @@ class Tests_App_View_Helper_LeaderboardTest
      * @covers          App_View_Helper_Leaderboard::_getScoreEditLink
      * @dataProvider    provide__getScoreEditLink
      */
-    public function test__getScoreEditLink ($link, $competitionId, $action, $data)
+    public function test__getScoreEditLink ($expected, $link, $competitionId, $action, $data, $isAllowed = true)
     {
         $class = 'App_View_Helper_Leaderboard';
         $subject = $this->getBuiltMock($class, array('_link'));
-        $html   = '<div class="small default btn icon-right icon-pencil">%s</div>';
-        $expected = sprintf($html, $link);
+        $acl = $this->getBuiltMock('Rx_View_Helper_Acl', array('isAllowed'));
+        $view = $this->getBuiltMock('Zend_View', array('acl'));
+        $user = (object)array('doesnt' => 'matter');
 
-        $subject->expects($this->once())
-            ->method('_link')
-            ->with($this->equalTo($action), $this->equalTo(array(
-                'module'        => 'default',
-                'controller'    => 'scores',
-                'action'        => $action,
-                'id'            => $data['score_id'],
-                'competition_id'=> $competitionId,
-                'athlete_id'    => $data['athlete_id'],
+        $acl->expects($this->once())
+            ->method('isAllowed')
+            ->with($this->equalTo('competitions'), $this->equalTo('edit'))
+            ->will($this->returnValue($isAllowed));
 
-            )))
-            ->will($this->returnValue($link));
+        $view->expects($this->once())
+            ->method('acl')
+            ->with($this->equalTo($user))
+            ->will($this->returnValue($acl));
+
+        if ($isAllowed) {
+            $subject->expects($this->once())
+                ->method('_link')
+                ->with($this->equalTo($action), $this->equalTo(array(
+                    'module'        => 'default',
+                    'controller'    => 'scores',
+                    'action'        => $action,
+                    'id'            => $data['score_id'],
+                    'competition_id'=> $competitionId,
+                    'athlete_id'    => $data['athlete_id'],
+
+                )))
+                ->will($this->returnValue($link));
+        }
+
+        $subject->view = $view;
 
         $method = new ReflectionMethod($class, '_getScoreEditLink');
         $method->setAccessible(true);
-        $result = $method->invoke($subject, $competitionId, $data);
+        $result = $method->invoke($subject, $competitionId, $data, $user);
 
         $this->assertEquals($expected, $result);
 
@@ -1057,9 +1073,12 @@ class Tests_App_View_Helper_LeaderboardTest
      */
     public function provide__getScoreEditLink ( )
     {
+        $html   = '<div class="small default btn icon-right icon-pencil">%s</div>';
+
         return array(
             // compId = 5, score_id = 100, athlete_id = 20, action = edit
-            array(
+            'first test' => array(
+                'expected'      => sprintf($html, 'link'),
                 'link'          => 'link',
                 'competitionId' => 5,
                 'action'        => 'edit',
@@ -1070,7 +1089,8 @@ class Tests_App_View_Helper_LeaderboardTest
             ),
 
             // compId = 5, score_id = 100, athlete_id = 20, action = edit
-            array(
+            'second test' => array(
+                'expected'      => sprintf($html, 'link'),
                 'link'          => 'link',
                 'competitionId' => 5,
                 'action'        => 'create',
@@ -1079,6 +1099,20 @@ class Tests_App_View_Helper_LeaderboardTest
                     'score_id' => 100,
                     'placeholder_score' => true,
                 ),
+            ),
+
+            // compId = 5, score_id = 100, athlete_id = 20, action = edit, not allowed
+            'third test' => array(
+                'expected'      => null,
+                'link'          => 'link',
+                'competitionId' => 5,
+                'action'        => 'create',
+                'data'          => array(
+                    'athlete_id' => 20,
+                    'score_id' => 100,
+                    'placeholder_score' => true,
+                ),
+                'isAllowed' => false,
             ),
         );
 

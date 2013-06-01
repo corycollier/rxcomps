@@ -8,5 +8,6 @@ src/lib/Zend
 src/tmp/zend*
 src/tmp/sess*
 src/log/*.log
+cache.properties
 src/etc/httpd-rxcompetition.com.conf
 src/etc/nginx-rxcompetition.com.conf

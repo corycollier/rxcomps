@@ -65,12 +65,12 @@ class App_View_Helper_Leaderboard
      * @param array $data
      * @return string
      */
-    public function table ($data = array())
+    public function table ($data = array(), $user)
     {
         // var_dump($data);die;
         return '<table class="data-table leaderboards-table">'
             . $this->headers(current($data))
-            . $this->rows($data)
+            . $this->rows($data, $user)
             . '</table>';
 
     } // END function table
@@ -100,7 +100,7 @@ class App_View_Helper_Leaderboard
      * @param array $data
      * @return string
      */
-    public function rows ($data)
+    public function rows ($data, $user = null)
     {
         // set some variables to default values
         $rank = 1;
@@ -111,7 +111,7 @@ class App_View_Helper_Leaderboard
             if ($athlete['points'] != $points) {
                 $rank = $index + 1;
             }
-            $result .= $this->row($athlete, $rank);
+            $result .= $this->row($athlete, $rank, $user);
             $points = $athlete['points'];
         }
 
@@ -127,7 +127,7 @@ class App_View_Helper_Leaderboard
      * @param array $data
      * @return string
      */
-    public function row ($data, $rank)
+    public function row ($data, $rank, $user = null)
     {
         if (! array_key_exists('athlete_id', $data)) {
             return '';
@@ -143,7 +143,7 @@ class App_View_Helper_Leaderboard
 
         $title = '<td class="athlete-name">%s %d <span class="alt">(%d)</span></td>';
         $title = sprintf($title, $link, $rank, $data['points']);
-        $competitions = $this->getCompetitionResults($data);
+        $competitions = $this->getCompetitionResults($data, $user);
 
         return '<tr>' . $title . implode('', $competitions) . '</tr>';
 
@@ -196,13 +196,13 @@ class App_View_Helper_Leaderboard
      *
      * @return array
      */
-    public function getCompetitionResults ($data)
+    public function getCompetitionResults ($data, $user = null)
     {
         $results = array();
         $goal = $data['goal'];
 
         foreach ($data['competitions'] as $id => $competition) {
-            $results[] = $this->getCompetitionResult($goal, $id, $competition);
+            $results[] = $this->getCompetitionResult($goal, $id, $competition, $user);
         }
 
         return $results;
@@ -217,7 +217,7 @@ class App_View_Helper_Leaderboard
      * @param  array $competition
      * @return string
      */
-    public function getCompetitionResult ($goal, $id, $competition = array())
+    public function getCompetitionResult ($goal, $id, $competition = array(), $user = null)
     {
         $filter = new Rx_Filter_SecondsToTime;
         $template = '<td class="%s">
@@ -237,7 +237,7 @@ class App_View_Helper_Leaderboard
             $this->isFiltered($id) ? 'filtered' : '',
             $competition['rank'],
             $competition['score'],
-            $this->_getScoreEditLink($id, $competition)
+            $this->_getScoreEditLink($id, $competition, $user)
         );
 
     } // END function getCompetitionResult
@@ -252,12 +252,12 @@ class App_View_Helper_Leaderboard
      * @param  array $data
      * @return string
      */
-    protected function _getScoreEditLink ($competitionId, $data)
+    protected function _getScoreEditLink ($competitionId, $data, $user = null)
     {
-        // if (! $this->view->auth()->hasIdentity()) {
-        //     return '';
-        // }
-        //
+        if (! $this->view->acl($user)->isAllowed('competitions', 'edit')) {
+            return;
+        }
+
         $html = '<div class="small default btn icon-right icon-pencil">%s</div>';
 
         $action = 'edit';
