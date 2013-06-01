@@ -48,4 +48,18 @@ class ScalesController
 
     } // END function indexAction
 
+    /**
+     * listAction()
+     *
+     * List all of the model data, paginated, of course
+     */
+    public function listAction ( )
+    {
+        $model = $this->getModel('Scale');
+        $request = $this->getRequest();
+
+        $this->view->items = $model->paginate($request->getParams());
+
+    } // END function listAction
+
 } // END class App_Controller_ScalesController

@@ -445,4 +445,17 @@ class App_View_Helper_Leaderboard
         return $this->view->htmlAnchor($label, $params);
     }
 
+    /**
+     * getLink()
+     *
+     * Gets a link to the leaderboard, if needed. returns an empty string otherwise
+     *
+     * @param object $gender
+     * @param object $scale
+     */
+    public function getLink ( )
+    {
+
+    } // END function getLink
+
 } // END class App_View_Helper_Leaderboard

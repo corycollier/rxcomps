@@ -209,4 +209,30 @@ class App_Model_Leaderboard
         return 'leaderboards';
     }
 
+    /**
+     * getActiveLeaderboards()
+     *
+     * Gets the leaderboards that have people signed up in the division/gender combination
+     *
+     * @param App_Model_Event
+     */
+    public function getActiveLeaderboards ($event)
+    {
+        // @TODO fix this awfulness
+        $sql = "select scale_id, gender, count(1) as count, s.name as name from athletes
+            inner join scales s on s.id=athletes.scale_id
+            where
+                s.event_id=%d group by scale_id, gender";
+
+        $table = new App_Model_DbTable_Athlete;
+
+
+        $result = $table->getAdapter()->query(sprintf($sql, $event->id));
+
+        $result->setFetchMode(Zend_Db::FETCH_OBJ);
+
+        return $result->fetchall();
+
+    } // END function getActiveLeaderboards
+
 } // END class App_Model_Leaderboard

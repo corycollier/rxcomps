@@ -57,4 +57,4 @@ class App_Model_Scale
         return $event;
     }
 
-}// END class App_Model_Scales
+} // END class App_Model_Scales
