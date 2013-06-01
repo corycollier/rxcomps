@@ -107,7 +107,7 @@ class Rx_Model_DbTable_Abstract
      * @param array $values
      *
      */
-    public function insert ($values = array())
+    public function insert (array $values)
     {
         return parent::insert($this->filterValues($values));
 
