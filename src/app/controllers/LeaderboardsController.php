@@ -92,6 +92,12 @@ class LeaderboardsController
         $this->view->items = $items;
         $this->view->model = $scale->load($scaleId);
 
+
+        $scaleTable = $this->getTable('Scale');
+        $this->view->scale = $scaleTable->fetchRow(
+            $scaleTable->select()->where(sprintf('id = %d', $scaleId))
+        );
+
     } // END function viewAction
 
     public function allAction ( )
@@ -102,9 +108,9 @@ class LeaderboardsController
         $leaderboards = $this->getModel('Leaderboard');
 
         if ($eventId) {
-
             $event = $eventsTable->fetchRow(
-                $eventsTable->select()->where(sprintf('id = %d', $eventId))
+                $eventsTable->select()
+                    ->where(sprintf('id = %d', $eventId))
             );
 
             $this->view->leaderboards = $leaderboards->getActiveLeaderboards($event);
