@@ -131,9 +131,7 @@ class App_Form_Score
     {
         // athletes
         $table = $model->getParent('Competition')->getTable();
-        $competitions = $table->fetchAll(
-            $table->buildWhere($params)
-        );
+        $competitions = $table->fetchAll($table->buildWhere($params));
 
         $element = $this->getElement('competition_id');
 
