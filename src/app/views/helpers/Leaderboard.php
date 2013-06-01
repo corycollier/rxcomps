@@ -199,10 +199,9 @@ class App_View_Helper_Leaderboard
     public function getCompetitionResults ($data, $user = null)
     {
         $results = array();
-        $goal = $data['goal'];
 
         foreach ($data['competitions'] as $id => $competition) {
-            $results[] = $this->getCompetitionResult($goal, $id, $competition, $user);
+            $results[] = $this->getCompetitionResult($id, $competition, $user);
         }
 
         return $results;
@@ -217,7 +216,7 @@ class App_View_Helper_Leaderboard
      * @param  array $competition
      * @return string
      */
-    public function getCompetitionResult ($goal, $id, $competition = array(), $user = null)
+    public function getCompetitionResult ($id, $competition = array(), $user = null)
     {
         $filter = new Rx_Filter_SecondsToTime;
         $template = '<td class="%s">
@@ -225,7 +224,7 @@ class App_View_Helper_Leaderboard
             <span class="alt">(%s) %s</span>
             </td>';
 
-        if ($goal == 'time') {
+        if ($competition['goal'] == 'time') {
             $competition['score'] = $filter->filter($competition['score']);
         }
 
