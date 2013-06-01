@@ -101,13 +101,16 @@ class LeaderboardsController
         $eventsTable = $this->getTable('Event');
         $scalesTable = $this->getTable('Scale');
         $athletesTable = $this->getTable('Athlete');
+        $leaderboards = $this->getModel('Leaderboard');
 
         if ($eventId) {
+
             $event = $eventsTable->fetchRow(
                 $eventsTable->select()->where(sprintf('id = %d', $eventId))
             );
 
-            $this->view->competitions = $event->findDependentRowset('App_Model_DbTable_Competition');
+            $this->view->leaderboards = $leaderboards->getActiveLeaderboards($event);
+
             $this->view->scales = $event->findDependentRowset('App_Model_DbTable_Scale');
             $this->view->genders = $athletesTable->fetchAll(
                 $athletesTable->select()
