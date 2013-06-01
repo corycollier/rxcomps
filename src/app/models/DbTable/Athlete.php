@@ -60,4 +60,26 @@ class App_Model_DbTable_Athlete
         'App_Model_DbTable_Registration',
     );
 
+
+    /**
+     * getScaleCount()
+     *
+     * Gets the number of athletes for a given scale.
+     * Important to note: scaleIds are unique per event
+     *
+     * @param integer|string $scaleId
+     * @return integer
+     */
+    public function getScaleCount ($scaleId)
+    {
+        return $this->fetchRow(
+            $this->select()
+                ->from($this, array('count(1) as count'))
+                ->where('scale_id = ?', $scaleId)
+
+        )->count;
+
+    } // END function getScaleCount
+
+
 } // END class App_Model_DbTable_Athletes

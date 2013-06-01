@@ -122,12 +122,10 @@ class App_Form_Athlete
      */
     protected function _insertScales ($model, $params = array())
     {
-        $table = $model->getParent('Scale')->getTable();
+        $scale = $model->getParent('Scale');
+        $table = $scale->getTable();
 
-        $scales = $table->fetchAll(
-            $table->select()
-                ->where(sprintf('event_id = %d', @$params['event_id']))
-        );
+        $scales = $table->getScalesByEventId(@$params['event_id']);
 
         $element = $this->getElement('scale_id');
 
@@ -136,12 +134,7 @@ class App_Form_Athlete
         $disable = array();
 
         foreach ($scales as $scale) {
-            $athleteCount = $table->fetchRow(
-                $table->select()
-                    ->from($table, array('count(1) as count'))
-                    ->where('scale_id = ?', $scale->id)
-
-            )->count;
+            $athleteCount = $table->getScaleCount($scale->id);
 
             $spotsLeft = (int)$scale->max_count - (int)$athleteCount;
             $element->addMultiOption($scale->id, sprintf(

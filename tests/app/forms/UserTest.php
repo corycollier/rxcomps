@@ -47,7 +47,7 @@ class Tests_App_Form_User
 
         $email = $form->getElement('email');
         $passwd = $form->getElement('passwd');
-        $login = $form->getElement('login');
+        $login = $form->getElement('save');
 
         $this->assertInstanceOf('Zend_Form_Element_Text', $email);
         $this->assertInstanceOf('Zend_Form_Element_Password', $passwd);

@@ -75,18 +75,16 @@ class Tests_App_Form_Athlete
             ->disableOriginalConstructor()
             ->getMock();
 
-        $model = $this->getMockBuilder('Rx_Model_Abstract')
-            ->disableOriginalConstructor()
-            ->getMock();
-
         $element = $this->getMockBuilder('Zend_Form_Element_Hidden')
             ->setMethods(array('setValue'))
             ->disableOriginalConstructor()
             ->getMock();
 
+        $model = (object)array('doesnt' => 'matter');
+
         $eventId = @$params['event_id'];
 
-        $element->expects($this->once())
+        $element->expects($this->any())
             ->method('setValue')
             ->with($this->equalTo($eventId));
 
@@ -95,7 +93,7 @@ class Tests_App_Form_Athlete
             ->with($this->equalTo($model), $this->equalTo($params))
             ->will($this->returnSelf());
 
-        $subject->expects($this->once())
+        $subject->expects($this->any())
             ->method('getElement')
             ->with($this->equalTo('event_id'))
             ->will($this->returnValue($element));
@@ -117,7 +115,11 @@ class Tests_App_Form_Athlete
     public function provide_injectDependencies ( )
     {
         return array(
-            'no params' => array(),
+            'no params' => array(
+                'params'  => array(
+                    'event_id' => 1,
+                ),
+            ),
         );
 
     } // END function provide_injectDependencies
@@ -147,13 +149,8 @@ class Tests_App_Form_Athlete
             ->disableOriginalConstructor()
             ->getMock();
 
-        $select = $this->getMockBuilder('Zend_Db_Table_Select')
-            ->setMethods(array('where'))
-            ->disableOriginalConstructor()
-            ->getMock();
-
-        $table = $this->getMockBuilder('Zend_Db_Table_Abstract')
-            ->setMethods(array('fetchAll', 'select'))
+        $table = $this->getMockBuilder('App_Model_DbTable_Athlete')
+            ->setMethods(array('getScaleCount', 'getScalesByEventId'))
             ->disableOriginalConstructor()
             ->getMock();
 
@@ -165,18 +162,12 @@ class Tests_App_Form_Athlete
         $scaleElement->expects($this->exactly(count($scales)))
             ->method('addMultiOption');
 
-        $select->expects($this->once())
-            ->method('where')
-            ->with($this->equalTo(sprintf('event_id = %d', @$params['event_id'])))
-            ->will($this->returnSelf());
+        $table->expects($this->any())
+            ->method('getScaleCount')
+            ->will($this->returnValue(count($scales)));
 
         $table->expects($this->once())
-            ->method('select')
-            ->will($this->returnValue($select));
-
-        $table->expects($this->once())
-            ->method('fetchAll')
-            ->with($this->equalTo($select))
+            ->method('getScalesByEventId')
             ->will($this->returnValue($scales));
 
         $scaleModel->expects($this->once())
@@ -226,6 +217,8 @@ class Tests_App_Form_Athlete
                     (object)array(
                         'id'    => 1,
                         'name'  => 'scale name',
+                        'max_count' => 10,
+                        'price'     => 0,
                     )
                 ),
             ),
