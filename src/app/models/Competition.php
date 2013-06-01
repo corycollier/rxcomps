@@ -259,11 +259,16 @@ class App_Model_Competition
     public function getWorstScore ( )
     {
         $table = $this->getTable('Score');
+
+        $expr = new Zend_Db_Expr('min(scores.score) as score');
+        if ($this->row->goal == 'time') {
+            $expr = new Zend_Db_Expr('max(scores.score) as score');
+        }
+
         $maxScore = $table->fetchRow(
-            $table->select()->from($table, array(
-                new Zend_Db_Expr('max(scores.score) as score')
-            ))
-            ->where(sprintf('competition_id = %d', $this->id))
+            $table->select()
+                ->from($table, array($expr))
+                ->where(sprintf('competition_id = %d', $this->id))
         );
 
         return $maxScore->toArray();

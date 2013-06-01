@@ -60,10 +60,9 @@ class App_Model_Leaderboard
         $competitionFilters = explode(',', trim($competitionFilters));
 
         $competitions = $event->getChildren('Competition');
-        $competition = current($competitions);
 
-        $scoringType = 'time';
-        if ($competition) {
+        $scoringType = 'points';
+        if ($competitions) {
             $scoringType = current($competitions)->getScoringType();
         }
 
@@ -71,15 +70,24 @@ class App_Model_Leaderboard
 
         $athletes = array();
         foreach ($results as $competitionId => $competitionResults) {
+            $goal = 'time';
+            foreach ($competitions as  $competition) {
+                if ($competition->id == $competitionId) {
+                    $goal = $competition->row->goal;
+                }
+            }
+
             foreach ($competitionResults as $athleteId => $athleteResults) {
                 $athletes = $this->_mergeAthleteResults(
                     $athletes,
                     $athleteId,
                     $competitionFilters,
-                    $athleteResults
+                    $athleteResults,
+                    $goal
                 );
             }
         }
+
 
         return $this->_sortAthleteResults($athletes, $scoringType);
 
@@ -117,7 +125,7 @@ class App_Model_Leaderboard
      * @return array
      */
     protected function _mergeAthleteResults ($athletes, $id,
-        $competitionFilters = array(), $data = array())
+        $competitionFilters = array(), $data = array(), $scoringType = 'time')
     {
         if (! array_key_exists($id, $athletes)) {
             $athletes[$id] = $data;
@@ -139,6 +147,7 @@ class App_Model_Leaderboard
             'athlete_id'    => @$data['athlete_id'],
             'competition_id'    => $data['competition_id'],
             'placeholder_score' => @$data['placeholder_score'],
+            'goal'              => $scoringType,
         );
 
         unset($athletes[$id]['competition_id']);
