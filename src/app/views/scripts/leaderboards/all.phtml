@@ -20,21 +20,18 @@
 
 <div class="row">
     <div class="twelve columns">
-
-        <?php foreach ($this->scales as $scale) : ?>
-        <?php foreach ($this->genders as $gender) : ?>
+        <?php foreach ($this->leaderboards as $leaderboard) : ?>
             <h2>
-                <?php $title = ucwords($gender->gender) . ' ' . $scale->name; ?>
+                <?php $title = ucwords($leaderboard->gender) . ' ' . $leaderboard->name; ?>
             </h2>
 
             <?php echo $this->htmlAnchor($title, array_merge($params, array(
                 'controller'=> 'leaderboards',
                 'action'    => 'view',
-                'scale_id'  => $scale->id,
-                'gender'    => $gender->gender,
+                'scale_id'  => $leaderboard->scale_id,
+                'gender'    => $leaderboard->gender,
                 'event_id'  => $params['id'],
             ))); ?>
-        <?php endforeach; ?>
         <?php endforeach; ?>
 
     </div>
