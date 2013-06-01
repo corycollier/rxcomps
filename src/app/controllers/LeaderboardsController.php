@@ -99,8 +99,6 @@ class LeaderboardsController
         $request = $this->getRequest();
         $eventId = $request->getParam('event_id');
         $eventsTable = $this->getTable('Event');
-        $scalesTable = $this->getTable('Scale');
-        $athletesTable = $this->getTable('Athlete');
         $leaderboards = $this->getModel('Leaderboard');
 
         if ($eventId) {
@@ -110,13 +108,6 @@ class LeaderboardsController
             );
 
             $this->view->leaderboards = $leaderboards->getActiveLeaderboards($event);
-
-            $this->view->scales = $event->findDependentRowset('App_Model_DbTable_Scale');
-            $this->view->genders = $athletesTable->fetchAll(
-                $athletesTable->select()
-                    ->where('event_id = ?', $eventId)
-                    ->group('gender')
-            );
         }
 
     }
