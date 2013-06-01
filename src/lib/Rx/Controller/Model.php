@@ -150,12 +150,13 @@ class Rx_Controller_Model
     {
         $message = sprintf(self::MSG_CREATE_SUCCESS, $this->_modelName);
         $params = array_merge($request->getParams(), $request->getPost());
+        $form = $model->getForm();
 
-        if (!$model->getForm()->isValid($params)) {
+        if (!$form->isValid($params)) {
             throw new Rx_Controller_Exception(self::MSG_FORM_INVALID);
         }
 
-        $model->create($params);
+        $model->create($form->getValues());
 
         $this->flashAndRedirect($message, 'success', array(
             'module'        => $request->getModuleName(),
@@ -226,7 +227,7 @@ class Rx_Controller_Model
             throw new Rx_Controller_Exception(self::MSG_FORM_INVALID);
         }
 
-        $model->edit($params);
+        $model->edit($form->getValues());
         $this->flashAndRedirect($message, 'success', $request->getParams());
 
     } // END function _edit
