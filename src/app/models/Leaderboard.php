@@ -63,7 +63,9 @@ class App_Model_Leaderboard
 
         $scoringType = 'points';
         if ($competitions) {
-            $scoringType = current($competitions)->getScoringType();
+            if ($competition = current($competitions)) {
+                $scoringType = $competition->getScoringType();
+            }
         }
 
         $results = $this->getLeaderboardsFromCompetitions($competitions, $scaleId, $gender);

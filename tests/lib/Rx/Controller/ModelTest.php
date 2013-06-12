@@ -224,19 +224,20 @@ class Tests_Rx_Controller_ModelTest
      * @covers Rx_Controller_Model::createAction
      * @dataProvider provide_createAction
      */
-    public function test_createAction ($params, $post = false, $filtered = array())
+    public function test_createAction ($params, $post = false, $exceptionMessage = '')
     {
         // create objects to mock
-        $subject = $this->getBuiltMock('Rx_Controller_Model', array('getModel', 'getRequest', '_create'));
+        $subject = $this->getBuiltMock('Rx_Controller_Model', array('getModel', 'getRequest', '_create', 'getHelper'));
         $model  = $this->getBuiltMock('Rx_Model_Abstract', array('getForm'));
         $form   = $this->getBuiltMock('Rx_Form_Abstract', array('injectDependencies', 'populate'));
+        $helper = $this->getBuiltMock('Zend_Controller_Action_Helper_FlashMessenger', array('addMessage'));
         $request = new Zend_Controller_Request_HttpTestCase;
         $view = new Zend_View;
 
         // set method expectations
         $request->setParams($params);
         if ($post) {
-            $request->setMethod('POST');
+            $request->setMethod('post');
         }
 
         $form->expects($this->once())
@@ -260,9 +261,23 @@ class Tests_Rx_Controller_ModelTest
             ->will($this->returnValue($request));
 
         if ($post) {
+            if ($exceptionMessage) {
+                $helper->expects($this->once())
+                    ->method('addMessage')
+                    ->with($this->equalTo($exceptionMessage), $this->equalTo('error'));
+
+                $subject->expects($this->once())
+                    ->method('getHelper')
+                    ->with($this->equalTo('FlashMessenger'))
+                    ->will($this->returnValue($helper));
+            }
             $subject->expects($this->once())
                 ->method('_create')
-                ->with($this->equalTo($model), $this->equalTo($request));
+                ->with($this->equalTo($model), $this->equalTo($request))
+                ->will($exceptionMessage
+                    ? $this->throwException(new Zend_Exception($exceptionMessage))
+                    : $this->returnSelf()
+                );
         }
 
         $subject->view = $view;
@@ -292,6 +307,15 @@ class Tests_Rx_Controller_ModelTest
                 ),
                 true
             ),
+
+            'with post and exception' => array(
+                array(
+                    'module' => 'default',
+                ),
+                true,
+                'bad stff',
+
+            ),
         );
 
     } // END function provide_createAction
@@ -304,12 +328,32 @@ class Tests_Rx_Controller_ModelTest
      * @covers Rx_Controller_Model::_create
      * @dataProvider provide__create
      */
-    public function test__create ($params, $post = array(), $exception = '')
+    public function test__create ($params, $post = array(), $exception = false)
     {
+        /**
+         *
+        $message = sprintf(self::MSG_CREATE_SUCCESS, $this->_modelName);
+        $params = array_merge($request->getParams(), $request->getPost());
+        $form = $model->getForm();
+
+        if (!$form->isValid($params)) {
+            throw new Rx_Controller_Exception(self::MSG_FORM_INVALID);
+        }
+
+        $model->create($form->getValues());
+
+        $this->flashAndRedirect($message, 'success', array(
+            'module'        => $request->getModuleName(),
+            'controller'    => $request->getControllerName(),
+            'action'        => 'view',
+            'id'            => $model->id,
+        ));
+        */
+
         // create objects to mock
         $subject = $this->getBuiltMock('Rx_Controller_Model', array('flashAndRedirect'));
         $model = $this->getBuiltMock('Rx_Model_Abstract', array('create', 'getForm'));
-        $form = $this->getBuiltMock('Rx_Form_Abstract', array('isValid'));
+        $form = $this->getBuiltMock('Rx_Form_Abstract', array('isValid', 'getValues'));
         $request = new Zend_Controller_Request_HttpTestCase;
         $merged = array_merge($params, $post);
 
@@ -320,21 +364,21 @@ class Tests_Rx_Controller_ModelTest
             ->method('isValid')
             ->with($this->equalTo($merged))
             ->will($exception
-                ? $this->throwException(new Rx_Controller_Exception($exception))
+                ? $this->throwException(new Rx_Controller_Exception)
                 : $this->returnValue(true)
             );
+
+        $form->expects($this->any())
+            ->method('getValues')
+            ->will($this->returnValue($merged));
 
         $model->expects($this->once())
             ->method('getForm')
             ->will($this->returnValue($form));
 
-        $model->expects($this->once())
+        $model->expects($this->any())
             ->method('create')
-            ->with($this->equalTo(array_merge($params, $post)))
-            ->will($exception
-                ? $this->throwException(new Zend_Exception($exception))
-                : $this->returnSelf()
-            );
+            ->with($this->equalTo($merged));
 
         if (! $exception) {
             $subject->expects($this->once())->method('flashAndRedirect');
@@ -368,15 +412,196 @@ class Tests_Rx_Controller_ModelTest
                 array('postKey' => 'postVal'),
             ),
 
-
             'post with exception' => array(
                 array('module' => 'default'),
                 array('postKey' => 'postVal'),
-                'bad stuff',
+                true,
             ),
         );
 
     } // END function provide__create
+
+    /**
+     * test__delete()
+     *
+     * Tests the _delete of the Rx_Controller_Model
+     *
+     * @covers          Rx_Controller_Model::_delete
+     * @dataProvider    provide__delete
+     */
+    public function test__delete ($params = array())
+    {
+        /**
+         *
+        $message = sprintf(self::MSG_DELETE_SUCCESS, $this->_modelName);
+        $model->delete();
+        $this->flashAndRedirect($message, 'success', array(
+            'module'        => $request->getModuleName(),
+            'controller'    => $request->getControllerName(),
+            'action'        => 'index',
+        ), 'default', true);
+         */
+
+        $subject = $this->getMockBuilder('Rx_Controller_Model')
+            ->setMethods(array('flashAndRedirect'))
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $model = $this->getMockBuilder('Rx_Model_Abstract')
+            ->setMethods(array('delete'))
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $request = new Zend_Controller_Request_HttpTestCase;
+        $request->setParams($params);
+
+        $message = sprintf(Rx_Controller_Model::MSG_DELETE_SUCCESS, '');
+
+        $model->expects($this->once())->method('delete');
+
+        $subject->expects($this->once())
+            ->method('flashAndRedirect')
+            ->with(
+                $this->equalTo($message),
+                $this->equalTo('success'),
+                $this->equalTo(Array(
+                    'module'    => $request->getModuleName(),
+                    'controller'=> $request->getControllerName(),
+                    'action'    => 'index',
+                )),
+                $this->equalTo('default'),
+                $this->equalTo(true)
+            );
+
+        $method = new ReflectionMethod('Rx_Controller_Model', '_delete');
+        $method->setAccessible(true);
+
+        $method->invoke($subject, $model, $request);
+
+    } // END function test__delete
+
+    /**
+     * provide__delete()
+     *
+     * Provides data for the _delete method of the
+     * Rx_Controller_Model class
+     */
+    public function provide__delete ( )
+    {
+        return array(
+            array(
+                'params'    => array(
+                    'module'    => 'default',
+                    'controller'=> 'index',
+                    'action'    => 'index',
+                )
+            ),
+        );
+
+    } // END function provide__delete
+
+    /**
+     * test_deleteAction()
+     *
+     * Tests the deleteAction of the Rx_Controller_Model
+     *
+     * @covers          Rx_Controller_Model::deleteAction
+     * @dataProvider    provide_deleteAction
+     */
+    public function test_deleteAction ($method, $exceptionMessage = null, $params = array())
+    {
+        $subject = $this->getMockBuilder('Rx_Controller_Model')
+            ->setMethods(array('getModel', 'getRequest', '_delete', 'getHelper'))
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $model = $this->getMockBuilder('Rx_Model_Abstract')
+            ->setMethods(array('load'))
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $helper = $this->getMockBuilder('Zend_Controller_Action_Helper_FlashMessenger')
+            ->setMethods(array('addMessage'))
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $request = new Zend_Controller_Request_HttpTestCase;
+        $request->setMethod($method);
+        $request->setParams($params);
+
+        $model->expects($this->once())
+            ->method('load')
+            ->with($this->equalTo($request->getParam('id')));
+
+        $subject->expects($this->once())
+            ->method('getRequest')
+            ->will($this->returnValue($request));
+
+        $subject->expects($this->once())
+            ->method('getModel')
+            ->will($this->returnValue($model));
+
+        if ($request->isPost()) {
+
+            if ($exceptionMessage) {
+                $helper->expects($this->once())
+                    ->method('addMessage')
+                    ->with($this->equalTo($exceptionMessage), $this->equalTo('error'));
+
+                $subject->expects($this->once())
+                    ->method('getHelper')
+                    ->with($this->equalTo('FlashMessenger'))
+                    ->will($this->returnValue($helper));
+            }
+
+            $subject->expects($this->once())
+                ->method('_delete')
+                ->with($this->equalTo($model), $this->equalTo($request))
+                ->will($exceptionMessage
+                    ? $this->throwException(new Zend_Exception($exceptionMessage))
+                    : $this->returnSelf()
+                );
+        }
+
+        $subject->deleteAction();
+
+    } // END function test_deleteAction
+
+    /**
+     * provide_deleteAction()
+     *
+     * Provides data for the deleteAction method of the
+     * Rx_Controller_Model class
+     */
+    public function provide_deleteAction ( )
+    {
+        return array(
+            array(
+                'method'            => 'get',
+                'exceptionMessage'  => null,
+                'params'            => array(
+                    'id'    => 1,
+                )
+            ),
+
+            array(
+                'method'            => 'post',
+                'exceptionMessage'  => null,
+                'params'            => array(
+                    'id'    => 1,
+                )
+            ),
+
+            array(
+                'method'            => 'post',
+                'exceptionMessage'  => 'bad stuff',
+                'params'            => array(
+                    'id'    => 1,
+                )
+            ),
+        );
+
+    } // END function provide_deleteAction
 
     /**
      * test_postDispatch()
@@ -423,6 +648,7 @@ class Tests_Rx_Controller_ModelTest
         );
 
     } // END function provide_postDispatch
+
 
 } // END class Tests_Rx_Controller_ModelTest
 
