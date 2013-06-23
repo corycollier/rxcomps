@@ -62,7 +62,7 @@ class App_Model_Leaderboard
         $competitions = $event->getChildren('Competition');
 
         $scoringType = 'points';
-        if ($competitions) {
+        if ($competitions && count($competitions)) {
             $scoringType = current($competitions)->getScoringType();
         }
 
