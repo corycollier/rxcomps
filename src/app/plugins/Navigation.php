@@ -86,6 +86,7 @@ class App_Plugin_Navigation
                 'params' => array(
                     'event_id'      => $eventId,
                 ),
+                'fragment'      => 'leaderboards',
             ),
             array(
                 'label'         => 'Competitions',
@@ -106,6 +107,7 @@ class App_Plugin_Navigation
                 'params' => array(
                     'event_id'      => $eventId,
                 ),
+                'fragment'      => 'athletes',
             ),
             array(
                 'label'         => 'Divisions',

@@ -16,6 +16,10 @@ Gumby.oldie(function() {
 // Document ready
 $(function() {
 
+    if (window.location.hash) {
+        $("a[href$='" + window.location.hash + "']").parent().trigger('click');
+    }
+
     // hide gender and scale from the user if they're a judge
     $("#role").on('change', function(event){
         var role = $(this).val();

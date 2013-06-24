@@ -85,6 +85,11 @@ class Tests_App_Model_CompetitionTest
             array(array(
                 'stuff' => 'value',
             )),
+
+            array(array(
+                'stuff' => 'value',
+                'scoring_type'  => 'points',
+            )),
         );
 
     } // END function provide_create
@@ -138,6 +143,11 @@ class Tests_App_Model_CompetitionTest
         return array(
             array(array(
                 'stuff' => 'value',
+            )),
+
+            array(array(
+                'stuff' => 'value',
+                'scoring_type'  => 'points',
             )),
         );
 
@@ -519,5 +529,183 @@ class Tests_App_Model_CompetitionTest
         $this->assertEquals('competitions', $result);
 
     } // END function test_getResourceId
+
+    /**
+     * test_getWorstPoints()
+     *
+     * Tests the getWorstPoints method of the App_Model_Competition class
+     *
+     * @covers App_Model_Competition::getWorstPoints
+     * @dataProvider provide_getWorstPoints
+     */
+    public function test_getWorstPoints ($expected, $scores)
+    {
+        $subject = $this->getMockBuilder('App_Model_Competition')
+            ->setMethods(array('getPoints'))
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $subject->expects($this->once())
+            ->method('getPoints')
+            ->with($this->equalTo($scores))
+            ->will($this->returnValue(array($expected)));
+
+        $result = $subject->getWorstPoints($scores);
+        $this->assertEquals($expected, $result);
+
+    } // END function test_getWorstPoints
+
+    /**
+     * provide_getWorstPoints()
+     *
+     * Provides data to use for testing the getWorstPoints method of
+     * the App_Model_Competition class
+     *
+     * @return array
+     */
+    public function provide_getWorstPoints ( )
+    {
+        return array(
+            array(
+                'expected' => 1,
+                'scores'    => array(/* arbitrary data here */),
+            ),
+        );
+
+    } // END function provide_getWorstPoints
+
+    /**
+     * test_getEvent()
+     *
+     * Tests the getEvent method of the App_Model_Competition class
+     *
+     * @covers App_Model_Competition::getEvent
+     * @dataProvider provide_getEvent
+     */
+    public function test_getEvent ($expected)
+    {
+        $subject = $this->getMockBuilder('App_Model_Competition')
+            ->setMethods(array('getParent'))
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $subject->expects($this->once())
+            ->method('getParent')
+            ->with($this->equalTo('Event'))
+            ->will($this->returnValue($expected))
+        ;
+
+        $result = $subject->getEvent();
+
+        $this->assertEquals($expected, $result);
+
+    } // END function test_getEvent
+
+    /**
+     * provide_getEvent()
+     *
+     * Provides data to use for testing the getEvent method of
+     * the App_Model_Competition class
+     *
+     * @return array
+     */
+    public function provide_getEvent ( )
+    {
+        return array(
+            array(
+                'expected'  => 'expected value',
+            ),
+        );
+
+    } // END function provide_getEvent
+
+    /**
+     * test_getAthletes()
+     *
+     * Tests the getAthletes method of the App_Model_Competition class
+     *
+     * @covers App_Model_Competition::getAthletes
+     * @dataProvider provide_getAthletes
+     */
+    public function test_getAthletes ($expected, $scaleId, $gender)
+    {
+        /**
+        $event = $this->getParent('Event');
+        $table = $this->getTable('Athlete');
+        $athletes = $table->fetchAll(
+            $table->select()
+                ->where(sprintf('scale_id = %d', $scaleId))
+                ->where(sprintf('gender = "%s"', $gender))
+                ->where(sprintf('event_id = %d', $event->id))
+        );
+        return $athletes;
+        */
+
+        $subject = $this->getMockBuilder('App_Model_Competition')
+            ->setMethods(array('getEvent', 'getTable'))
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $table = $this->getMockBuilder('App_Model_DbTable_Athlete')
+            ->setMethods(array('fetchAll', 'select'))
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $event = $this->getMockBuilder('App_Model_Event')
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $select = $this->getMockBuilder('Zend_Db_Table_Select')
+            ->setMethods(array('where'))
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $select->expects($this->any())
+            ->method('where')
+            ->will($this->returnSelf());
+
+        $table->expects($this->once())
+            ->method('select')
+            ->will($this->returnValue($select));
+
+        $table->expects($this->once())
+            ->method('fetchAll')
+            ->with($this->equalTo($select))
+            ->will($this->returnValue($expected));
+
+        $subject->expects($this->once())
+            ->method('getTable')
+            ->with($this->equalTo('Athlete'))
+            ->will($this->returnValue($table));
+
+        $subject->expects($this->once())
+            ->method('getEvent')
+            ->will($this->returnValue($event));
+
+        $result = $subject->getAthletes($scaleId, $gender);
+
+        $this->assertEquals($expected, $result);
+
+    } // END function test_getAthletes
+
+    /**
+     * provide_getAthletes()
+     *
+     * Provides data to use for testing the getAthletes method of
+     * the App_Model_Competition class
+     *
+     * @return array
+     */
+    public function provide_getAthletes ( )
+    {
+        return array(
+            array(
+                'expected'  => 'expected value',
+                'scaleId'   => 1,
+                'gender'    => 'male',
+            ),
+        );
+
+    } // END function provide_getAthletes
 
 } // END class Tests_App_Model_CompetitionTest

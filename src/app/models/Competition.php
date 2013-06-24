@@ -371,7 +371,7 @@ class App_Model_Competition
      */
     public function getAthletes ($scaleId, $gender = 'team')
     {
-        $event = $this->getParent('Event');
+        $event = $this->getEvent();
         $table = $this->getTable('Athlete');
         $athletes = $table->fetchAll(
             $table->select()
