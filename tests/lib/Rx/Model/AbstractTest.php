@@ -108,8 +108,6 @@ class Tests_Rx_Model_AbstractTest
 
         $firstResult = $model->getForm();
 
-        print_r(get_class($firstResult));
-
         $this->assertInstanceOf('Rx_Form_Abstract', $firstResult);
 
         $secondResult = $model->getForm(true);
@@ -349,38 +347,14 @@ class Tests_Rx_Model_AbstractTest
      * @covers Rx_Model_Abstract::_edit
      * @dataProvider provide__edit
      */
-    public function test__edit ($isValid, $identity, $values, $exception = '')
+    public function test__edit ($identity, $values, $exception = '')
     {
-        $form   = $this->getBuiltMock('Rx_Form_Abstract', array(
-            'isValid', 'getValues'
-        ));
-        $model  = $this->getBuiltMock('Rx_Model_Abstract', array(
-            'getTable', 'getForm', 'filterValues'
-        ));
-        $table  = $this->getBuiltMock('Rx_Model_DbTable_Abstract', array(
-            'update', 'select'
-        ));
+        $model  = $this->getBuiltMock('Rx_Model_Abstract', array('getTable'));
+        $table  = $this->getBuiltMock('Rx_Model_DbTable_Abstract', array('update'));
 
-        if ($exception) {
-            $this->setExpectedException($exception);
-        } else {
-            $table->expects($this->once())
-                ->method('update')
-                ->with($this->equalto($values), $this->equalTo(sprintf('id = %d', $identity)));
-
-            $form->expects($this->once())
-                ->method('isValid')
-                ->with($this->equalTo($values))
-                ->will($this->returnValue($isValid));
-
-            $form->expects($this->once())
-                ->method('getValues')
-                ->will($this->returnValue($values));
-        }
-
-        $model->expects($this->once())
-            ->method('getForm')
-            ->will($this->returnValue($form));
+        $table->expects($this->once())
+            ->method('update')
+            ->with($this->equalto($values), $this->equalTo(sprintf('id = %d', $identity)));
 
         $model->expects($this->once())
             ->method('getTable')
@@ -426,33 +400,15 @@ class Tests_Rx_Model_AbstractTest
      * @covers Rx_Model_Abstract::_create
      * @dataProvider provide__create
      */
-    public function test__create ($isValid, $identity, $values, $exception = '')
+    public function test__create ($identity, $values)
     {
-        $model = $this->getBuiltMock('Rx_Model_Abstract', array('getTable', 'getForm'));
+        $model = $this->getBuiltMock('Rx_Model_Abstract', array('load', 'getTable'));
         $table = $this->getBuiltMock('Rx_Model_DbTable_Abstract', array('insert'));
-        $form = $this->getBuiltMock('Rx_Form_Abstract', array('isValid', 'getValues'));
 
-        if ($exception) {
-            $this->setExpectedException($exception);
-        } else {
-            $table->expects($this->once())
-                ->method('insert')
-                ->with($this->equalto($values))
-                ->will($this->returnValue($identity));
-
-            $form->expects($this->once())
-                ->method('isValid')
-                ->with($this->equalTo($values))
-                ->will($this->returnValue($isValid));
-
-            $form->expects($this->once())
-                ->method('getValues')
-                ->will($this->returnValue($values));
-        }
-
-        $model->expects($this->once())
-            ->method('getForm')
-            ->will($this->returnValue($form));
+        $table->expects($this->once())
+            ->method('insert')
+            ->with($this->equalto($values))
+            ->will($this->returnValue($identity));
 
         $model->expects($this->once())
             ->method('getTable')
@@ -462,8 +418,6 @@ class Tests_Rx_Model_AbstractTest
             ->invoke($model, $values);
 
         $this->assertSame($model, $result);
-
-        $this->assertEquals($identity, $model->id);
 
     } // END function test__create
 
@@ -479,13 +433,13 @@ class Tests_Rx_Model_AbstractTest
     {
         // $isValid, $values, $exception = ''
         return array(
-            'simple test' => array(true, 1, array(
+            'simple test' => array(1, array(
                 'name' => 'value',
             )),
 
-            'invalid form, expect exception' => array(false, 1, array(
+            'invalid form, expect exception' => array(1, array(
                 'name' => 'value',
-            ), 'Rx_Model_Exception'),
+            )),
         );
 
     } // END function provide__create

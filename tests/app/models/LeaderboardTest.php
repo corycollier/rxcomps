@@ -150,6 +150,7 @@ class Tests_App_Model_LeaderboardTest
                         'athlete_id'    => 100,
                         'competitions'  => array(
                             2 => array(
+                                'goal'      => 'time',
                                 'score'     => 500,
                                 'rank'      => 3,
                                 'points'    => 80,
@@ -181,6 +182,7 @@ class Tests_App_Model_LeaderboardTest
                         'athlete_id'    => 200,
                         'competitions'  => array(
                             2 => array(
+                                'goal'      => 'time',
                                 'score'     => 600,
                                 'rank'      => 2,
                                 'points'    => 90,
@@ -194,6 +196,7 @@ class Tests_App_Model_LeaderboardTest
                         'athlete_id'=> 100,
                         'competitions'  => array(
                             2 => array(
+                                'goal'      => 'time',
                                 'score'     => 500,
                                 'rank'      => 3,
                                 'points'    => 80,
@@ -211,6 +214,7 @@ class Tests_App_Model_LeaderboardTest
                         'athlete_id'    => 200,
                         'competitions'  => array(
                             2 => array(
+                                'goal'      => 'time',
                                 'score'     => 600,
                                 'rank'      => 2,
                                 'points'    => 90,
@@ -239,6 +243,7 @@ class Tests_App_Model_LeaderboardTest
                         'athlete_id'    => 200,
                         'competitions'  => array(
                             2 => array(
+                                'goal'      => 'time',
                                 'score'     => 600,
                                 'rank'      => 2,
                                 'points'    => 90,
@@ -252,6 +257,7 @@ class Tests_App_Model_LeaderboardTest
                         'athlete_id'    => 100,
                         'competitions'  => array(
                             2 => array(
+                                'goal'      => 'time',
                                 'score'     => 500,
                                 'rank'      => 3,
                                 'points'    => 80,
@@ -259,6 +265,7 @@ class Tests_App_Model_LeaderboardTest
                                 'competition_id'=> 2,
                             ),
                             3 => array(
+                                'goal'      => 'time',
                                 'score'     => 200,
                                 'rank'      => 6,
                                 'points'    => 50,
@@ -276,6 +283,7 @@ class Tests_App_Model_LeaderboardTest
                         'athlete_id'    => 200,
                         'competitions'  => array(
                             2 => array(
+                                'goal'      => 'time',
                                 'score'     => 600,
                                 'rank'      => 2,
                                 'points'    => 90,
@@ -289,6 +297,7 @@ class Tests_App_Model_LeaderboardTest
                         'athlete_id'    => 100,
                         'competitions'  => array(
                             2 => array(
+                                'goal'      => 'time',
                                 'score'     => 500,
                                 'rank'      => 3,
                                 'points'    => 80,
