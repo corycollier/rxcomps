@@ -92,7 +92,6 @@ class LeaderboardsController
         $this->view->items = $items;
         $this->view->model = $scale->load($scaleId);
 
-
         $scaleTable = $this->getTable('Scale');
         $this->view->scale = $scaleTable->fetchRow(
             $scaleTable->select()->where(sprintf('id = %d', $scaleId))

@@ -1,36 +1,36 @@
 <?php
 /**
- * Unit Test Suite for the ScalesController class
+ * Unit Test Suite for the AdminController class
  *
- * This unit test suite should test all of the custom functionality provided by
- * the ScalesController class
+ * This unit test suite should test all custom functionality provided by the
+ * AdminController class
  *
  * @category    RxCompetition
  * @package     Tests
  * @subpackage  App_Controller
- * @copyright   Copyright (c) 2012 RxCompetition, Inc (http://www.rxcompetition.com)
+ * @copyright   Copyright (c) 2013 RxCompetition, Inc (http://www.rxcompetition.com)
  * @license     All Rights Reserved
- * @version     Release: 1.0.0
- * @since       File available since release 1.0.0
+ * @version     Release: 2.0.0
+ * @since       File available since release 2.0.0
  * @filesource
  */
 
 /**
- * Unit Test Suite for the ScalesController
+ * Unit Test Suite for the AdminController
  *
- * This unit test suite should test all of the custom functionality provided by
- * the ScalesController class
+ * This unit test suite should test all custom functionality provided by the
+ * AdminController class
  *
  * @category    RxCompetition
  * @package     Tests
  * @subpackage  App_Controller
- * @copyright   Copyright (c) 2012 RxCompetition, Inc (http://www.rxcompetition.com)
+ * @copyright   Copyright (c) 2013 RxCompetition, Inc (http://www.rxcompetition.com)
  * @license     All Rights Reserved
- * @version     Release: 1.0.0
- * @since       Class available since release 1.0.0
+ * @version     Release: 2.0.0
+ * @since       Class available since release 2.0.0
  */
 
-class Tests_App_Controller_ScalesControllerTest
+class Tests_AdminControllerTest
     extends Zend_Test_PHPUnit_ControllerTestCase
 {
     /**
@@ -45,20 +45,21 @@ class Tests_App_Controller_ScalesControllerTest
         );
 
         parent::setUp();
-    }
+
+    } // END function setUp
 
     /**
-     * test_dispatchIndexAction()
+     * test_indexAction()
      *
-     * Tests the dispatching of the indexAction method of the ScalesController class
+     * Unit test for the indexAction of the AdminController class
      *
-     * @covers ScalesController::indexAction
+     * @covers AdminController::indexAction
      */
     public function test_dispatchIndexAction ( )
     {
         $params = array(
             'action'    => 'index',
-            'controller'=> 'scales',
+            'controller'=> 'admin',
             'module'    => 'default'
         );
 
@@ -70,22 +71,20 @@ class Tests_App_Controller_ScalesControllerTest
         $this->assertModule($urlParams['module']);
         $this->assertController($urlParams['controller']);
         $this->assertAction($urlParams['action']);
-
-    } // END function test_dispatchIndexAction
+    }
 
     /**
-     * test_listIndexAction()
+     * test_dispatchEventOptionsAction()
      *
-     * Tests the dispatching of the listAction method of the ScalesController class
+     * Unit test for the eventOptionsAction of the AdminController class
      *
-     * @covers ScalesController::listAction
+     * @covers AdminController::eventOptionsAction
      */
-    public function test_listIndexAction ( )
+    public function test_dispatchEventOptionsAction ( )
     {
         $params = array(
-            'event_id'  => 1,
-            'action'    => 'list',
-            'controller'=> 'scales',
+            'action'    => 'event-options',
+            'controller'=> 'admin',
             'module'    => 'default'
         );
 
@@ -97,7 +96,6 @@ class Tests_App_Controller_ScalesControllerTest
         $this->assertModule($urlParams['module']);
         $this->assertController($urlParams['controller']);
         $this->assertAction($urlParams['action']);
+    }
 
-    } // END function test_dispatchIndexAction
-
-} // END class Tests_App_Controller_ScalesControllerTest
+} // END class Tests_AdminControllerTest
