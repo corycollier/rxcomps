@@ -59,7 +59,7 @@ class App_Form_Registration
         // $this->addSubForm($form, 'registration');
         $this->addSubForm($this->getUserForm(), 'user');
         $this->addSubForm($this->getAthleteForm(), 'athlete');
-        $this->addSubForm($this->getCreditCardForm(), 'credit_card');
+        // $this->addSubForm($this->getCreditCardForm(), 'credit_card');
 
         // $form = new Zend_Form_SubForm;
         $this->addElement('hidden', 'id', array(

@@ -77,7 +77,7 @@ class App_Plugin_Acl
             'all-leaderboards',
         ));
 
-        $acl->allow('guest', 'registrations', 'create');
+        // $acl->allow('guest', 'registrations', 'create');
         $acl->allow('guest', 'events', 'list');
         $acl->allow('guest', 'athletes', 'list');
         $acl->allow('guest', 'competitions', 'list');
