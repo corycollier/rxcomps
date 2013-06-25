@@ -58,6 +58,13 @@ class App_Form_Athlete
             'filters'       => array('StringTrim'),
         ));
 
+        $this->addElement('text', 'given_id', array(
+            'label'         => 'Athlete ID',
+            'placeholder'   => 'Enter the athlete id',
+            'required'      => false,
+            'filters'       => array('StringTrim'),
+        ));
+
         $this->addElement('select', 'gender', array(
             'label'         => 'Gender',
             'placeholder'   => 'Select Gender',

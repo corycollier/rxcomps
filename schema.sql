@@ -30,6 +30,7 @@ CREATE  TABLE IF NOT EXISTS `athletes` (
   `name` VARCHAR(45) NOT NULL ,
   `scale_id` INT NOT NULL ,
   `event_id` INT NOT NULL ,
+  `given_id` INT NULL,
   `gender` ENUM('male', 'female', 'team') NOT NULL DEFAULT 'team',
   `gym` TEXT,
   `created` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
