@@ -20,6 +20,14 @@ $(function() {
         $("a[href$='" + window.location.hash + "']").parent().trigger('click');
     }
 
+    $(".tab-content paginationControl a").on('click', function(event){
+        event.preventDefault(true);
+        $.get($(this).attr('href'), function(data){
+            $(".tab-content.active").html(data);
+        });
+        return false;
+    });
+
     // hide gender and scale from the user if they're a judge
     $("#role").on('change', function(event){
         var role = $(this).val();

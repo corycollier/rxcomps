@@ -72,4 +72,26 @@ class AthletesController
 
     } // END function indexAction
 
+    /**
+     * searchAction()
+     *
+     * Action to search athletes by query
+     */
+    public function searchAction ( )
+    {
+        $model = new App_Model_Lucene;
+        $form = new Rx_Form_Search;
+
+        $request = $this->getRequest();
+        $this->view->results = array();
+
+        if ($request->getParam('q')) {
+            if ($form->isValid($request->getParams())) {
+                $this->view->results = $model->search('App_Model_Athlete', $request->getParam('q'));
+            }
+        }
+
+        $this->view->form = $form;
+    }
+
 } // END class App_Controller_AthletesController

@@ -63,4 +63,17 @@ class AdminController
 
     } // END function eventOptionsAction
 
+    /**
+     * buildUserIndexAction()
+     *
+     * Builds the user index
+     */
+    public function buildAthleteIndexAction ( )
+    {
+        $lucene = new App_Model_Lucene;
+
+        $lucene->buildIndex('App_Model_Athlete');
+
+    } // END function buildUserAction
+
 } // END class AdminController

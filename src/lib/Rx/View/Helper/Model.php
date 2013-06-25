@@ -172,6 +172,23 @@ class Rx_View_Helper_Model
     } // END function create
 
     /**
+     * search()
+     *
+     * this method provides a search form for a given model
+     *
+     * @return string
+     */
+    public function search ($params)
+    {
+        $form = new Rx_Form_Search;
+
+        $form->setAction($this->view->url($params['formAction']));
+
+        return $form;
+
+    } // END function search
+
+    /**
      * csv()
      *
      * Method to return a csv link for a given model

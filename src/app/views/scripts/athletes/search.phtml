@@ -1,0 +1,36 @@
+<?php
+/**
+ * search view script
+ *
+ * This view script is for displaying search results
+ *
+ * @category    RxCompetition
+ * @package     App
+ * @subpackage  View_Scripts
+ * @copyright   Copyright (c) 2012 RxCompetition.com, Inc (http://www.RxCompetition.com)
+ * @license     All Rights Reserved
+ * @version     Release: 2.0.0
+ * @since       File available since release 2.0.0
+ */
+?>
+
+<?php echo $this->form; ?>
+
+<ul>
+<?php foreach ($this->results as $result) : ?>
+    <?php
+    $link = $this->htmlAnchor($result->name, array(
+        'controller'=> 'athletes',
+        'action'    => 'view',
+        'id'        => $result->id,
+        'event_id'  => $result->event_id,
+    ));
+    ?>
+    <li>
+        <h3><?php echo $link; ?>
+            <span class="alt">(<?php echo $result->gym; ?>)</span>
+        </h3>
+    </li>
+
+<?php endforeach; ?>
+</ul>

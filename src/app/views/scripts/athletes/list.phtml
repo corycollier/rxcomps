@@ -27,6 +27,15 @@ echo $this->model(new App_Model_Athlete)->csv($this->user, 'Export Athletes', ar
     'event_id'  => $eventId,
 ));
 
+// echo a create new link, if appropriate
+echo $this->model(new App_Model_Athlete)->search(array(
+    'formAction' => array(
+        'controller' => 'athletes',
+        'action'    => 'search',
+        'event_id'  => $eventId,
+    ),
+));
+
 // iterate through the athletes, rendering information
 foreach ($this->items as $athlete) :
 

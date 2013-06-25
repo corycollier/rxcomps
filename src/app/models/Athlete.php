@@ -30,7 +30,9 @@
 
 class App_Model_Athlete
     extends Rx_Model_Abstract
-    implements Zend_Acl_Resource_Interface, App_Model_Interface_Eventable
+    implements Zend_Acl_Resource_Interface,
+        App_Model_Interface_Eventable,
+        App_Model_Interface_Searchable
 {
     /**
      * getResourceId()
@@ -56,6 +58,25 @@ class App_Model_Athlete
         $event = $this->getParent('Event');
         return $event;
     }
+
+    /**
+     * getSearchFields()
+     *
+     * Gets the search fields for this model
+     *
+     * @return array
+     */
+    public function getSearchFields ( )
+    {
+        return array(
+            // 'athlete_id'    => 'Text',
+            'id'            => 'Text',
+            'name'          => 'Text',
+            'gym'           => 'Text',
+            'event_id'      => 'Text',
+        );
+
+    } // END function getSearchFields
 
 }// END class App_Model_Athletes
 

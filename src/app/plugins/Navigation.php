@@ -129,26 +129,26 @@ class App_Plugin_Navigation
                     'event_id'      => $eventId,
                 ),
             ),
-            array(
-                'label'         => 'Options',
-                'controller'    => 'event-options',
-                'resource'      => 'event-options',
-                'privilege'     => 'list',
-                'action'        => 'list',
-                'params' => array(
-                    'event_id'      => $eventId,
-                ),
-            ),
-            array(
-                'label'         => 'Admin',
-                'controller'    => 'event-admin',
-                'resource'      => 'event-admin',
-                'privilege'     => 'edit',
-                'action'        => 'index',
-                'params' => array(
-                    'event_id'      => $eventId,
-                ),
-            ),
+            // array(
+            //     'label'         => 'Options',
+            //     'controller'    => 'event-options',
+            //     'resource'      => 'event-options',
+            //     'privilege'     => 'list',
+            //     'action'        => 'list',
+            //     'params' => array(
+            //         'event_id'      => $eventId,
+            //     ),
+            // ),
+            // array(
+            //     'label'         => 'Admin',
+            //     'controller'    => 'event-admin',
+            //     'resource'      => 'event-admin',
+            //     'privilege'     => 'edit',
+            //     'action'        => 'index',
+            //     'params' => array(
+            //         'event_id'      => $eventId,
+            //     ),
+            // ),
         );
 
     }
