@@ -53,7 +53,6 @@ class App_Model_Lucene
 
         $data = $model->getTable()->fetchAll();
 
-
         // var_dump($data);
         $fields = $model->getSearchFields();
 

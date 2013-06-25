@@ -78,4 +78,20 @@ class AdminController
 
     } // END function buildUserAction
 
+    /**
+     * flushCacheAction()
+     *
+     * Action that allows the deletion of specific caches
+     */
+    public function flushCacheAction ( )
+    {
+        $request = $this->getRequest();
+        $cache = $this->getFrontController()
+                ->getParam('bootstrap')
+                ->getResource('cachemanager')
+                ->getCache('page')
+                ->clean();
+
+    } // END function deleteCacheAction
+
 } // END class AdminController

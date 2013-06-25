@@ -71,6 +71,7 @@ class App_Plugin_Acl
             'login',
             'logout',
             'success',
+            'search',
             // 'list',
             'leaderboards',
             'all',
