@@ -25,16 +25,17 @@ echo $this->form;
 <ul>
 <?php foreach ($this->results as $result) : ?>
     <?php
-    $link = $this->htmlAnchor($result->name, array(
+    $doc = $result->getDocument();
+    $link = $this->htmlAnchor($doc->name, array(
         'controller'=> 'athletes',
         'action'    => 'view',
-        'id'        => $result->id,
-        'event_id'  => $result->event_id,
+        'id'        => $doc->id,
+        'event_id'  => $doc->event_id,
     ));
     ?>
     <li>
         <h3><?php echo $link; ?>
-            <span class="alt">(<?php echo $result->gym; ?>)</span>
+            <span class="alt">(<?php echo $doc->gym; ?>)</span>
         </h3>
     </li>
 

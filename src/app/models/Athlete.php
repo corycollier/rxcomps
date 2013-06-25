@@ -70,7 +70,7 @@ class App_Model_Athlete
     {
         return array(
             // 'athlete_id'    => 'Text',
-            'id'            => 'Text',
+            'id'            => 'UnIndexed',
             'name'          => 'Text',
             'gym'           => 'Text',
             'event_id'      => 'Text',

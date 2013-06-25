@@ -44,7 +44,7 @@ class App_Model_Lucene
      * @param string $modelName
      * @return App_Model_Lucene $this for object-chaining
      */
-    public function buildIndex ($modelName)
+    public function buildIndex ($modelName, $eventId)
     {
         $model = new $modelName;
         if (! $model instanceof App_Model_Interface_Searchable) {
@@ -53,11 +53,11 @@ class App_Model_Lucene
 
         $data = $model->getTable()->fetchAll();
 
-        // var_dump($data); die;
 
+        // var_dump($data);
         $fields = $model->getSearchFields();
 
-        $path = $this->_getIndexPath($modelName);
+        $path = $this->_getIndexPath($modelName, $eventId);
 
         Zend_Search_Lucene::create($path);
         $index = Zend_Search_Lucene::open($path);
@@ -67,6 +67,7 @@ class App_Model_Lucene
             foreach ($fields as $property => $type) {
                 $doc->addField(Zend_Search_Lucene_Field::$type($property, $datum->$property));
             }
+            // var_dump($doc); die;
             $index->addDocument($doc);
         }
 
@@ -85,9 +86,9 @@ class App_Model_Lucene
      * @param string $query
      * @return array
      */
-    public function search ($modelName, $query)
+    public function search ($modelName, $eventId, $query)
     {
-        $index = $this->_getIndex($modelName);
+        $index = $this->_getIndex($modelName, $eventId);
 
         $query = Zend_Search_Lucene_Search_QueryParser::parse("{$query}*");
 
@@ -118,9 +119,9 @@ class App_Model_Lucene
      * @param string $modelName
      * @return d
      */
-    protected function _getIndex ($modelName)
+    protected function _getIndex ($modelName, $eventId)
     {
-        $path = $this->_getIndexPath($modelName);
+        $path = $this->_getIndexPath($modelName, $eventId);
 
         $index = Zend_Search_Lucene::open($path);
 
@@ -136,13 +137,13 @@ class App_Model_Lucene
      * @param string $modelName
      * @return string
      */
-    protected function _getIndexPath ($modelName)
+    protected function _getIndexPath ($modelName, $eventId)
     {
         $filter = new Zend_Filter;
         $filter->addFilter(new Zend_Filter_Word_UnderscoreToDash);
         $filter->addFilter(new Zend_Filter_StringToLower);
 
-        return ROOT_PATH . '/tmp/zend_lucene_' . $filter->filter($modelName);
+        return ROOT_PATH . '/tmp/zend_lucene_event_' . $eventId . '_' . $filter->filter($modelName);
     }
 
 } // END class App_Model_Lucene

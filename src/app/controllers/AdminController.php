@@ -72,7 +72,9 @@ class AdminController
     {
         $lucene = new App_Model_Lucene;
 
-        $lucene->buildIndex('App_Model_Athlete');
+        $eventId = $this->getRequest()->getParam('event_id');
+
+        $lucene->buildIndex('App_Model_Athlete', $eventId);
 
     } // END function buildUserAction
 

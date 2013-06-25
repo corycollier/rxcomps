@@ -84,10 +84,12 @@ class AthletesController
 
         $request = $this->getRequest();
         $this->view->results = array();
+        $query = $request->getParam('q');
+        $eventId = $request->getParam('event_id');
 
-        if ($request->getParam('q')) {
+        if ($query && $eventId) {
             if ($form->isValid($request->getParams())) {
-                $this->view->results = $model->search('App_Model_Athlete', $request->getParam('q'));
+                $this->view->results = $model->search('App_Model_Athlete', $eventId, $query);
             }
         }
 
