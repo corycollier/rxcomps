@@ -253,11 +253,7 @@ class App_View_Helper_Leaderboard
      */
     protected function _getScoreEditLink ($competitionId, $data, $user = null)
     {
-        if (! $this->view->acl($user)->isAllowed('competitions', 'edit')) {
-            return;
-        }
-
-        $html = '<div class="small default btn icon-right icon-pencil">%s</div>';
+        $html = '<div class="admin-edit-link small default btn icon-right icon-pencil">%s</div>';
 
         $action = 'edit';
         if (isset($data['placeholder_score']) && $data['placeholder_score']) {

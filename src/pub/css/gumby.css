@@ -1847,6 +1847,10 @@ span.adjoined { width: 25%; text-align: right; vertical-align: top; overflow: hi
 
 .athlete-name { text-align: right; }
 
+.leaderboards-table .admin-edit-link { display: none; }
+
+.leaderboards-table .admin-edit-link { display: -moz-inline-stack; display: inline-block; vertical-align: middle; *vertical-align: auto; zoom: 1; *display: inline; }
+
 .header { background: rgba(0, 0, 0, 0.5); }
 .header a { color: #fff; text-shadow: 0 1px 0 rgba(0, 0, 0, 0.5); }
 

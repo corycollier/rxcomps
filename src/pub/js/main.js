@@ -16,9 +16,9 @@ Gumby.oldie(function() {
 // Document ready
 $(function() {
 
-    if (window.location.hash) {
-        $("a[href$='" + window.location.hash + "']").parent().trigger('click');
-    }
+    $.getJSON('/index/get-user-role-id/?format=json', function(data) {
+        $("body").addClass(data.role);
+    });
 
     $(".tab-content paginationControl a").on('click', function(event){
         event.preventDefault(true);

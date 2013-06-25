@@ -106,6 +106,14 @@ span.adjoined {
     text-align: right;
 }
 
+.leaderboards-table .admin-edit-link {
+    display: none;
+}
+
+.leaderboards-table .admin-edit-link {
+    @include inline-block;
+}
+
 .header {
     background: rgba(0,0,0,0.5);
 

@@ -32,6 +32,19 @@
     extends Rx_Controller_Action
 {
     /**
+     * init()
+     *
+     * local override of the init hook
+     */
+    public function init ( )
+    {
+        $this->getHelper('ContextSwitch')
+            ->addActionContext('get-user-role-id', array('json'))
+            ->initContext();
+
+    } // END function init
+
+    /**
      * indexController()
      *
      * The default action for the controller
@@ -50,5 +63,17 @@
     {
 
     } // END function termsOfUseAction
+
+    /**
+     * getUserRoleId()
+     *
+     * Method to show a user's role id
+     */
+    public function getUserRoleIdAction ( )
+    {
+        // specify the needed classes
+        $this->view->role = $this->getModel('User')->fromSession()->getRoleId();
+
+    } // END function getUserRoleId
 
 } // END function indexController
