@@ -13,8 +13,14 @@
  * @since       File available since release 2.0.0
  */
 ?>
+<?php
+// render a link back to the main event
+echo $this->actionList(array(
+    $this->backToEventLink(new App_Model_Athlete, $this->request()->getParams()),
+));
 
-<?php echo $this->form; ?>
+echo $this->form;
+?>
 
 <ul>
 <?php foreach ($this->results as $result) : ?>

@@ -43,8 +43,8 @@ class Rx_Form_Search
             'validators'    => array(
                 array('StringLength', true, array(
                     'min' => 3,
-                ))
-            )
+                )),
+            ),
         ));
 
         $this->addElement('submit', 'search', array(
