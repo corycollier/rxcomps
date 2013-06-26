@@ -1813,7 +1813,7 @@ body .video { width: 100%; position: relative; height: 0; padding-bottom: 56.25%
 
 html, body { height: 100%; }
 
-body { background: url(/img/body.jpg) center center fixed; background-repeat: no-repeat; background-color: #000; background-size: cover; }
+body { background: url(/img/bbd-body.jpg) center center fixed; background-repeat: no-repeat; background-color: #000; background-size: cover; }
 body p + p { text-indent: 2em; margin-top: -1.5em; /* Don't want this in forms. */ }
 form body p + p { text-indent: 0; }
 body p.incr, body .incr p { font-size: 0.83333em; line-height: 1.44em; margin-bottom: 1.5em; }
@@ -1822,6 +1822,7 @@ body .dquo { margin-left: -0.5em; }
 body .alt { color: #666666; font-family: "Open Sans"; font-style: italic; font-weight: normal; }
 body p + p { text-indent: 0; margin-top: auto; }
 body .alt { color: rgba(0, 0, 0, 0.5); }
+body .navbar { box-shadow: 0 1px 3px rgba(0, 0, 0, 0.5); }
 body .page-content { background: #fff; padding-bottom: 30px; margin-bottom: 20px; }
 
 td, th { padding: 0.5em; border: 1px solid #ddd; }
@@ -1852,7 +1853,7 @@ span.adjoined { width: 25%; text-align: right; vertical-align: top; overflow: hi
 .leaderboards-table .admin-edit-link { display: -moz-inline-stack; display: inline-block; vertical-align: middle; *vertical-align: auto; zoom: 1; *display: inline; }
 
 .header { background: rgba(0, 0, 0, 0.5); }
-.header a { color: #fff; text-shadow: 0 1px 0 rgba(0, 0, 0, 0.5); }
+.header a { color: #fff; float: left; text-indent: -9999px; background: url(/img/bbdfullogo_forwhite.png) top left no-repeat; width: 310px; height: 145px; }
 
 .footer { background: rgba(0, 0, 0, 0.5); }
 .footer p { font-size: 0.8em; color: #fff; line-height: 1.2em; }

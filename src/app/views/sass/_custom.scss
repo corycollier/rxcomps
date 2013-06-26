@@ -12,7 +12,7 @@ $alternate-text-font: "Open Sans";
 body {
     @include fancy-type;
 
-    background: url(/img/body.jpg) center center fixed;
+    background: url(/img/bbd-body.jpg) center center fixed;
     background-repeat: no-repeat;
     background-color: #000;
     background-size: cover;
@@ -24,6 +24,10 @@ body {
 
     .alt {
         color: rgba(0,0,0,0.5);
+    }
+
+    .navbar {
+        box-shadow: 0 1px 3px rgba(0,0,0,0.5);
     }
 
     .page-content {
@@ -119,7 +123,11 @@ span.adjoined {
 
     a {
         color: #fff;
-        @include text-shadow(0 1px 0 rgba(0,0,0,0.5));
+        float: left;
+        text-indent: -9999px;
+        background: url(/img/bbdfullogo_forwhite.png) top left no-repeat;
+        width: 310px;
+        height: 145px;
     }
 }
 
