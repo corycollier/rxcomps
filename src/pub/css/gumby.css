@@ -1826,7 +1826,7 @@ body .navbar { background: transparent; }
 body .navbar .navigation { margin-top: 53px; float: right; }
 body .navbar.fixed { background: #333; box-shadow: 1 1px 3px rgba(0, 0, 0, 0.5); }
 body .navbar.fixed .navigation { margin-top: 0px; }
-body .page-content { background: #fff; padding-bottom: 30px; margin-bottom: 20px; }
+body .page-content { background: #fff; padding-bottom: 30px; margin-bottom: 20px; overflow-x: scroll; }
 
 td, th { padding: 0.5em; border: 1px solid #ddd; }
 
