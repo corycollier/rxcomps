@@ -75,7 +75,18 @@ class App_Plugin_View
         // add some css
         $this->view->headLink()->appendStylesheet("/css/gumby.css");
         $this->view->headScript()
-            ->appendFile('/js/libs/gumby.min.js')
+            ->appendFile('/js/libs/gumby.js')
+            ->appendFile('/js/libs/ui/gumby.retina.js')
+            ->appendFile('/js/libs/ui/gumby.fixed.js')
+            ->appendFile('/js/libs/ui/gumby.skiplink.js')
+            ->appendFile('/js/libs/ui/gumby.toggleswitch.js')
+            ->appendFile('/js/libs/ui/gumby.checkbox.js')
+            ->appendFile('/js/libs/ui/gumby.radiobtn.js')
+            ->appendFile('/js/libs/ui/gumby.tabs.js')
+            ->appendFile('/js/libs/ui/gumby.navbar.js')
+            ->appendFile('/js/libs/ui/gumby.fittext.js')
+            ->appendFile('/js/libs/ui/jquery.validation.js')
+            ->appendFile('/js/libs/gumby.init.js')
             ->appendFile('/js/plugins.js')
             ->appendFile('/js/main.js');
 
