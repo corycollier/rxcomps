@@ -13,6 +13,11 @@ Gumby.oldie(function() {
 
 });
 
+// Touch devices loaded
+Gumby.touch(function() {
+    console.log("This is a touch enabled device...");
+});
+
 // Document ready
 $(function() {
 

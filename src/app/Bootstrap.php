@@ -76,10 +76,14 @@ class App_Bootstrap
     {
         $this->bootstrap('frontcontroller');
         $front = $this->getResource('frontcontroller');
+
+        $this->bootstrap('view');
+        $view = $this->getResource('view');
+
         $front->registerPlugin(new App_Plugin_Acl);
         $front->registerPlugin(new App_Plugin_EventOptions);
         $front->registerPlugin(new App_Plugin_Navigation);
-        $front->registerPlugin(new App_Plugin_View);
+        $front->registerPlugin(new App_Plugin_View($view));
         $front->registerPlugin(new App_Plugin_Cache);
         $front->registerPlugin(new App_Plugin_User);
     }

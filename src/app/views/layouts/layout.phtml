@@ -63,28 +63,26 @@
     <!-- All JavaScript at the bottom, except for Modernizr / Respond.
     Modernizr enables HTML5 elements & feature detects; Respond is a polyfill for min/max-width CSS3 Media Queries
     For optimal performance, use a custom Modernizr build: www.modernizr.com/download/ -->
-    <script src="/js/modernizr-2.6.2.min.js"></script>
+    <script src="/js/libs/modernizr-2.6.2.min.js"></script>
 </head>
 
 <body>
     <div class="header">
         <div class="container row">
             <h2 class="logo"><a href="/">Rx Competition</a></h2>
+            <nav class="navbar" gumby-fixed="top">
+                <a href="#" class="toggle" data-for=".navbar ul"><i class="icon-menu"></i></a>
+                <?php
+                    echo $this->navigation()
+                        ->menu()
+                        ->setUlClass('container')
+                        ->setMinDepth(0)
+                        ->setMaxDepth(0)
+                        ->render();
+                ?>
+            </nav>
         </div>
     </div>
-    <nav class="navbar" gumby-fixed="top">
-        <a href="#" class="toggle" data-for=".navbar ul"><i class="icon-menu"></i></a>
-        <div class="row">
-            <?php
-                echo $this->navigation()
-                    ->menu()
-                    ->setUlClass('container')
-                    ->setMinDepth(0)
-                    ->setMaxDepth(0)
-                    ->render();
-            ?>
-        </div>
-    </nav>
 
     <div class="container row page-content">
         <?php echo $this->flashMessenger($this->flashMessenger); ?>
@@ -115,12 +113,15 @@
         </div>
     </div>
 
-  <!-- JavaScript at the bottom for fast page loading -->
+    <!-- Grab Google CDN's jQuery, fall back to local if offline -->
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script>window.jQuery || document.write('<script src="/js/libs/jquery-1.9.1.min.js"><\/script>')</script>
 
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-    <script>window.jQuery || document.write('<script src="/js/vendor/jquery-1.9.1.min.js"><\/script>')</script>
-    <script src="/js/libs/gumby.min.js"></script>
-    <script src="/js/plugins.js"></script>
-    <script src="/js/main.js"></script>
+    <?php // render all of the javascript
+        echo implode(PHP_EOL, array(
+            $this->headScript(),
+            $this->inlineScript(),
+        )) . PHP_EOL;
+    ?>
 </body>
 </html>

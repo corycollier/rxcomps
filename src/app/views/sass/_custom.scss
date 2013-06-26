@@ -12,7 +12,8 @@ $alternate-text-font: "Open Sans";
 body {
     @include fancy-type;
 
-    background: url(/img/bbd-body.jpg) center center fixed;
+    // background: url(/img/body.jpg) center center;
+    background: url(/img/bbd-body.jpg) top center fixed;
     background-repeat: no-repeat;
     background-color: #000;
     background-size: cover;
@@ -27,7 +28,18 @@ body {
     }
 
     .navbar {
+        background: transparent;
+        margin-top: 53px;
+
+        ul {
+            float: right;
+        }
+    }
+
+    .navbar.fixed {
+        background: #333;
         box-shadow: 0 1px 3px rgba(0,0,0,0.5);
+        margin-top: 0px;
     }
 
     .page-content {
@@ -119,9 +131,9 @@ span.adjoined {
 }
 
 .header {
-    background: rgba(0,0,0,0.5);
+    // background: rgba(0,0,0,0.5);
 
-    a {
+    .logo a {
         color: #fff;
         float: left;
         text-indent: -9999px;

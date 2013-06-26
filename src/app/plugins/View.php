@@ -31,6 +31,21 @@
 class App_Plugin_View
     extends Rx_Controller_Plugin_Abstract
 {
+
+    public $view;
+
+    /**
+     * __construct()
+     *
+     * Constructor
+     *
+     * @param Zend_View $view
+     */
+    public function __construct (Zend_View $view)
+    {
+        $this->view = $view;
+
+    } // END function __construct
     /**
      * preDispatch()
      *
@@ -56,6 +71,13 @@ class App_Plugin_View
         $view->navigation()
             ->setAcl($this->getRegistry()->get('acl'))
             ->setRole($this->getRegistry()->get('user')->getRoleId());
+
+        // add some css
+        $this->view->headLink()->appendStylesheet("/css/gumby.css");
+        $this->view->headScript()
+            ->appendFile('/js/libs/gumby.min.js')
+            ->appendFile('/js/plugins.js')
+            ->appendFile('/js/main.js');
 
     } // END function preDispatch
 

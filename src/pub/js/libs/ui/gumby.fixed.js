@@ -7,9 +7,17 @@
 
 	function Fixed($el) {
 		this.$el = $el;
-		this.$holder = Gumby.selectAttr.apply(this.$el, ['holder']) || $(window);
+		this.$holder = Gumby.selectAttr.apply(this.$el, ['holder']);
 		this.fixedPoint = Gumby.selectAttr.apply(this.$el, ['fixed']);
 		this.unfixPoint = false;
+
+		// if holder attr set then create jQuery object
+		// otherwise use window for scrolling cals
+		if(this.$holder) {
+			this.$holder = $(this.$holder);
+		} else {
+			this.$holder = $(window);
+		}
 
 		// fix/unfix points specified
 		if(this.fixedPoint.indexOf('|') > -1) {
@@ -42,8 +50,13 @@
 		fixedPoint = fixedPoint instanceof jQuery ? this.fixedPoint.offset().top : this.fixedPoint;
 		unfixPoint = unfixPoint instanceof jQuery ? this.unfixPoint.offset().top : this.unfixPoint;
 
+		// ensure unfix point is never reached if not set
+		if(!unfixPoint) {
+			unfixPoint = offset * 2;
+		}
+
 		// scrolled past fixed point and no fixed class present
-		if(offset >= fixedPoint && !this.$el.hasClass('fixed')) {
+		if((offset >= fixedPoint) && (offset < unfixPoint)  && !this.$el.hasClass('fixed')) {
 			this.$el.addClass('fixed').trigger('gumby.onFixed');
 
 		// before fixed point, pass 0 to onUnfixed event
