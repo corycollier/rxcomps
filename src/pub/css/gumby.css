@@ -1822,9 +1822,10 @@ body .dquo { margin-left: -0.5em; }
 body .alt { color: #666666; font-family: "Open Sans"; font-style: italic; font-weight: normal; }
 body p + p { text-indent: 0; margin-top: auto; }
 body .alt { color: rgba(0, 0, 0, 0.5); }
-body .navbar { background: transparent; margin-top: 53px; }
-body .navbar ul { float: right; }
-body .navbar.fixed { background: #333; box-shadow: 0 1px 3px rgba(0, 0, 0, 0.5); margin-top: 0px; }
+body .navbar { background: transparent; }
+body .navbar .navigation { margin-top: 53px; float: right; }
+body .navbar.fixed { background: #333; box-shadow: 1 1px 3px rgba(0, 0, 0, 0.5); }
+body .navbar.fixed .navigation { margin-top: 0px; }
 body .page-content { background: #fff; padding-bottom: 30px; margin-bottom: 20px; }
 
 td, th { padding: 0.5em; border: 1px solid #ddd; }

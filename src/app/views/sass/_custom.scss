@@ -29,17 +29,19 @@ body {
 
     .navbar {
         background: transparent;
-        margin-top: 53px;
-
-        ul {
+        .navigation {
+            margin-top: 53px;
             float: right;
         }
     }
 
     .navbar.fixed {
         background: #333;
-        box-shadow: 0 1px 3px rgba(0,0,0,0.5);
-        margin-top: 0px;
+        box-shadow: 1 1px 3px rgba(0,0,0,0.5);
+
+        .navigation {
+            margin-top: 0px;
+        }
     }
 
     .page-content {

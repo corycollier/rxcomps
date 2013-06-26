@@ -70,17 +70,18 @@
     <div class="header">
         <div class="container row">
             <h2 class="logo"><a href="/">Rx Competition</a></h2>
-            <nav class="navbar" gumby-fixed="top">
-                <a href="#" class="toggle" data-for=".navbar ul"><i class="icon-menu"></i></a>
-                <?php
-                    echo $this->navigation()
+
+            <div id="navigation" class="navbar" gumby-fixed="top">
+                <a class="toggle" gumby-trigger="#navigation > ul" href="#">
+                    <i class="icon-menu"></i>
+                </a>
+
+                <?php echo $this->navigation()
                         ->menu()
-                        ->setUlClass('container')
                         ->setMinDepth(0)
                         ->setMaxDepth(0)
-                        ->render();
-                ?>
-            </nav>
+                        ->render(); ?>
+            </div>
         </div>
     </div>
 
