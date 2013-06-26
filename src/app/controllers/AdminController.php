@@ -85,7 +85,6 @@ class AdminController
      */
     public function flushCacheAction ( )
     {
-        $request = $this->getRequest();
         $cache = $this->getFrontController()
                 ->getParam('bootstrap')
                 ->getResource('cachemanager')
