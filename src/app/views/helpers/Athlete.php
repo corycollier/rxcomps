@@ -66,6 +66,11 @@ class App_View_Helper_Athlete
     {
         $view = $this->view;
 
+        $givenId = '';
+        if ($athlete->row->given_id) {
+            $givenId = $athlete->row->given_id . ' - ';
+        }
+
         $link = $view->htmlAnchor(ucwords($athlete->row->name), array(
             'controller'=> 'athletes',
             'action'    => 'view',
@@ -76,7 +81,8 @@ class App_View_Helper_Athlete
         $scale = $athlete->row->findParentRow('App_Model_DbTable_Scale');
 
         $title = sprintf(
-            '<h3>%s <span class="alt">(%s) [%s]</span></h3>',
+            '<h3>%s%s <span class="alt">(%s) [%s]</span></h3>',
+            $givenId,
             $link,
             $athlete->row->gym,
             $scale->name
