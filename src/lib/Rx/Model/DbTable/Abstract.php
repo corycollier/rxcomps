@@ -124,7 +124,7 @@ class Rx_Model_DbTable_Abstract
      */
     public function update (array $data, $where)
     {
-        return parent::update($this->filterValues($values), $where);
+        return parent::update($this->filterValues($data), $where);
 
     } // END function update
 
