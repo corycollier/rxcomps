@@ -1,6 +1,6 @@
 // Gumby is ready to go
 Gumby.ready(function() {
-	console.log('Gumby is ready to go...', Gumby.debug());
+	// console.log('Gumby is ready to go...', Gumby.debug());
 
 	// placeholder polyfil
 	if(Gumby.isOldie || Gumby.$dom.find('html').hasClass('ie9')) {
@@ -15,7 +15,7 @@ Gumby.oldie(function() {
 
 // Touch devices loaded
 Gumby.touch(function() {
-    console.log("This is a touch enabled device...");
+    // console.log("This is a touch enabled device...");
 });
 
 // Document ready
