@@ -39,7 +39,8 @@ class Rx_Form_Search
     public function init ( )
     {
         $this->addElement('text', 'q', array(
-            'placeholder' => 'search terms',
+            'class'         => 'search input',
+            'placeholder'   => 'search terms',
             'validators'    => array(
                 array('StringLength', true, array(
                     'min' => 3,
@@ -47,14 +48,11 @@ class Rx_Form_Search
             ),
         ));
 
-        $this->addElement('submit', 'search', array(
-            'ignore' => true,
-            'class' => 'adjoined',
-        ));
-
         $this->setMethod('GET');
 
-        parent::init();
+        // parent::init();
+
+        $this->setDecorators(array('FormElements', 'Form'));
 
     } // END function init
 

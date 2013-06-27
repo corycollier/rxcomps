@@ -73,7 +73,14 @@ class App_View_Helper_Athlete
             'event_id'  => $athlete->row->event_id,
         ));
 
-        $title = sprintf('<h3>%s <span class="alt">(%s)</span></h3>', $link, $athlete->row->gym);
+        $scale = $athlete->row->findParentRow('App_Model_DbTable_Scale');
+
+        $title = sprintf(
+            '<h3>%s <span class="alt">(%s) [%s]</span></h3>',
+            $link,
+            $athlete->row->gym,
+            $scale->name
+        );
 
         return $title;
 
