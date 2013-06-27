@@ -106,11 +106,6 @@ class Rx_View_Helper_Model
      */
     public function links ($user, $params = array())
     {
-        $acl = $this->view->acl($user);
-        if (! $acl) {
-            return;
-        }
-
         $resourceId = $this->_model->getResourceId();
         $roleId     = $user->getRoleId();
         $privileges = array('edit', 'delete');
@@ -118,12 +113,7 @@ class Rx_View_Helper_Model
         $links      = array();
 
         foreach ($privileges as $privilege) {
-
-            if (! $acl->isAllowed($resourceId, $privilege)) {
-                continue;
-            }
-
-            $class = 'small default btn icon-right icon-' . $icons[$privilege];
+            $class = 'admin-edit-link small default btn icon-right icon-' . $icons[$privilege];
 
             $links[] = '<div class="' . $class . '">'
                 . $this->view->htmlAnchor($privilege, array_merge($params, array(
@@ -156,11 +146,7 @@ class Rx_View_Helper_Model
         $resourceId = $this->_model->getResourceId();
         $privilege  = 'create';
 
-        if (! $this->view->acl($user)->isAllowed($resourceId, $privilege)) {
-            return;
-        }
-
-        $html = '<div class="small default btn icon-right icon-list-add">%s</div>';
+        $html = '<div class="admin-edit-link small default btn icon-right icon-list-add">%s</div>';
 
         $link = $this->view->htmlAnchor($title, array_merge($params, array(
             'controller'    => $resourceId,
@@ -202,11 +188,7 @@ class Rx_View_Helper_Model
         $resourceId = $this->_model->getResourceId();
         $privilege  = 'list';
 
-        if (! $this->view->acl($user)->isAllowed($resourceId, $privilege)) {
-            return;
-        }
-
-        $html = '<div class="small default btn icon-right icon-list-add">%s</div>';
+        $html = '<div class="admin-edit-link small default btn icon-right icon-list-add">%s</div>';
 
         $link = $this->view->htmlAnchor($title, array_merge($params, array(
             'controller'    => $resourceId,

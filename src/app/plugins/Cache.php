@@ -45,7 +45,7 @@ class App_Plugin_Cache
     {
         $cache = $this->getCache();
 
-        // $result = $cache->start();
+        $result = $cache->start();
 
     } // END function dispatchLoopStartup
 
