@@ -87,7 +87,7 @@ class Rx_View_Helper_Model
 
         $title = $this->_getTitle($this->_model);
 
-        $this->_htmlAttribs($attribs);
+        $attribs = $this->_htmlAttribs($attribs);
 
         $actions = $this->links($user, $params);
 
