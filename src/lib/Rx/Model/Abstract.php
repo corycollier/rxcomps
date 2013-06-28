@@ -402,9 +402,12 @@ class Rx_Model_Abstract
      */
     public function getChildren ($shortName)
     {
+        $result = new ArrayObject;
+        if ($this->row) {
+            return $result;
+        }
         $fullTableName = $this->getLoader('table')->load($shortName);
         $rowset = $this->row->findDependentRowset($fullTableName);
-        $result = new ArrayObject;
 
         foreach ($rowset as $row) {
             $model = $this->getModel($shortName);
