@@ -15,7 +15,8 @@
 ?>
 
 <?php
-$eventId = $this->request()->getParam('event_id');
+$request = $this->request();
+$eventId = $request->getParam('event_id');
 
 // echo the appropriate link to create a new score
 echo $this->model(new App_Model_Score)->create($this->user, 'Add Score', array(

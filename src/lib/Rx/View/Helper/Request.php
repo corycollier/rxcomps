@@ -38,6 +38,10 @@ class Rx_View_Helper_Request
      */
     public function request ( )
     {
+        if ($this->view->request) {
+            return $this->view->request;
+        }
+
         return Zend_Controller_Front::getInstance()->getRequest();
     }
 

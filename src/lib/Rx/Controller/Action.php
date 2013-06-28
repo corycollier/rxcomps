@@ -41,6 +41,7 @@ class Rx_Controller_Action
     public function preDispatch ( )
     {
         $this->getHelper('Acl')->check($this->getRequest());
+        $this->view->request = $this->getRequest();
 
     } // END function preDispatch
 
