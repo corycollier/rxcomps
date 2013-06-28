@@ -109,7 +109,7 @@ class App_Form_Score
         $element = $this->getElement('athlete_id');
 
         foreach ($athletes as $athlete) {
-            $element->addMultiOption($athlete->id, sprintf('%d - %s',
+            $element->addMultiOption($athlete->given_id, sprintf('%d - %s',
                 $athlete->id, $athlete->name
             ));
         }
