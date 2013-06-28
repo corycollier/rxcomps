@@ -128,11 +128,11 @@ class App_Form_User
             'filters'       => array('StringTrim'),
         ));
 
-        $this->addElement('date', 'birthday', array(
-            'label'      => 'Birth Date',
-            'placeholder'   => 'Enter Birthday',
-            'required'      => true,
-        ));
+        // $this->addElement('date', 'birthday', array(
+        //     'label'      => 'Birth Date',
+        //     'placeholder'   => 'Enter Birthday',
+        //     // 'required'      => true,
+        // ));
 
     	$this->addElement('submit', 'save', array(
     		'label' 		=> 'Save',

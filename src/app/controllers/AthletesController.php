@@ -96,4 +96,32 @@ class AthletesController
         $this->view->form = $form;
     }
 
+//     public function listAction ( )
+//     {
+
+//         $model = $this->getModel($this->_modelName);
+//         $request = $this->getRequest();
+
+//         $db = $this->getFrontController()
+//             ->getParam('bootstrap')
+//             ->getResource('db');
+
+//         $db->select()
+//             ->from(array('a' => 'athletes'),
+//                     array('scale_id', 'given_id', 'gender', 'gym', 'name'))
+
+// $select = $db->select()
+//              ->from(array('p' => 'products'),
+//                     array('product_id', 'product_name'))
+//              ->join(array('l' => 'line_items'),
+//                     'p.product_id = l.product_id');
+
+
+//         if ($request->getParam('format') == 'csv') {
+
+//         } else {
+//             $this->view->items = $model->paginate($request->getParams());
+//         }
+//     }
+
 } // END class App_Controller_AthletesController

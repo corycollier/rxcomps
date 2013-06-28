@@ -100,6 +100,8 @@ class App_Model_Registration
     {
         $logger = $this->getLog();
 
+        $logger->info(print_r($values, true));
+
         $user = $this->getParent('User');
         $event = $this->getParent('Event')->load($values['event_id']);
         $scale = $this->getParent('Scale')->load($values['athlete']['scale_id']);
@@ -123,10 +125,14 @@ class App_Model_Registration
                 try {
                     $table = $user->getTable('User');
                     $row = $table->fetchRow(
-                        $table->select()->where(sprintf('email = "%s"', $values['user']['email']))
+                        $table->select()
+                            ->where(sprintf('email = "%s"', $values['user']['email']))
                     );
-                    $user->fromRow($row);
-                    $user->create($values['user']);
+                    if ($row) {
+                        $user->fromRow($row);
+                    } else {
+                        $user->create($values['user']);
+                    }
                 } catch (Zend_Exception $exception) {
                     $logger->err($exception->getMessage());
                 }
