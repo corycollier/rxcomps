@@ -88,6 +88,7 @@ class App_View_Helper_Event
     public function register ($user)
     {
         $result = '';
+        return $result;
 
         if (! $user->isRegistered($this->_model)) {
 
