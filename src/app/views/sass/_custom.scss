@@ -125,11 +125,11 @@ span.adjoined {
     text-align: right;
 }
 
-.guest .admin-edit-link {
-    display: none!important;
+.admin-edit-link {
+    display: none;
 }
 
-.admin-edit-link {
+.admin .admin-edit-link {
     @include inline-block;
 }
 

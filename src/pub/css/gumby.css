@@ -1851,9 +1851,9 @@ span.adjoined { width: 25%; text-align: right; vertical-align: top; overflow: hi
 
 .athlete-name { text-align: right; }
 
-.guest .admin-edit-link { display: none !important; }
+.admin-edit-link { display: none; }
 
-.admin-edit-link { display: -moz-inline-stack; display: inline-block; vertical-align: middle; *vertical-align: auto; zoom: 1; *display: inline; }
+.admin .admin-edit-link { display: -moz-inline-stack; display: inline-block; vertical-align: middle; *vertical-align: auto; zoom: 1; *display: inline; }
 
 .header .logo a { color: #fff; float: left; text-indent: -9999px; background: url(/img/bbdfullogo_forwhite.png) top left no-repeat; width: 310px; height: 145px; }
 

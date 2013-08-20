@@ -87,7 +87,9 @@
 
     <div class="container row page-content">
         <?php echo $this->flashMessenger($this->flashMessenger); ?>
-        <?php echo $this->navigation()->breadcrumbs(); ?>
+        <div class="breadcrumbs">
+            <?php echo $this->navigation()->breadcrumbs()->setMinDepth(0)->setMaxDepth(5)->render(); ?>
+        </div>
         <?php echo $this->layout()->content; ?>
     </div>
 
