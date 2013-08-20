@@ -94,12 +94,11 @@ h1 {
     padding: 0.5em;
 
     h3 {
+        min-width: 50%;
         @include inline-block;
     }
     .action-links {
-        float: right;
-        line-height: 3em;
-        @include inline-block;
+        line-height: 2em;
     }
 }
 

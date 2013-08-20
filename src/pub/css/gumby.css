@@ -1842,8 +1842,8 @@ h1 .btn { vertical-align: middle; }
 .action-links a i { color: rgba(0, 0, 0, 0.7); }
 
 .list-item { background: rgba(0, 0, 0, 0.02); margin: 1em 0; padding: 0.5em; }
-.list-item h3 { display: -moz-inline-stack; display: inline-block; vertical-align: middle; *vertical-align: auto; zoom: 1; *display: inline; }
-.list-item .action-links { float: right; line-height: 3em; display: -moz-inline-stack; display: inline-block; vertical-align: middle; *vertical-align: auto; zoom: 1; *display: inline; }
+.list-item h3 { min-width: 50%; display: -moz-inline-stack; display: inline-block; vertical-align: middle; *vertical-align: auto; zoom: 1; *display: inline; }
+.list-item .action-links { line-height: 2em; }
 
 span.adjoined { width: 25%; text-align: right; vertical-align: top; overflow: hidden; }
 

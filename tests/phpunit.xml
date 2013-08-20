@@ -3,6 +3,10 @@
     verbose="true"
     >
 
+<php>
+    <const name="APPLICATION_ENV" value="testing" />
+</php>
+
 <testsuite name="RxCompetition Test Suite">
     <directory>./app</directory>
 </testsuite>

@@ -142,7 +142,7 @@
         <delete dir="${basedir}/src/lib/Zend" />
         <exec executable="svn">
             <arg value="co" />
-            <arg value="http://framework.zend.com/svn/framework/standard/tags/release-1.12.0/library/Zend/" />
+            <arg value="http://framework.zend.com/svn/framework/standard/tags/release-1.12.3/library/Zend/" />
             <arg value="${basedir}/src/lib/Zend/" />
         </exec>
     </target>
