@@ -72,9 +72,16 @@ class AdminController
     {
         $lucene = new App_Model_Lucene;
 
+        $form = new App_Form_EventSelection;
+        $form->buildOptions();
+
         $eventId = $this->getRequest()->getParam('event_id');
 
-        $lucene->buildIndex('App_Model_Athlete', $eventId);
+        if ($eventId) {
+            $lucene->buildIndex('App_Model_Athlete', $eventId);
+        }
+
+        $this->view->form = $form;
 
     } // END function buildUserAction
 
@@ -86,10 +93,14 @@ class AdminController
     public function flushCacheAction ( )
     {
         $cache = $this->getFrontController()
-                ->getParam('bootstrap')
-                ->getResource('cachemanager')
-                ->getCache('page')
-                ->clean();
+            ->getParam('bootstrap')
+            ->getResource('cachemanager')
+            ->getCache('page');
+
+        // var_dump($cache); die;
+
+
+        $cache->clean();
 
     } // END function deleteCacheAction
 

@@ -73,8 +73,8 @@ class App_Plugin_View
             ->setRole($this->getRegistry()->get('user')->getRoleId());
 
         // add some css
-        $this->view->headLink()->appendStylesheet("/css/gumby.css");
-        $this->view->headScript()
+        $view->headLink()->appendStylesheet("/css/gumby.css");
+        $view->headScript()
             ->appendFile('/js/libs/gumby.js')
             ->appendFile('/js/libs/ui/gumby.retina.js')
             ->appendFile('/js/libs/ui/gumby.fixed.js')

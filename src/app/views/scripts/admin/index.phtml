@@ -14,4 +14,19 @@
  */
 ?>
 
-index action
+<?php
+// render a link back to the main event
+echo $this->actionList(array(
+    // link to clear the cache
+    $this->htmlAnchor($this->translate('Clear Cache'), array(
+        'controller'    => 'admin',
+        'action'        => 'flush-cache',
+    )),
+
+    // link to build the athlete index
+    $this->htmlAnchor($this->translate('Build Athlete Index'), array(
+        'controller'    => 'admin',
+        'action'        => 'build-athlete-index',
+    )),
+
+));
