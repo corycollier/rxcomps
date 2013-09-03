@@ -4,7 +4,7 @@
 
 // Grid Settings
 $row-max-width: 1040 !default;
-$gutter-in-px: 20 !default;
+$gutter-in-px: 10 !default;
 $cols: 12 !default;
 $hybrid: 16 !default;
 
@@ -77,7 +77,7 @@ $body-link-color: #cc0000 !default;
 $body-link-hover-color: #c03d20 !default;
 
 // User Interface Colors
-$global-bg-color: #ffffff;
+$global-bg-color: #000000;
 $navbar-color: #333333;
 $navbar-link-color: #ffffff;
 $primary-color: #3085d6;
@@ -99,9 +99,9 @@ $black: #000;
 $white: #fff;
 
 // Borders
-$button-radius: 4px;
+$button-radius: 2px;
 $metro-radius: 0 !default;
-$bigger-radius: 8px;
+$bigger-radius: 4px;
 
 // Buttons
 // Font Sizing
@@ -111,13 +111,13 @@ $medium-button-font-size: $norm;
 $small-button-font-size: $small;
 
 // Padding
-$default-button-padding: $med;
+$default-button-padding: $norm;
 
 // Height
 $default-button-height: 36px;
 
 // Tabs
-$tab-height: 42px;
+$tab-height: 36px;
 
 // Floats
 $default-float: left;

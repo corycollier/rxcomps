@@ -151,6 +151,10 @@ span.adjoined {
     @include inline-block;
 }
 
+.subnav li a {
+    color: #ffffff;
+}
+
 .header {
     // background: rgba(0,0,0,0.5);
 

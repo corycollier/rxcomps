@@ -18,15 +18,19 @@
 // render a link back to the main event
 echo $this->actionList(array(
     // link to clear the cache
+    '<div class="medium info btn icon-left entypo icon-ccw">' .
     $this->htmlAnchor($this->translate('Clear Page Cache'), array(
         'controller'    => 'admin',
         'action'        => 'flush-cache',
-    )),
+    ))
+    . '</div>',
 
     // link to build the athlete index
+    '<div class="medium info btn icon-left entypo icon-users">' .
     $this->htmlAnchor($this->translate('Build Athlete Index'), array(
         'controller'    => 'admin',
         'action'        => 'build-athlete-index',
-    )),
+    ))
+    . '</div>',
 
 ));
