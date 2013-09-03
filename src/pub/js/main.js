@@ -6,6 +6,7 @@ Gumby.ready(function() {
 	if(Gumby.isOldie || Gumby.$dom.find('html').hasClass('ie9')) {
 		$('input, textarea').placeholder();
 	}
+
 });
 
 // Oldie document loaded
@@ -20,6 +21,7 @@ Gumby.touch(function() {
 
 // Document ready
 $(function() {
+    $('.tabs').trigger('gumby.set', 0);
 
     $.getJSON('/index/get-user-role-id/?format=json', function(data) {
         $("body").addClass(data.role);
