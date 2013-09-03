@@ -117,8 +117,8 @@ h1 {
     padding: 0.5em;
 
     h3 {
-        min-width: 50%;
-        @include inline-block;
+        // min-width: 50%;
+        // @include inline-block;
     }
     .action-links {
         line-height: 2em;
