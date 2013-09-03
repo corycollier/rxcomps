@@ -43,6 +43,13 @@ class Rx_Controller_Action
         $this->getHelper('Acl')->check($this->getRequest());
         $this->view->request = $this->getRequest();
 
+        $layout     = $this->getHelper('Layout');
+        $request    = $this->getRequest();
+
+        if ($request->isXmlHttpRequest()) {
+            $layout->disableLayout();
+        }
+
     } // END function preDispatch
 
     /**

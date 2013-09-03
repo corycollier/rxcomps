@@ -38,13 +38,3 @@ echo $this->competition($this->model->row)->item($this->user, array(
     PHP_EOL => '</p><p>',
 )); ?></p>
 <p></p>
-
-<h3>Leaderboards</h3>
-<?php
-// render the all-leaderboards action
-echo $this->action('all-leaderboards', 'competitions', 'default', array_merge(
-    $this->request()->getParams(),
-    array('event_id' => $eventId)
-));
-
-?>
