@@ -5,10 +5,10 @@
  * This form defines the default custom functionality for forms when using the
  * Rx library
  *
- * @category    RxCompetition
+ * @category    RxComps
  * @package     Rx
  * @subpackage  Form
- * @copyright   Copyright (c) 2012 RxCompetition, Inc (http://www.rxcompetition.com)
+ * @copyright   Copyright (c) 2012 RxComps, Inc (http://www.RxComps.com)
  * @license     All Rights Reserved
  * @version     Release: 1.0.0
  * @since       File available since release 1.0.0
@@ -21,10 +21,10 @@
  * This form defines the default custom functionality for forms when using the
  * Rx library
  *
- * @category    RxCompetition
+ * @category    RxComps
  * @package     Rx
  * @subpackage  Form
- * @copyright   Copyright (c) 2012 RxCompetition, Inc (http://www.rxcompetition.com)
+ * @copyright   Copyright (c) 2012 RxComps, Inc (http://www.RxComps.com)
  * @license     All Rights Reserved
  * @version     Release: 1.0.0
  * @since       Class available since release 1.0.0

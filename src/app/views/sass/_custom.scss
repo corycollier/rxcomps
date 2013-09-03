@@ -30,7 +30,11 @@ body {
     .navbar {
         background: transparent;
         .navigation {
+            float: right;
             // margin-top: 53px;
+        }
+
+        .tab-nav {
             float: right;
         }
     }

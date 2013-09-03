@@ -5,10 +5,10 @@
  * Filter to translate a time entry into seconds, instead of the standard
  * hh:mm:ss format
  *
- * @category    RxCompetition
+ * @category    RxComps
  * @package     Rx
  * @subpackage  Filter
- * @copyright   Copyright (c) 2012 RxCompetition.com, Inc (http://www.RxCompetition.com)
+ * @copyright   Copyright (c) 2012 RxComps.com, Inc (http://www.RxComps.com)
  * @license     All Rights Reserved
  * @version     Release: 1.0.0
  * @since       File available since release 1.0.0
@@ -21,10 +21,10 @@
  * Filter to translate a time entry into seconds, instead of the standard
  * hh:mm:ss format
  *
- * @category    RxCompetition
+ * @category    RxComps
  * @package     Rx
  * @subpackage  Filter
- * @copyright   Copyright (c) 2012 RxCompetition.com, Inc (http://www.RxCompetition.com)
+ * @copyright   Copyright (c) 2012 RxComps.com, Inc (http://www.RxComps.com)
  * @license     All Rights Reserved
  * @version     Release: 1.0.0
  * @since       Class available since release 1.0.0

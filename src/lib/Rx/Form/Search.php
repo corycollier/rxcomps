@@ -4,10 +4,10 @@
  *
  * The search form for models
  *
- * @category    RxCompetition
+ * @category    RxComps
  * @package     Rx
  * @subpackage  Form
- * @copyright   Copyright (c) 2012 RxCompetition.com, Inc (http://www.RxCompetition.com)
+ * @copyright   Copyright (c) 2012 RxComps.com, Inc (http://www.RxComps.com)
  * @license     All Rights Reserved
  * @version     Release: 2.0.0
  * @since       File available since release 2.0.0
@@ -19,10 +19,10 @@
  *
  * The search form for models
  *
- * @category    RxCompetition
+ * @category    RxComps
  * @package     Rx
  * @subpackage  Form
- * @copyright   Copyright (c) 2012 RxCompetition.com, Inc (http://www.RxCompetition.com)
+ * @copyright   Copyright (c) 2012 RxComps.com, Inc (http://www.RxComps.com)
  * @license     All Rights Reserved
  * @version     Release: 2.0.0
  * @since       Class available since release 2.0.0

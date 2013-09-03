@@ -5,10 +5,10 @@
  * This interface defines the functionality required of models to be owned
  * by an event model
  *
- * @category    RxCompetition
+ * @category    RxComps
  * @package     App
  * @subpackage  Model
- * @copyright   Copyright (c) 2013 RxCompetition, Inc (http://www.rxcompetition.com)
+ * @copyright   Copyright (c) 2013 RxComps, Inc (http://www.RxComps.com)
  * @license     All Rights Reserved
  * @version     Release: 2.0.0
  * @since       File available since release 2.0.0
@@ -21,10 +21,10 @@
  * This interface defines the functionality required of models to be owned
  * by an event model
  *
- * @category    RxCompetition
+ * @category    RxComps
  * @package     App
  * @subpackage  Model
- * @copyright   Copyright (c) 2013 RxCompetition, Inc (http://www.rxcompetition.com)
+ * @copyright   Copyright (c) 2013 RxComps, Inc (http://www.RxComps.com)
  * @license     All Rights Reserved
  * @version     Release: 2.0.0
  * @since       Class available since release 2.0.0

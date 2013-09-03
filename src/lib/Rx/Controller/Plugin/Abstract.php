@@ -5,10 +5,10 @@
  * This plugin class provides some common functionality that's missing from the
  * base Zend_Controller_Plugin_Abstract class
  *
- * @category    RxCompetition
+ * @category    RxComps
  * @package     Rx
  * @subpackage  Controller_Plugin
- * @copyright   Copyright (c) 2013 RxCompetition, Inc (http://www.rxcompetition.com)
+ * @copyright   Copyright (c) 2013 RxComps, Inc (http://www.RxComps.com)
  * @license     All Rights Reserved
  * @version     Release: 2.0.0
  * @since       File available since release 2.0.0
@@ -21,10 +21,10 @@
  * This plugin class provides some common functionality that's missing from the
  * base Zend_Controller_Plugin_Abstract class
  *
- * @category    RxCompetition
+ * @category    RxComps
  * @package     Rx
  * @subpackage  Controller_Plugin
- * @copyright   Copyright (c) 2013 RxCompetition, Inc (http://www.rxcompetition.com)
+ * @copyright   Copyright (c) 2013 RxComps, Inc (http://www.RxComps.com)
  * @license     All Rights Reserved
  * @version     Release: 2.0.0
  * @since       Class available since release 2.0.0

@@ -5,10 +5,10 @@
  * This controller acts as the default controller to extend from when
  * using the Rx libarry
  *
- * @category    RxCompetition
+ * @category    RxComps
  * @package     Rx
  * @subpackage  Controller
- * @copyright   Copyright (c) 2012 RxCompetition, Inc (http://www.rxcompetition.com)
+ * @copyright   Copyright (c) 2012 RxComps, Inc (http://www.RxComps.com)
  * @license     All Rights Reserved
  * @version     Release: 2.0.0
  * @since       File available since release 2.0.0
@@ -21,10 +21,10 @@
  * This controller acts as the default controller to extend from when
  * using the Rx libarry
  *
- * @category    RxCompetition
+ * @category    RxComps
  * @package     Rx
  * @subpackage  Controller
- * @copyright   Copyright (c) 2012 RxCompetition, Inc (http://www.rxcompetition.com)
+ * @copyright   Copyright (c) 2012 RxComps, Inc (http://www.RxComps.com)
  * @license     All Rights Reserved
  * @version     Release: 2.0.0
  * @since       Class available since release 2.0.0

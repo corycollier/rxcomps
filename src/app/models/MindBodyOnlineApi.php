@@ -4,10 +4,10 @@
  *
  * This model represents the interaction with the mind-body-online api
  *
- * @category    RxCompetition
+ * @category    RxComps
  * @package     App
  * @subpackage  Model
- * @copyright   Copyright (c) 2013 RxCompetition.com, Inc (http://www.rxcompetition.com)
+ * @copyright   Copyright (c) 2013 RxComps.com, Inc (http://www.RxComps.com)
  * @license     All Rights Reserved
  * @version     Release: 2.0.0
  * @since       File available since release 2.0.0
@@ -19,10 +19,10 @@
  *
  * This model represents the interaction with the mind-body-online api
  *
- * @category    RxCompetition
+ * @category    RxComps
  * @package     App
  * @subpackage  Model
- * @copyright   Copyright (c) 2013 RxCompetition.com, Inc (http://www.rxcompetition.com)
+ * @copyright   Copyright (c) 2013 RxComps.com, Inc (http://www.RxComps.com)
  * @license     All Rights Reserved
  * @version     Release: 2.0.0
  * @since       Class available since release 2.0.0
@@ -41,7 +41,7 @@ class App_Model_MindBodyOnlineApi
 
     const SITE_ID = 29673;
 
-    const SOURCE_NAME = 'RxCompetitions';
+    const SOURCE_NAME = 'RxCompss';
     const SOURCE_PASSWORD = 'EOlu/DBwB63riPua0svGaQE8+HQ=';
 
     const USER_USERNAME = 'corycollier';

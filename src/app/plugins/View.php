@@ -68,9 +68,18 @@ class App_Plugin_View
 
         $view->user = new App_Model_User;
 
+        $role = 'guest';
+        try {
+            $user = $this->getRegistry()->get('user');
+            $role = $user->getRoleId();
+        } catch (Zend_Exception $exception) {
+
+        }
+
+
         $view->navigation()
             ->setAcl($this->getRegistry()->get('acl'))
-            ->setRole($this->getRegistry()->get('user')->getRoleId());
+            ->setRole($role);
 
         // add some css
         $view->headLink()->appendStylesheet("/css/gumby.css");

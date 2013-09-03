@@ -6,10 +6,10 @@
  * to the current location, thus allowing for the filtering of current items
  * by scale_id
  *
- * @category    RxCompetition
+ * @category    RxComps
  * @package     App
  * @subpackage  View_Helper
- * @copyright   Copyright (c) 2012 RxCompetition.com, Inc (http://www.RxCompetition.com)
+ * @copyright   Copyright (c) 2012 RxComps.com, Inc (http://www.RxComps.com)
  * @license     All Rights Reserved
  * @version     Release: 1.0.0
  * @since       File available since release 1.0.0
@@ -23,10 +23,10 @@
  * to the current location, thus allowing for the filtering of current items
  * by scale_id
  *
- * @category    RxCompetition
+ * @category    RxComps
  * @package     App
  * @subpackage  View_Helper
- * @copyright   Copyright (c) 2012 RxCompetition.com, Inc (http://www.RxCompetition.com)
+ * @copyright   Copyright (c) 2012 RxComps.com, Inc (http://www.RxComps.com)
  * @license     All Rights Reserved
  * @version     Release: 1.0.0
  * @since       Class available since release 1.0.0

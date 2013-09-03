@@ -4,10 +4,10 @@
  *
  * This view helper aids in determining if a user has access to a requested resource
  *
- * @category    RxCompetition
+ * @category    RxComps
  * @package     Rx
  * @subpackage  View_Helper
- * @copyright   Copyright (c) 2012 RxCompetition.com, Inc (http://www.RxCompetition.com)
+ * @copyright   Copyright (c) 2012 RxComps.com, Inc (http://www.RxComps.com)
  * @license     All Rights Reserved
  * @version     Release: 1.1.0
  * @since       File available since release 1.1.0
@@ -19,10 +19,10 @@
  *
  * This view helper aids in determining if a user has access to a requested resource
  *
- * @category    RxCompetition
+ * @category    RxComps
  * @package     Rx
  * @subpackage  View_Helper
- * @copyright   Copyright (c) 2012 RxCompetition.com, Inc (http://www.RxCompetition.com)
+ * @copyright   Copyright (c) 2012 RxComps.com, Inc (http://www.RxComps.com)
  * @license     All Rights Reserved
  * @version     Release: 1.1.0
  * @since       Class available since release 1.1.0

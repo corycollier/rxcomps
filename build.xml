@@ -154,6 +154,12 @@
         </chmod>
     </target>
 
+    <target name="flush-cache" description="Flush cache">
+        <delete>
+            <fileset dir="${basedir}/src/tmp" includes="**/*" />
+        </delete>
+    </target>
+
     <target name="deploy-configurations" description="setup and deploy configurations">
         <copy file="${basedir}/src/etc/httpd-rxcompetition.com.sample.conf"
             tofile="${basedir}/src/etc/httpd-rxcompetition.com.conf" />

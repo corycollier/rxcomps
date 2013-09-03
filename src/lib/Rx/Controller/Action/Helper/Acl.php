@@ -5,10 +5,10 @@
  * This action helper is designed for use with Rx action controllers, to
  * provide quick access to acl information
  *
- * @category    RxCompetition
+ * @category    RxComps
  * @package     Rx
  * @subpackage  Controller_Action_Helper
- * @copyright   Copyright (c) 2012 RxCompetition, Inc (http://www.rxcompetition.com)
+ * @copyright   Copyright (c) 2012 RxComps, Inc (http://www.RxComps.com)
  * @license     All Rights Reserved
  * @version     Release: 1.0.0
  * @since       File available since release 1.0.0
@@ -21,10 +21,10 @@
  * This action helper is designed for use with Rx action controllers, to
  * provide quick access to acl information
  *
- * @category    RxCompetition
+ * @category    RxComps
  * @package     Rx
  * @subpackage  Controller_Action_Helper
- * @copyright   Copyright (c) 2012 RxCompetition, Inc (http://www.rxcompetition.com)
+ * @copyright   Copyright (c) 2012 RxComps, Inc (http://www.RxComps.com)
  * @license     All Rights Reserved
  * @version     Release: 1.0.0
  * @since       Class available since release 1.0.0

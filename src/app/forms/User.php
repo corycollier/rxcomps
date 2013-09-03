@@ -4,10 +4,10 @@
  *
  * The form for editing a single User
  *
- * @category    RxCompetition
+ * @category    RxComps
  * @package     App
  * @subpackage  Form
- * @copyright   Copyright (c) 2012 RxCompetition, Inc (http://www.rxcompetition.com)
+ * @copyright   Copyright (c) 2012 RxComps, Inc (http://www.RxComps.com)
  * @license     All Rights Reserved
  * @version     Release: 1.0.0
  * @since       File available since release 1.0.0
@@ -19,10 +19,10 @@
  *
  * The form for editing a single User
  *
- * @category    RxCompetition
+ * @category    RxComps
  * @package     App
  * @subpackage  Form
- * @copyright   Copyright (c) 2012 RxCompetition, Inc (http://www.rxcompetition.com)
+ * @copyright   Copyright (c) 2012 RxComps, Inc (http://www.RxComps.com)
  * @license     All Rights Reserved
  * @version     Release: 1.0.0
  * @since       Class available since release 1.0.0

@@ -4,10 +4,10 @@
  *
  * This view helper gives access to the request object
  *
- * @category    RxCompetition
+ * @category    RxComps
  * @package     Rx
  * @subpackage  View_Helper
- * @copyright   Copyright (c) 2012 RxCompetition.com, Inc (http://www.RxCompetition.com)
+ * @copyright   Copyright (c) 2012 RxComps.com, Inc (http://www.RxComps.com)
  * @license     All Rights Reserved
  * @version     Release: 1.0.6
  * @since       File available since release 1.0.6
@@ -19,10 +19,10 @@
  *
  * This view helper gives access to the request object
  *
- * @category    RxCompetition
+ * @category    RxComps
  * @package     Rx
  * @subpackage  View_Helper
- * @copyright   Copyright (c) 2012 RxCompetition.com, Inc (http://www.RxCompetition.com)
+ * @copyright   Copyright (c) 2012 RxComps.com, Inc (http://www.RxComps.com)
  * @license     All Rights Reserved
  * @version     Release: 1.0.6
  * @since       Class available since release 1.0.6

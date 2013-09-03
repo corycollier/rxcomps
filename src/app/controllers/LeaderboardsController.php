@@ -5,10 +5,10 @@
  * This controller handles all of the displaying an routing of requests for
  * leaderboard information
  *
- * @category    RxCompetition
+ * @category    RxComps
  * @package     App
  * @subpackage  Controller
- * @copyright   Copyright (c) 2012 RxCompetition.com, Inc (http://www.rxcompetition.com)
+ * @copyright   Copyright (c) 2012 RxComps.com, Inc (http://www.RxComps.com)
  * @license     All Rights Reserved
  * @version     Release: 1.0.0
  * @since       File available since release 1.0.0
@@ -21,10 +21,10 @@
  * This controller handles all of the displaying an routing of requests for
  * leaderboard information
  *
- * @category    RxCompetition
+ * @category    RxComps
  * @package     App
  * @subpackage  Controller
- * @copyright   Copyright (c) 2012 RxCompetition.com, Inc (http://www.rxcompetition.com)
+ * @copyright   Copyright (c) 2012 RxComps.com, Inc (http://www.RxComps.com)
  * @license     All Rights Reserved
  * @version     Release: 1.0.0
  * @since       Class available since release 1.0.0
