@@ -35,14 +35,14 @@ $(function() {
         return false;
     });
 
-    $(".tab-content a").on('click', function(event){
-        event.preventDefault(true);
-        $.get($(this).attr('href'), function(data){
-            $(".tab-content.active").html(data);
-        });
-        return false;
+    // $(".tab-content a").on('click', function(event){
+    //     event.preventDefault(true);
+    //     $.get($(this).attr('href'), function(data){
+    //         $(".tab-content.active").html(data);
+    //     });
+    //     return false;
 
-    });
+    // });
 
     // hide gender and scale from the user if they're a judge
     $("#role").on('change', function(event){

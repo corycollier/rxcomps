@@ -76,6 +76,7 @@ class App_Plugin_View
 
         }
 
+        $view->title = 'Rx Comps - ' . $request->getControllerName();
 
         $view->navigation()
             ->setAcl($this->getRegistry()->get('acl'))
