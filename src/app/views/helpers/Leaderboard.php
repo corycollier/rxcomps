@@ -87,7 +87,7 @@ class App_View_Helper_Leaderboard
     {
         $competitions = $this->_getCompetitions($data);
         $headers = $this->_getHeaders($competitions);
-        return sprintf('<tr><th class="athlete-name">Team</th>%s</th>', implode('', $headers));
+        return sprintf('<tr><th class="athlete-name">Team <br /><span class="alt">(gym)</span></th><th>Rank <span class="alt">(points)</span></th>%s</th>', implode('', $headers));
 
     } // END function headers
 
@@ -141,8 +141,8 @@ class App_View_Helper_Leaderboard
             'id'            => $athlete->id,
         ));
 
-        $title = '<td class="athlete-name">%s %d <span class="alt">(%d)</span></td>';
-        $title = sprintf($title, $link, $rank, $data['points']);
+        $title = '<td class="athlete-name">%s <br /> <span class="alt">(%s)</span></td><td>%d <span class="alt">(%d)</span></td>';
+        $title = sprintf($title, $link, $athlete->gym, $rank, $data['points']);
         $competitions = $this->getCompetitionResults($data, $user);
 
         return '<tr>' . $title . implode('', $competitions) . '</tr>';
@@ -226,6 +226,11 @@ class App_View_Helper_Leaderboard
 
         if ($competition['goal'] == 'time') {
             $competition['score'] = $filter->filter($competition['score']);
+        }
+
+        $parts = explode('.', $competition['score']);
+        if (@$parts[1] == '000') {
+            $competition['score'] = $parts[0];
         }
 
         if (@$competition['placeholder_score']) {

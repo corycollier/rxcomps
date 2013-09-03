@@ -9,6 +9,7 @@ html, body {
 }
 
 $alternate-text-font: "Open Sans";
+
 body {
     @include fancy-type;
 
@@ -71,8 +72,15 @@ h1 {
    }
 }
 
-.data-table .details {
-    font-size: 0.8em;
+.data-table {
+
+    td {
+        // white-space: nowrap;
+    }
+
+    .details {
+        font-size: 0.8em;
+    }
 }
 
 .filtered {
@@ -126,6 +134,7 @@ span.adjoined {
 
 .athlete-name {
     text-align: right;
+    white-space: nowrap;
 }
 
 .admin-edit-link {
