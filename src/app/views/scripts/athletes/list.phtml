@@ -18,12 +18,14 @@
 $eventId = $this->request()->getParam('event_id');
 
 // echo the appropriate link to create a new athlete
-echo $this->model(new App_Model_Event)->create($this->user, 'Add Athlete', array(
+echo $this->model(new App_Model_Athlete)->create($this->user, 'Add Athlete', array(
+    'controller'    => 'athletes',
     'event_id'  => $eventId,
 ));
 
 // echo a create new link, if appropriate
 echo $this->model(new App_Model_Athlete)->csv($this->user, 'Export Athletes', array(
+    'controller'    => 'athletes',
     'event_id'  => $eventId,
 ));
 

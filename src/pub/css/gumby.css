@@ -1823,7 +1823,7 @@ body .alt { color: #666666; font-family: "Open Sans"; font-style: italic; font-w
 body p + p { text-indent: 0; margin-top: auto; }
 body .alt { color: rgba(0, 0, 0, 0.5); }
 body .navbar { background: transparent; }
-body .navbar .navigation { margin-top: 53px; float: right; }
+body .navbar .navigation { float: right; }
 body .navbar.fixed { background: #333; box-shadow: 1 1px 3px rgba(0, 0, 0, 0.5); }
 body .navbar.fixed .navigation { margin-top: 0px; }
 body .page-content { background: #fff; padding-bottom: 30px; margin-bottom: 20px; overflow-x: scroll; }
@@ -1855,7 +1855,8 @@ span.adjoined { width: 25%; text-align: right; vertical-align: top; overflow: hi
 
 .admin .admin-edit-link { display: -moz-inline-stack; display: inline-block; vertical-align: middle; *vertical-align: auto; zoom: 1; *display: inline; }
 
-.header .logo a { color: #fff; float: left; text-indent: -9999px; background: url(/img/bbdfullogo_forwhite.png) top left no-repeat; width: 310px; height: 145px; }
+.header .logo { float: left; }
+.header .logo a { color: #fff; float: left; }
 
 .footer { background: rgba(0, 0, 0, 0.5); }
 .footer p { font-size: 0.8em; color: #fff; line-height: 1.2em; }

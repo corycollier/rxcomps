@@ -30,7 +30,7 @@ body {
     .navbar {
         background: transparent;
         .navigation {
-            margin-top: 53px;
+            // margin-top: 53px;
             float: right;
         }
     }
@@ -135,13 +135,18 @@ span.adjoined {
 .header {
     // background: rgba(0,0,0,0.5);
 
-    .logo a {
-        color: #fff;
+    .logo {
+
         float: left;
-        text-indent: -9999px;
-        background: url(/img/bbdfullogo_forwhite.png) top left no-repeat;
-        width: 310px;
-        height: 145px;
+
+        a {
+            color: #fff;
+            float: left;
+            // text-indent: -9999px;
+            // background: url(/img/bbdfullogo_forwhite.png) top left no-repeat;
+            // width: 310px;
+            // height: 145px;
+        }
     }
 }
 
