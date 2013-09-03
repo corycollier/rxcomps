@@ -76,9 +76,20 @@ h1 {
 
     td {
         // white-space: nowrap;
+        text-align: center;
+        line-height: 0.9em;
     }
 
-    .details {
+    .athlete-name {
+        text-align: right;
+        white-space: nowrap;
+    }
+
+    .rank {
+        font-weight: bold;
+    }
+
+    .details, .alt {
         font-size: 0.8em;
     }
 }
@@ -130,11 +141,6 @@ span.adjoined {
 
 .competition-item {
 
-}
-
-.athlete-name {
-    text-align: right;
-    white-space: nowrap;
 }
 
 .admin-edit-link {

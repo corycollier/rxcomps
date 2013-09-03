@@ -141,8 +141,14 @@ class App_View_Helper_Leaderboard
             'id'            => $athlete->id,
         ));
 
-        $title = '<td class="athlete-name">%s <br /> <span class="alt">(%s)</span></td><td>%d <span class="alt">(%d)</span></td>';
-        $title = sprintf($title, $link, $athlete->gym, $rank, $data['points']);
+        $rank   = sprintf('<span class="rank">%d</span>', $rank);
+        $points = sprintf('<span class="alt">(%d)</span>', $data['points']);
+        $gym    = sprintf('<span class="alt">(%s)</span>', $athlete->gym);
+
+        $title = sprintf('<td class="athlete-name">%s <br /> %s</td><td> %s <br />%s</td>',
+            $link, $gym, $rank, $points
+        );
+
         $competitions = $this->getCompetitionResults($data, $user);
 
         return '<tr>' . $title . implode('', $competitions) . '</tr>';
@@ -220,7 +226,8 @@ class App_View_Helper_Leaderboard
     {
         $filter = new Rx_Filter_SecondsToTime;
         $template = '<td class="%s">
-            <a href="#" class="expand-details">%d</a>
+            %d
+            <br />
             <span class="alt">(%s) %s</span>
             </td>';
 

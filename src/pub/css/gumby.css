@@ -1835,7 +1835,10 @@ th { font-weight: bold; }
 
 h1 .btn { vertical-align: middle; }
 
-.data-table .details { font-size: 0.8em; }
+.data-table td { text-align: center; line-height: 0.9em; }
+.data-table .athlete-name { text-align: right; white-space: nowrap; }
+.data-table .rank { font-weight: bold; }
+.data-table .details, .data-table .alt { font-size: 0.8em; }
 
 .filtered { background: rgba(0, 0, 0, 0.25); color: rgba(0, 0, 0, 0.5); }
 .filtered a { color: rgba(0, 0, 0, 0.5); }
@@ -1849,8 +1852,6 @@ h1 .btn { vertical-align: middle; }
 span.adjoined { width: 25%; text-align: right; vertical-align: top; overflow: hidden; }
 
 .field input, .field input[type="*"], .field textarea { width: 70%; max-width: 70%; }
-
-.athlete-name { text-align: right; white-space: nowrap; }
 
 .admin-edit-link { display: none; }
 
