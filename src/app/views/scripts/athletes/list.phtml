@@ -48,6 +48,14 @@ foreach ($this->items as $athlete) :
 endforeach;
 
 // output any pagination control necessary
-echo $this->paginationControl($this->paginator, 'Sliding', 'partials/pagination.phtml');
+
+$this->paginator->getView()->controller = 'athletes';
+
+echo $this->paginationControl($this->paginator, 'Sliding', 'partials/pagination.phtml', array(
+    'additionalParams' => array(
+        'controller' => 'athletes',
+        'action'     => 'list',
+    )
+));
 
 ?>
