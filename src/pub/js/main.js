@@ -35,10 +35,6 @@ $(function() {
         return false;
     });
 
-    $(".athlete-name a").tooltip({ content: function() {
-        $.get($(this).attr('href'));
-    }})
-
     // $(".tab-content a").on('click', function(event){
     //     event.preventDefault(true);
     //     $.get($(this).attr('href'), function(data){
