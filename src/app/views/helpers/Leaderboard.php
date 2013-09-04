@@ -224,11 +224,15 @@ class App_View_Helper_Leaderboard
      */
     public function getCompetitionResult ($id, $competition = array(), $user = null)
     {
+        // var_dump($competition); die;
         $filter = new Rx_Filter_SecondsToTime;
         $template = '<td class="%s">
             %d
             <br />
-            <span class="alt">(%s) %s</span>
+            <span class="alt">(%s) </span>
+            <br />
+            <span class="alt">(%s) pts</span>
+            %s
             </td>';
 
         if ($competition['goal'] == 'time') {
@@ -248,6 +252,7 @@ class App_View_Helper_Leaderboard
             $this->isFiltered($id) ? 'filtered' : '',
             $competition['rank'],
             $competition['score'],
+            $competition['points'],
             $this->_getScoreEditLink($id, $competition, $user)
         );
 
