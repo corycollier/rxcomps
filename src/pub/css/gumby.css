@@ -1835,6 +1835,7 @@ th { font-weight: bold; }
 
 h1 .btn { vertical-align: middle; }
 
+.data-table { min-width: 100%; }
 .data-table td { text-align: center; line-height: 0.9em; }
 .data-table .athlete-name { text-align: right; white-space: nowrap; }
 .data-table .rank { font-weight: bold; }
