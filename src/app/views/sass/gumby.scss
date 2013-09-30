@@ -1,3 +1,4 @@
+
 /*!
 * Gumby Framework Version 2.0
 * ---------------------------
@@ -8,23 +9,16 @@
 * http://www.gumbyframework.com/
 */
 
-@import "modular-scale";
+@import 'modular-scale';
 
 @import "var/settings";
 @import "var/lists";
 
 @import "compass";
 @import "compass/reset";
-@import "compass/css3";
-@import "compass/css3/images";
-@import "compass/utilities/general/clearfix";
 
-@import "mixins/all";
-
-@import "functions/breakpoints";
-@import "functions/grid-calc";
-
-@import "base";
+@import "functions/all";
+@import "base";
 @import "fonts";
 @import "typography";
 @import "grid";

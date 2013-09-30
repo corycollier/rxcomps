@@ -6,12 +6,17 @@
 
 html, body {
     height: 100%;
+    color: #333;
 }
 
 $alternate-text-font: "Open Sans";
 
 body {
     @include fancy-type;
+
+    a {
+        @include link-colors(#c00, #f00, #c00, #c00, #c00);
+    }
 
     // background: url(/img/body.jpg) center center;
     background: url(/img/bbd-body.jpg) top center fixed;

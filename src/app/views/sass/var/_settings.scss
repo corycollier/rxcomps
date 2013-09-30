@@ -3,8 +3,8 @@
 
 
 // Grid Settings
-$row-max-width: 1040 !default;
-$gutter-in-px: 10 !default;
+$row-max-width: 940px !default;
+$gutter-in-px: 20px !default;
 $cols: 12 !default;
 $hybrid: 16 !default;
 
@@ -18,7 +18,7 @@ $max-device-width: 2880px;
 $nav-distance: 0px;
 
 // Typography
-$font-family: Open Sans;
+$font-family: "Open Sans";
 $font-style-italic: italic;
 $icons: entypo;
 $font-smoothing: antialiased;
@@ -69,28 +69,28 @@ $tremendous: ms(9);
 $absurd: ms(10);
 
 // Typography Colors
-$header-font-color: #444444 !default;
+$header-font-color: #b6b6b6 !default;
 $header-link-color: #d04526 !default;
 $header-link-hover-color: #c03d20 !default;
-$body-font-color: #555555 !default;
-$body-link-color: #cc0000 !default;
+$body-font-color: #b6b6b6 !default;
+$body-link-color: #ffcc00 !default;
 $body-link-hover-color: #c03d20 !default;
 
 // User Interface Colors
-$global-bg-color: #000000;
-$navbar-color: #333333;
+$global-bg-color: #1e1e1e;
+$navbar-color: #171717;
 $navbar-link-color: #ffffff;
 $primary-color: #3085d6;
 $secondary-color: #42a35a;
 $default-color: #f2f2f2;
-$info-color: #4a4d50;
+$info-color: #ffffff;
 $danger-color: #ca3838;
 $warning-color: #f6b83f;
 $success-color: #58c026;
 $primary-hover-color: #58b2fa;
 $secondary-hover-color: #6dbb80;
 $default-hover-color: #ffffff;
-$info-hover-color: #868d92;
+$info-hover-color: #ffffff;
 $danger-hover-color: #f14f4f;
 $warning-hover-color: #fdd27f;
 $success-hover-color: #66d92f;
@@ -99,9 +99,9 @@ $black: #000;
 $white: #fff;
 
 // Borders
-$button-radius: 2px;
+$button-radius: 4px;
 $metro-radius: 0 !default;
-$bigger-radius: 4px;
+$bigger-radius: 8px;
 
 // Buttons
 // Font Sizing
@@ -111,13 +111,22 @@ $medium-button-font-size: $norm;
 $small-button-font-size: $small;
 
 // Padding
-$default-button-padding: $norm;
+$default-button-padding: $med;
 
 // Height
 $default-button-height: 36px;
 
 // Tabs
-$tab-height: 36px;
+$tab-height: 42px;
+
+// Drawers & Modals
+$modal-overlay-color: rgba(0, 0, 0, 0.8);
+$modal-window-color: $white;
+$drawer-background-color: #3e4144;
+$drawer-inner-shadow-x-offset: 0;
+$drawer-inner-shadow-y-offset: 2px;
+$drawer-inner-shadow-blur: 5px;
+$drawer-inner-shadow-color: #313436;
 
 // Floats
 $default-float: left;
