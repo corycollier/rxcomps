@@ -15,6 +15,11 @@
 ?>
 
 <?php
+// render a link back to the main event
+echo $this->actionList(array(
+    $this->backToEventLink(new App_Model_Event, $this->request()->getParams()),
+));
+
 // render the editing form
 echo $this->form;
 
