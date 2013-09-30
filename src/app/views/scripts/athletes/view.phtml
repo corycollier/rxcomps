@@ -20,8 +20,10 @@ $eventId = $this->request()->getParam('event_id');
 // echo a link back to the main event
 echo $this->actionList(array(
     $this->backToEventLink($this->model, $this->request()->getParams()),
-    $this->model($this->model)->create($this->user, 'Add Score', array(
+    $this->model(new App_Model_Score)->create($this->user, 'Add Score', array(
+        'controller'=> 'scores',
         'event_id'  => $eventId,
+        'athlete_id'=> $this->model->id,
     )),
 ));
 

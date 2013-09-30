@@ -58,6 +58,38 @@ class App_View_Helper_Leaderboard
     }
 
     /**
+     *
+     *
+     *
+     *
+     *
+     */
+    public function select ($params = array())
+    {
+        $table      = $this->getTable('Scale');
+        $genders    = array('male', 'female');
+        $attribs    = array();
+        $options    = array();
+        $select     = $table->select()->where('event_id = ?', $params['event_id']);
+        $scales     = $table->fetchAll($select);
+
+        foreach ($scales as $scale) {
+            foreach ($genders as $gender) {
+                $title = ucwords($gender . ' - ' . $scale->name);
+                $url = $this->view->url(array_merge($params, array(
+                    'scale_id'  => $scale->id,
+                    'gender'    => $gender,
+                )));
+
+                $options[$url] = $title;
+            }
+        }
+
+        return $this->view->formSelect('leaderboard_select', null, $attribs, $options);
+
+    } // END function select
+
+    /**
      * table()
      *
      * Method to return a table of information for a provided set of data

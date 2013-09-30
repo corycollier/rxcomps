@@ -146,11 +146,16 @@ class Rx_View_Helper_Model
         $resourceId = $this->_model->getResourceId();
         $privilege  = 'create';
 
+        if (array_key_exists('id', $params)) {
+            unset($params['id']);
+        }
+
         $html = '<div class="admin-edit-link small default btn icon-right icon-list-add">%s</div>';
 
         $link = $this->view->htmlAnchor($title, array_merge($params, array(
             'controller'    => $resourceId,
             'action'        => $privilege,
+            'reset-url'     => true,
         )));
 
         return sprintf($html, $link);

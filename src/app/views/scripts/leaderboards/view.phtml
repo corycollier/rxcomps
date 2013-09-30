@@ -21,11 +21,12 @@
 ?>
 <h2><?php echo $title; ?></h2>
 <?php
-
 // echo a link back to the main event
 echo $this->actionList(array(
     $this->backToEventLink($this->model, $this->request()->getParams()),
 ));
+
+echo $this->leaderboard()->select($this->request()->getParams());
 
 echo $this->leaderboard()->table($this->items, $this->user);
 ?>

@@ -81,7 +81,7 @@ class App_View_Helper_Athlete
         $scale = $athlete->row->findParentRow('App_Model_DbTable_Scale');
 
         $title = sprintf(
-            '<h3>%s%s </h3><span class="alt">(%s) <br />[%s]</span>',
+            '<h3>%s%s </h3><i class="entypo icon-user"></i><span class="alt">(%s) <br />[%s]</span>',
             $givenId,
             $link,
             $athlete->row->gym,
