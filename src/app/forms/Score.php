@@ -103,7 +103,7 @@ class App_Form_Score
         // athletes
         $table = $model->getParent('Athlete')->getTable();
         $athletes = $table->fetchAll(
-            $table->buildWhere($params)
+            $table->buildWhere($params)->order('given_id ASC')
         );
 
         $element = $this->getElement('athlete_id');
