@@ -190,4 +190,19 @@ class Rx_Controller_Action
 
     } // END function _getViewObject
 
+    /**
+     * _getGetRequest()
+     *
+     * Method to extract _GET params from the request object
+     *
+     * @return array
+     */
+    protected function _getGetRequest ( )
+    {
+        $request = $this->getRequest();
+
+        return array_diff($request->getParams(), $request->getPost());
+
+    } // END function _getGetRequest
+
 } // END class Rx_Controller_Action

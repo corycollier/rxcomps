@@ -196,7 +196,8 @@ class Rx_Controller_Model
             try {
                 $this->_edit($model, $request);
             } catch (Zend_Exception $exception) {
-                $this->flashAndRedirect($exception->getMessage(), 'error', $request->getParams());
+                $get = $this->_getGetRequest();
+                $this->flashAndRedirect($exception->getMessage(), 'error', $get);
             }
         }
 
@@ -220,7 +221,7 @@ class Rx_Controller_Model
         $form->injectDependencies($model, $request->getParams());
         $form->populate($model->filterValues($request->getParams()));
 
-        $message = sprintf(self::MSG_EDIT_SUCCESS, $this->_modelName);
+        $message = $this->_getEditMessage();
         $params = array_merge($request->getParams(), $request->getPost());
 
         if (! $form->isValid($params)) {
@@ -228,7 +229,10 @@ class Rx_Controller_Model
         }
 
         $model->edit($form->getValues());
-        $this->flashAndRedirect($message, 'success', $request->getParams());
+
+        $get = $this->_getGetRequest();
+
+        $this->flashAndRedirect($message, 'success', $get);
 
     } // END function _edit
 
@@ -330,5 +334,18 @@ class Rx_Controller_Model
             $this->getModel($this->_modelName)->getTable()->getPaginationAdapter()
         );
     }
+
+    /**
+     * _getEditMessage()
+     *
+     * Method to get the edit message for a successful edit of a model
+     *
+     * @return string
+     */
+    protected function _getEditMessage ( )
+    {
+        return sprintf(self::MSG_EDIT_SUCCESS, $this->_modelName);
+
+    } // END function _getEditMessage
 
 } // END class Rx_Controller_Model
