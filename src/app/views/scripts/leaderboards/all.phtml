@@ -16,6 +16,11 @@
 <?php
     // store request params for use later
     $params = $this->request()->getParams();
+
+    $eventId = $params['id'];
+    if (array_key_exists('event_id', $params)) :
+        $eventId = $params['event_id'];
+    endif;
 ?>
 
 <div class="row">
