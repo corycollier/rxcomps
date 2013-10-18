@@ -50,6 +50,8 @@ class Rx_Controller_Action
             $layout->disableLayout();
         }
 
+        $this->view->flashMessenger = $this->getHelper('FlashMessenger');
+
     } // END function preDispatch
 
     /**
