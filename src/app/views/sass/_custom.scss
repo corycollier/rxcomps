@@ -76,6 +76,12 @@ h1 {
    }
 }
 
+.inline-block {
+    padding-bottom: 0!important;
+    margin-bottom: 0!important;
+    @include inline-block;
+}
+
 .data-table {
 
     min-width: 100%;
@@ -190,4 +196,10 @@ span.adjoined {
 
 .btn.info {
     background: #333;
+}
+
+.btn.primary {
+    vertical-align: middle;
+    padding-bottom: 3.5px;
+    margin-bottom: 10px;
 }

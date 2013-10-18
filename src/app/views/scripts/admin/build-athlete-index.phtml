@@ -13,7 +13,12 @@
  * @since       File available since release 2.0.0
  */
 ?>
-
+<?php
+// echo a link back to the main event
+echo $this->actionList(array(
+    $this->backToEventLink(new App_Model_Event, $this->request()->getParams()),
+));
+?>
 <h2><?php echo $this->translate('Build Athlete Search Index'); ?>
 
 <?php echo $this->form; ?>

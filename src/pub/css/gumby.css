@@ -1865,6 +1865,8 @@ th { font-weight: bold; }
 
 h1 .btn { vertical-align: middle; }
 
+.inline-block { padding-bottom: 0 !important; margin-bottom: 0 !important; display: -moz-inline-stack; display: inline-block; vertical-align: middle; *vertical-align: auto; zoom: 1; *display: inline; }
+
 .data-table { min-width: 100%; }
 .data-table td { text-align: center; line-height: 0.9em; }
 .data-table .athlete-name { text-align: right; white-space: nowrap; }
@@ -1896,3 +1898,5 @@ span.adjoined { width: 25%; text-align: right; vertical-align: top; overflow: hi
 .footer p { font-size: 0.8em; color: #fff; line-height: 1.2em; }
 
 .btn.info { background: #333; }
+
+.btn.primary { vertical-align: middle; padding-bottom: 3.5px; margin-bottom: 10px; }

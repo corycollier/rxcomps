@@ -58,34 +58,39 @@ class App_View_Helper_Leaderboard
     }
 
     /**
+     * select()
      *
+     * Method to return a select form for leaderboards
      *
-     *
-     *
-     *
+     * @param array $params
+     * @return App_Form_Leaderboard
      */
     public function select ($params = array())
     {
-        $table      = $this->getTable('Scale');
-        $genders    = array('male', 'female');
-        $attribs    = array();
-        $options    = array();
-        $select     = $table->select()->where('event_id = ?', $params['event_id']);
-        $scales     = $table->fetchAll($select);
+        $form   = new App_Form_Leaderboard;
+        $table  = $this->getTable('Scale');
+        $select = $table->select()->where('event_id = ?', $params['event_id']);
+        $scales = $table->fetchAll($select);
+        $form->build($scales, $this->view->request());
 
-        foreach ($scales as $scale) {
-            foreach ($genders as $gender) {
-                $title = ucwords($gender . ' - ' . $scale->name);
-                $url = $this->view->url(array_merge($params, array(
-                    'scale_id'  => $scale->id,
-                    'gender'    => $gender,
-                )));
+        $requestParams = $this->view->request()->getParams();
+        $requestParams = array_diff_key($requestParams, array(
+            'scale_id' => null,
+            'gender'   => null,
+        ));
 
-                $options[$url] = $title;
-            }
-        }
+        // var_dump($requestParams); die;
+        $form->setAction($this->view->url($requestParams, null, true));
 
-        return $this->view->formSelect('leaderboard_select', null, $attribs, $options);
+        $form->getElement('scale_id')
+            ->getDecorator('td')
+            ->setOption('class', 'prepend field inline-block');
+
+        $form->getElement('gender')
+            ->getDecorator('td')
+            ->setOption('class', 'prepend field inline-block');
+
+        return $form;
 
     } // END function select
 

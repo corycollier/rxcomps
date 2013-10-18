@@ -14,4 +14,17 @@
  */
 ?>
 
+<?php
+
+// store request params for use later
+$params = $this->request()->getParams();
+
+$eventId = $params['event_id'];
+
+// echo a link back to the main event
+echo $this->actionList(array(
+    $this->backToEventLink(new App_Model_Event, $this->request()->getParams()),
+));
+?>
+
 <h2><?php echo $this->translate('Page Cache Flushed'); ?></h2>
