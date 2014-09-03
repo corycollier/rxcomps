@@ -1,0 +1,13 @@
+{
+    "name": "cory/rxcomps",
+    "description": "Scoring software for competitions",
+    "require": {
+        "phpunit/phpunit": "3.7.*"
+    },
+    "authors": [
+        {
+            "name": "Cory Collier",
+            "email": "corycollier@corycollier.com"
+        }
+    ]
+}
