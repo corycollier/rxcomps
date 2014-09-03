@@ -1,1 +1,205 @@
 // Your custom SCSS should be written here...
+
+@import "blueprint";
+@import "blueprint/fancy-type";
+
+html, body {
+    height: 100%;
+    color: #333;
+}
+
+$alternate-text-font: "Open Sans";
+
+body {
+    @include fancy-type;
+
+    a {
+        @include link-colors(#c00, #f00, #c00, #c00, #c00);
+    }
+
+    // background: url(/img/body.jpg) center center;
+    background: url(/img/bbd-body.jpg) top center fixed;
+    background-repeat: no-repeat;
+    background-color: #000;
+    background-size: cover;
+
+    p + p {
+        text-indent: 0;
+        margin-top: auto;
+    }
+
+    .alt {
+        color: rgba(0,0,0,0.5);
+    }
+
+    .navbar {
+        background: transparent;
+        .navigation {
+            float: right;
+            // margin-top: 53px;
+        }
+
+        .tab-nav {
+            float: right;
+        }
+    }
+
+    .navbar.fixed {
+        background: #333;
+        box-shadow: 1 1px 3px rgba(0,0,0,0.5);
+
+        .navigation {
+            margin-top: 0px;
+        }
+    }
+
+    .page-content {
+        background: #fff;
+        padding-bottom: 30px;
+        margin-bottom: 20px;
+        overflow-x: scroll;
+    }
+}
+
+td, th {
+    padding: 0.5em;
+    border: 1px solid #ddd;
+}
+
+th {
+    font-weight: bold;
+}
+
+h1 {
+   .btn {
+        vertical-align: middle;
+   }
+}
+
+.inline-block {
+    padding-bottom: 0!important;
+    margin-bottom: 0!important;
+    @include inline-block;
+}
+
+.data-table {
+
+    min-width: 100%;
+
+    td {
+        // white-space: nowrap;
+        text-align: center;
+        line-height: 0.9em;
+    }
+
+    .athlete-name {
+        text-align: right;
+        white-space: nowrap;
+    }
+
+    .rank {
+        font-weight: bold;
+    }
+
+    .details, .alt {
+        font-size: 0.8em;
+    }
+}
+
+.filtered {
+    background: rgba(0,0,0,0.25);
+    color: rgba(0,0,0,0.5);
+
+    a {
+        color: rgba(0,0,0,0.5);
+    }
+}
+
+.action-links {
+
+    a i {
+            color: rgba(0,0,0,0.7);
+    }
+
+}
+
+.list-item {
+    background: rgba(0,0,0,0.02);
+    margin: 1em 0;
+    padding: 0.5em;
+
+    h3 {
+        // min-width: 50%;
+        // @include inline-block;
+    }
+    .action-links {
+        line-height: 2em;
+    }
+}
+
+span.adjoined {
+    width: 25%;
+    text-align: right;
+    vertical-align: top;
+    overflow: hidden;
+}
+
+.field {
+    input, input[type="*"], textarea {
+        width: 70%;
+        max-width: 70%;
+    }
+}
+
+.competition-item {
+
+}
+
+.admin-edit-link {
+    display: none;
+}
+
+.admin .admin-edit-link {
+    @include inline-block;
+}
+
+.subnav li a {
+    color: #ffffff;
+}
+
+.header {
+    // background: rgba(0,0,0,0.5);
+
+    .logo {
+
+        float: left;
+
+        a {
+            color: #fff;
+            float: left;
+            // text-indent: -9999px;
+            // background: url(/img/bbdfullogo_forwhite.png) top left no-repeat;
+            // width: 310px;
+            // height: 145px;
+        }
+    }
+}
+
+.footer {
+    background: rgba(0,0,0,0.5);
+    p {
+        font-size: 0.8em;
+        color: #fff;
+        line-height:1.2em;
+    }
+}
+
+.btn.info {
+    background: #333;
+}
+
+.btn.primary {
+    vertical-align: middle;
+    padding-bottom: 3.5px;
+    margin-bottom: 10px;
+}
